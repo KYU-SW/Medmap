@@ -1,0 +1,731 @@
+[
+  {
+    "row_index": 0,
+    "age": 18,
+    "sex": "M",
+    "label": "URTI",
+    "initial_evidence": "E_91",
+    "evidences": [
+      {
+        "raw": "E_48",
+        "code": "E_48",
+        "question": "Do you live with 4 or more people?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_50",
+        "code": "E_50",
+        "question": "Have you had significantly increased sweating?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_53",
+        "code": "E_53",
+        "question": "Do you have pain somewhere, related to your reason for consulting?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_54_@_V_161",
+        "code": "E_54",
+        "question": "Characterize your pain:",
+        "type": "M",
+        "value": "sensitive"
+      },
+      {
+        "raw": "E_54_@_V_183",
+        "code": "E_54",
+        "question": "Characterize your pain:",
+        "type": "M",
+        "value": "heavy"
+      },
+      {
+        "raw": "E_55_@_V_89",
+        "code": "E_55",
+        "question": "Do you feel pain somewhere?",
+        "type": "M",
+        "value": "forehead"
+      },
+      {
+        "raw": "E_55_@_V_108",
+        "code": "E_55",
+        "question": "Do you feel pain somewhere?",
+        "type": "M",
+        "value": "cheek(R)"
+      },
+      {
+        "raw": "E_55_@_V_167",
+        "code": "E_55",
+        "question": "Do you feel pain somewhere?",
+        "type": "M",
+        "value": "temple(L)"
+      },
+      {
+        "raw": "E_56_@_4",
+        "code": "E_56",
+        "question": "How intense is the pain?",
+        "type": "C",
+        "value": "4"
+      },
+      {
+        "raw": "E_57_@_V_123",
+        "code": "E_57",
+        "question": "Does the pain radiate to another location?",
+        "type": "M",
+        "value": "nowhere"
+      },
+      {
+        "raw": "E_58_@_3",
+        "code": "E_58",
+        "question": "How precisely is the pain located?",
+        "type": "C",
+        "value": "3"
+      },
+      {
+        "raw": "E_59_@_3",
+        "code": "E_59",
+        "question": "How fast did the pain appear?",
+        "type": "C",
+        "value": "3"
+      },
+      {
+        "raw": "E_77",
+        "code": "E_77",
+        "question": "Do you have a cough that produces colored or more abundant sputum than usual?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_79",
+        "code": "E_79",
+        "question": "Do you smoke cigarettes?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_91",
+        "code": "E_91",
+        "question": "Do you have a fever (either felt or measured with a thermometer)?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_97",
+        "code": "E_97",
+        "question": "Do you have a sore throat?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_201",
+        "code": "E_201",
+        "question": "Do you have a cough?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_204_@_V_10",
+        "code": "E_204",
+        "question": "Have you traveled out of the country in the last 4 weeks?",
+        "type": "C",
+        "value": "N"
+      },
+      {
+        "raw": "E_222",
+        "code": "E_222",
+        "question": "Are you exposed to secondhand cigarette smoke on a daily basis?",
+        "type": "B",
+        "value": true
+      }
+    ],
+    "differential": [
+      [
+        "Bronchitis",
+        0.19171203430383882
+      ],
+      [
+        "Pneumonia",
+        0.17579340398940366
+      ],
+      [
+        "URTI",
+        0.1607809719801254
+      ],
+      [
+        "Bronchiectasis",
+        0.12429044460990353
+      ],
+      [
+        "Tuberculosis",
+        0.11367177304035844
+      ],
+      [
+        "Influenza",
+        0.11057936110639896
+      ],
+      [
+        "HIV (initial infection)",
+        0.07333003867293564
+      ],
+      [
+        "Chagas",
+        0.04984197229703562
+      ]
+    ]
+  },
+  {
+    "row_index": 1,
+    "age": 21,
+    "sex": "M",
+    "label": "HIV (initial infection)",
+    "initial_evidence": "E_50",
+    "evidences": [
+      {
+        "raw": "E_9",
+        "code": "E_9",
+        "question": "Do you have swollen or painful lymph nodes?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_27",
+        "code": "E_27",
+        "question": "Have you ever had a sexually transmitted infection?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_50",
+        "code": "E_50",
+        "question": "Have you had significantly increased sweating?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_51",
+        "code": "E_51",
+        "question": "Have you had diarrhea or an increase in stool frequency?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_53",
+        "code": "E_53",
+        "question": "Do you have pain somewhere, related to your reason for consulting?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_54_@_V_198",
+        "code": "E_54",
+        "question": "Characterize your pain:",
+        "type": "M",
+        "value": "exhausting"
+      },
+      {
+        "raw": "E_55_@_V_62",
+        "code": "E_55",
+        "question": "Do you feel pain somewhere?",
+        "type": "M",
+        "value": "top of the head"
+      },
+      {
+        "raw": "E_55_@_V_166",
+        "code": "E_55",
+        "question": "Do you feel pain somewhere?",
+        "type": "M",
+        "value": "temple(R)"
+      },
+      {
+        "raw": "E_55_@_V_167",
+        "code": "E_55",
+        "question": "Do you feel pain somewhere?",
+        "type": "M",
+        "value": "temple(L)"
+      },
+      {
+        "raw": "E_56_@_7",
+        "code": "E_56",
+        "question": "How intense is the pain?",
+        "type": "C",
+        "value": "7"
+      },
+      {
+        "raw": "E_57_@_V_123",
+        "code": "E_57",
+        "question": "Does the pain radiate to another location?",
+        "type": "M",
+        "value": "nowhere"
+      },
+      {
+        "raw": "E_58_@_7",
+        "code": "E_58",
+        "question": "How precisely is the pain located?",
+        "type": "C",
+        "value": "7"
+      },
+      {
+        "raw": "E_59_@_2",
+        "code": "E_59",
+        "question": "How fast did the pain appear?",
+        "type": "C",
+        "value": "2"
+      },
+      {
+        "raw": "E_91",
+        "code": "E_91",
+        "question": "Do you have a fever (either felt or measured with a thermometer)?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_115",
+        "code": "E_115",
+        "question": "Have you had unprotected sex with more than one partner in the last 6 months?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_129",
+        "code": "E_129",
+        "question": "Do you have any lesions, redness or problems on your skin that you believe are related to the condition you are consulting for?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_130_@_V_138",
+        "code": "E_130",
+        "question": "What color is the rash?",
+        "type": "C",
+        "value": "pale"
+      },
+      {
+        "raw": "E_131_@_V_10",
+        "code": "E_131",
+        "question": "Do your lesions peel off?",
+        "type": "C",
+        "value": "N"
+      },
+      {
+        "raw": "E_132_@_0",
+        "code": "E_132",
+        "question": "Is the rash swollen?",
+        "type": "C",
+        "value": "0"
+      },
+      {
+        "raw": "E_133_@_V_90",
+        "code": "E_133",
+        "question": "Where is the affected region located?",
+        "type": "M",
+        "value": "lower gum"
+      },
+      {
+        "raw": "E_133_@_V_91",
+        "code": "E_133",
+        "question": "Where is the affected region located?",
+        "type": "M",
+        "value": "upper gum"
+      },
+      {
+        "raw": "E_133_@_V_95",
+        "code": "E_133",
+        "question": "Where is the affected region located?",
+        "type": "M",
+        "value": "labia majora(R)"
+      },
+      {
+        "raw": "E_133_@_V_110",
+        "code": "E_133",
+        "question": "Where is the affected region located?",
+        "type": "M",
+        "value": "internal cheek(R)"
+      },
+      {
+        "raw": "E_133_@_V_111",
+        "code": "E_133",
+        "question": "Where is the affected region located?",
+        "type": "M",
+        "value": "internal cheek(L)"
+      },
+      {
+        "raw": "E_134_@_6",
+        "code": "E_134",
+        "question": "How intense is the pain caused by the rash?",
+        "type": "C",
+        "value": "6"
+      },
+      {
+        "raw": "E_135_@_V_12",
+        "code": "E_135",
+        "question": "Is the lesion (or are the lesions) larger than 1cm?",
+        "type": "C",
+        "value": "Y"
+      },
+      {
+        "raw": "E_136_@_0",
+        "code": "E_136",
+        "question": "How severe is the itching?",
+        "type": "C",
+        "value": "0"
+      },
+      {
+        "raw": "E_148",
+        "code": "E_148",
+        "question": "Are you feeling nauseous or do you feel like vomiting?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_162",
+        "code": "E_162",
+        "question": "Have you had an involuntary weight loss over the last 3 months?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_189",
+        "code": "E_189",
+        "question": "Have you had sexual intercourse with an HIV-positive partner in the past 12 months?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_204_@_V_10",
+        "code": "E_204",
+        "question": "Have you traveled out of the country in the last 4 weeks?",
+        "type": "C",
+        "value": "N"
+      }
+    ],
+    "differential": [
+      [
+        "HIV (initial infection)",
+        0.5189500564407601
+      ],
+      [
+        "Chagas",
+        0.3217819010436332
+      ],
+      [
+        "Scombroid food poisoning",
+        0.13496758062695968
+      ],
+      [
+        "Sarcoidosis",
+        0.024300461888647054
+      ]
+    ]
+  },
+  {
+    "row_index": 2,
+    "age": 19,
+    "sex": "F",
+    "label": "Pneumonia",
+    "initial_evidence": "E_77",
+    "evidences": [
+      {
+        "raw": "E_53",
+        "code": "E_53",
+        "question": "Do you have pain somewhere, related to your reason for consulting?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_54_@_V_179",
+        "code": "E_54",
+        "question": "Characterize your pain:",
+        "type": "M",
+        "value": "a knife stroke"
+      },
+      {
+        "raw": "E_54_@_V_192",
+        "code": "E_54",
+        "question": "Characterize your pain:",
+        "type": "M",
+        "value": "sharp"
+      },
+      {
+        "raw": "E_55_@_V_29",
+        "code": "E_55",
+        "question": "Do you feel pain somewhere?",
+        "type": "M",
+        "value": "lower chest"
+      },
+      {
+        "raw": "E_55_@_V_55",
+        "code": "E_55",
+        "question": "Do you feel pain somewhere?",
+        "type": "M",
+        "value": "side of the chest(R)"
+      },
+      {
+        "raw": "E_55_@_V_56",
+        "code": "E_55",
+        "question": "Do you feel pain somewhere?",
+        "type": "M",
+        "value": "side of the chest(L)"
+      },
+      {
+        "raw": "E_55_@_V_170",
+        "code": "E_55",
+        "question": "Do you feel pain somewhere?",
+        "type": "M",
+        "value": "posterior chest wall(R)"
+      },
+      {
+        "raw": "E_55_@_V_171",
+        "code": "E_55",
+        "question": "Do you feel pain somewhere?",
+        "type": "M",
+        "value": "posterior chest wall(L)"
+      },
+      {
+        "raw": "E_56_@_5",
+        "code": "E_56",
+        "question": "How intense is the pain?",
+        "type": "C",
+        "value": "5"
+      },
+      {
+        "raw": "E_57_@_V_123",
+        "code": "E_57",
+        "question": "Does the pain radiate to another location?",
+        "type": "M",
+        "value": "nowhere"
+      },
+      {
+        "raw": "E_58_@_2",
+        "code": "E_58",
+        "question": "How precisely is the pain located?",
+        "type": "C",
+        "value": "2"
+      },
+      {
+        "raw": "E_59_@_6",
+        "code": "E_59",
+        "question": "How fast did the pain appear?",
+        "type": "C",
+        "value": "6"
+      },
+      {
+        "raw": "E_77",
+        "code": "E_77",
+        "question": "Do you have a cough that produces colored or more abundant sputum than usual?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_78",
+        "code": "E_78",
+        "question": "Do you drink alcohol excessively or do you have an addiction to alcohol?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_79",
+        "code": "E_79",
+        "question": "Do you smoke cigarettes?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_94",
+        "code": "E_94",
+        "question": "Have you had chills or shivers?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_106",
+        "code": "E_106",
+        "question": "Do you have heart failure?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_118",
+        "code": "E_118",
+        "question": "Have you ever had pneumonia?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_123",
+        "code": "E_123",
+        "question": "Do you have a chronic obstructive pulmonary disease (COPD)?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_124",
+        "code": "E_124",
+        "question": "Do you have asthma or have you ever had to use a bronchodilator in the past?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_129",
+        "code": "E_129",
+        "question": "Do you have any lesions, redness or problems on your skin that you believe are related to the condition you are consulting for?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_130_@_V_156",
+        "code": "E_130",
+        "question": "What color is the rash?",
+        "type": "C",
+        "value": "pink"
+      },
+      {
+        "raw": "E_131_@_V_12",
+        "code": "E_131",
+        "question": "Do your lesions peel off?",
+        "type": "C",
+        "value": "Y"
+      },
+      {
+        "raw": "E_132_@_4",
+        "code": "E_132",
+        "question": "Is the rash swollen?",
+        "type": "C",
+        "value": "4"
+      },
+      {
+        "raw": "E_133_@_V_54",
+        "code": "E_133",
+        "question": "Where is the affected region located?",
+        "type": "M",
+        "value": "side of the neck(L)"
+      },
+      {
+        "raw": "E_133_@_V_85",
+        "code": "E_133",
+        "question": "Where is the affected region located?",
+        "type": "M",
+        "value": "flank(L)"
+      },
+      {
+        "raw": "E_134_@_0",
+        "code": "E_134",
+        "question": "How intense is the pain caused by the rash?",
+        "type": "C",
+        "value": "0"
+      },
+      {
+        "raw": "E_135_@_V_10",
+        "code": "E_135",
+        "question": "Is the lesion (or are the lesions) larger than 1cm?",
+        "type": "C",
+        "value": "N"
+      },
+      {
+        "raw": "E_136_@_0",
+        "code": "E_136",
+        "question": "How severe is the itching?",
+        "type": "C",
+        "value": "0"
+      },
+      {
+        "raw": "E_144",
+        "code": "E_144",
+        "question": "Do you have diffuse (widespread) muscle pain?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_175",
+        "code": "E_175",
+        "question": "Have you noticed any new fatigue, generalized and vague discomfort, diffuse (widespread) muscle aches or a change in your general well-being related to your consultation today?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_181",
+        "code": "E_181",
+        "question": "Do you have nasal congestion or a clear runny nose?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_201",
+        "code": "E_201",
+        "question": "Do you have a cough?",
+        "type": "B",
+        "value": true
+      },
+      {
+        "raw": "E_204_@_V_10",
+        "code": "E_204",
+        "question": "Have you traveled out of the country in the last 4 weeks?",
+        "type": "C",
+        "value": "N"
+      }
+    ],
+    "differential": [
+      [
+        "Bronchitis",
+        0.11278064619119596
+      ],
+      [
+        "Pneumonia",
+        0.10048134562119852
+      ],
+      [
+        "Unstable angina",
+        0.08462979865697953
+      ],
+      [
+        "Possible NSTEMI / STEMI",
+        0.08343170881871906
+      ],
+      [
+        "Bronchiectasis",
+        0.07764173703530038
+      ],
+      [
+        "Boerhaave",
+        0.07708363099826726
+      ],
+      [
+        "Spontaneous rib fracture",
+        0.07682349455456361
+      ],
+      [
+        "Pericarditis",
+        0.07504681799224715
+      ],
+      [
+        "URTI",
+        0.06705952510476514
+      ],
+      [
+        "Stable angina",
+        0.06667817325012103
+      ],
+      [
+        "GERD",
+        0.06455232704351052
+      ],
+      [
+        "Scombroid food poisoning",
+        0.058790058668404095
+      ],
+      [
+        "Chagas",
+        0.02923384001251551
+      ],
+      [
+        "Sarcoidosis",
+        0.016406922262218876
+      ],
+      [
+        "Panic attack",
+        0.009359973789993502
+      ]
+    ]
+  }
+]
