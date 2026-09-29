@@ -61,9 +61,13 @@ RULES = (
 )
 
 ONSET_PATTERN = re.compile(
-    r"(?:오늘|어제|그제|방금|아침|점심|저녁|밤|새벽)(?:부터)?|"
-    r"(?:\d+|하루|이틀|사흘|나흘|닷새|일|이|삼|사|오|육|칠|팔|구|십)\s*"
-    r"(?:시간|일|주|개월|달)\s*(?:전부터|전|동안|째)"
+    r"(?:오늘|어제|그제|그저께|엊그제|방금|아침|점심|저녁|밤|새벽)(?:부터)?|"
+    r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘)"
+    r"(?:\s*(?:전부터|전|동안|째))?|"
+    r"(?:일주일|한\s*주|두\s*주|한\s*달|두\s*달)"
+    r"(?:\s*(?:전부터|전|동안|째))?|"
+    r"(?:\d+|일|이|삼|사|오|육|칠|팔|구|십)\s*"
+    r"(?:시간|일|주|개월|달)(?:\s*(?:전부터|전|동안|째))?"
 )
 SEVERITY_PATTERN = re.compile(
     r"매우\s*심(?:해|하|했)|너무\s*심(?:해|하|했)|심(?:해|하|했)|많이|조금|약간"
@@ -89,19 +93,46 @@ def _severity(text: str) -> str | None:
 def _normalize_onset(value: str | None) -> str | None:
     if value is None:
         return None
+    native_days = {
+        "하루": "1일", "이틀": "2일", "사흘": "3일", "나흘": "4일",
+        "닷새": "5일", "엿새": "6일", "이레": "7일", "여드레": "8일",
+        "아흐레": "9일", "열흘": "10일",
+    }
+    native_match = re.fullmatch(
+        r"(하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘)"
+        r"\s*(전부터|전|동안|째)?",
+        value,
+    )
+    if native_match:
+        suffix = native_match.group(2)
+        return native_days[native_match.group(1)] + (f" {suffix}" if suffix else "")
+
+    calendar_words = {
+        "일주일": "1주", "한주": "1주", "두주": "2주", "한달": "1달", "두달": "2달"
+    }
+    calendar_match = re.fullmatch(
+        r"(일주일|한\s*주|두\s*주|한\s*달|두\s*달)\s*(전부터|전|동안|째)?",
+        value,
+    )
+    if calendar_match:
+        key = re.sub(r"\s+", "", calendar_match.group(1))
+        suffix = calendar_match.group(2)
+        return calendar_words[key] + (f" {suffix}" if suffix else "")
+
     number_words = {
-        "하루": "1", "일": "1", "이틀": "2", "이": "2", "사흘": "3", "삼": "3",
-        "나흘": "4", "사": "4", "닷새": "5", "오": "5", "육": "6", "칠": "7",
-        "팔": "8", "구": "9", "십": "10",
+        "일": "1", "이": "2", "삼": "3", "사": "4", "오": "5", "육": "6",
+        "칠": "7", "팔": "8", "구": "9", "십": "10",
     }
     match = re.fullmatch(
-        r"(하루|이틀|사흘|나흘|닷새|일|이|삼|사|오|육|칠|팔|구|십)\s*"
-        r"(시간|일|주|개월|달)\s*(전부터|전|동안|째)",
+        r"(\d+|일|이|삼|사|오|육|칠|팔|구|십)\s*"
+        r"(시간|일|주|개월|달)\s*(전부터|전|동안|째)?",
         value,
     )
     if not match:
         return value
-    return f"{number_words[match.group(1)]}{match.group(2)} {match.group(3)}"
+    number = number_words.get(match.group(1), match.group(1))
+    suffix = match.group(3)
+    return f"{number}{match.group(2)}" + (f" {suffix}" if suffix else "")
 
 
 def _nearest_value(

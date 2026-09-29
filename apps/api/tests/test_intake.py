@@ -87,3 +87,23 @@ def test_keeps_all_symptoms_when_intensity_is_inside_expression() -> None:
     assert result["symptoms"][1]["severity"] == "심함"
     assert result["symptoms"][2]["severity"] == "심함"
     assert result["symptoms"][2]["onset"] is None
+
+
+def test_common_korean_day_expressions() -> None:
+    cases = {
+        "오늘부터": "오늘부터",
+        "어제": "어제",
+        "하루 전": "1일 전",
+        "하루 전부터": "1일 전부터",
+        "이틀": "2일",
+        "이틀 전": "2일 전",
+        "이틀 전부터": "2일 전부터",
+        "2일 전": "2일 전",
+        "2일 전부터": "2일 전부터",
+        "삼일 전부터": "3일 전부터",
+        "사흘째": "3일 째",
+        "일주일 전부터": "1주 전부터",
+    }
+    for spoken, expected in cases.items():
+        result = extract(f"{spoken} 머리가 아파요")
+        assert result["symptoms"][0]["onset"] == expected, spoken
