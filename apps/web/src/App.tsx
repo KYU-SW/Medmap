@@ -2,12 +2,31 @@ import { useEffect, useRef, useState } from "react";
 
 type Status = "idle" | "recording" | "transcribing" | "done" | "error";
 
+type SymptomObservation = {
+  name: string;
+  status: "present" | "absent";
+  body_site: string | null;
+  onset: string | null;
+  severity: string | null;
+  source_text: string;
+};
+
+type IntakeResult = {
+  symptoms: SymptomObservation[];
+  medications: string[];
+  allergies: string[];
+  needs_user_confirmation: boolean;
+};
+
 const MAX_RECORDING_MS = 60_000;
 
 export default function App() {
   const [status, setStatus] = useState<Status>("idle");
   const [transcript, setTranscript] = useState("");
   const [message, setMessage] = useState("버튼을 누르고 증상을 말해 주세요.");
+  const [intake, setIntake] = useState<IntakeResult | null>(null);
+  const [extracting, setExtracting] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -89,6 +108,8 @@ export default function App() {
       if (!response.ok) throw new Error(data.detail || "음성 변환에 실패했습니다.");
 
       setTranscript(data.transcript);
+      setIntake(null);
+      setConfirmed(false);
       setStatus("done");
       const processingTime = Number(data.processing_seconds);
       const timing = Number.isFinite(processingTime)
@@ -99,6 +120,37 @@ export default function App() {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "음성 변환에 실패했습니다.");
     }
+  }
+
+  async function extractMedicalInformation() {
+    if (!transcript.trim()) return;
+    setExtracting(true);
+    setConfirmed(false);
+    try {
+      const response = await fetch("/v1/intake/extract", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ transcript }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.detail || "의료정보를 정리하지 못했습니다.");
+      setIntake(data);
+    } catch (error) {
+      setStatus("error");
+      setMessage(error instanceof Error ? error.message : "의료정보를 정리하지 못했습니다.");
+    } finally {
+      setExtracting(false);
+    }
+  }
+
+  function updateSymptom(index: number, changes: Partial<SymptomObservation>) {
+    setIntake((current) => current && ({
+      ...current,
+      symptoms: current.symptoms.map((item, itemIndex) =>
+        itemIndex === index ? { ...item, ...changes } : item,
+      ),
+    }));
+    setConfirmed(false);
   }
 
   const busy = status === "recording" || status === "transcribing";
@@ -126,11 +178,79 @@ export default function App() {
         <textarea
           id="transcript"
           value={transcript}
-          onChange={(event) => setTranscript(event.target.value)}
+          onChange={(event) => {
+            setTranscript(event.target.value);
+            setIntake(null);
+            setConfirmed(false);
+          }}
           placeholder="음성 변환 결과가 여기에 표시됩니다."
           rows={6}
           disabled={status === "transcribing"}
         />
+
+        <button
+          className="button--secondary"
+          type="button"
+          onClick={extractMedicalInformation}
+          disabled={!transcript.trim() || extracting || busy}
+        >
+          {extracting ? "정리 중…" : "증상 정보 정리"}
+        </button>
+
+        {intake && (
+          <section className="intake" aria-label="정리된 의료정보">
+            <h2>확인이 필요한 정보</h2>
+            <p>잘못 정리된 내용은 직접 고친 뒤 확인해 주세요.</p>
+            {intake.symptoms.length === 0 ? (
+              <p className="empty-result">현재 규칙에서 찾은 증상이 없습니다.</p>
+            ) : intake.symptoms.map((symptom, index) => (
+              <div className="observation" key={`${symptom.name}-${index}`}>
+                <label>
+                  증상
+                  <input
+                    value={symptom.name}
+                    onChange={(event) => updateSymptom(index, { name: event.target.value })}
+                  />
+                </label>
+                <label>
+                  상태
+                  <select
+                    value={symptom.status}
+                    onChange={(event) => updateSymptom(index, {
+                      status: event.target.value as SymptomObservation["status"],
+                    })}
+                  >
+                    <option value="present">있음</option>
+                    <option value="absent">없음</option>
+                  </select>
+                </label>
+                <label>
+                  시작 시점
+                  <input
+                    value={symptom.onset ?? ""}
+                    placeholder="확인되지 않음"
+                    onChange={(event) => updateSymptom(index, { onset: event.target.value || null })}
+                  />
+                </label>
+                <label>
+                  정도
+                  <input
+                    value={symptom.severity ?? ""}
+                    placeholder="확인되지 않음"
+                    onChange={(event) => updateSymptom(index, { severity: event.target.value || null })}
+                  />
+                </label>
+                <p className="source-text">원문 근거: “{symptom.source_text}”</p>
+              </div>
+            ))}
+            <p><strong>복용약:</strong> {intake.medications.join(", ") || "확인되지 않음"}</p>
+            <p><strong>알레르기:</strong> {intake.allergies.join(", ") || "확인되지 않음"}</p>
+            <button type="button" onClick={() => setConfirmed(true)}>
+              내용 확인 완료
+            </button>
+            {confirmed && <p className="confirmed">확인했습니다. 아직 서버에 저장하지 않았습니다.</p>}
+          </section>
+        )}
         <p className="privacy-note">
           음성은 글자로 바꾸는 동안만 사용합니다. 결과는 사용자가 확인하기 전까지 환자
           기록에 반영하지 않습니다.

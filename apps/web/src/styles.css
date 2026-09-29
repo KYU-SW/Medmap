@@ -96,6 +96,72 @@ textarea:focus {
   border-color: #247365;
 }
 
+.button--secondary {
+  color: #185a50;
+  border: 1px solid #7eb5aa;
+  background: #e8f4f1;
+}
+
+.intake {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid #d9e4e1;
+}
+
+.intake h2 {
+  margin: 0;
+}
+
+.observation {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #f4f8f7;
+}
+
+.observation label {
+  margin: 0;
+  font-size: 14px;
+}
+
+input,
+select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px;
+  border: 1px solid #b9c9c5;
+  border-radius: 9px;
+  background: white;
+  font: inherit;
+}
+
+.source-text {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #52605d;
+  font-size: 13px;
+}
+
+.confirmed {
+  padding: 12px;
+  border-radius: 10px;
+  color: #185a50;
+  background: #e8f4f1;
+}
+
+@media (max-width: 520px) {
+  .card {
+    padding: 24px 18px;
+  }
+
+  .observation {
+    grid-template-columns: 1fr;
+  }
+}
+
 .privacy-note {
   margin: 14px 0 0;
   color: #52605d;
