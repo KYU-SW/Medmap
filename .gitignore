@@ -18,5 +18,19 @@ __pycache__/
 /checkpoints/
 /runs/
 
+# Node / frontend build
+node_modules/
+dist/
+coverage/
+
+# Local media used for STT development
+/tests/fixtures/audio/private/
+*.wav
+*.webm
+*.m4a
+*.mp3
+!tests/fixtures/audio/README.md
+
 # 컴퓨터별 절대 경로와 파일 크기 목록
 /LOCAL_FILE_INVENTORY.json
+/LOCAL_GIT_AUTH_STATUS.json

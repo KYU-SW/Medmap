@@ -1,0 +1,50 @@
+:root {
+  font-family: Pretendard, "Noto Sans KR", system-ui, sans-serif;
+  color: #17202a;
+  background: #f4f8f7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.card {
+  width: min(100%, 560px);
+  padding: 36px;
+  border: 1px solid #d9e4e1;
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 18px 48px rgb(32 72 64 / 10%);
+}
+
+.eyebrow {
+  color: #247365;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 8px 0 16px;
+  font-size: clamp(28px, 6vw, 42px);
+  line-height: 1.2;
+}
+
+button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 700;
+}

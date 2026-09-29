@@ -1,4 +1,11 @@
-# MedMap: DDXPlus 첫 분석
+# MedMap
+
+MedMap은 환자가 제공한 증상과 시간에 따른 변화를 연결하고, 현재 진단과 중요한 정보 사이의 불일치를 다시 확인하도록 돕는 진단 안전망 프로젝트다.
+
+새 애플리케이션 구조는 [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md), STT 1차 기능 범위는 [docs/STT_SPEC.md](docs/STT_SPEC.md)를 참고한다.
+현재 애플리케이션 재구축은 `feature/stt-rebuild` 브랜치에서 시작한다.
+
+## DDXPlus 첫 분석
 
 사용자가 제공한 프로젝트 기준안은 PROJECT_BRIEF.txt에 보존했다. 현재 범위는 데이터 확보·구조 확인·통계·부분 관찰 설계다.
 
