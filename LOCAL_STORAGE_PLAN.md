@@ -12,6 +12,7 @@
 |Python 환경|`apps/api/.venv/`|아니오|`scripts/setup_api.ps1`|
 |Frontend 패키지|`apps/web/node_modules/`|아니오|추후 lockfile 기준 설치|
 |Whisper 모델|`local-cache/huggingface/`|아니오|첫 모델 실행 시 재다운로드|
+|모바일 시험용 인증서|`local-cache/mobile-https/`|아니오|`scripts/setup_mobile_https.ps1`|
 |pip 캐시|`local-cache/pip/`|아니오|패키지 설치 시 재생성|
 |pnpm 캐시|`local-cache/pnpm-store/`|아니오|lockfile 기준 재생성|
 |실험 결과|`runs/`|선별|재현 코드 또는 최종 결과 보존|
