@@ -159,3 +159,29 @@ def test_warns_when_medical_expression_is_not_supported() -> None:
     result = extract("어제부터 허리가 아프고 어지러워요")
     assert result["symptoms"] == []
     assert result["unrecognized_fragments"] == ["어제부터 허리가 아프고 어지러워요"]
+
+
+def test_repeated_intensity_words_do_not_hide_symptoms() -> None:
+    phrases = [
+        "머리가 너무 너무 아파요",
+        "머리가 너무너무 아파요",
+        "머리가 많이 많이 아파요",
+        "머리가 아주 많이 아파요",
+    ]
+    for phrase in phrases:
+        result = extract(phrase)
+        assert result["symptoms"][0]["name"] == "두통", phrase
+        assert result["symptoms"][0]["severity"] == "심함", phrase
+
+
+def test_full_repeated_intensity_regression_sentence() -> None:
+    result = extract(
+        "머리가 너무 너무 아프고 배도 이틀 전부터 아팠어요 "
+        "그리고 사흘 전에는 구토도 했어요"
+    )
+    assert [item["name"] for item in result["symptoms"]] == [
+        "두통", "복통", "구토"
+    ]
+    assert result["symptoms"][0]["onset"] is None
+    assert result["symptoms"][1]["onset"] == "2일 전부터"
+    assert result["symptoms"][2]["onset"] == "3일 전"

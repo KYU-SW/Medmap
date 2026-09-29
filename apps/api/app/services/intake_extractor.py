@@ -12,7 +12,8 @@ class SymptomRule:
     body_site: str | None = None
 
 
-INTENSITY_WORD = r"(?:매우|너무|많이|조금|약간|심하게)"
+INTENSITY_WORD = r"(?:아주|매우|너무|많이|조금|약간|심하게)"
+INTENSITY_PHRASE = rf"(?:{INTENSITY_WORD}\s*)*"
 INLINE_ONSET = (
     r"(?:(?:오늘|어제|그제|그저께|엊그제)(?:부터)?|"
     r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘)"
@@ -26,7 +27,7 @@ RULES = (
     SymptomRule(
         "두통",
         re.compile(
-            rf"두통|머리(?:가|는|도)?\s*(?:{INTENSITY_WORD}\s*)?(?:아프|아파|아팠|지끈|욱신)"
+            rf"두통|머리(?:가|는|도)?\s*{INTENSITY_PHRASE}(?:아프|아파|아팠|지끈|욱신)"
         ),
         re.compile(r"두통(?:은|이|도)?\s*(?:없|아니)|머리(?:가|는|도)?\s*(?:안\s*(?:아프|아파)|아프지\s*않)"),
         "머리",
@@ -56,7 +57,7 @@ RULES = (
         "복통",
         re.compile(
             rf"(?:배|복부)(?:가|는|도)?\s*(?:{INLINE_ONSET}\s*)?"
-            rf"(?:{INTENSITY_WORD}\s*)?(?:아프|아파|아팠)|복통"
+            rf"{INTENSITY_PHRASE}(?:아프|아파|아팠)|복통"
         ),
         re.compile(r"(?:배|복부)(?:가|는|도)?\s*(?:안\s*아프|아프지\s*않)|복통(?:은|이)?\s*없"),
         "복부",
@@ -79,7 +80,7 @@ ONSET_PATTERN = re.compile(
 )
 SEVERITY_PATTERN = re.compile(
     r"매우\s*심(?:해|하|했)|너무\s*심(?:해|하|했)|심(?:해|하|했)|"
-    r"매우|너무|많이|조금|약간"
+    r"아주|매우|너무|많이|조금|약간"
 )
 MEDICATION_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20}\s*(?:약|제))"
@@ -103,7 +104,7 @@ def _severity(text: str) -> str | None:
     value = match.group(0)
     return (
         "심함"
-        if "심" in value or "너무" in value or "많이" in value or "매우" in value
+        if "심" in value or "너무" in value or "많이" in value or "매우" in value or "아주" in value
         else "경미함"
     )
 
@@ -190,13 +191,7 @@ def _onset_for_symptom(text: str, start: int, end: int) -> str | None:
     if preceding:
         return preceding[-1].group(0)
 
-    following = [
-        match for match in ONSET_PATTERN.finditer(text)
-        if match.start() >= end
-        and match.start() - end <= 12
-        and not boundary_pattern.search(text[end:match.start()])
-    ]
-    return following[0].group(0) if following else None
+    return None
 
 
 def extract_intake(text: str) -> IntakeExtractionResponse:
