@@ -5,6 +5,7 @@ from pathlib import Path
 from threading import Lock
 from time import perf_counter
 from typing import Protocol
+import wave
 
 
 @dataclass(frozen=True)
@@ -12,6 +13,7 @@ class Transcription:
     text: str
     language: str = "ko"
     duration_seconds: float | None = None
+    processing_seconds: float | None = None
 
 
 class SpeechToTextService(Protocol):
@@ -97,13 +99,33 @@ class FasterWhisperService:
             raise NoSpeechDetectedError("말소리를 찾지 못했습니다. 다시 녹음해 주세요.")
 
         duration = getattr(info, "duration", None)
-        _elapsed_seconds = perf_counter() - started_at
-        # Do not log audio or transcript. Timing metrics can be added separately.
+        elapsed_seconds = perf_counter() - started_at
         return Transcription(
             text=text,
             language=getattr(info, "language", "ko") or "ko",
             duration_seconds=float(duration) if duration is not None else None,
+            processing_seconds=elapsed_seconds,
         )
+
+    def warm_up(self) -> None:
+        """Load the model and run one private, in-memory silent inference."""
+        audio = BytesIO()
+        with wave.open(audio, "wb") as wav:
+            wav.setnchannels(1)
+            wav.setsampwidth(2)
+            wav.setframerate(16000)
+            wav.writeframes(b"\x00\x00" * 16000)
+        audio.seek(0)
+
+        segments, _ = self._get_model().transcribe(
+            audio,
+            language="ko",
+            task="transcribe",
+            beam_size=1,
+            vad_filter=False,
+            condition_on_previous_text=False,
+        )
+        list(segments)
 
 
 _service: FasterWhisperService | None = None

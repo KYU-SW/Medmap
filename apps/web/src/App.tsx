@@ -90,7 +90,11 @@ export default function App() {
 
       setTranscript(data.transcript);
       setStatus("done");
-      setMessage("변환 결과를 확인하고 틀린 부분을 직접 수정해 주세요.");
+      const processingTime = Number(data.processing_seconds);
+      const timing = Number.isFinite(processingTime)
+        ? ` 변환 시간은 ${processingTime.toFixed(2)}초입니다.`
+        : "";
+      setMessage(`변환 결과를 확인하고 틀린 부분을 직접 수정해 주세요.${timing}`);
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "음성 변환에 실패했습니다.");

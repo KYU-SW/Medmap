@@ -67,4 +67,5 @@ async def transcribe(file: UploadFile = File(...)) -> TranscriptionResponse:
         transcript=result.text,
         language=result.language,
         duration_seconds=result.duration_seconds,
+        processing_seconds=result.processing_seconds,
     )

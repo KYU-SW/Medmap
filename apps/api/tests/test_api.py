@@ -37,6 +37,7 @@ def test_accepts_webm_type_with_codec_parameter(monkeypatch) -> None:
         text: str = "머리가 아파요."
         language: str = "ko"
         duration_seconds: float = 1.0
+        processing_seconds: float = 0.2
 
     class FakeService:
         def transcribe(self, audio: bytes, content_type: str) -> Result:
@@ -58,6 +59,7 @@ def test_returns_transcript_from_service(monkeypatch) -> None:
         text: str = "어제부터 머리가 아파요."
         language: str = "ko"
         duration_seconds: float = 2.5
+        processing_seconds: float = 0.4
 
     class FakeService:
         def transcribe(self, audio: bytes, content_type: str) -> Result:
@@ -76,4 +78,5 @@ def test_returns_transcript_from_service(monkeypatch) -> None:
         "transcript": "어제부터 머리가 아파요.",
         "language": "ko",
         "duration_seconds": 2.5,
+        "processing_seconds": 0.4,
     }
