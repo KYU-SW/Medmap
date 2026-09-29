@@ -57,14 +57,17 @@ RULES = (
 
 ONSET_PATTERN = re.compile(
     r"(?:오늘|어제|그제|방금|아침|점심|저녁|밤|새벽)(?:부터)?|"
-    r"\d+\s*(?:시간|일|주|개월|달)\s*(?:전부터|전|동안|째)"
+    r"(?:\d+|하루|이틀|사흘|나흘|닷새|일|이|삼|사|오|육|칠|팔|구|십)\s*"
+    r"(?:시간|일|주|개월|달)\s*(?:전부터|전|동안|째)"
 )
 SEVERITY_PATTERN = re.compile(r"매우\s*심(?:해|하)|너무\s*심(?:해|하)|심(?:해|하)|조금|약간")
 MEDICATION_PATTERN = re.compile(
-    r"([가-힣A-Za-z0-9-]{2,20}(?:약|제))(?:을|를|도|은|는)?\s*(?:먹|복용)"
+    r"([가-힣A-Za-z0-9-]{2,20}\s*(?:약|제))"
+    r"(?:을|를|도|은|는)?\s*(?:먹|복용)"
 )
 ALLERGY_PATTERN = re.compile(
-    r"([가-힣A-Za-z0-9-]{2,20})\s*알레르기(?!약)"
+    r"([가-힣A-Za-z0-9-]{2,20})\s*알레르기(?!\s*약)"
+    r"(?:가|는|도)?\s*(?:있|있어|있습니다|예요|입니다|반응)"
 )
 
 
@@ -133,7 +136,10 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
             )
         )
 
-    medications = list(dict.fromkeys(MEDICATION_PATTERN.findall(normalized)))
+    medications = [
+        re.sub(r"\s+", "", value)
+        for value in dict.fromkeys(MEDICATION_PATTERN.findall(normalized))
+    ]
     allergies = list(dict.fromkeys(ALLERGY_PATTERN.findall(normalized)))
     return IntakeExtractionResponse(
         symptoms=symptoms,

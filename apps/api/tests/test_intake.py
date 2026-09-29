@@ -60,3 +60,16 @@ def test_links_nearest_time_and_severity_to_each_symptom() -> None:
     assert result["symptoms"][0]["severity"] == "경미함"
     assert result["symptoms"][1]["onset"] == "3일 전부터"
     assert result["symptoms"][1]["severity"] == "심함"
+
+
+def test_spoken_korean_time_and_spaced_allergy_medicine() -> None:
+    result = extract(
+        "어제부터 머리가 조금 아프고 삼일 전부터 기침이 심해요 "
+        "추가로 알레르기 약도 복용하고 있어요"
+    )
+    assert result["symptoms"][0]["onset"] == "어제부터"
+    assert result["symptoms"][0]["severity"] == "경미함"
+    assert result["symptoms"][1]["onset"] == "삼일 전부터"
+    assert result["symptoms"][1]["severity"] == "심함"
+    assert result["medications"] == ["알레르기약"]
+    assert result["allergies"] == []
