@@ -12,11 +12,14 @@ class SymptomRule:
     body_site: str | None = None
 
 
+INTENSITY_WORD = r"(?:매우|너무|많이|조금|약간|심하게)"
+
+
 RULES = (
     SymptomRule(
         "두통",
         re.compile(
-            r"두통|머리(?:가|는|도)?\s*(?:(?:매우|너무|조금|약간|심하게)\s*)?(?:아프|지끈|욱신)"
+            rf"두통|머리(?:가|는|도)?\s*(?:{INTENSITY_WORD}\s*)?(?:아프|아파|지끈|욱신)"
         ),
         re.compile(r"두통(?:은|이|도)?\s*(?:없|아니)|머리(?:가|는|도)?\s*(?:안\s*아프|아프지\s*않)"),
         "머리",
@@ -44,7 +47,9 @@ RULES = (
     ),
     SymptomRule(
         "복통",
-        re.compile(r"(?:배|복부)(?:가|는|도)?\s*아프|복통"),
+        re.compile(
+            rf"(?:배|복부)(?:가|는|도)?\s*(?:{INTENSITY_WORD}\s*)?(?:아프|아파)|복통"
+        ),
         re.compile(r"(?:배|복부)(?:가|는|도)?\s*(?:안\s*아프|아프지\s*않)|복통(?:은|이)?\s*없"),
         "복부",
     ),
@@ -60,7 +65,9 @@ ONSET_PATTERN = re.compile(
     r"(?:\d+|하루|이틀|사흘|나흘|닷새|일|이|삼|사|오|육|칠|팔|구|십)\s*"
     r"(?:시간|일|주|개월|달)\s*(?:전부터|전|동안|째)"
 )
-SEVERITY_PATTERN = re.compile(r"매우\s*심(?:해|하)|너무\s*심(?:해|하)|심(?:해|하)|조금|약간")
+SEVERITY_PATTERN = re.compile(
+    r"매우\s*심(?:해|하|했)|너무\s*심(?:해|하|했)|심(?:해|하|했)|많이|조금|약간"
+)
 MEDICATION_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20}\s*(?:약|제))"
     r"(?:을|를|도|은|는)?\s*(?:먹|복용)"
@@ -76,7 +83,25 @@ def _severity(text: str) -> str | None:
     if not match:
         return None
     value = match.group(0)
-    return "심함" if "심" in value or "너무" in value else "경미함"
+    return "심함" if "심" in value or "너무" in value or "많이" in value else "경미함"
+
+
+def _normalize_onset(value: str | None) -> str | None:
+    if value is None:
+        return None
+    number_words = {
+        "하루": "1", "일": "1", "이틀": "2", "이": "2", "사흘": "3", "삼": "3",
+        "나흘": "4", "사": "4", "닷새": "5", "오": "5", "육": "6", "칠": "7",
+        "팔": "8", "구": "9", "십": "10",
+    }
+    match = re.fullmatch(
+        r"(하루|이틀|사흘|나흘|닷새|일|이|삼|사|오|육|칠|팔|구|십)\s*"
+        r"(시간|일|주|개월|달)\s*(전부터|전|동안|째)",
+        value,
+    )
+    if not match:
+        return value
+    return f"{number_words[match.group(1)]}{match.group(2)} {match.group(3)}"
 
 
 def _nearest_value(
@@ -96,16 +121,21 @@ def _nearest_value(
 
 
 def _onset_for_symptom(text: str, start: int, end: int) -> str | None:
+    boundary_pattern = re.compile(r"(?:추가로|그리고|하지만|그러나|또한)")
     preceding = [
         match for match in ONSET_PATTERN.finditer(text)
-        if match.end() <= start and start - match.end() <= 24
+        if match.end() <= start
+        and start - match.end() <= 24
+        and not boundary_pattern.search(text[match.end():start])
     ]
     if preceding:
         return preceding[-1].group(0)
 
     following = [
         match for match in ONSET_PATTERN.finditer(text)
-        if match.start() >= end and match.start() - end <= 12
+        if match.start() >= end
+        and match.start() - end <= 12
+        and not boundary_pattern.search(text[end:match.start()])
     ]
     return following[0].group(0) if following else None
 
@@ -120,7 +150,9 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
             continue
         evidence = absent or mention
         assert evidence is not None
-        onset = _onset_for_symptom(normalized, evidence.start(), evidence.end())
+        onset = _normalize_onset(
+            _onset_for_symptom(normalized, evidence.start(), evidence.end())
+        )
         severity_text = _nearest_value(
             SEVERITY_PATTERN, normalized, evidence.start(), evidence.end(), max_gap=12
         )

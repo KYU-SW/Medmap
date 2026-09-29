@@ -69,7 +69,21 @@ def test_spoken_korean_time_and_spaced_allergy_medicine() -> None:
     )
     assert result["symptoms"][0]["onset"] == "어제부터"
     assert result["symptoms"][0]["severity"] == "경미함"
-    assert result["symptoms"][1]["onset"] == "삼일 전부터"
+    assert result["symptoms"][1]["onset"] == "3일 전부터"
     assert result["symptoms"][1]["severity"] == "심함"
     assert result["medications"] == ["알레르기약"]
     assert result["allergies"] == []
+
+
+def test_keeps_all_symptoms_when_intensity_is_inside_expression() -> None:
+    result = extract(
+        "어제부터 머리가 조금 아프고 이 일 전부터 기침이 심했어요 "
+        "추가로 배도 많이 아파요"
+    )
+    assert [item["name"] for item in result["symptoms"]] == [
+        "두통", "기침", "복통"
+    ]
+    assert result["symptoms"][1]["onset"] == "2일 전부터"
+    assert result["symptoms"][1]["severity"] == "심함"
+    assert result["symptoms"][2]["severity"] == "심함"
+    assert result["symptoms"][2]["onset"] is None
