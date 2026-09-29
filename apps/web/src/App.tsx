@@ -15,6 +15,7 @@ type IntakeResult = {
   symptoms: SymptomObservation[];
   medications: string[];
   allergies: string[];
+  unrecognized_fragments: string[];
   needs_user_confirmation: boolean;
 };
 
@@ -245,6 +246,15 @@ export default function App() {
             ))}
             <p><strong>복용약:</strong> {intake.medications.join(", ") || "확인되지 않음"}</p>
             <p><strong>알레르기:</strong> {intake.allergies.join(", ") || "확인되지 않음"}</p>
+            {intake.unrecognized_fragments.length > 0 && (
+              <div className="review-warning" role="alert">
+                <strong>자동으로 정리하지 못한 표현</strong>
+                {intake.unrecognized_fragments.map((fragment, index) => (
+                  <p key={`${fragment}-${index}`}>“{fragment}”</p>
+                ))}
+                <p>원문을 확인하고 필요한 내용을 직접 추가해 주세요.</p>
+              </div>
+            )}
             <button type="button" onClick={() => setConfirmed(true)}>
               내용 확인 완료
             </button>

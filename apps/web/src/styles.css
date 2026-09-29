@@ -152,6 +152,19 @@ select {
   background: #e8f4f1;
 }
 
+.review-warning {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid #d89b42;
+  border-radius: 10px;
+  color: #704708;
+  background: #fff7e8;
+}
+
+.review-warning p {
+  margin: 8px 0 0;
+}
+
 @media (max-width: 520px) {
   .card {
     padding: 24px 18px;

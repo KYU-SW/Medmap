@@ -20,5 +20,5 @@ class IntakeExtractionResponse(BaseModel):
     symptoms: list[SymptomObservation]
     medications: list[str]
     allergies: list[str]
+    unrecognized_fragments: list[str] = Field(default_factory=list)
     needs_user_confirmation: bool = True
-

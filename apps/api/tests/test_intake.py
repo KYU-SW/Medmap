@@ -101,9 +101,61 @@ def test_common_korean_day_expressions() -> None:
         "2일 전": "2일 전",
         "2일 전부터": "2일 전부터",
         "삼일 전부터": "3일 전부터",
-        "사흘째": "3일 째",
+        "사흘째": "3일째",
         "일주일 전부터": "1주 전부터",
     }
     for spoken, expected in cases.items():
         result = extract(f"{spoken} 머리가 아파요")
         assert result["symptoms"][0]["onset"] == expected, spoken
+
+
+def test_onset_between_body_site_and_pain_is_preserved() -> None:
+    result = extract(
+        "어제부터 머리가 너무 아프고 배는 이틀 전부터 아팠어요 "
+        "그리고 사흘째 되는 날에 구토를 하기 시작했어요"
+    )
+    assert [item["name"] for item in result["symptoms"]] == [
+        "두통", "복통", "구토"
+    ]
+    assert result["symptoms"][0]["severity"] == "심함"
+    assert result["symptoms"][1]["onset"] == "2일 전부터"
+    assert result["symptoms"][2]["onset"] == "3일째"
+
+
+def test_common_variants_for_every_supported_symptom() -> None:
+    variants = {
+        "두통": ["머리가 아파요", "머리가 아팠어요", "두통이 있어요", "머리가 욱신거려요"],
+        "발열": ["열이 나요", "열이 났어요", "발열이 있어요", "고열이 있어요"],
+        "기침": ["기침이 나요", "기침을 해요", "기침이 심했어요", "계속 기침해요"],
+        "호흡곤란": ["숨이 차요", "숨쉬기가 힘들어요", "숨을 쉬기가 어려워요", "호흡곤란이 있어요"],
+        "가슴 답답함": ["가슴이 답답해요", "가슴이 조여요", "가슴이 눌리는 느낌이에요", "흉부 압박이 있어요"],
+        "복통": ["배가 아파요", "배는 아팠어요", "복부가 많이 아파요", "복통이 있어요"],
+        "구토": ["구토했어요", "토를 했어요", "토해요", "구토가 있어요"],
+    }
+    for expected, phrases in variants.items():
+        for phrase in phrases:
+            result = extract(phrase)
+            assert result["symptoms"], phrase
+            assert result["symptoms"][0]["name"] == expected, phrase
+
+
+def test_common_negative_variants() -> None:
+    cases = {
+        "머리는 안 아파요": "두통",
+        "열은 없어요": "발열",
+        "기침은 안 해요": "기침",
+        "숨은 안 차요": "호흡곤란",
+        "가슴이 답답하지 않아요": "가슴 답답함",
+        "배는 아프지 않아요": "복통",
+        "구토는 없어요": "구토",
+    }
+    for phrase, expected in cases.items():
+        result = extract(phrase)
+        assert result["symptoms"][0]["name"] == expected, phrase
+        assert result["symptoms"][0]["status"] == "absent", phrase
+
+
+def test_warns_when_medical_expression_is_not_supported() -> None:
+    result = extract("어제부터 허리가 아프고 어지러워요")
+    assert result["symptoms"] == []
+    assert result["unrecognized_fragments"] == ["어제부터 허리가 아프고 어지러워요"]

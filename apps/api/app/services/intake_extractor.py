@@ -13,49 +13,57 @@ class SymptomRule:
 
 
 INTENSITY_WORD = r"(?:매우|너무|많이|조금|약간|심하게)"
+INLINE_ONSET = (
+    r"(?:(?:오늘|어제|그제|그저께|엊그제)(?:부터)?|"
+    r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘)"
+    r"(?:\s*(?:전부터|전|동안|째))?|"
+    r"(?:\d+|일|이|삼|사|오|육|칠|팔|구|십)\s*"
+    r"(?:시간|일|주|개월|달)(?:\s*(?:전부터|전|동안|째))?)"
+)
 
 
 RULES = (
     SymptomRule(
         "두통",
         re.compile(
-            rf"두통|머리(?:가|는|도)?\s*(?:{INTENSITY_WORD}\s*)?(?:아프|아파|지끈|욱신)"
+            rf"두통|머리(?:가|는|도)?\s*(?:{INTENSITY_WORD}\s*)?(?:아프|아파|아팠|지끈|욱신)"
         ),
-        re.compile(r"두통(?:은|이|도)?\s*(?:없|아니)|머리(?:가|는|도)?\s*(?:안\s*아프|아프지\s*않)"),
+        re.compile(r"두통(?:은|이|도)?\s*(?:없|아니)|머리(?:가|는|도)?\s*(?:안\s*(?:아프|아파)|아프지\s*않)"),
         "머리",
     ),
     SymptomRule(
         "발열",
-        re.compile(r"발열|열(?:이|은|도|이s*나)?"),
-        re.compile(r"(?:발열|열)(?:은|이|도)?\s*(?:없|안\s*나|나지\s*않)"),
+        re.compile(r"고열|발열|열(?:이|은|도)?\s*(?:나|났|오르|있)?"),
+        re.compile(r"(?:고열|발열|열)(?:은|이|도)?\s*(?:없|안\s*나|나지\s*않)"),
     ),
     SymptomRule(
         "기침",
-        re.compile(r"기침"),
-        re.compile(r"기침(?:은|이|도)?\s*(?:없|안\s*나|나지\s*않)"),
+        re.compile(r"기침(?:이|을|은|도)?\s*(?:나|났|해|했|하|심하|심했|계속)?"),
+        re.compile(r"기침(?:은|이|도)?\s*(?:없|안\s*(?:나|해|하)|나지\s*않|하지\s*않)"),
     ),
     SymptomRule(
         "호흡곤란",
-        re.compile(r"숨(?:쉬기가|을\s*쉬기가)?\s*(?:차|힘들|어렵)|호흡곤란"),
+        re.compile(r"숨(?:이|은)?\s*차|숨(?:을)?\s*쉬기가\s*(?:힘들|어렵|어려)|호흡곤란"),
         re.compile(r"숨(?:은|이)?\s*(?:안\s*차|차지\s*않)|호흡곤란(?:은|이)?\s*없"),
     ),
     SymptomRule(
         "가슴 답답함",
-        re.compile(r"가슴(?:이|은)?\s*답답"),
+        re.compile(r"가슴(?:이|은)?\s*(?:답답|조이|조여|눌리)|흉부(?:가|는)?\s*(?:답답|압박)"),
         re.compile(r"가슴(?:이|은)?\s*(?:안\s*답답|답답하지\s*않)"),
         "가슴",
     ),
     SymptomRule(
         "복통",
         re.compile(
-            rf"(?:배|복부)(?:가|는|도)?\s*(?:{INTENSITY_WORD}\s*)?(?:아프|아파)|복통"
+            rf"(?:배|복부)(?:가|는|도)?\s*(?:{INLINE_ONSET}\s*)?"
+            rf"(?:{INTENSITY_WORD}\s*)?(?:아프|아파|아팠)|복통"
         ),
         re.compile(r"(?:배|복부)(?:가|는|도)?\s*(?:안\s*아프|아프지\s*않)|복통(?:은|이)?\s*없"),
         "복부",
     ),
     SymptomRule(
         "구토",
-        re.compile(r"구토|토(?:를|가)?\s*(?:했|해|하)"),
+        re.compile(r"구토|토(?:를|가)?\s*(?:했|해|하|했었)"),
         re.compile(r"구토(?:는|가|도)?\s*없|토(?:는|를)?\s*(?:안\s*했|하지\s*않)"),
     ),
 )
@@ -70,7 +78,8 @@ ONSET_PATTERN = re.compile(
     r"(?:시간|일|주|개월|달)(?:\s*(?:전부터|전|동안|째))?"
 )
 SEVERITY_PATTERN = re.compile(
-    r"매우\s*심(?:해|하|했)|너무\s*심(?:해|하|했)|심(?:해|하|했)|많이|조금|약간"
+    r"매우\s*심(?:해|하|했)|너무\s*심(?:해|하|했)|심(?:해|하|했)|"
+    r"매우|너무|많이|조금|약간"
 )
 MEDICATION_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20}\s*(?:약|제))"
@@ -80,6 +89,11 @@ ALLERGY_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20})\s*알레르기(?!\s*약)"
     r"(?:가|는|도)?\s*(?:있|있어|있습니다|예요|입니다|반응)"
 )
+MEDICAL_SIGNAL_PATTERN = re.compile(
+    r"아프|통증|열|기침|숨|호흡|답답|구토|토했|어지|설사|메스꺼|오한|"
+    r"콧물|발진|붓|저리|마비|출혈|두근|약|알레르기"
+)
+CLAUSE_SPLIT_PATTERN = re.compile(r"[.!?。]|(?:\s+)(?:그리고|추가로|하지만|그러나|또한)(?:\s+)")
 
 
 def _severity(text: str) -> str | None:
@@ -87,7 +101,11 @@ def _severity(text: str) -> str | None:
     if not match:
         return None
     value = match.group(0)
-    return "심함" if "심" in value or "너무" in value or "많이" in value else "경미함"
+    return (
+        "심함"
+        if "심" in value or "너무" in value or "많이" in value or "매우" in value
+        else "경미함"
+    )
 
 
 def _normalize_onset(value: str | None) -> str | None:
@@ -105,7 +123,8 @@ def _normalize_onset(value: str | None) -> str | None:
     )
     if native_match:
         suffix = native_match.group(2)
-        return native_days[native_match.group(1)] + (f" {suffix}" if suffix else "")
+        separator = "" if suffix == "째" else " "
+        return native_days[native_match.group(1)] + (f"{separator}{suffix}" if suffix else "")
 
     calendar_words = {
         "일주일": "1주", "한주": "1주", "두주": "2주", "한달": "1달", "두달": "2달"
@@ -117,7 +136,8 @@ def _normalize_onset(value: str | None) -> str | None:
     if calendar_match:
         key = re.sub(r"\s+", "", calendar_match.group(1))
         suffix = calendar_match.group(2)
-        return calendar_words[key] + (f" {suffix}" if suffix else "")
+        separator = "" if suffix == "째" else " "
+        return calendar_words[key] + (f"{separator}{suffix}" if suffix else "")
 
     number_words = {
         "일": "1", "이": "2", "삼": "3", "사": "4", "오": "5", "육": "6",
@@ -132,7 +152,8 @@ def _normalize_onset(value: str | None) -> str | None:
         return value
     number = number_words.get(match.group(1), match.group(1))
     suffix = match.group(3)
-    return f"{number}{match.group(2)}" + (f" {suffix}" if suffix else "")
+    separator = "" if suffix == "째" else " "
+    return f"{number}{match.group(2)}" + (f"{separator}{suffix}" if suffix else "")
 
 
 def _nearest_value(
@@ -153,6 +174,13 @@ def _nearest_value(
 
 def _onset_for_symptom(text: str, start: int, end: int) -> str | None:
     boundary_pattern = re.compile(r"(?:추가로|그리고|하지만|그러나|또한)")
+    overlapping = [
+        match for match in ONSET_PATTERN.finditer(text)
+        if match.start() >= start and match.end() <= end
+    ]
+    if overlapping:
+        return overlapping[0].group(0)
+
     preceding = [
         match for match in ONSET_PATTERN.finditer(text)
         if match.end() <= start
@@ -204,8 +232,20 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
         for value in dict.fromkeys(MEDICATION_PATTERN.findall(normalized))
     ]
     allergies = list(dict.fromkeys(ALLERGY_PATTERN.findall(normalized)))
+    recognized_evidence = [item.source_text for item in symptoms]
+    unrecognized_fragments: list[str] = []
+    for fragment in CLAUSE_SPLIT_PATTERN.split(normalized):
+        fragment = fragment.strip()
+        if not fragment or not MEDICAL_SIGNAL_PATTERN.search(fragment):
+            continue
+        recognized = any(evidence in fragment for evidence in recognized_evidence)
+        recognized = recognized or any(medication in re.sub(r"\s+", "", fragment) for medication in medications)
+        recognized = recognized or any(allergen in fragment for allergen in allergies)
+        if not recognized:
+            unrecognized_fragments.append(fragment)
     return IntakeExtractionResponse(
         symptoms=symptoms,
         medications=medications,
         allergies=allergies,
+        unrecognized_fragments=unrecognized_fragments,
     )
