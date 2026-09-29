@@ -2,9 +2,11 @@ $ErrorActionPreference = 'Stop'
 $medmapRoot = Split-Path -Parent $PSScriptRoot
 $medmapApi = Join-Path $medmapRoot 'apps\api'
 $medmapPython = Join-Path $medmapApi '.venv\Scripts\python.exe'
+$env:MEDMAP_CACHE_DIR = Join-Path $medmapRoot 'local-cache'
+$env:HF_HOME = Join-Path $env:MEDMAP_CACHE_DIR 'huggingface'
 
 if (-not (Test-Path -LiteralPath $medmapPython)) {
-    throw 'apps/api/.venv가 없습니다. API 폴더에서 Python 가상환경과 패키지를 먼저 설치하세요.'
+    throw 'apps/api/.venv is missing. Run scripts/setup_api.ps1 first.'
 }
 
 Push-Location $medmapApi

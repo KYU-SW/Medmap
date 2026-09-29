@@ -15,7 +15,8 @@ train ZIP은 약 141 MB이므로 일반 Git 커밋 대신 재현 가능한 다�
 
 가상환경, 캐시, 인증정보, 대용량 실행 결과는 .gitignore로 제외한다.
 실험 설정, seed, 데이터 버전, 지표와 재생성 코드는 저장소에 남긴다.
-GitHub 저장소: https://github.com/minu2246/MedMap (비공개). 로컬 origin도 이 주소로 설정했다. 초기 파일 업로드는 브라우저를 사용한다. 로컬 Git push/pull 인증은 별도 확인이 필요하다.
+GitHub 저장소: https://github.com/minu2246/MedMap (비공개). 로컬 origin도 이 주소로 설정했다.
+로컬 Git의 fetch, pull, push 인증 확인을 완료했다.
 
 ## 경로 기록
 
@@ -24,6 +25,10 @@ GitHub 저장소: https://github.com/minu2246/MedMap (비공개). 로컬 origin�
 컴퓨터 경로를 담으므로 해당 목록은 로컬 전용이다.
 새 데이터·환경·산출물·외부 저장 위치를 만들 때 이 목록을 갱신한다.
 임시 작업은 현재 채팅의 work/, 사용자에게 전달하는 산출물은 outputs/MedMap/에 둔다.
+
+Whisper 모델과 패키지 캐시는 공용 사용자 캐시 대신 `local-cache/`에 저장한다.
+Python 가상환경은 `apps/api/.venv/`, frontend 패키지는 `apps/web/node_modules/`에 둔다.
+상세 삭제 대상과 복원 방법은 `LOCAL_STORAGE_PLAN.md`에 기록한다.
 
 ## 프로젝트 종료 후 정리
 

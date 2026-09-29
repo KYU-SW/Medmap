@@ -47,4 +47,58 @@ button {
   border-radius: 12px;
   font: inherit;
   font-weight: 700;
+  color: white;
+  background: #247365;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.button--stop {
+  background: #b44343;
+}
+
+.status {
+  min-height: 48px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #eef5f3;
+}
+
+.status--recording,
+.status--error {
+  color: #8b2727;
+  background: #fff0f0;
+}
+
+label {
+  display: block;
+  margin-top: 24px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+  padding: 14px;
+  border: 1px solid #b9c9c5;
+  border-radius: 12px;
+  font: inherit;
+  line-height: 1.6;
+}
+
+textarea:focus {
+  outline: 3px solid rgb(36 115 101 / 20%);
+  border-color: #247365;
+}
+
+.privacy-note {
+  margin: 14px 0 0;
+  color: #52605d;
+  font-size: 14px;
+  line-height: 1.6;
 }

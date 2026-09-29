@@ -55,3 +55,13 @@ file: 녹음 파일
 - 중복 제출 방지
 - Android Chrome 실기기 확인
 - 원본 음성과 transcript 미저장 확인
+
+## 로컬 모델 기본값
+
+- 엔진: `faster-whisper==1.2.1`
+- 모델: `turbo` (`whisper-large-v3-turbo` 계열)
+- 언어: 한국어 고정
+- 첫 실행: CPU `int8`
+- GPU 확인 후: CUDA `float16`
+
+모델은 첫 실행 때 내려받으므로 인터넷 연결과 추가 저장공간이 필요하다.

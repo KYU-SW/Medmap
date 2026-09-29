@@ -5,6 +5,25 @@ MedMap은 환자가 제공한 증상과 시간에 따른 변화를 연결하고,
 새 애플리케이션 구조는 [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md), STT 1차 기능 범위는 [docs/STT_SPEC.md](docs/STT_SPEC.md)를 참고한다.
 현재 애플리케이션 재구축은 `feature/stt-rebuild` 브랜치에서 시작한다.
 
+## STT 실행
+
+처음 한 번 서버 환경을 준비한다.
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup_api.ps1
+```
+
+이후 서버와 웹 화면을 각각 실행한다.
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_api.ps1
+cd .\apps\web
+pnpm dev
+```
+
+브라우저에서 `http://127.0.0.1:5173`을 열고 녹음한다. 모델·패키지·가상환경은
+저장소 안의 Git 제외 폴더에 모이며, 위치와 정리 순서는 `LOCAL_STORAGE_PLAN.md`에 기록한다.
+
 ## DDXPlus 첫 분석
 
 사용자가 제공한 프로젝트 기준안은 PROJECT_BRIEF.txt에 보존했다. 현재 범위는 데이터 확보·구조 확인·통계·부분 관찰 설계다.
