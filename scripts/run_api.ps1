@@ -29,7 +29,7 @@ if ($nvidiaBins.Count -ge 2) {
 
 Push-Location $medmapApi
 try {
-    & $medmapPython -m uvicorn app.main:app --reload
+    & $medmapPython -m uvicorn app.main:app
 } finally {
     Pop-Location
 }
