@@ -41,3 +41,22 @@ def test_extracts_severity_medication_and_allergy() -> None:
     assert result["symptoms"][0]["severity"] == "경미함"
     assert result["medications"] == ["당뇨약"]
     assert result["allergies"] == ["페니실린"]
+
+
+def test_allergy_medicine_is_not_mistaken_for_an_allergen() -> None:
+    result = extract(
+        "머리가 아프고 복통이 있어요 그리고 알레르기약도 복용했어요"
+    )
+    assert [item["name"] for item in result["symptoms"]] == ["두통", "복통"]
+    assert result["medications"] == ["알레르기약"]
+    assert result["allergies"] == []
+
+
+def test_links_nearest_time_and_severity_to_each_symptom() -> None:
+    result = extract(
+        "어제부터 머리가 조금 아프고 3일 전부터 기침이 심해요."
+    )
+    assert result["symptoms"][0]["onset"] == "어제부터"
+    assert result["symptoms"][0]["severity"] == "경미함"
+    assert result["symptoms"][1]["onset"] == "3일 전부터"
+    assert result["symptoms"][1]["severity"] == "심함"

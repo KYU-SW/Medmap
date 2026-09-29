@@ -15,7 +15,9 @@ class SymptomRule:
 RULES = (
     SymptomRule(
         "두통",
-        re.compile(r"두통|머리(?:가|는|도)?\s*(?:아프|지끈|욱신)"),
+        re.compile(
+            r"두통|머리(?:가|는|도)?\s*(?:(?:매우|너무|조금|약간|심하게)\s*)?(?:아프|지끈|욱신)"
+        ),
         re.compile(r"두통(?:은|이|도)?\s*(?:없|아니)|머리(?:가|는|도)?\s*(?:안\s*아프|아프지\s*않)"),
         "머리",
     ),
@@ -58,8 +60,12 @@ ONSET_PATTERN = re.compile(
     r"\d+\s*(?:시간|일|주|개월|달)\s*(?:전부터|전|동안|째)"
 )
 SEVERITY_PATTERN = re.compile(r"매우\s*심(?:해|하)|너무\s*심(?:해|하)|심(?:해|하)|조금|약간")
-MEDICATION_PATTERN = re.compile(r"([가-힣A-Za-z0-9-]{2,20}(?:약|제))을?\s*(?:먹|복용)")
-ALLERGY_PATTERN = re.compile(r"([가-힣A-Za-z0-9-]{2,20})\s*알레르기")
+MEDICATION_PATTERN = re.compile(
+    r"([가-힣A-Za-z0-9-]{2,20}(?:약|제))(?:을|를|도|은|는)?\s*(?:먹|복용)"
+)
+ALLERGY_PATTERN = re.compile(
+    r"([가-힣A-Za-z0-9-]{2,20})\s*알레르기(?!약)"
+)
 
 
 def _severity(text: str) -> str | None:
@@ -70,12 +76,39 @@ def _severity(text: str) -> str | None:
     return "심함" if "심" in value or "너무" in value else "경미함"
 
 
+def _nearest_value(
+    pattern: re.Pattern[str], text: str, start: int, end: int, max_gap: int = 24
+) -> str | None:
+    candidates: list[tuple[int, str]] = []
+    for match in pattern.finditer(text):
+        if match.end() <= start:
+            gap = start - match.end()
+        elif match.start() >= end:
+            gap = match.start() - end
+        else:
+            gap = 0
+        if gap <= max_gap:
+            candidates.append((gap, match.group(0)))
+    return min(candidates, default=(0, None), key=lambda item: item[0])[1]
+
+
+def _onset_for_symptom(text: str, start: int, end: int) -> str | None:
+    preceding = [
+        match for match in ONSET_PATTERN.finditer(text)
+        if match.end() <= start and start - match.end() <= 24
+    ]
+    if preceding:
+        return preceding[-1].group(0)
+
+    following = [
+        match for match in ONSET_PATTERN.finditer(text)
+        if match.start() >= end and match.start() - end <= 12
+    ]
+    return following[0].group(0) if following else None
+
+
 def extract_intake(text: str) -> IntakeExtractionResponse:
     normalized = " ".join(text.strip().split())
-    onset_match = ONSET_PATTERN.search(normalized)
-    onset = onset_match.group(0) if onset_match else None
-    severity = _severity(normalized)
-
     symptoms: list[SymptomObservation] = []
     for rule in RULES:
         mention = rule.mention.search(normalized)
@@ -84,6 +117,11 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
             continue
         evidence = absent or mention
         assert evidence is not None
+        onset = _onset_for_symptom(normalized, evidence.start(), evidence.end())
+        severity_text = _nearest_value(
+            SEVERITY_PATTERN, normalized, evidence.start(), evidence.end(), max_gap=12
+        )
+        severity = _severity(severity_text or "")
         symptoms.append(
             SymptomObservation(
                 name=rule.name,
@@ -102,4 +140,3 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
         medications=medications,
         allergies=allergies,
     )
-
