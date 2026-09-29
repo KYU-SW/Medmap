@@ -6,6 +6,8 @@ requires-python = ">=3.11,<3.14"
 dependencies = [
   "fastapi>=0.115,<1.0",
   "faster-whisper==1.2.1",
+  "nvidia-cublas-cu12==12.9.2.10; sys_platform == 'win32'",
+  "nvidia-cudnn-cu12==9.26.0.51; sys_platform == 'win32'",
   "python-multipart>=0.0.20,<1.0",
   "uvicorn[standard]>=0.34,<1.0",
 ]

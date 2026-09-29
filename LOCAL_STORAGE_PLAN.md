@@ -47,10 +47,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\storage_report.ps1
 
 |항목|대략적인 용량|
 |---|---:|
-|저장소 전체|2.20 GB|
+|저장소 전체|5.45 GB|
 |DDXPlus 원본|0.17 GB|
-|Python 환경|0.29 GB|
+|Python 환경|2.25 GB|
 |웹 패키지|0.07 GB|
-|Whisper·패키지 캐시|1.67 GB|
+|Whisper·패키지 캐시|2.95 GB|
 
 용량은 실행할 때마다 달라질 수 있으므로 삭제 직전에 `storage_report.ps1`로 다시 확인한다.
+현재 패키지 캐시에는 GPU 라이브러리 설치 파일이 포함되어 있다. 설치 완료 후에는
+`local-cache/pip/`를 삭제해도 실행에 영향이 없으며, 필요하면 다시 받을 수 있다.

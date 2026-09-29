@@ -63,7 +63,10 @@ file: 녹음 파일
 - 엔진: `faster-whisper==1.2.1`
 - 모델: `turbo` (`whisper-large-v3-turbo` 계열)
 - 언어: 한국어 고정
-- 첫 실행: CPU `int8`
-- GPU 확인 후: CUDA `float16`
+- 기본 실행: RTX 4070 Ti SUPER, CUDA `float16`
+- GPU 라이브러리가 없을 때: CPU `int8`
+
+2026-09-29 프로젝트 전용 NVIDIA CUDA 12용 cuBLAS·cuDNN을 설치하고,
+개인정보가 없는 메모리상 무음 데이터로 GPU 추론 성공을 확인했다.
 
 모델은 첫 실행 때 내려받으므로 인터넷 연결과 추가 저장공간이 필요하다.
