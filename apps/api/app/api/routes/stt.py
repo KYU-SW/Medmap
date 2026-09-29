@@ -25,7 +25,8 @@ MAX_AUDIO_BYTES = 25 * 1024 * 1024
 
 @router.post("/transcribe", response_model=TranscriptionResponse)
 async def transcribe(file: UploadFile = File(...)) -> TranscriptionResponse:
-    if file.content_type not in ALLOWED_CONTENT_TYPES:
+    content_type = (file.content_type or "").split(";", 1)[0].strip().lower()
+    if content_type not in ALLOWED_CONTENT_TYPES:
         raise HTTPException(
             status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
             detail="지원하지 않는 음성 형식입니다.",
@@ -49,7 +50,7 @@ async def transcribe(file: UploadFile = File(...)) -> TranscriptionResponse:
         result = await run_in_threadpool(
             get_stt_service().transcribe,
             audio,
-            file.content_type,
+            content_type,
         )
     except NoSpeechDetectedError as exc:
         raise HTTPException(

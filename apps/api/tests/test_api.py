@@ -31,6 +31,27 @@ def test_rejects_empty_audio() -> None:
     assert response.status_code == 422
 
 
+def test_accepts_webm_type_with_codec_parameter(monkeypatch) -> None:
+    @dataclass(frozen=True)
+    class Result:
+        text: str = "머리가 아파요."
+        language: str = "ko"
+        duration_seconds: float = 1.0
+
+    class FakeService:
+        def transcribe(self, audio: bytes, content_type: str) -> Result:
+            assert content_type == "audio/webm"
+            return Result()
+
+    monkeypatch.setattr(stt, "get_stt_service", lambda: FakeService())
+    response = client.post(
+        "/v1/stt/transcribe",
+        files={"file": ("sample.webm", b"fake audio", "audio/webm;codecs=opus")},
+    )
+
+    assert response.status_code == 200
+
+
 def test_returns_transcript_from_service(monkeypatch) -> None:
     @dataclass(frozen=True)
     class Result:
