@@ -21,6 +21,13 @@ cd .\apps\web
 pnpm dev
 ```
 
+원격 데스크톱에서 집 컴퓨터의 브라우저로 시험할 때는 인증서가 필요 없는 데스크톱
+스크립트를 사용한다.
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_web_desktop.ps1
+```
+
 브라우저에서 `http://127.0.0.1:5173`을 열고 녹음한다. 모델·패키지·가상환경은
 저장소 안의 Git 제외 폴더에 모이며, 위치와 정리 순서는 `LOCAL_STORAGE_PLAN.md`에 기록한다.
 Windows에서 프로젝트 전용 NVIDIA 라이브러리가 설치되어 있으면 `run_api.ps1`이 GPU를

@@ -8,7 +8,8 @@ const webDirectory = path.dirname(fileURLToPath(import.meta.url));
 const certificateDirectory = path.resolve(webDirectory, "../../local-cache/mobile-https");
 const certificatePath = path.join(certificateDirectory, "server-cert.pem");
 const keyPath = path.join(certificateDirectory, "server-key.pem");
-const https = existsSync(certificatePath) && existsSync(keyPath)
+const https = process.env.MEDMAP_USE_HTTPS !== "0" &&
+  existsSync(certificatePath) && existsSync(keyPath)
   ? { cert: readFileSync(certificatePath), key: readFileSync(keyPath) }
   : undefined;
 
