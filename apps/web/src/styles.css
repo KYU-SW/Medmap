@@ -186,6 +186,7 @@ select {
   background: #e8f4f1;
 }
 
+.episodes,
 .timeline,
 .records {
   margin-top: 30px;
@@ -193,9 +194,51 @@ select {
   border-top: 1px solid #d9e4e1;
 }
 
+.episodes h2,
 .timeline h2,
 .records h2 {
   margin: 0;
+}
+
+.episode-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.episode {
+  padding: 16px;
+  border: 1px solid #d9e4e1;
+  border-radius: 14px;
+  background: #f8fbfa;
+}
+
+.episode-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.episode-status {
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.episode-status--active {
+  color: #185a50;
+  background: #dcefeb;
+}
+
+.episode-status--resolved {
+  color: #52605d;
+  background: #e8edeb;
+}
+
+.episode p {
+  margin: 8px 0 0;
 }
 
 .timeline-entry {

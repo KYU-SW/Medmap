@@ -6,6 +6,7 @@ import {
   type StoredIntakeRecord,
 } from "./recordStorage";
 import { buildTimeline } from "./timeline";
+import { buildSymptomEpisodes } from "./symptomEpisodes";
 
 type Status = "idle" | "recording" | "transcribing" | "done" | "error";
 
@@ -343,6 +344,7 @@ export default function App() {
 
   const busy = status === "recording" || status === "transcribing";
   const timeline = buildTimeline(records);
+  const symptomEpisodes = buildSymptomEpisodes(records);
 
   return (
     <main className="page">
@@ -461,6 +463,43 @@ export default function App() {
           </section>
         )}
         {recordMessage && <p className="record-message">{recordMessage}</p>}
+        <section className="episodes" aria-label="증상 발생 기간">
+          <h2>증상 발생 기간</h2>
+          <p>같은 증상이 나타난 때부터 사라진 때까지를 하나로 묶습니다.</p>
+          {symptomEpisodes.length === 0 ? (
+            <p className="empty-result">묶어서 표시할 증상 기록이 없습니다.</p>
+          ) : (
+            <div className="episode-list">
+              {symptomEpisodes.map((episode) => (
+                <article className="episode" key={episode.id}>
+                  <div className="episode-heading">
+                    <strong>{episode.name}</strong>
+                    <span className={`episode-status episode-status--${episode.status}`}>
+                      {episode.status === "active" ? "진행 중" : "종료됨"}
+                    </span>
+                  </div>
+                  <p>
+                    첫 기록: {new Intl.DateTimeFormat("ko-KR", {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    }).format(new Date(episode.startedAt))}
+                  </p>
+                  {episode.endedAt && (
+                    <p>
+                      사라짐 기록: {new Intl.DateTimeFormat("ko-KR", {
+                        dateStyle: "medium",
+                        timeStyle: "short",
+                      }).format(new Date(episode.endedAt))}
+                    </p>
+                  )}
+                  <p>말한 시작 시점: {episode.statedOnset || "확인되지 않음"}</p>
+                  <p>가장 심한 정도: {episode.peakSeverity || "확인되지 않음"}</p>
+                  <p>연결된 기록: {episode.recordCount}개</p>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
         <section className="timeline" aria-label="증상 변화 타임라인">
           <h2>증상 변화 타임라인</h2>
           <p>확인하고 저장한 기록만 시간순으로 연결합니다.</p>
