@@ -15,7 +15,7 @@ class SymptomRule:
 INTENSITY_WORD = r"(?:아주|매우|너무|많이|조금|약간|심하게)"
 INTENSITY_PHRASE = rf"(?:{INTENSITY_WORD}\s*)*"
 INLINE_ONSET = (
-    r"(?:어젯밤(?:부터)?|"
+    r"(?<![가-힣A-Za-z0-9])(?:어젯밤(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제)\s*"
     r"(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제)(?:부터)?|"
@@ -30,6 +30,8 @@ RULES = (
     SymptomRule(
         "두통",
         re.compile(
+            rf"머리(?:랑|와|하고)\s*(?:배|복부|속)(?:가|는|도)?\s*"
+            rf"(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}(?:아프|아파|아팠|아픈)|"
             rf"두통|머리(?:가|는|도)?\s*(?:{INLINE_ONSET}\s*)?"
             rf"(?:같이\s*|함께\s*)?{INTENSITY_PHRASE}"
             rf"(?:아프|아파|아팠|아픈|지끈|욱신)"
@@ -67,6 +69,10 @@ RULES = (
     SymptomRule(
         "복통",
         re.compile(
+            rf"머리(?:랑|와|하고)\s*(?:배|복부|속)(?:가|는|도)?\s*"
+            rf"(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}(?:아프|아파|아팠|아픈)|"
+            rf"(?:배|복부|속)(?:랑|과|하고)\s*머리(?:가|는|도)?\s*"
+            rf"(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}(?:아프|아파|아팠|아픈)|"
             rf"(?:배|복부|속)(?:이|가|는|도)?\s*(?:{INLINE_ONSET}\s*)?"
             rf"{INTENSITY_PHRASE}(?:아프|아파|아팠|아픈)|복통"
         ),
@@ -81,7 +87,7 @@ RULES = (
 )
 
 ONSET_PATTERN = re.compile(
-    r"어젯밤(?:부터)?|"
+    r"(?<![가-힣A-Za-z0-9])(?:어젯밤(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제)\s*"
     r"(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제|방금|아침|점심|저녁|밤|새벽)(?:부터)?|"
@@ -90,18 +96,19 @@ ONSET_PATTERN = re.compile(
     r"(?:일주일|한\s*주|두\s*주|한\s*달|두\s*달)"
     r"(?:\s*(?:전부터|전|동안|째))?|"
     r"(?:\d+|일|이|삼|사|오|육|칠|팔|구|십)\s*"
-    r"(?:시간|일|주|개월|달)(?:\s*(?:전부터|전|동안|째))?"
+    r"(?:시간|일|주|개월|달)(?:\s*(?:전부터|전|동안|째))?)"
 )
 SEVERITY_PATTERN = re.compile(
     r"매우\s*심(?:해|하|했)|너무\s*심(?:해|하|했)|심(?:해|하|했)|"
     r"아주|매우|너무|많이|조금|약간"
 )
 PAIN_SCORE_PATTERN = re.compile(
-    r"(?:(?:통증|아픈\s*강도|아픔|강도)(?:를|로)?\s*"
+    r"(?:(?:고통(?:의\s*정도)?|통증|아픈\s*강도|아픈\s*정도|아픔|강도)(?:를|로|는|가)?\s*"
     r"(?:따지면|점수는?|정도는?)?\s*)?"
+    r"(?:한\s*)?"
     r"(?:10\s*점\s*만점(?:에|에서)\s*\d{1,2}\s*점|"
     r"10\s*중(?:에|에서)?\s*\d{1,2}\s*(?:점|정도)?|"
-    r"\d{1,3}\s*점)"
+    r"\d{1,3}\s*(?:점|정도))"
 )
 MEDICATION_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20}\s*(?:약|제))"
@@ -110,6 +117,9 @@ MEDICATION_PATTERN = re.compile(
 MEDICATION_NAME_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{1,20}?\s*(?:약|제))"
     r"(?=(?:과|와|을|를|도|은|는)?(?:\s|$))"
+)
+KNOWN_MEDICATION_PATTERN = re.compile(
+    r"타이레놀|아세트아미노펜|이부프로펜|애드빌|게보린|판피린"
 )
 ALLERGY_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20})\s*알레르기(?!\s*약)"
@@ -296,7 +306,8 @@ def _severity_for_symptom(
         for match in pattern.finditer(text)
     ):
         owner = owner_for(match)
-        if owner != (start, end):
+        owner_overlaps_current = owner[0] < end and owner[1] > start
+        if owner != (start, end) and not owner_overlaps_current:
             continue
         between = (
             text[match.end():start]
@@ -324,6 +335,9 @@ def _extract_medications(text: str) -> list[str]:
             normalized = re.sub(r"\s+", "", value)
             if normalized not in medications:
                 medications.append(normalized)
+        for value in KNOWN_MEDICATION_PATTERN.findall(clause):
+            if value not in medications:
+                medications.append(value)
     return medications
 
 

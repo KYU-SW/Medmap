@@ -136,6 +136,27 @@ def test_numeric_score_stays_with_the_nearest_symptom() -> None:
     assert symptoms["복통"]["severity"] == "90/100점"
 
 
+def test_coordinated_pain_shares_onset_score_and_extracts_named_medicine() -> None:
+    result = extract(
+        "어제 밤부터 머리랑 배가 너무 아팠어요 고통의 정도는 한 10 정도 되는 것 같아요 "
+        "그리고 머리가 아파서 타이레놀 먹었어요"
+    )
+    symptoms = symptoms_by_name(result)
+    assert set(symptoms) == {"두통", "복통"}
+    assert symptoms["두통"]["onset"] == "어제 밤부터"
+    assert symptoms["복통"]["onset"] == "어제 밤부터"
+    assert symptoms["두통"]["severity"] == "10/10점"
+    assert symptoms["복통"]["severity"] == "10/10점"
+    assert result["medications"] == ["타이레놀"]
+    assert all(item["onset"] != "7일" for item in result["symptoms"])
+
+
+def test_medicine_name_does_not_become_native_day_expression() -> None:
+    result = extract("머리가 아파서 타이레놀을 먹었어요")
+    assert result["symptoms"][0]["onset"] is None
+    assert result["medications"] == ["타이레놀"]
+
+
 def test_relative_day_and_time_of_day_are_kept_together() -> None:
     result = extract("어제 밤부터 머리가 아파요")
     assert result["symptoms"][0]["onset"] == "어제 밤부터"
