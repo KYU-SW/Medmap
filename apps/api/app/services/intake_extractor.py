@@ -27,7 +27,8 @@ RULES = (
     SymptomRule(
         "두통",
         re.compile(
-            rf"두통|머리(?:가|는|도)?\s*{INTENSITY_PHRASE}(?:아프|아파|아팠|지끈|욱신)"
+            rf"두통|머리(?:가|는|도)?\s*(?:{INLINE_ONSET}\s*)?"
+            rf"{INTENSITY_PHRASE}(?:아프|아파|아팠|지끈|욱신)"
         ),
         re.compile(r"두통(?:은|이|도)?\s*(?:없|아니)|머리(?:가|는|도)?\s*(?:안\s*(?:아프|아파|아픈)|아프지\s*않)"),
         "머리",

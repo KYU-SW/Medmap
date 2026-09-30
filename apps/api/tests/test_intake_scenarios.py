@@ -52,6 +52,21 @@ def test_category_3_each_symptom_keeps_its_own_onset() -> None:
     assert symptoms["복통"]["onset"] == "오늘 아침부터"
 
 
+def test_onset_between_head_and_pain_keeps_headache_and_severity_separate() -> None:
+    result = extract(
+        "머리가 어제부터 너무 아프고요 배는 3일 전부터 아팠어요 "
+        "그리고 알레르기약도 먹었어요"
+    )
+    symptoms = symptoms_by_name(result)
+    assert set(symptoms) == {"두통", "복통"}
+    assert symptoms["두통"]["onset"] == "어제부터"
+    assert symptoms["두통"]["severity"] == "심함"
+    assert symptoms["복통"]["onset"] == "3일 전부터"
+    assert symptoms["복통"]["severity"] is None
+    assert result["medications"] == ["알레르기약"]
+    assert result["allergies"] == []
+
+
 @pytest.mark.parametrize(
     ("text", "medications", "allergies"),
     [
