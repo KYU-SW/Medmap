@@ -86,6 +86,7 @@ export default function App() {
   const liveIntervalRef = useRef<number | null>(null);
   const liveRequestRef = useRef<AbortController | null>(null);
   const liveRequestRunningRef = useRef(false);
+  const transcriptRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     void listIntakeRecords()
@@ -234,6 +235,14 @@ export default function App() {
     stopMediaTracks();
   }
 
+  function startTextEntry() {
+    setStatus("idle");
+    setIntake(null);
+    setConfirmed(false);
+    setMessage("증상을 직접 입력한 뒤 증상 정보 정리를 눌러 주세요.");
+    window.requestAnimationFrame(() => transcriptRef.current?.focus());
+  }
+
   async function sendRecording(contentType: string) {
     const audio = new Blob(chunksRef.current, { type: contentType });
     chunksRef.current = [];
@@ -341,19 +350,30 @@ export default function App() {
         <p className={`status status--${status}`}>{message}</p>
 
         <div className="controls">
-          {status !== "recording" ? (
-            <button type="button" onClick={startRecording} disabled={busy}>
-              {status === "transcribing" ? "변환 중…" : "녹음 시작"}
-            </button>
-          ) : (
+          {status === "recording" ? (
             <button className="button--stop" type="button" onClick={stopRecording}>
               녹음 종료
             </button>
+          ) : (
+            <>
+              <button type="button" onClick={startRecording} disabled={busy}>
+                {status === "transcribing" ? "변환 중…" : "음성으로 기록"}
+              </button>
+              <button
+                className="button--secondary"
+                type="button"
+                onClick={startTextEntry}
+                disabled={busy}
+              >
+                텍스트로 기록
+              </button>
+            </>
           )}
         </div>
 
         <label htmlFor="transcript">변환된 문장</label>
         <textarea
+          ref={transcriptRef}
           id="transcript"
           value={transcript}
           onChange={(event) => {
