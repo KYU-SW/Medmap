@@ -230,6 +230,34 @@ select {
   line-height: 1.5;
 }
 
+.summary-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.summary-actions button {
+  padding-inline: 10px;
+}
+
+.summary-qr {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.summary-qr img {
+  display: block;
+  width: min(100%, 360px);
+  height: auto;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+.summary-qr p {
+  color: #52605d;
+  font-size: 13px;
+}
+
 .episode-list {
   display: grid;
   gap: 12px;
@@ -357,6 +385,51 @@ select {
 
   .controls {
     grid-template-columns: 1fr;
+  }
+
+  .summary-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  @page {
+    margin: 15mm;
+  }
+
+  body,
+  .page {
+    background: white;
+  }
+
+  .page {
+    display: block;
+    min-height: auto;
+    padding: 0;
+  }
+
+  .card {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .card > * {
+    display: none !important;
+  }
+
+  .card > .visit-summary {
+    display: block !important;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .summary-actions,
+  .summary-qr,
+  .summary-feedback {
+    display: none !important;
   }
 }
 

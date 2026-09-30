@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import QRCode from "qrcode";
 import {
   deleteIntakeRecord,
   listIntakeRecords,
@@ -77,6 +78,7 @@ export default function App() {
   const [savingRecord, setSavingRecord] = useState(false);
   const [recordMessage, setRecordMessage] = useState("");
   const [summaryMessage, setSummaryMessage] = useState("");
+  const [summaryQrCode, setSummaryQrCode] = useState("");
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -101,6 +103,11 @@ export default function App() {
       stopMediaTracks();
     };
   }, []);
+
+  useEffect(() => {
+    setSummaryQrCode("");
+    setSummaryMessage("");
+  }, [records]);
 
   function stopLiveCapture() {
     if (liveIntervalRef.current !== null) {
@@ -359,6 +366,31 @@ export default function App() {
     }
   }
 
+  async function toggleVisitSummaryQr() {
+    if (summaryQrCode) {
+      setSummaryQrCode("");
+      setSummaryMessage("");
+      return;
+    }
+    if (!visitSummary) return;
+    try {
+      const dataUrl = await QRCode.toDataURL(visitSummaryText(visitSummary), {
+        errorCorrectionLevel: "M",
+        margin: 2,
+        width: 360,
+      });
+      setSummaryQrCode(dataUrl);
+      setSummaryMessage("QR을 만들었습니다. 환자 정보가 서버로 전송되지는 않습니다.");
+    } catch {
+      setSummaryMessage("기록이 너무 길어 QR을 만들지 못했습니다. PDF 저장을 이용해 주세요.");
+    }
+  }
+
+  function printVisitSummary() {
+    setSummaryMessage("인쇄 화면에서 대상을 PDF로 저장으로 선택해 주세요.");
+    window.print();
+  }
+
   return (
     <main className="page">
       <section className="card" aria-live="polite">
@@ -512,10 +544,25 @@ export default function App() {
               <p><strong>기록 기간 중 복용약:</strong> {visitSummary.medications.join(", ") || "확인되지 않음"}</p>
               <p><strong>기록된 알레르기:</strong> {visitSummary.allergies.join(", ") || "확인되지 않음"}</p>
               <p className="summary-notice">사용자가 확인한 기록의 요약이며 진단 결과가 아닙니다.</p>
-              <button className="button--secondary" type="button" onClick={() => void copyVisitSummary()}>
-                진료 전 요약 복사
-              </button>
-              {summaryMessage && <p className="confirmed">{summaryMessage}</p>}
+              <div className="summary-actions">
+                <button className="button--secondary" type="button" onClick={() => void copyVisitSummary()}>
+                  요약 복사
+                </button>
+                <button className="button--secondary" type="button" onClick={printVisitSummary}>
+                  PDF로 저장
+                </button>
+                <button className="button--secondary" type="button" onClick={() => void toggleVisitSummaryQr()}>
+                  {summaryQrCode ? "QR 숨기기" : "QR 만들기"}
+                </button>
+              </div>
+              {summaryQrCode && (
+                <div className="summary-qr">
+                  <img src={summaryQrCode} alt="진료 전 증상 요약 QR 코드" />
+                  <p>의사의 카메라로 읽으면 요약 글자가 표시됩니다.</p>
+                  <p>QR을 촬영한 사람은 내용을 읽을 수 있으므로 진료할 때만 보여주세요.</p>
+                </div>
+              )}
+              {summaryMessage && <p className="confirmed summary-feedback">{summaryMessage}</p>}
             </div>
           )}
         </section>
