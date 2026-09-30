@@ -1,4 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import {
+  deleteIntakeRecord,
+  listIntakeRecords,
+  saveIntakeRecord,
+  type StoredIntakeRecord,
+} from "./recordStorage";
 
 type Status = "idle" | "recording" | "transcribing" | "done" | "error";
 
@@ -64,6 +70,9 @@ export default function App() {
   const [intake, setIntake] = useState<IntakeResult | null>(null);
   const [extracting, setExtracting] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
+  const [records, setRecords] = useState<StoredIntakeRecord[]>([]);
+  const [savingRecord, setSavingRecord] = useState(false);
+  const [recordMessage, setRecordMessage] = useState("");
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -79,6 +88,9 @@ export default function App() {
   const liveRequestRunningRef = useRef(false);
 
   useEffect(() => {
+    void listIntakeRecords()
+      .then(setRecords)
+      .catch(() => setRecordMessage("저장된 기록을 불러오지 못했습니다."));
     return () => {
       stopLiveCapture();
       stopMediaTracks();
@@ -286,6 +298,39 @@ export default function App() {
     setConfirmed(false);
   }
 
+  async function confirmAndSave() {
+    if (!intake || !transcript.trim()) return;
+    setSavingRecord(true);
+    setRecordMessage("");
+    const record: StoredIntakeRecord = {
+      id: crypto.randomUUID(),
+      createdAt: new Date().toISOString(),
+      transcript: transcript.trim(),
+      intake,
+    };
+    try {
+      await saveIntakeRecord(record);
+      setRecords((current) => [record, ...current]);
+      setConfirmed(true);
+      setRecordMessage("이 브라우저에 기록을 저장했습니다.");
+    } catch {
+      setConfirmed(false);
+      setRecordMessage("기록을 저장하지 못했습니다. 브라우저 저장 권한을 확인해 주세요.");
+    } finally {
+      setSavingRecord(false);
+    }
+  }
+
+  async function removeRecord(id: string) {
+    try {
+      await deleteIntakeRecord(id);
+      setRecords((current) => current.filter((record) => record.id !== id));
+      setRecordMessage("선택한 테스트 기록을 삭제했습니다.");
+    } catch {
+      setRecordMessage("기록을 삭제하지 못했습니다.");
+    }
+  }
+
   const busy = status === "recording" || status === "transcribing";
 
   return (
@@ -387,15 +432,44 @@ export default function App() {
                 <p>원문을 확인하고 필요한 내용을 직접 추가해 주세요.</p>
               </div>
             )}
-            <button type="button" onClick={() => setConfirmed(true)}>
-              내용 확인 완료
+            <button type="button" onClick={() => void confirmAndSave()} disabled={savingRecord}>
+              {savingRecord ? "저장 중…" : "확인하고 기록 저장"}
             </button>
-            {confirmed && <p className="confirmed">확인했습니다. 아직 서버에 저장하지 않았습니다.</p>}
+            {confirmed && <p className="confirmed">확인한 내용을 현재 브라우저에 저장했습니다.</p>}
           </section>
         )}
+        {recordMessage && <p className="record-message">{recordMessage}</p>}
+        <section className="records" aria-label="저장된 증상 기록">
+          <h2>저장된 증상 기록</h2>
+          <p>이 기기의 현재 브라우저에만 보관됩니다.</p>
+          {records.length === 0 ? (
+            <p className="empty-result">아직 저장된 기록이 없습니다.</p>
+          ) : records.map((record) => (
+            <article className="record" key={record.id}>
+              <time dateTime={record.createdAt}>
+                {new Intl.DateTimeFormat("ko-KR", {
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                }).format(new Date(record.createdAt))}
+              </time>
+              <p>{record.transcript}</p>
+              <p>
+                <strong>증상:</strong>{" "}
+                {record.intake.symptoms.map((symptom) => (
+                  `${symptom.name}(${symptom.status === "present" ? "있음" : "없음"})`
+                )).join(", ") || "확인되지 않음"}
+              </p>
+              <p><strong>복용약:</strong> {record.intake.medications.join(", ") || "확인되지 않음"}</p>
+              <p><strong>알레르기:</strong> {record.intake.allergies.join(", ") || "확인되지 않음"}</p>
+              <button className="button--delete" type="button" onClick={() => void removeRecord(record.id)}>
+                이 기록 삭제
+              </button>
+            </article>
+          ))}
+        </section>
         <p className="privacy-note">
-          음성은 글자로 바꾸는 동안만 사용합니다. 결과는 사용자가 확인하기 전까지 환자
-          기록에 반영하지 않습니다.
+          음성은 글자로 바꾸는 동안만 사용합니다. 확인한 기록은 이 브라우저 안에만
+          저장되며 서버에는 보관하지 않습니다.
         </p>
       </section>
     </main>

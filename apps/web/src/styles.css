@@ -165,6 +165,49 @@ select {
   margin: 8px 0 0;
 }
 
+.record-message {
+  padding: 12px;
+  border-radius: 10px;
+  color: #185a50;
+  background: #e8f4f1;
+}
+
+.records {
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid #d9e4e1;
+}
+
+.records h2 {
+  margin: 0;
+}
+
+.record {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid #d9e4e1;
+  border-radius: 14px;
+  background: #f8fbfa;
+}
+
+.record time {
+  color: #52605d;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.record p {
+  margin: 10px 0 0;
+  line-height: 1.5;
+}
+
+.button--delete {
+  margin-top: 12px;
+  color: #8b2727;
+  border: 1px solid #d8aaaa;
+  background: #fff0f0;
+}
+
 @media (max-width: 520px) {
   .card {
     padding: 24px 18px;
