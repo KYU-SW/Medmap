@@ -43,6 +43,7 @@ class FasterWhisperService:
         self.compute_type = compute_type
         self._model = None
         self._model_lock = Lock()
+        self._inference_lock = Lock()
 
     def _get_model(self):
         if self._model is not None:
@@ -77,17 +78,18 @@ class FasterWhisperService:
         model = self._get_model()
         started_at = perf_counter()
         try:
-            segments, info = model.transcribe(
-                BytesIO(audio),
-                language="ko",
-                task="transcribe",
-                beam_size=5,
-                vad_filter=True,
-                condition_on_previous_text=False,
-            )
-            text = " ".join(
-                segment.text.strip() for segment in segments if segment.text.strip()
-            ).strip()
+            with self._inference_lock:
+                segments, info = model.transcribe(
+                    BytesIO(audio),
+                    language="ko",
+                    task="transcribe",
+                    beam_size=5,
+                    vad_filter=True,
+                    condition_on_previous_text=False,
+                )
+                text = " ".join(
+                    segment.text.strip() for segment in segments if segment.text.strip()
+                ).strip()
         except NoSpeechDetectedError:
             raise
         except Exception as exc:

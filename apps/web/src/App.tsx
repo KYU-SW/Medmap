@@ -20,6 +20,42 @@ type IntakeResult = {
 };
 
 const MAX_RECORDING_MS = 60_000;
+const LIVE_TRANSCRIPTION_INTERVAL_MS = 1_500;
+
+function encodeMonoWav(chunks: Float32Array[], sampleRate: number): Blob {
+  const sampleCount = chunks.reduce((total, chunk) => total + chunk.length, 0);
+  const buffer = new ArrayBuffer(44 + sampleCount * 2);
+  const view = new DataView(buffer);
+  const writeText = (offset: number, value: string) => {
+    for (let index = 0; index < value.length; index += 1) {
+      view.setUint8(offset + index, value.charCodeAt(index));
+    }
+  };
+
+  writeText(0, "RIFF");
+  view.setUint32(4, 36 + sampleCount * 2, true);
+  writeText(8, "WAVE");
+  writeText(12, "fmt ");
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * 2, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  writeText(36, "data");
+  view.setUint32(40, sampleCount * 2, true);
+
+  let offset = 44;
+  for (const chunk of chunks) {
+    for (const sample of chunk) {
+      const clipped = Math.max(-1, Math.min(1, sample));
+      view.setInt16(offset, clipped < 0 ? clipped * 0x8000 : clipped * 0x7fff, true);
+      offset += 2;
+    }
+  }
+  return new Blob([buffer], { type: "audio/wav" });
+}
 
 export default function App() {
   const [status, setStatus] = useState<Status>("idle");
@@ -32,10 +68,104 @@ export default function App() {
   const streamRef = useRef<MediaStream | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const timeoutRef = useRef<number | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const audioSourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
+  const audioProcessorRef = useRef<ScriptProcessorNode | null>(null);
+  const silentGainRef = useRef<GainNode | null>(null);
+  const liveSamplesRef = useRef<Float32Array[]>([]);
+  const liveSampleRateRef = useRef(16_000);
+  const liveIntervalRef = useRef<number | null>(null);
+  const liveRequestRef = useRef<AbortController | null>(null);
+  const liveRequestRunningRef = useRef(false);
 
   useEffect(() => {
-    return () => stopMediaTracks();
+    return () => {
+      stopLiveCapture();
+      stopMediaTracks();
+    };
   }, []);
+
+  function stopLiveCapture() {
+    if (liveIntervalRef.current !== null) {
+      window.clearInterval(liveIntervalRef.current);
+      liveIntervalRef.current = null;
+    }
+    liveRequestRef.current?.abort();
+    liveRequestRef.current = null;
+    liveRequestRunningRef.current = false;
+    audioProcessorRef.current?.disconnect();
+    audioSourceRef.current?.disconnect();
+    silentGainRef.current?.disconnect();
+    audioProcessorRef.current = null;
+    audioSourceRef.current = null;
+    silentGainRef.current = null;
+    void audioContextRef.current?.close();
+    audioContextRef.current = null;
+  }
+
+  async function requestLiveTranscript() {
+    if (liveRequestRunningRef.current) return;
+    const sampleCount = liveSamplesRef.current.reduce(
+      (total, chunk) => total + chunk.length,
+      0,
+    );
+    if (sampleCount < liveSampleRateRef.current * 0.6) return;
+
+    liveRequestRunningRef.current = true;
+    const controller = new AbortController();
+    liveRequestRef.current = controller;
+    const form = new FormData();
+    form.append(
+      "file",
+      encodeMonoWav([...liveSamplesRef.current], liveSampleRateRef.current),
+      "live.wav",
+    );
+
+    try {
+      const response = await fetch("/v1/stt/transcribe", {
+        method: "POST",
+        body: form,
+        signal: controller.signal,
+      });
+      const data = await response.json();
+      if (response.ok && typeof data.transcript === "string" && data.transcript.trim()) {
+        setTranscript(data.transcript);
+        setMessage("듣고 있습니다. 말하는 동안 문장이 계속 수정될 수 있습니다.");
+      }
+    } catch (error) {
+      if (!(error instanceof DOMException && error.name === "AbortError")) {
+        console.error("Live transcription failed", error);
+      }
+    } finally {
+      if (liveRequestRef.current === controller) liveRequestRef.current = null;
+      liveRequestRunningRef.current = false;
+    }
+  }
+
+  async function startLiveCapture(stream: MediaStream) {
+    const context = new AudioContext({ sampleRate: 16_000 });
+    await context.resume();
+    const source = context.createMediaStreamSource(stream);
+    const processor = context.createScriptProcessor(4096, 1, 1);
+    const silentGain = context.createGain();
+    silentGain.gain.value = 0;
+    liveSamplesRef.current = [];
+    liveSampleRateRef.current = context.sampleRate;
+    processor.onaudioprocess = (event) => {
+      liveSamplesRef.current.push(new Float32Array(event.inputBuffer.getChannelData(0)));
+    };
+    source.connect(processor);
+    processor.connect(silentGain);
+    silentGain.connect(context.destination);
+    audioContextRef.current = context;
+    audioSourceRef.current = source;
+    audioProcessorRef.current = processor;
+    silentGainRef.current = silentGain;
+    liveIntervalRef.current = window.setInterval(
+      () => void requestLiveTranscript(),
+      LIVE_TRANSCRIPTION_INTERVAL_MS,
+    );
+  }
 
   function stopMediaTracks() {
     if (timeoutRef.current !== null) {
@@ -71,8 +201,9 @@ export default function App() {
       };
       recorder.onstop = () => void sendRecording(recorder.mimeType || "audio/webm");
       recorder.start();
+      await startLiveCapture(stream);
       setStatus("recording");
-      setMessage("녹음 중입니다. 말이 끝나면 녹음 종료를 눌러 주세요.");
+      setMessage("듣고 있습니다. 말하는 동안 변환 문장이 표시됩니다.");
       timeoutRef.current = window.setTimeout(() => stopRecording(), MAX_RECORDING_MS);
     } catch {
       stopMediaTracks();
@@ -83,6 +214,7 @@ export default function App() {
 
   function stopRecording() {
     if (recorderRef.current?.state === "recording") {
+      stopLiveCapture();
       recorderRef.current.stop();
       setStatus("transcribing");
       setMessage("음성을 글자로 바꾸고 있습니다. 첫 실행은 시간이 더 걸릴 수 있습니다.");
