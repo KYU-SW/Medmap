@@ -29,7 +29,7 @@ RULES = (
         re.compile(
             rf"두통|머리(?:가|는|도)?\s*{INTENSITY_PHRASE}(?:아프|아파|아팠|지끈|욱신)"
         ),
-        re.compile(r"두통(?:은|이|도)?\s*(?:없|아니)|머리(?:가|는|도)?\s*(?:안\s*(?:아프|아파)|아프지\s*않)"),
+        re.compile(r"두통(?:은|이|도)?\s*(?:없|아니)|머리(?:가|는|도)?\s*(?:안\s*(?:아프|아파|아픈)|아프지\s*않)"),
         "머리",
     ),
     SymptomRule(
@@ -44,22 +44,22 @@ RULES = (
     ),
     SymptomRule(
         "호흡곤란",
-        re.compile(r"숨(?:이|은)?\s*차|숨(?:을)?\s*쉬기가\s*(?:힘들|어렵|어려)|호흡곤란"),
+        re.compile(r"숨(?:이|은|도)?\s*차|숨(?:을)?\s*쉬기(?:가)?\s*(?:힘들|어렵|어려)|호흡곤란"),
         re.compile(r"숨(?:은|이)?\s*(?:안\s*차|차지\s*않)|호흡곤란(?:은|이)?\s*없"),
     ),
     SymptomRule(
         "가슴 답답함",
-        re.compile(r"가슴(?:이|은)?\s*(?:답답|조이|조여|눌리)|흉부(?:가|는)?\s*(?:답답|압박)"),
+        re.compile(r"가슴(?:이|은|만|도)?\s*(?:답답|조이|조여|눌리)|흉부(?:가|는|만|도)?\s*(?:답답|압박)"),
         re.compile(r"가슴(?:이|은)?\s*(?:안\s*답답|답답하지\s*않)"),
         "가슴",
     ),
     SymptomRule(
         "복통",
         re.compile(
-            rf"(?:배|복부)(?:가|는|도)?\s*(?:{INLINE_ONSET}\s*)?"
+            rf"(?:배|복부|속)(?:이|가|는|도)?\s*(?:{INLINE_ONSET}\s*)?"
             rf"{INTENSITY_PHRASE}(?:아프|아파|아팠)|복통"
         ),
-        re.compile(r"(?:배|복부)(?:가|는|도)?\s*(?:안\s*아프|아프지\s*않)|복통(?:은|이)?\s*없"),
+        re.compile(r"(?:배|복부|속)(?:이|가|는|도)?\s*(?:안\s*(?:아프|아픈)|아프지\s*않)|복통(?:은|이)?\s*없"),
         "복부",
     ),
     SymptomRule(
@@ -70,6 +70,7 @@ RULES = (
 )
 
 ONSET_PATTERN = re.compile(
+    r"오늘\s*(?:아침|점심|저녁|밤|새벽)부터|"
     r"(?:오늘|어제|그제|그저께|엊그제|방금|아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘)"
     r"(?:\s*(?:전부터|전|동안|째))?|"
@@ -85,6 +86,10 @@ SEVERITY_PATTERN = re.compile(
 MEDICATION_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20}\s*(?:약|제))"
     r"(?:을|를|도|은|는)?\s*(?:먹|복용)"
+)
+MEDICATION_NAME_PATTERN = re.compile(
+    r"([가-힣A-Za-z0-9-]{1,20}?\s*(?:약|제))"
+    r"(?=(?:과|와|을|를|도|은|는)?(?:\s|$))"
 )
 ALLERGY_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20})\s*알레르기(?!\s*약)"
@@ -173,8 +178,13 @@ def _nearest_value(
     return min(candidates, default=(0, None), key=lambda item: item[0])[1]
 
 
-def _onset_for_symptom(text: str, start: int, end: int) -> str | None:
-    boundary_pattern = re.compile(r"(?:추가로|그리고|하지만|그러나|또한)")
+def _onset_for_symptom(
+    text: str, start: int, end: int, previous_end: int, next_start: int
+) -> str | None:
+    boundary_pattern = re.compile(
+        r"[,;.!?。]|(?:추가로|그리고|하지만|그러나|또한)|"
+        r"(?:고|며|면서|는데|지만)(?:\s|$)"
+    )
     overlapping = [
         match for match in ONSET_PATTERN.finditer(text)
         if match.start() >= start and match.end() <= end
@@ -185,47 +195,89 @@ def _onset_for_symptom(text: str, start: int, end: int) -> str | None:
     preceding = [
         match for match in ONSET_PATTERN.finditer(text)
         if match.end() <= start
+        and match.end() >= previous_end
         and start - match.end() <= 24
         and not boundary_pattern.search(text[match.end():start])
     ]
     if preceding:
         return preceding[-1].group(0)
 
+    following = [
+        match for match in ONSET_PATTERN.finditer(text)
+        if match.start() >= end
+        and match.end() <= next_start
+        and match.start() - end <= 24
+        and not boundary_pattern.search(text[end:match.start()])
+    ]
+    if following:
+        return following[0].group(0)
+
     return None
+
+
+def _severity_for_symptom(
+    text: str, start: int, end: int, previous_end: int, next_start: int
+) -> str | None:
+    candidates = [
+        match.group(0)
+        for match in SEVERITY_PATTERN.finditer(text, previous_end, next_start)
+    ]
+    if not candidates:
+        return None
+    return _severity(candidates[-1])
+
+
+def _extract_medications(text: str) -> list[str]:
+    medications: list[str] = []
+    clause_boundaries = re.compile(r"[.!?。]|(?:\s+)(?:그리고|하지만|그러나|또한)(?:\s+)")
+    for clause in clause_boundaries.split(text):
+        if not re.search(r"먹|복용", clause):
+            continue
+        for value in MEDICATION_NAME_PATTERN.findall(clause):
+            normalized = re.sub(r"\s+", "", value)
+            if normalized not in medications:
+                medications.append(normalized)
+    return medications
 
 
 def extract_intake(text: str) -> IntakeExtractionResponse:
     normalized = " ".join(text.strip().split())
-    symptoms: list[SymptomObservation] = []
+    matches: list[tuple[SymptomRule, re.Match[str], bool]] = []
     for rule in RULES:
         mention = rule.mention.search(normalized)
         absent = rule.absent.search(normalized)
-        if not mention and not absent:
-            continue
         evidence = absent or mention
-        assert evidence is not None
+        if evidence is not None:
+            matches.append((rule, evidence, absent is not None))
+
+    positions = sorted((evidence.start(), evidence.end()) for _, evidence, _ in matches)
+    symptoms: list[SymptomObservation] = []
+    symptom_positions: list[tuple[int, SymptomObservation]] = []
+    for rule, evidence, is_absent in matches:
+        position_index = positions.index((evidence.start(), evidence.end()))
+        previous_end = positions[position_index - 1][1] if position_index > 0 else 0
+        next_start = positions[position_index + 1][0] if position_index + 1 < len(positions) else len(normalized)
         onset = _normalize_onset(
-            _onset_for_symptom(normalized, evidence.start(), evidence.end())
-        )
-        severity_text = _nearest_value(
-            SEVERITY_PATTERN, normalized, evidence.start(), evidence.end(), max_gap=12
-        )
-        severity = _severity(severity_text or "")
-        symptoms.append(
-            SymptomObservation(
-                name=rule.name,
-                status="absent" if absent else "present",
-                body_site=rule.body_site,
-                onset=onset if not absent else None,
-                severity=severity if not absent else None,
-                source_text=evidence.group(0),
+            _onset_for_symptom(
+                normalized, evidence.start(), evidence.end(), previous_end, next_start
             )
         )
+        severity = _severity_for_symptom(
+            normalized, evidence.start(), evidence.end(), previous_end, next_start
+        )
+        symptom_positions.append(
+            (evidence.start(), SymptomObservation(
+                name=rule.name,
+                status="absent" if is_absent else "present",
+                body_site=rule.body_site,
+                onset=onset if not is_absent else None,
+                severity=severity if not is_absent else None,
+                source_text=evidence.group(0),
+            ))
+        )
+    symptoms = [item for _, item in sorted(symptom_positions, key=lambda pair: pair[0])]
 
-    medications = [
-        re.sub(r"\s+", "", value)
-        for value in dict.fromkeys(MEDICATION_PATTERN.findall(normalized))
-    ]
+    medications = _extract_medications(normalized)
     allergies = list(dict.fromkeys(ALLERGY_PATTERN.findall(normalized)))
     recognized_evidence = [item.source_text for item in symptoms]
     unrecognized_fragments: list[str] = []
