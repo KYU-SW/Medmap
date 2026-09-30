@@ -7,6 +7,7 @@ import {
 } from "./recordStorage";
 import { buildTimeline } from "./timeline";
 import { buildSymptomEpisodes } from "./symptomEpisodes";
+import { buildVisitSummary, visitSummaryText } from "./visitSummary";
 
 type Status = "idle" | "recording" | "transcribing" | "done" | "error";
 
@@ -75,6 +76,7 @@ export default function App() {
   const [records, setRecords] = useState<StoredIntakeRecord[]>([]);
   const [savingRecord, setSavingRecord] = useState(false);
   const [recordMessage, setRecordMessage] = useState("");
+  const [summaryMessage, setSummaryMessage] = useState("");
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -345,6 +347,17 @@ export default function App() {
   const busy = status === "recording" || status === "transcribing";
   const timeline = buildTimeline(records);
   const symptomEpisodes = buildSymptomEpisodes(records);
+  const visitSummary = buildVisitSummary(records, symptomEpisodes);
+
+  async function copyVisitSummary() {
+    if (!visitSummary) return;
+    try {
+      await navigator.clipboard.writeText(visitSummaryText(visitSummary));
+      setSummaryMessage("진료 전 요약을 복사했습니다.");
+    } catch {
+      setSummaryMessage("요약을 복사하지 못했습니다. 브라우저의 클립보드 권한을 확인해 주세요.");
+    }
+  }
 
   return (
     <main className="page">
@@ -463,6 +476,49 @@ export default function App() {
           </section>
         )}
         {recordMessage && <p className="record-message">{recordMessage}</p>}
+        <section className="visit-summary" aria-label="진료 전 요약">
+          <h2>진료 전 요약</h2>
+          <p>병원에서 보여줄 수 있도록 확인한 기록을 짧게 정리합니다.</p>
+          {!visitSummary ? (
+            <p className="empty-result">요약할 기록이 없습니다.</p>
+          ) : (
+            <div className="visit-summary-card">
+              <p>
+                <strong>기록 기간</strong><br />
+                {new Intl.DateTimeFormat("ko-KR", {
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                }).format(new Date(visitSummary.firstRecordedAt))}
+                {" ~ "}
+                {new Intl.DateTimeFormat("ko-KR", {
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                }).format(new Date(visitSummary.lastRecordedAt))}
+              </p>
+              <div className="visit-summary-symptoms">
+                <strong>증상 변화</strong>
+                <ul>
+                  {visitSummary.symptoms.map((symptom) => (
+                    <li key={`summary-${symptom.id}`}>
+                      <strong>{symptom.name}</strong>
+                      {` · ${symptom.status === "active" ? "현재 있음" : "사라짐"}`}
+                      {` · 시작: ${symptom.statedOnset || "확인되지 않음"}`}
+                      {` · 가장 심한 정도: ${symptom.peakSeverity || "확인되지 않음"}`}
+                      {` · ${symptom.recordCount}회 기록`}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <p><strong>기록 기간 중 복용약:</strong> {visitSummary.medications.join(", ") || "확인되지 않음"}</p>
+              <p><strong>기록된 알레르기:</strong> {visitSummary.allergies.join(", ") || "확인되지 않음"}</p>
+              <p className="summary-notice">사용자가 확인한 기록의 요약이며 진단 결과가 아닙니다.</p>
+              <button className="button--secondary" type="button" onClick={() => void copyVisitSummary()}>
+                진료 전 요약 복사
+              </button>
+              {summaryMessage && <p className="confirmed">{summaryMessage}</p>}
+            </div>
+          )}
+        </section>
         <section className="episodes" aria-label="증상 발생 기간">
           <h2>증상 발생 기간</h2>
           <p>같은 증상이 나타난 때부터 사라진 때까지를 하나로 묶습니다.</p>

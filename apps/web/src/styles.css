@@ -186,6 +186,7 @@ select {
   background: #e8f4f1;
 }
 
+.visit-summary,
 .episodes,
 .timeline,
 .records {
@@ -194,10 +195,39 @@ select {
   border-top: 1px solid #d9e4e1;
 }
 
+.visit-summary h2,
 .episodes h2,
 .timeline h2,
 .records h2 {
   margin: 0;
+}
+
+.visit-summary-card {
+  margin-top: 16px;
+  padding: 18px;
+  border: 1px solid #7eb5aa;
+  border-radius: 14px;
+  background: #f2f9f7;
+}
+
+.visit-summary-card > p:first-child {
+  margin-top: 0;
+}
+
+.visit-summary-symptoms ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.visit-summary-symptoms li {
+  margin-top: 7px;
+  line-height: 1.5;
+}
+
+.summary-notice {
+  color: #52605d;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .episode-list {
