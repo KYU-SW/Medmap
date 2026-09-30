@@ -118,6 +118,7 @@ def test_category_6_current_severity_and_change(text: str, expected_severity: st
         ("복통이 있고 아픈 강도로 따지면 90점 정도예요", "90/100점"),
         ("두통이 있고 10점 만점에 8점이에요", "8/10점"),
         ("배가 아프고 통증 점수는 7점이에요", "7/10점"),
+        ("배가 아프고 아픈 정도는 10중에 8정도로 아팠어요", "8/10점"),
     ],
 )
 def test_numeric_pain_scores(text: str, expected_severity: str) -> None:
@@ -138,6 +139,20 @@ def test_numeric_score_stays_with_the_nearest_symptom() -> None:
 def test_relative_day_and_time_of_day_are_kept_together() -> None:
     result = extract("어제 밤부터 머리가 아파요")
     assert result["symptoms"][0]["onset"] == "어제 밤부터"
+
+
+def test_compact_yesterday_night_and_together_expression() -> None:
+    result = extract(
+        "어제부터 배가 아팠어요 아픈 정도는 10중에 8정도로 아팠고 "
+        "머리도 같이 아팠어요 이거 때문에 그런지는 모르겠는데 어젯밤 구토도 했어요"
+    )
+    symptoms = {item["name"]: item for item in result["symptoms"]}
+    assert set(symptoms) == {"복통", "두통", "구토"}
+    assert symptoms["복통"]["onset"] == "어제부터"
+    assert symptoms["복통"]["severity"] == "8/10점"
+    assert symptoms["두통"]["status"] == "present"
+    assert symptoms["두통"]["severity"] is None
+    assert symptoms["구토"]["onset"] == "어젯밤"
 
 
 @pytest.mark.parametrize(

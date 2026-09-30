@@ -15,7 +15,8 @@ class SymptomRule:
 INTENSITY_WORD = r"(?:아주|매우|너무|많이|조금|약간|심하게)"
 INTENSITY_PHRASE = rf"(?:{INTENSITY_WORD}\s*)*"
 INLINE_ONSET = (
-    r"(?:(?:오늘|어제|그제|그저께|엊그제)\s*"
+    r"(?:어젯밤(?:부터)?|"
+    r"(?:오늘|어제|그제|그저께|엊그제)\s*"
     r"(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제)(?:부터)?|"
     r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘)"
@@ -30,7 +31,8 @@ RULES = (
         "두통",
         re.compile(
             rf"두통|머리(?:가|는|도)?\s*(?:{INLINE_ONSET}\s*)?"
-            rf"{INTENSITY_PHRASE}(?:아프|아파|아팠|아픈|지끈|욱신)"
+            rf"(?:같이\s*|함께\s*)?{INTENSITY_PHRASE}"
+            rf"(?:아프|아파|아팠|아픈|지끈|욱신)"
         ),
         re.compile(r"두통(?:은|이|도)?\s*(?:없|아니)|머리(?:가|는|도)?\s*(?:안\s*(?:아프|아파|아픈)|아프지\s*않)"),
         "머리",
@@ -79,6 +81,7 @@ RULES = (
 )
 
 ONSET_PATTERN = re.compile(
+    r"어젯밤(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제)\s*"
     r"(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제|방금|아침|점심|저녁|밤|새벽)(?:부터)?|"
@@ -96,7 +99,9 @@ SEVERITY_PATTERN = re.compile(
 PAIN_SCORE_PATTERN = re.compile(
     r"(?:(?:통증|아픈\s*강도|아픔|강도)(?:를|로)?\s*"
     r"(?:따지면|점수는?|정도는?)?\s*)?"
-    r"(?:10\s*점\s*만점(?:에|에서)\s*)?\d{1,3}\s*점"
+    r"(?:10\s*점\s*만점(?:에|에서)\s*\d{1,2}\s*점|"
+    r"10\s*중(?:에|에서)?\s*\d{1,2}\s*(?:점|정도)?|"
+    r"\d{1,3}\s*점)"
 )
 MEDICATION_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20}\s*(?:약|제))"
@@ -121,7 +126,7 @@ def _severity(text: str) -> str | None:
     score_match = PAIN_SCORE_PATTERN.search(text)
     if score_match:
         numbers = [int(value) for value in re.findall(r"\d+", score_match.group(0))]
-        if "만점" in score_match.group(0) and len(numbers) >= 2:
+        if ("만점" in score_match.group(0) or "중" in score_match.group(0)) and len(numbers) >= 2:
             maximum, score = numbers[-2], numbers[-1]
             if 0 <= score <= maximum:
                 return f"{score}/{maximum}점"
@@ -244,16 +249,69 @@ def _onset_for_symptom(
 
 
 def _severity_for_symptom(
-    text: str, start: int, end: int, previous_end: int, next_start: int
+    text: str,
+    start: int,
+    end: int,
+    symptom_positions: list[tuple[int, int]],
 ) -> str | None:
-    candidates = [
-        (match.start(), match.group(0))
+    def distance(match: re.Match[str], position: tuple[int, int]) -> int:
+        position_start, position_end = position
+        if match.end() <= position_start:
+            return position_start - match.end()
+        if match.start() >= position_end:
+            return match.start() - position_end
+        return 0
+
+    connector_pattern = re.compile(
+        r"[,;]|(?:추가로|그리고|하지만|그러나|또한)|"
+        r"(?:고|며|면서|는데|지만)(?:\s|,|$)"
+    )
+
+    def owner_for(match: re.Match[str]) -> tuple[int, int]:
+        overlapping = [
+            position for position in symptom_positions
+            if match.start() < position[1] and match.end() > position[0]
+        ]
+        if overlapping:
+            return overlapping[0]
+
+        preceding = [position for position in symptom_positions if position[1] <= match.start()]
+        following = [position for position in symptom_positions if position[0] >= match.end()]
+        previous = preceding[-1] if preceding else None
+        next_position = following[0] if following else None
+        if previous and next_position:
+            left_text = text[previous[1]:match.start()]
+            right_text = text[match.end():next_position[0]]
+            if connector_pattern.search(right_text):
+                return previous
+            if connector_pattern.search(left_text):
+                return next_position
+        available = [position for position in (previous, next_position) if position]
+        return min(available, key=lambda position: (distance(match, position), position[0]))
+
+    candidates: list[re.Match[str]] = []
+    for match in (
+        match
         for pattern in (SEVERITY_PATTERN, PAIN_SCORE_PATTERN)
-        for match in pattern.finditer(text, previous_end, next_start)
-    ]
+        for match in pattern.finditer(text)
+    ):
+        owner = owner_for(match)
+        if owner != (start, end):
+            continue
+        between = (
+            text[match.end():start]
+            if match.end() <= start
+            else text[end:match.start()]
+            if match.start() >= end
+            else ""
+        )
+        if re.search(r"[.!?。]", between):
+            continue
+        candidates.append(match)
     if not candidates:
         return None
-    return _severity(max(candidates, key=lambda item: item[0])[1])
+    latest = max(candidates, key=lambda match: match.start())
+    return _severity(latest.group(0))
 
 
 def _extract_medications(text: str) -> list[str]:
@@ -292,7 +350,7 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
             )
         )
         severity = _severity_for_symptom(
-            normalized, evidence.start(), evidence.end(), previous_end, next_start
+            normalized, evidence.start(), evidence.end(), positions
         )
         symptom_positions.append(
             (evidence.start(), SymptomObservation(
