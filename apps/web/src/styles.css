@@ -215,6 +215,20 @@ select {
   line-height: 1.5;
 }
 
+.record-symptoms {
+  margin-top: 12px;
+}
+
+.record-symptoms ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.record-symptoms li {
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
 .button--delete {
   margin-top: 12px;
   color: #8b2727;

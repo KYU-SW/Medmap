@@ -473,12 +473,23 @@ export default function App() {
                 }).format(new Date(record.createdAt))}
               </time>
               <p>{record.transcript}</p>
-              <p>
-                <strong>증상:</strong>{" "}
-                {record.intake.symptoms.map((symptom) => (
-                  `${symptom.name}(${symptom.status === "present" ? "있음" : "없음"})`
-                )).join(", ") || "확인되지 않음"}
-              </p>
+              <div className="record-symptoms">
+                <strong>증상</strong>
+                {record.intake.symptoms.length === 0 ? (
+                  <p>확인되지 않음</p>
+                ) : (
+                  <ul>
+                    {record.intake.symptoms.map((symptom, index) => (
+                      <li key={`${record.id}-${symptom.name}-${index}`}>
+                        <strong>{symptom.name}</strong>
+                        {` · ${symptom.status === "present" ? "있음" : "없음"}`}
+                        {symptom.status === "present" && ` · 시작: ${symptom.onset || "확인되지 않음"}`}
+                        {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
               <p><strong>복용약:</strong> {record.intake.medications.join(", ") || "확인되지 않음"}</p>
               <p><strong>알레르기:</strong> {record.intake.allergies.join(", ") || "확인되지 않음"}</p>
               <button className="button--delete" type="button" onClick={() => void removeRecord(record.id)}>

@@ -15,7 +15,9 @@ class SymptomRule:
 INTENSITY_WORD = r"(?:아주|매우|너무|많이|조금|약간|심하게)"
 INTENSITY_PHRASE = rf"(?:{INTENSITY_WORD}\s*)*"
 INLINE_ONSET = (
-    r"(?:(?:오늘|어제|그제|그저께|엊그제)(?:부터)?|"
+    r"(?:(?:오늘|어제|그제|그저께|엊그제)\s*"
+    r"(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
+    r"(?:오늘|어제|그제|그저께|엊그제)(?:부터)?|"
     r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘)"
     r"(?:\s*(?:전부터|전|동안|째))?|"
     r"(?:\d+|일|이|삼|사|오|육|칠|팔|구|십)\s*"
@@ -77,7 +79,8 @@ RULES = (
 )
 
 ONSET_PATTERN = re.compile(
-    r"오늘\s*(?:아침|점심|저녁|밤|새벽)부터|"
+    r"(?:오늘|어제|그제|그저께|엊그제)\s*"
+    r"(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제|방금|아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘)"
     r"(?:\s*(?:전부터|전|동안|째))?|"
@@ -89,6 +92,11 @@ ONSET_PATTERN = re.compile(
 SEVERITY_PATTERN = re.compile(
     r"매우\s*심(?:해|하|했)|너무\s*심(?:해|하|했)|심(?:해|하|했)|"
     r"아주|매우|너무|많이|조금|약간"
+)
+PAIN_SCORE_PATTERN = re.compile(
+    r"(?:(?:통증|아픈\s*강도|아픔|강도)(?:를|로)?\s*"
+    r"(?:따지면|점수는?|정도는?)?\s*)?"
+    r"(?:10\s*점\s*만점(?:에|에서)\s*)?\d{1,3}\s*점"
 )
 MEDICATION_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20}\s*(?:약|제))"
@@ -110,6 +118,19 @@ CLAUSE_SPLIT_PATTERN = re.compile(r"[.!?。]|(?:\s+)(?:그리고|추가로|하�
 
 
 def _severity(text: str) -> str | None:
+    score_match = PAIN_SCORE_PATTERN.search(text)
+    if score_match:
+        numbers = [int(value) for value in re.findall(r"\d+", score_match.group(0))]
+        if "만점" in score_match.group(0) and len(numbers) >= 2:
+            maximum, score = numbers[-2], numbers[-1]
+            if 0 <= score <= maximum:
+                return f"{score}/{maximum}점"
+        elif numbers:
+            score = numbers[-1]
+            if 0 <= score <= 100:
+                maximum = 10 if score <= 10 else 100
+                return f"{score}/{maximum}점"
+
     match = SEVERITY_PATTERN.search(text)
     if not match:
         return None
@@ -226,12 +247,13 @@ def _severity_for_symptom(
     text: str, start: int, end: int, previous_end: int, next_start: int
 ) -> str | None:
     candidates = [
-        match.group(0)
-        for match in SEVERITY_PATTERN.finditer(text, previous_end, next_start)
+        (match.start(), match.group(0))
+        for pattern in (SEVERITY_PATTERN, PAIN_SCORE_PATTERN)
+        for match in pattern.finditer(text, previous_end, next_start)
     ]
     if not candidates:
         return None
-    return _severity(candidates[-1])
+    return _severity(max(candidates, key=lambda item: item[0])[1])
 
 
 def _extract_medications(text: str) -> list[str]:

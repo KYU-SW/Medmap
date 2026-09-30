@@ -113,6 +113,34 @@ def test_category_6_current_severity_and_change(text: str, expected_severity: st
 
 
 @pytest.mark.parametrize(
+    ("text", "expected_severity"),
+    [
+        ("복통이 있고 아픈 강도로 따지면 90점 정도예요", "90/100점"),
+        ("두통이 있고 10점 만점에 8점이에요", "8/10점"),
+        ("배가 아프고 통증 점수는 7점이에요", "7/10점"),
+    ],
+)
+def test_numeric_pain_scores(text: str, expected_severity: str) -> None:
+    result = extract(text)
+    assert result["symptoms"][0]["severity"] == expected_severity
+
+
+def test_numeric_score_stays_with_the_nearest_symptom() -> None:
+    result = extract(
+        "어제부터 머리가 너무 아프고요 배는 2일 전부터 아팠는데 "
+        "아픈 강도로 따지면 90점 정도예요"
+    )
+    symptoms = {item["name"]: item for item in result["symptoms"]}
+    assert symptoms["두통"]["severity"] == "심함"
+    assert symptoms["복통"]["severity"] == "90/100점"
+
+
+def test_relative_day_and_time_of_day_are_kept_together() -> None:
+    result = extract("어제 밤부터 머리가 아파요")
+    assert result["symptoms"][0]["onset"] == "어제 밤부터"
+
+
+@pytest.mark.parametrize(
     "text",
     [
         "어지럽고 설사를 해요",
