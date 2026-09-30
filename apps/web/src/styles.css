@@ -186,14 +186,51 @@ select {
   background: #e8f4f1;
 }
 
+.timeline,
 .records {
   margin-top: 30px;
   padding-top: 24px;
   border-top: 1px solid #d9e4e1;
 }
 
+.timeline h2,
 .records h2 {
   margin: 0;
+}
+
+.timeline-entry {
+  position: relative;
+  margin: 18px 0 0 10px;
+  padding: 0 0 18px 22px;
+  border-left: 2px solid #7eb5aa;
+}
+
+.timeline-entry::before {
+  position: absolute;
+  top: 2px;
+  left: -7px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: #247365;
+  content: "";
+}
+
+.timeline-entry time {
+  color: #247365;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.timeline-entry ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+}
+
+.timeline-entry li {
+  margin-top: 7px;
+  line-height: 1.5;
 }
 
 .record {

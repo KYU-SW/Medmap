@@ -5,6 +5,7 @@ import {
   saveIntakeRecord,
   type StoredIntakeRecord,
 } from "./recordStorage";
+import { buildTimeline } from "./timeline";
 
 type Status = "idle" | "recording" | "transcribing" | "done" | "error";
 
@@ -341,6 +342,7 @@ export default function App() {
   }
 
   const busy = status === "recording" || status === "transcribing";
+  const timeline = buildTimeline(records);
 
   return (
     <main className="page">
@@ -459,6 +461,36 @@ export default function App() {
           </section>
         )}
         {recordMessage && <p className="record-message">{recordMessage}</p>}
+        <section className="timeline" aria-label="증상 변화 타임라인">
+          <h2>증상 변화 타임라인</h2>
+          <p>확인하고 저장한 기록만 시간순으로 연결합니다.</p>
+          {timeline.length === 0 ? (
+            <p className="empty-result">타임라인에 표시할 기록이 없습니다.</p>
+          ) : timeline.map((entry) => (
+            <article className="timeline-entry" key={entry.id}>
+              <time dateTime={entry.createdAt}>
+                {new Intl.DateTimeFormat("ko-KR", {
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                }).format(new Date(entry.createdAt))}
+              </time>
+              {entry.symptoms.length === 0 ? (
+                <p>확인된 증상이 없습니다.</p>
+              ) : (
+                <ul>
+                  {entry.symptoms.map((symptom, index) => (
+                    <li key={`${entry.id}-${symptom.name}-${index}`}>
+                      <strong>{symptom.name}</strong>
+                      {` · ${symptom.change}`}
+                      {symptom.status === "present" && ` · 시작: ${symptom.onset || "확인되지 않음"}`}
+                      {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          ))}
+        </section>
         <section className="records" aria-label="저장된 증상 기록">
           <h2>저장된 증상 기록</h2>
           <p>이 기기의 현재 브라우저에만 보관됩니다.</p>
