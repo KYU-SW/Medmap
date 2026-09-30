@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "project": "MedMap",
+  "localResourcesOutsideProject": [],
+  "remoteResources": [
+    {
+      "type": "github-repository",
+      "name": "minu2246/MedMap",
+      "url": "https://github.com/minu2246/MedMap",
+      "deletionRequiresSeparateApproval": true
+    }
+  ],
+  "sharedGlobalTools": [
+    {
+      "name": "Codex bundled Python runtime",
+      "projectOwned": false,
+      "removeWhenProjectEnds": false,
+      "note": "Shared by Codex and not owned by MedMap. Do not remove as part of project cleanup."
+    },
+    {
+      "name": "Git",
+      "projectOwned": false,
+      "removeWhenProjectEnds": false
+    }
+  ]
+}
