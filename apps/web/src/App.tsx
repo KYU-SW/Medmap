@@ -106,6 +106,7 @@ export default function App() {
   const liveRequestRef = useRef<AbortController | null>(null);
   const liveRequestRunningRef = useRef(false);
   const transcriptRef = useRef<HTMLTextAreaElement | null>(null);
+  const savingRecordRef = useRef(false);
 
   useEffect(() => {
     void listIntakeRecords()
@@ -337,7 +338,12 @@ export default function App() {
   }
 
   async function confirmAndSave() {
-    if (!intake || !transcript.trim()) return;
+    if (!intake || !transcript.trim() || savingRecordRef.current || confirmed) return;
+    if (!currentRecordGroupId) {
+      setRecordMessage("증상 기록 묶음을 불러오는 중입니다. 잠시 후 다시 저장해 주세요.");
+      return;
+    }
+    savingRecordRef.current = true;
     setSavingRecord(true);
     setRecordMessage("");
     const record: StoredIntakeRecord = {
@@ -356,6 +362,7 @@ export default function App() {
       setConfirmed(false);
       setRecordMessage("기록을 저장하지 못했습니다. 브라우저 저장 권한을 확인해 주세요.");
     } finally {
+      savingRecordRef.current = false;
       setSavingRecord(false);
     }
   }
@@ -604,7 +611,7 @@ export default function App() {
                 <p>원문을 확인하고 필요한 내용을 직접 추가해 주세요.</p>
               </div>
             )}
-            <button type="button" onClick={() => void confirmAndSave()} disabled={savingRecord}>
+            <button type="button" onClick={() => void confirmAndSave()} disabled={savingRecord || confirmed || !currentRecordGroupId}>
               {savingRecord ? "저장 중…" : "확인하고 기록 저장"}
             </button>
             {confirmed && <p className="confirmed">확인한 내용을 현재 브라우저에 저장했습니다.</p>}
