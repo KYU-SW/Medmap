@@ -23,6 +23,9 @@ RESOLVED_STATE = (
     r"(?:다|완전히)\s*(?:나았|괜찮아졌|좋아졌))"
 )
 NOW_ADVERB = r"(?:(?:이제는?|이젠|지금은|현재는)\s*)?"
+PARTICLE = r"(?:은|는|이|가|도)?"
+ABSENT_ENDING = rf"{NOW_ADVERB}(?:없|{RESOLVED_STATE})"
+NOT_PAINFUL = r"(?:(?:더\s*이상\s*)?안\s*(?:아프|아파|아픈)|아프지\s*않)"
 INLINE_ONSET = (
     r"(?<![가-힣A-Za-z0-9])(?:어젯밤(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제)\s*"
@@ -55,9 +58,13 @@ RULES = (
     ),
     SymptomRule(
         "발열",
-        re.compile(r"고열|발열|열(?:이|은|도)?\s*(?:나|났|오르|있)?"),
         re.compile(
-            rf"(?:고열|발열|열)(?:은|이|도)?\s*{NOW_ADVERB}(?:없|안\s*나|나지\s*않|내렸|{RESOLVED_STATE})"
+            r"고열|미열|발열|"
+            r"(?<![가-힣])열(?=\s*$|이|은|도|까지|감|나|났|있|오르|올라|\s+(?:나|났|있|오르|올라|조금|좀|많이))"
+            r"(?:이|은|도)?\s*(?:나|났|오르|있)?"
+        ),
+        re.compile(
+            rf"(?:고열|미열|발열|열)(?:은|이|도)?\s*{NOW_ADVERB}(?:없|안\s*나|나지\s*않|내렸|{RESOLVED_STATE})"
         ),
     ),
     SymptomRule(
@@ -122,14 +129,139 @@ RULES = (
             rf"구토\s*증상(?:은|이|도)?\s*{NOW_ADVERB}{RESOLVED_STATE}"
         ),
     ),
+    SymptomRule(
+        "흉통",
+        re.compile(
+            rf"흉통|가슴(?:이|은|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
+            r"(?:아프|아파|아팠|아픈|찌르|찌릿|콕콕)"
+        ),
+        re.compile(
+            rf"흉통{PARTICLE}\s*{ABSENT_ENDING}|"
+            rf"가슴(?:은|이|도)?\s*{NOW_ADVERB}{NOT_PAINFUL}"
+        ),
+        "가슴",
+    ),
+    SymptomRule(
+        "인후통",
+        re.compile(
+            rf"인후통|목\s*통증|목(?:이|은|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
+            r"(?:아프|아파|아팠|아픈|따끔|칼칼|부었|부어|붓)|"
+            rf"(?:인후통|목)(?:이|은|도)?\s*{IMPROVEMENT_PHRASE}|"
+            r"침(?:을)?\s*삼키기(?:가)?\s*(?:힘들|어렵|아프)"
+        ),
+        re.compile(
+            rf"인후통{PARTICLE}\s*{ABSENT_ENDING}|"
+            rf"목(?:은|이|도)?\s*{NOW_ADVERB}{NOT_PAINFUL}"
+        ),
+        "목",
+    ),
+    SymptomRule(
+        "콧물",
+        re.compile(r"콧물|코(?:를|가)?\s*(?:훌쩍|흘러)"),
+        re.compile(
+            rf"콧물{PARTICLE}\s*{NOW_ADVERB}(?:없|안\s*나|나지\s*않|멈췄|{RESOLVED_STATE})"
+        ),
+        "코",
+    ),
+    SymptomRule(
+        "코막힘",
+        re.compile(r"코막힘|코(?:가|도)?\s*(?:꽉\s*)?막(?:혀|히|혔|힌)"),
+        re.compile(
+            rf"코막힘{PARTICLE}\s*{ABSENT_ENDING}|"
+            rf"코(?:는|가|도)?\s*{NOW_ADVERB}(?:안\s*막|막히지\s*않)"
+        ),
+        "코",
+    ),
+    SymptomRule(
+        "가래",
+        re.compile(r"가래"),
+        re.compile(
+            rf"가래{PARTICLE}\s*{NOW_ADVERB}(?:없|안\s*(?:나|끓)|나오지\s*않|{RESOLVED_STATE})"
+        ),
+    ),
+    SymptomRule(
+        "오한",
+        re.compile(r"오한|으슬으슬|한기|춥고\s*떨|몸이\s*(?:덜덜\s*)?떨"),
+        re.compile(rf"(?:오한|한기){PARTICLE}\s*{ABSENT_ENDING}"),
+    ),
+    SymptomRule(
+        "근육통",
+        re.compile(
+            rf"근육통|몸살|(?:온몸|몸|근육|팔다리)(?:이|가|은|도)?\s*{INTENSITY_PHRASE}"
+            r"(?:쑤시|쑤셔|쑤신|결리|결려|아프|아파|아픈)"
+        ),
+        re.compile(
+            rf"(?:근육통|몸살){PARTICLE}\s*{ABSENT_ENDING}|"
+            rf"(?:온몸|몸|근육)(?:은|이|도)?\s*{NOW_ADVERB}(?:{NOT_PAINFUL}|안\s*쑤|쑤시지\s*않)"
+        ),
+    ),
+    SymptomRule(
+        "요통",
+        re.compile(
+            rf"요통|허리(?:가|는|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
+            r"(?:아프|아파|아팠|아픈|쑤시|쑤셔|결리|결려)"
+        ),
+        re.compile(
+            rf"요통{PARTICLE}\s*{ABSENT_ENDING}|"
+            rf"허리(?:는|가|도)?\s*{NOW_ADVERB}{NOT_PAINFUL}"
+        ),
+        "허리",
+    ),
+    SymptomRule(
+        "어지러움",
+        re.compile(r"어지러|어지럽|어지럼|현기증|핑\s*(?:돌|돈)|빙빙\s*(?:돌|돈)"),
+        re.compile(
+            rf"(?:어지럼증?|현기증){PARTICLE}\s*{ABSENT_ENDING}|"
+            rf"{NOW_ADVERB}안\s*어지러|어지럽지\s*않"
+        ),
+    ),
+    SymptomRule(
+        "메스꺼움",
+        re.compile(r"메스꺼|메스껍|메슥|미식거|울렁|구역질|구역감|헛구역|토할\s*(?:것\s*)?같"),
+        re.compile(
+            rf"(?:메스꺼움|구역감|구역질|울렁거림){PARTICLE}\s*{ABSENT_ENDING}|"
+            r"메스껍지\s*않|안\s*메스꺼|울렁거리지\s*않"
+        ),
+    ),
+    SymptomRule(
+        "설사",
+        re.compile(r"설사|(?:대변|변)(?:이|을|도)?\s*(?:묽|물\s*같)|물\s*같은\s*변"),
+        re.compile(
+            rf"설사{PARTICLE}\s*{NOW_ADVERB}(?:없|안\s*(?:했|해|하)|하지\s*않|멈췄|{RESOLVED_STATE})"
+        ),
+    ),
+    SymptomRule(
+        "변비",
+        re.compile(r"변비|(?:대변|변)(?:을|이|도)?\s*(?:잘\s*)?(?:못\s*(?:봤|봐|보|본)|안\s*나와|안\s*나오)"),
+        re.compile(rf"변비{PARTICLE}\s*{ABSENT_ENDING}"),
+    ),
+    SymptomRule(
+        "발진",
+        re.compile(
+            r"발진|두드러기|피부(?:가|에|도)?\s*(?:\S+\s*)?(?:가렵|가려|빨갛|붉|오돌토돌|뭐가\s*(?:났|올라))|"
+            r"(?:몸|피부|팔|다리|얼굴)(?:이|가|에)?\s*(?:빨갛게|붉게)\s*(?:올라|돋)"
+        ),
+        re.compile(rf"(?:발진|두드러기){PARTICLE}\s*{ABSENT_ENDING}"),
+        "피부",
+    ),
+    SymptomRule(
+        "피로",
+        re.compile(r"피곤|피로|기운(?:이|도)?\s*없|기력(?:이|도)?\s*없|무기력|나른"),
+        re.compile(
+            rf"(?:피로감?|피곤함){PARTICLE}\s*{ABSENT_ENDING}|"
+            r"안\s*피곤|피곤하지\s*않"
+        ),
+    ),
 )
+FREQUENCY_SYMPTOMS = {"구토", "설사"}
 
 ONSET_PATTERN = re.compile(
     r"(?<![가-힣A-Za-z0-9])(?:어젯밤(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제)\s*"
     r"(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제|방금|아침|점심|저녁|밤|새벽)(?:부터)?|"
-    r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘)(?!\s*에)"
+    r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘)"
+    r"(?!\s*에|\s*(?:\d+|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*(?:번|회|차례))"
     r"(?:\s*(?:전부터|전|동안|째))?|"
     r"(?:일주일|한\s*주|두\s*주|한\s*달|두\s*달)(?!\s*에)"
     r"(?:\s*(?:전부터|전|동안|째))?|"
@@ -176,11 +308,32 @@ ALLERGY_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20})\s*알레르기(?!\s*약)"
     r"(?:가|는|도)?\s*(?:있|있어|있습니다|예요|입니다|반응)"
 )
+TEMPERATURE_PATTERN = re.compile(r"(?<![\d.])(3[5-9]|4[0-2])(?:\.(\d))?\s*(?:도|℃)")
+KNOWN_CONDITION = (
+    r"고혈압|저혈압|당뇨병?|고지혈증|이상지질혈증|천식|만성\s*폐쇄성\s*폐질환|결핵|"
+    r"갑상선\s*(?:기능\s*(?:저하증|항진증)|질환)|심부전|부정맥|협심증|심근경색|심장병|"
+    r"뇌졸중|뇌경색|간염|지방간|간경화|신부전|만성\s*신장\s*질환|신장\s*질환|"
+    r"위염|위궤양|역류성\s*식도염|과민성\s*대장\s*증후군|비염|축농증|아토피|"
+    r"우울증|공황장애|불면증|빈혈|통풍|관절염|디스크|골다공증|암"
+)
+MEDICAL_HISTORY_PATTERN = re.compile(
+    rf"(?<![가-힣])({KNOWN_CONDITION})(?:이|가|은|는|도)?\s*"
+    r"(?:있|진단|앓|걸렸|걸린|치료|투병|병력)"
+)
+MEDICAL_HISTORY_ABSENT_PATTERN = re.compile(
+    rf"(?<![가-힣])({KNOWN_CONDITION})(?:은|는|이|가|도)?\s*(?:없|아니)"
+)
+SURGERY_PATTERN = re.compile(r"([가-힣]{1,10}?)\s*수술(?:을|도)?\s*(?:받았|받은|했|한\s*적)")
 MEDICAL_SIGNAL_PATTERN = re.compile(
-    r"아프|통증|열|기침|숨|호흡|답답|구토|토했|어지|설사|메스꺼|오한|"
-    r"콧물|발진|붓|저리|마비|출혈|두근|약|알레르기"
+    r"아프|아파|통증|열|기침|숨|호흡|답답|구토|토했|어지|설사|메스꺼|오한|"
+    r"콧물|발진|붓|저리|저려|마비|출혈|두근|약|알레르기|가래|막혀|가렵|가려|"
+    r"두드러기|변비|피곤|쑤시|쑤셔|울렁|몸살|현기증|침침|이명|수술|진단"
 )
 CLAUSE_SPLIT_PATTERN = re.compile(r"[.!?。]|(?:\s+)(?:그리고|추가로|하지만|그러나|또한)(?:\s+)")
+SUBCLAUSE_SPLIT_PATTERN = re.compile(
+    r"[.!?。,]|\s+(?:그리고|추가로|하지만|그러나|또한)\s+|"
+    r"(?<=[가-힣])(?:고|며|면서|는데|지만)\s+"
+)
 
 
 def _severity(text: str) -> str | None:
@@ -517,9 +670,15 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
         severity = _severity_for_symptom(
             normalized, evidence.start(), evidence.end(), positions
         )
+        if rule.name == "발열":
+            temperature = _nearest_value(
+                TEMPERATURE_PATTERN, normalized, evidence.start(), evidence.end()
+            )
+            if temperature:
+                severity = re.sub(r"\s*(?:도|℃)$", "℃", temperature)
         frequency = (
             _frequency_for_symptom(normalized, evidence.start(), evidence.end(), positions)
-            if rule.name == "구토"
+            if rule.name in FREQUENCY_SYMPTOMS
             else None
         )
         trend = _trend_for_symptom(
@@ -541,13 +700,21 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
 
     medications = _extract_medications(normalized)
     allergies = list(dict.fromkeys(ALLERGY_PATTERN.findall(normalized)))
-    recognized_evidence = [item.source_text for item in symptoms]
+    medical_history = _extract_medical_history(normalized)
+    evidence_spans = [(evidence.start(), evidence.end()) for _, evidence, _ in matches]
+    evidence_spans += [
+        (match.start(), match.end())
+        for pattern in (
+            MEDICAL_HISTORY_PATTERN, MEDICAL_HISTORY_ABSENT_PATTERN, SURGERY_PATTERN, TEMPERATURE_PATTERN
+        )
+        for match in pattern.finditer(normalized)
+    ]
     unrecognized_fragments: list[str] = []
-    for fragment in CLAUSE_SPLIT_PATTERN.split(normalized):
-        fragment = fragment.strip()
+    for start, end in _subclause_spans(normalized):
+        fragment = normalized[start:end].strip()
         if not fragment or not MEDICAL_SIGNAL_PATTERN.search(fragment):
             continue
-        recognized = any(evidence in fragment for evidence in recognized_evidence)
+        recognized = any(span_start < end and span_end > start for span_start, span_end in evidence_spans)
         recognized = recognized or any(medication in re.sub(r"\s+", "", fragment) for medication in medications)
         recognized = recognized or any(allergen in fragment for allergen in allergies)
         if not recognized:
@@ -556,5 +723,31 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
         symptoms=symptoms,
         medications=medications,
         allergies=allergies,
+        medical_history=medical_history,
         unrecognized_fragments=unrecognized_fragments,
     )
+
+
+def _subclause_spans(text: str) -> list[tuple[int, int]]:
+    spans: list[tuple[int, int]] = []
+    start = 0
+    for boundary in SUBCLAUSE_SPLIT_PATTERN.finditer(text):
+        # Keep the connective ending (e.g. "아프고") with the clause it belongs to.
+        spans.append((start, boundary.start() + len(boundary.group(0).rstrip())))
+        start = boundary.end()
+    spans.append((start, len(text)))
+    return spans
+
+
+def _extract_medical_history(text: str) -> list[str]:
+    denied = {re.sub(r"\s+", " ", value) for value in MEDICAL_HISTORY_ABSENT_PATTERN.findall(text)}
+    history: list[str] = []
+    for value in MEDICAL_HISTORY_PATTERN.findall(text):
+        condition = re.sub(r"\s+", " ", value)
+        if condition not in denied and condition not in history:
+            history.append(condition)
+    for value in SURGERY_PATTERN.findall(text):
+        surgery = f"{value} 수술"
+        if surgery not in history:
+            history.append(surgery)
+    return history

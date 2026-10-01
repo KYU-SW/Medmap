@@ -1,5 +1,6 @@
 import type { StoredIntakeRecord } from "./recordStorage";
 import type { SymptomEpisode } from "./symptomEpisodes";
+import { tracksFrequency } from "./symptomOptions";
 
 export type VisitSummary = {
   firstRecordedAt: string;
@@ -7,6 +8,7 @@ export type VisitSummary = {
   symptoms: SymptomEpisode[];
   medications: string[];
   allergies: string[];
+  medicalHistory: string[];
 };
 
 export function buildVisitSummary(
@@ -24,6 +26,7 @@ export function buildVisitSummary(
     }),
     medications: [...new Set(ordered.flatMap((record) => record.intake.medications))],
     allergies: [...new Set(ordered.flatMap((record) => record.intake.allergies))],
+    medicalHistory: [...new Set(ordered.flatMap((record) => record.intake.medical_history ?? []))],
   };
 }
 
@@ -39,7 +42,7 @@ export function visitSummaryText(summary: VisitSummary): string {
       + (symptom.latestTrend
         ? ` / 최근 변화: ${symptom.latestTrend === "improving" ? "호전 중" : symptom.latestTrend === "worsening" ? "악화 중" : "변화 없음"}`
         : "")
-      + (symptom.name === "구토" && symptom.frequencies.length > 0
+      + (tracksFrequency(symptom.name) && symptom.frequencies.length > 0
         ? ` / 횟수: ${symptom.frequencies.join(", ")}`
         : "")
       + ` / 기록 ${symptom.recordCount}회`,
@@ -51,6 +54,7 @@ export function visitSummaryText(summary: VisitSummary): string {
     ...(symptomLines.length > 0 ? symptomLines : ["- 확인된 증상 없음"]),
     `기록 기간 중 복용약: ${summary.medications.join(", ") || "확인되지 않음"}`,
     `기록된 알레르기: ${summary.allergies.join(", ") || "확인되지 않음"}`,
+    `과거력: ${summary.medicalHistory.join(", ") || "확인되지 않음"}`,
     "이 내용은 사용자가 확인한 기록의 요약이며 진단 결과가 아닙니다.",
   ].join("\n");
 }

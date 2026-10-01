@@ -283,9 +283,9 @@ def test_change_expressions_across_supported_symptoms(
 @pytest.mark.parametrize(
     "text",
     [
-        "어지럽고 설사를 해요",
-        "허리가 아프고 손이 저려요",
-        "목이 붓고 피부에 발진이 생겼어요",
+        "손발이 저려요",
+        "눈이 침침해요",
+        "가슴이 두근거려요",
     ],
 )
 def test_category_7_unsupported_symptoms_are_not_forced_into_supported_names(text: str) -> None:

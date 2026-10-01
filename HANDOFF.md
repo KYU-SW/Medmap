@@ -2,7 +2,7 @@
 
 작성일: 2026-10-01
 브랜치: `feature/stt-rebuild`
-마지막 커밋: `22aae26` Add AI handoff and agent instructions
+마지막 커밋: `291f13e` Add Claude project instructions
 
 ## 1. 프로젝트 개요
 
@@ -12,10 +12,14 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
 
 ## 2. Git 상태 (2026-10-01 확인)
 
-- 현재 브랜치 `feature/stt-rebuild`는 `origin/feature/stt-rebuild`와 같다(마지막 커밋 `22aae26`).
-- HANDOFF.md와 AGENTS.md는 `22aae26`에서 커밋했다.
-- 2026-10-01: Claude Code용 작업 규칙 파일 `CLAUDE.md`를 추가하고 이 HANDOFF.md의 Git 상태를 갱신했다.
-  이 두 변경은 아직 커밋하지 않았다.
+- 마지막 커밋은 `291f13e`(CLAUDE.md 추가)다. HANDOFF.md와 AGENTS.md는 `22aae26`에서 커밋했다.
+- 2026-10-01 작업(아래 4절 8~9번, 6절, 7절)은 **아직 커밋하지 않았다.** 변경 파일:
+  - 문서: `HANDOFF.md`, `docs/INTAKE_EXTRACTION.md`, `docs/PRIVACY.md`
+  - API: `app/services/intake_extractor.py`, `app/schemas/intake.py`, `tests/test_intake.py`,
+    `tests/test_intake_scenarios.py`, 새 파일 `tests/test_intake_expanded.py`
+  - 웹: `package.json`, `pnpm-lock.yaml`, `src/App.tsx`, `src/styles.css`, `src/recordStorage.ts`,
+    `src/recordGroups.ts`, `src/visitSummary.ts`, 새 파일 `src/symptomOptions.ts`, `src/backup.ts`,
+    `src/testRecords.ts`, 테스트 `src/*.test.ts` 5개
 - main(`1feda4b`, 2026-09-28)보다 커밋 46개 앞서 있다. 아직 main에 병합하지 않았다.
 - 원격 저장소: https://github.com/minu2246/MedMap (비공개)
 
@@ -30,6 +34,7 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
   진료 전 요약, PDF와 QR 공유를 제공한다.
   - `recordStorage.ts` 기록 저장(브라우저 IndexedDB) / `recordGroups.ts` 증상 그룹 / `symptomEpisodes.ts` 에피소드 묶음
   - `timeline.ts` 증상 변화 타임라인 / `visitSummary.ts` 진료 전 요약
+  - `symptomOptions.ts` 지원 증상 목록, 횟수 기록 대상 / `backup.ts` 기록 백업 파일 만들기와 검증
 - 루트의 `01_download.py`, `02_inspect.py`, `03_audit.py`: DDXPlus 다운로드, 구조 확인, 통계 감사 (연구 트랙)
 - `scripts/`: 실행, 설치, 모바일 HTTPS, 임시 터널, 저장소 감사와 정리용 PowerShell 스크립트
 
@@ -42,10 +47,21 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
    - 시간과 정도는 가장 가까운 증상에만 연결한다.
    - 지원하지 않는 표현은 "자동으로 정리하지 못한 표현"으로 따로 보여준다.
 3. 기록 기능: 사용자가 확인한 기록을 브라우저에 저장, 증상 그룹 분리와 삭제, 에피소드 묶음, 변화 타임라인
-4. 증상 경과: 좋아짐, 나빠짐, 사라짐 표현 인식. 빈도는 구토에만 기록한다.
+4. 증상 경과: 좋아짐, 나빠짐, 사라짐 표현 인식. 빈도는 구토에만 기록했다(2026-10-01부터 설사도 기록).
 5. 진료 전 요약: PDF와 QR로 공유한다. 기록 그룹을 바꾸면 QR을 지운다.
 6. 최근 수정: 같은 기록이 두 번 저장되거나 그룹 없이 저장되는 문제를 막았다(`f06d3cf`).
 7. 개발 환경: HTTP 데스크톱 모드, 모바일 HTTPS, 원격 시험용 임시 터널, 저장소 감사와 정리 스크립트
+8. 2026-10-01 증상 추출 확장 (상세: docs/INTAKE_EXTRACTION.md)
+   - 지원 증상 7개 → 21개: 흉통, 인후통, 콧물, 코막힘, 가래, 오한, 근육통, 요통, 어지러움,
+     메스꺼움, 설사, 변비, 발진, 피로 추가
+   - 과거력(`medical_history`): 정해진 질환 이름 + 있다/진단/앓다, 수술 경험. 부정하면 제외
+   - 발열에 체온(`38.5℃`) 기록, 횟수는 구토와 설사에 기록
+   - 버그 수정: `열흘`·`해열제`·`열심히`를 발열로 잡던 문제, `하루 3번`의 `하루`를 시작 시점 `1일`로 잡던 문제
+   - 미인식 표현을 문장 전체가 아니라 해당 부분만 보여준다
+9. 2026-10-01 진료 전 화면 보완
+   - 증상 직접 추가와 삭제(이름이 비면 저장 막음), 복용약·알레르기·과거력 직접 수정
+   - 요약, PDF/QR 글, 저장 기록에 과거력 표시
+   - 전체 기록 백업 파일(JSON) 내보내기와 가져오기. 같은 id 기록은 건너뛴다. 서버로 보내지 않는다.
 
 ## 5. 실행 방법
 
@@ -67,9 +83,11 @@ cd apps\api
 .\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
 ```
 
-- 결과: **99 passed, 1 warning (0.48s)**
+- 결과: **143 passed, 1 warning** (증상 확장 후, 2026-10-01). 확장 전에는 99 passed였다.
 - 경고: `StarletteDeprecationWarning`. `starlette.testclient`에서 `httpx`를 쓰는 방식이 deprecated라는 내용이다. 테스트 결과에는 영향이 없다.
-- 테스트 파일: `test_api.py`, `test_intake.py`, `test_intake_combinations.py`, `test_intake_scenarios.py`
+- 테스트 파일: `test_api.py`, `test_intake.py`, `test_intake_combinations.py`, `test_intake_scenarios.py`, `test_intake_expanded.py`
+- 기존 테스트 2개를 고쳤다. "허리 통증, 어지러움, 설사, 발진은 지원하지 않는다"를 확인하던 테스트로,
+  이제 지원하므로 손 저림, 눈 침침함, 두근거림처럼 아직 지원하지 않는 표현으로 바꿨다.
 
 ### 웹 빌드: 성공
 
@@ -80,7 +98,25 @@ corepack pnpm build   # 이 PC에는 pnpm이 PATH에 없어 corepack으로 pnpm 
 
 - 결과: **성공 (exit code 0)**. `tsc -b`와 vite v8.3.1 빌드를 모두 통과했다. 모듈 49개, JS 268.89 kB(gzip 84.80 kB).
 - 빌드 결과물 `dist/`는 Git에서 제외되어 있다. 빌드 후 `git status`에 변경 사항이 없었다.
-- 웹 자동 테스트는 아직 없다. 빌드에서는 타입 검사와 번들 생성만 확인한다.
+- 2026-10-01 화면 보완 후 다시 빌드: 성공. JS 275.22 kB(gzip 86.62 kB). 테스트 파일도 `tsc -b` 타입 검사 대상이다.
+
+### 웹 단위 테스트: 통과 (2026-10-01 추가)
+
+```powershell
+cd apps\web
+corepack pnpm test   # vitest run
+```
+
+- 결과: **5 files, 24 tests passed**
+- 대상: `buildTimeline`, `buildSymptomEpisodes`, `buildVisitSummary`, `visitSummaryText`, `backup.ts`, `symptomOptions.ts`
+- 아직 자동 테스트하지 않은 것: `recordStorage.ts`(IndexedDB), `recordGroups.ts`(localStorage), `App.tsx` 화면
+
+### PC 브라우저 수동 확인 (2026-10-01, Chrome, 텍스트 입력)
+
+- 확인한 것: 새 증상 인식(인후통·발열 38.5℃·설사 하루 3회), 과거력 `고혈압`, 미인식 표현 `손이 저려요.`만 표시,
+  증상 직접 추가, 이름이 비면 저장 차단, 알레르기 직접 수정, 저장 후 요약에 과거력 표시
+- 시험용으로 만든 기록 묶음은 확인 후 삭제했다. 기존 기록 묶음은 건드리지 않았다.
+- 확인하지 않은 것: 백업 내보내기/가져오기 버튼 실제 동작(파일 다운로드·선택 창이 필요해 단위 테스트로만 확인), 음성 입력, 휴대폰 화면
 
 ### 실제 기기 확인 (기존 문서 기준, 이번에 다시 확인하지 않음)
 
@@ -92,11 +128,20 @@ corepack pnpm build   # 이 PC에는 pnpm이 PATH에 없어 corepack으로 pnpm 
 ## 7. 남은 작업과 주의점 (STT 재구축 트랙)
 
 - [ ] Android Chrome에서 실제 확인
-- [ ] 웹 자동 테스트 추가
-- [ ] `apps/web/package.json`의 react, vite, typescript 버전이 `latest`라 재현성이 낮다.
-- [ ] docs/INTAKE_EXTRACTION.md에는 "확인 버튼을 눌러도 아직 서버나 PatientState에 저장하지 않는다"고 적혀 있다.
-      지금은 확인한 기록을 브라우저 IndexedDB에 저장하므로(docs/PRIVACY.md) 문서를 고쳐야 한다.
-- [ ] 기록은 브라우저에만 있다. 서버나 PatientState 연동과 진단 엔진은 아직 없다.
+- [x] 웹 자동 테스트 1차: Vitest 5.0.3을 도입하고 순수 함수 테스트 13개를 추가했다. (2026-10-01)
+- [ ] 웹 테스트 확장: `recordGroups.ts`, `recordStorage.ts`(jsdom 또는 fake-indexeddb 필요), 화면 테스트
+- [x] `apps/web/package.json`의 `latest` 버전을 지금 설치된 버전으로 고정했다. (2026-10-01)
+      react/react-dom/@types 19.3.0, @vitejs/plugin-react 6.1.1, typescript 7.0.2, vite 8.3.1. lockfile은 specifier만 바뀌었다.
+- [x] docs/INTAKE_EXTRACTION.md의 저장 설명을 IndexedDB 저장 기준으로 고쳤다. (2026-10-01)
+- 주의: `apps/web/node_modules`는 `local-cache/pnpm-store`와 연결되어 있다. pnpm 기본 store와 경로가 달라
+  `pnpm add/install`에서 `ERR_PNPM_UNEXPECTED_STORE`가 나면 `--store-dir ../../local-cache/pnpm-store`를 붙인다.
+- [ ] 기록은 브라우저에만 있다(백업 파일로 옮길 수는 있음). 서버나 PatientState 연동과 진단 엔진은 아직 없다.
+      서버 저장은 docs/PRIVACY.md 원칙(서버에 보관하지 않음)을 바꿔야 하므로 사용자 결정이 필요하다.
+- [ ] 백업 내보내기/가져오기를 실제 브라우저에서 한 번 눌러 확인
+- [ ] 증상 추출 남은 한계: 규칙 기반이라 목록에 없는 표현은 놓친다(손 저림, 두근거림, 눈 침침함 등).
+      한 문장 안에 같은 부위의 두 증상(예: `가슴이 답답하고 아파요`)은 하나만 잡고 나머지는 미인식으로 보여준다.
+      과거력은 정해진 질환 이름만 인식한다.
+- 진료 중/후 기능과 DDXPlus 연구 트랙은 2026-10-02 이후 진행 예정(사용자 결정, 2026-10-01).
 - [ ] 테스트의 `StarletteDeprecationWarning` 정리 여부 검토
 - [ ] `feature/stt-rebuild`를 main에 언제 병합할지 결정
 

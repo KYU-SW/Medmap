@@ -4,8 +4,11 @@ import {
   deleteIntakeRecord,
   listIntakeRecords,
   saveIntakeRecord,
+  saveIntakeRecords,
   type StoredIntakeRecord,
 } from "./recordStorage";
+import { createBackup, parseBackup } from "./backup";
+import { parseList, SUPPORTED_SYMPTOMS, tracksFrequency } from "./symptomOptions";
 import { buildTimeline } from "./timeline";
 import { buildSymptomEpisodes } from "./symptomEpisodes";
 import { buildVisitSummary, visitSummaryText } from "./visitSummary";
@@ -14,6 +17,7 @@ import {
   deleteRecordGroup,
   getCurrentRecordGroupId,
   LEGACY_RECORD_GROUP_ID,
+  mergeRecordGroups,
   prepareRecordGroups,
   setCurrentRecordGroupId,
   type RecordGroup,
@@ -36,9 +40,18 @@ type IntakeResult = {
   symptoms: SymptomObservation[];
   medications: string[];
   allergies: string[];
+  medical_history: string[];
   unrecognized_fragments: string[];
   needs_user_confirmation: boolean;
 };
+
+type ListDrafts = {
+  medications: string;
+  allergies: string;
+  medical_history: string;
+};
+
+const EMPTY_LIST_DRAFTS: ListDrafts = { medications: "", allergies: "", medical_history: "" };
 
 const MAX_RECORDING_MS = 60_000;
 const LIVE_TRANSCRIPTION_INTERVAL_MS = 1_500;
@@ -83,6 +96,8 @@ export default function App() {
   const [transcript, setTranscript] = useState("");
   const [message, setMessage] = useState("버튼을 누르고 증상을 말해 주세요.");
   const [intake, setIntake] = useState<IntakeResult | null>(null);
+  const [listDrafts, setListDrafts] = useState<ListDrafts>(EMPTY_LIST_DRAFTS);
+  const [backupMessage, setBackupMessage] = useState("");
   const [extracting, setExtracting] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [records, setRecords] = useState<StoredIntakeRecord[]>([]);
@@ -318,7 +333,13 @@ export default function App() {
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.detail || "의료정보를 정리하지 못했습니다.");
-      setIntake(data);
+      const result: IntakeResult = { ...data, medical_history: data.medical_history ?? [] };
+      setIntake(result);
+      setListDrafts({
+        medications: result.medications.join(", "),
+        allergies: result.allergies.join(", "),
+        medical_history: result.medical_history.join(", "),
+      });
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "의료정보를 정리하지 못했습니다.");
@@ -337,10 +358,44 @@ export default function App() {
     setConfirmed(false);
   }
 
+  function addSymptom() {
+    setIntake((current) => current && ({
+      ...current,
+      symptoms: [...current.symptoms, {
+        name: "",
+        status: "present",
+        body_site: null,
+        onset: null,
+        severity: null,
+        frequency: null,
+        trend: null,
+        source_text: "사용자가 직접 추가",
+      }],
+    }));
+    setConfirmed(false);
+  }
+
+  function removeSymptom(index: number) {
+    setIntake((current) => current && ({
+      ...current,
+      symptoms: current.symptoms.filter((_, itemIndex) => itemIndex !== index),
+    }));
+    setConfirmed(false);
+  }
+
+  function updateListDraft(key: keyof ListDrafts, value: string) {
+    setListDrafts((current) => ({ ...current, [key]: value }));
+    setConfirmed(false);
+  }
+
   async function confirmAndSave() {
     if (!intake || !transcript.trim() || savingRecordRef.current || confirmed) return;
     if (!currentRecordGroupId) {
       setRecordMessage("증상 기록 묶음을 불러오는 중입니다. 잠시 후 다시 저장해 주세요.");
+      return;
+    }
+    if (intake.symptoms.some((symptom) => !symptom.name.trim())) {
+      setRecordMessage("이름이 비어 있는 증상이 있습니다. 증상 이름을 입력하거나 삭제해 주세요.");
       return;
     }
     savingRecordRef.current = true;
@@ -351,7 +406,17 @@ export default function App() {
       recordGroupId: currentRecordGroupId,
       createdAt: new Date().toISOString(),
       transcript: transcript.trim(),
-      intake,
+      intake: {
+        ...intake,
+        symptoms: intake.symptoms.map((symptom) => ({
+          ...symptom,
+          name: symptom.name.trim(),
+          frequency: tracksFrequency(symptom.name.trim()) ? symptom.frequency : null,
+        })),
+        medications: parseList(listDrafts.medications),
+        allergies: parseList(listDrafts.allergies),
+        medical_history: parseList(listDrafts.medical_history),
+      },
     };
     try {
       await saveIntakeRecord(record);
@@ -456,6 +521,43 @@ export default function App() {
     window.print();
   }
 
+  function exportBackup() {
+    if (records.length === 0) {
+      setBackupMessage("내보낼 기록이 없습니다.");
+      return;
+    }
+    const backup = createBackup(recordGroups, records);
+    const url = URL.createObjectURL(new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `medmap-backup-${backup.exportedAt.slice(0, 10)}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    setBackupMessage(`기록 ${records.length}개를 백업 파일로 내보냈습니다. 파일에 건강 정보가 들어 있으니 안전하게 보관해 주세요.`);
+  }
+
+  async function importBackup(file: File) {
+    try {
+      const backup = parseBackup(await file.text());
+      const knownIds = new Set(records.map((record) => record.id));
+      const newRecords = backup.records.filter((record) => !knownIds.has(record.id));
+      await saveIntakeRecords(newRecords);
+      const allRecords = [...records, ...newRecords].sort(
+        (left, right) => right.createdAt.localeCompare(left.createdAt),
+      );
+      mergeRecordGroups(backup.groups);
+      setRecords(allRecords);
+      setRecordGroups(prepareRecordGroups(allRecords));
+      const skipped = backup.records.length - newRecords.length;
+      setBackupMessage(
+        `기록 ${newRecords.length}개를 가져왔습니다.`
+          + (skipped > 0 ? ` 이미 있는 기록 ${skipped}개는 건너뛰었습니다.` : ""),
+      );
+    } catch (error) {
+      setBackupMessage(error instanceof Error ? error.message : "백업 파일을 가져오지 못했습니다.");
+    }
+  }
+
   return (
     <main className="page">
       <section className="card" aria-live="polite">
@@ -540,6 +642,8 @@ export default function App() {
                   증상
                   <input
                     value={symptom.name}
+                    list="supported-symptoms"
+                    placeholder="증상 이름"
                     onChange={(event) => updateSymptom(index, { name: event.target.value })}
                   />
                 </label>
@@ -571,7 +675,7 @@ export default function App() {
                     onChange={(event) => updateSymptom(index, { severity: event.target.value || null })}
                   />
                 </label>
-                {symptom.name === "구토" && (
+                {tracksFrequency(symptom.name) && (
                   <label>
                     횟수
                     <input
@@ -598,10 +702,43 @@ export default function App() {
                   </label>
                 )}
                 <p className="source-text">원문 근거: “{symptom.source_text}”</p>
+                <button className="button--delete" type="button" onClick={() => removeSymptom(index)}>
+                  이 증상 삭제
+                </button>
               </div>
             ))}
-            <p><strong>복용약:</strong> {intake.medications.join(", ") || "확인되지 않음"}</p>
-            <p><strong>알레르기:</strong> {intake.allergies.join(", ") || "확인되지 않음"}</p>
+            <datalist id="supported-symptoms">
+              {SUPPORTED_SYMPTOMS.map((name) => <option key={name} value={name} />)}
+            </datalist>
+            <button className="button--secondary" type="button" onClick={addSymptom}>
+              증상 직접 추가
+            </button>
+            <div className="intake-lists">
+              <label>
+                복용약
+                <input
+                  value={listDrafts.medications}
+                  placeholder="확인되지 않음 (쉼표로 구분)"
+                  onChange={(event) => updateListDraft("medications", event.target.value)}
+                />
+              </label>
+              <label>
+                알레르기
+                <input
+                  value={listDrafts.allergies}
+                  placeholder="확인되지 않음 (쉼표로 구분)"
+                  onChange={(event) => updateListDraft("allergies", event.target.value)}
+                />
+              </label>
+              <label>
+                과거력 (앓고 있는 병, 수술)
+                <input
+                  value={listDrafts.medical_history}
+                  placeholder="확인되지 않음 (쉼표로 구분)"
+                  onChange={(event) => updateListDraft("medical_history", event.target.value)}
+                />
+              </label>
+            </div>
             {intake.unrecognized_fragments.length > 0 && (
               <div className="review-warning" role="alert">
                 <strong>자동으로 정리하지 못한 표현</strong>
@@ -647,7 +784,7 @@ export default function App() {
                       {` · 시작: ${symptom.statedOnset || "확인되지 않음"}`}
                       {` · 가장 심한 정도: ${symptom.peakSeverity || "확인되지 않음"}`}
                       {symptom.latestTrend && ` · 최근 변화: ${symptom.latestTrend === "improving" ? "호전 중" : symptom.latestTrend === "worsening" ? "악화 중" : "변화 없음"}`}
-                      {symptom.name === "구토" && symptom.frequencies.length > 0 && ` · 횟수: ${symptom.frequencies.join(", ")}`}
+                      {tracksFrequency(symptom.name) && symptom.frequencies.length > 0 && ` · 횟수: ${symptom.frequencies.join(", ")}`}
                       {` · ${symptom.recordCount}회 기록`}
                     </li>
                   ))}
@@ -655,6 +792,7 @@ export default function App() {
               </div>
               <p><strong>기록 기간 중 복용약:</strong> {visitSummary.medications.join(", ") || "확인되지 않음"}</p>
               <p><strong>기록된 알레르기:</strong> {visitSummary.allergies.join(", ") || "확인되지 않음"}</p>
+              <p><strong>과거력:</strong> {visitSummary.medicalHistory.join(", ") || "확인되지 않음"}</p>
               <p className="summary-notice">사용자가 확인한 기록의 요약이며 진단 결과가 아닙니다.</p>
               <div className="summary-actions">
                 <button className="button--secondary" type="button" onClick={() => void copyVisitSummary()}>
@@ -710,7 +848,7 @@ export default function App() {
                   <p>말한 시작 시점: {episode.statedOnset || "확인되지 않음"}</p>
                   <p>가장 심한 정도: {episode.peakSeverity || "확인되지 않음"}</p>
                   <p>최근 변화: {episode.latestTrend === "improving" ? "호전 중" : episode.latestTrend === "worsening" ? "악화 중" : episode.latestTrend === "unchanged" ? "변화 없음" : "확인되지 않음"}</p>
-                  {episode.name === "구토" && (
+                  {tracksFrequency(episode.name) && (
                     <p>기록된 횟수: {episode.frequencies.join(", ") || "확인되지 않음"}</p>
                   )}
                   <p>연결된 기록: {episode.recordCount}개</p>
@@ -743,7 +881,7 @@ export default function App() {
                       {symptom.status === "present" && ` · 시작: ${symptom.onset || "확인되지 않음"}`}
                       {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
                       {symptom.status === "present" && symptom.trend && ` · 변화: ${symptom.trend === "improving" ? "호전 중" : symptom.trend === "worsening" ? "악화 중" : "변화 없음"}`}
-                      {symptom.name === "구토" && symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
+                      {tracksFrequency(symptom.name) && symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
                     </li>
                   ))}
                 </ul>
@@ -754,6 +892,25 @@ export default function App() {
         <section className="records" aria-label="저장된 증상 기록">
           <h2>저장된 증상 기록</h2>
           <p>이 기기의 현재 브라우저에만 보관됩니다.</p>
+          <div className="backup-actions">
+            <button className="button--secondary" type="button" onClick={exportBackup}>
+              전체 기록 백업 파일로 내보내기
+            </button>
+            <label className="button--secondary backup-import">
+              백업 파일 가져오기
+              <input
+                type="file"
+                accept="application/json,.json"
+                onChange={(event) => {
+                  const file = event.target.files?.[0];
+                  event.target.value = "";
+                  if (file) void importBackup(file);
+                }}
+              />
+            </label>
+          </div>
+          <p className="backup-note">다른 브라우저나 기기로 옮길 때 사용하세요. 백업 파일은 서버로 전송되지 않습니다.</p>
+          {backupMessage && <p className="record-message">{backupMessage}</p>}
           {visibleRecords.length === 0 ? (
             <p className="empty-result">아직 저장된 기록이 없습니다.</p>
           ) : visibleRecords.map((record) => (
@@ -778,7 +935,7 @@ export default function App() {
                         {symptom.status === "present" && ` · 시작: ${symptom.onset || "확인되지 않음"}`}
                         {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
                         {symptom.status === "present" && symptom.trend && ` · 변화: ${symptom.trend === "improving" ? "호전 중" : symptom.trend === "worsening" ? "악화 중" : "변화 없음"}`}
-                        {symptom.name === "구토" && symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
+                        {tracksFrequency(symptom.name) && symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
                       </li>
                     ))}
                   </ul>
@@ -786,6 +943,7 @@ export default function App() {
               </div>
               <p><strong>복용약:</strong> {record.intake.medications.join(", ") || "확인되지 않음"}</p>
               <p><strong>알레르기:</strong> {record.intake.allergies.join(", ") || "확인되지 않음"}</p>
+              <p><strong>과거력:</strong> {record.intake.medical_history?.join(", ") || "확인되지 않음"}</p>
               <button className="button--delete" type="button" onClick={() => void removeRecord(record.id)}>
                 이 기록 삭제
               </button>

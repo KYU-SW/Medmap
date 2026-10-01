@@ -396,7 +396,45 @@ select {
   background: #fff0f0;
 }
 
+.observation .button--delete {
+  grid-column: 1 / -1;
+  margin-top: 0;
+  padding: 10px;
+}
+
+.intake-lists label {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.backup-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.backup-import {
+  margin: 20px 0 0;
+  padding: 14px 18px;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.backup-import input {
+  display: none;
+}
+
+.backup-note {
+  color: #52605d;
+  font-size: 13px;
+}
+
 @media (max-width: 520px) {
+  .backup-actions {
+    grid-template-columns: 1fr;
+  }
+
   .card {
     padding: 24px 18px;
   }

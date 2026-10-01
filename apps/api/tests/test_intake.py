@@ -181,9 +181,9 @@ def test_common_negative_variants() -> None:
 
 
 def test_warns_when_medical_expression_is_not_supported() -> None:
-    result = extract("어제부터 허리가 아프고 어지러워요")
-    assert result["symptoms"] == []
-    assert result["unrecognized_fragments"] == ["어제부터 허리가 아프고 어지러워요"]
+    result = extract("어제부터 허리가 아프고 손이 저려요")
+    assert [item["name"] for item in result["symptoms"]] == ["요통"]
+    assert result["unrecognized_fragments"] == ["손이 저려요"]
 
 
 def test_repeated_intensity_words_do_not_hide_symptoms() -> None:

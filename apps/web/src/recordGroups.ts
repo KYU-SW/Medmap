@@ -65,6 +65,18 @@ export function createRecordGroup(save = true): RecordGroup {
   return group;
 }
 
+export function mergeRecordGroups(incoming: RecordGroup[]): RecordGroup[] {
+  const groups = readSavedGroups();
+  const knownIds = new Set(groups.map((group) => group.id));
+  for (const group of incoming) {
+    if (knownIds.has(group.id)) continue;
+    groups.push(group);
+    knownIds.add(group.id);
+  }
+  saveGroups(groups);
+  return groups.sort((left, right) => right.createdAt.localeCompare(left.createdAt));
+}
+
 export function getCurrentRecordGroupId(groups: RecordGroup[]): string {
   const saved = localStorage.getItem(CURRENT_GROUP_KEY);
   return groups.some((group) => group.id === saved) ? saved! : groups[0].id;

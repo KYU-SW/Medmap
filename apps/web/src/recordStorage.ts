@@ -16,6 +16,7 @@ export type StoredIntakeRecord = {
     }>;
     medications: string[];
     allergies: string[];
+    medical_history?: string[];
     unrecognized_fragments: string[];
     needs_user_confirmation: boolean;
   };
@@ -61,6 +62,21 @@ export async function listIntakeRecords(): Promise<StoredIntakeRecord[]> {
 
 export async function saveIntakeRecord(record: StoredIntakeRecord): Promise<void> {
   await useStore<IDBValidKey>("readwrite", (store) => store.put(record));
+}
+
+export async function saveIntakeRecords(records: StoredIntakeRecord[]): Promise<void> {
+  const database = await openDatabase();
+  await new Promise<void>((resolve, reject) => {
+    const transaction = database.transaction(STORE_NAME, "readwrite");
+    const store = transaction.objectStore(STORE_NAME);
+    for (const record of records) store.put(record);
+    transaction.oncomplete = () => {
+      database.close();
+      resolve();
+    };
+    transaction.onerror = () => reject(transaction.error);
+    transaction.onabort = () => reject(transaction.error);
+  });
 }
 
 export async function deleteIntakeRecord(id: string): Promise<void> {
