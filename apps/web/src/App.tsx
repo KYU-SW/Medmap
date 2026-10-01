@@ -9,6 +9,14 @@ import {
 import { buildTimeline } from "./timeline";
 import { buildSymptomEpisodes } from "./symptomEpisodes";
 import { buildVisitSummary, visitSummaryText } from "./visitSummary";
+import {
+  createRecordGroup,
+  getCurrentRecordGroupId,
+  LEGACY_RECORD_GROUP_ID,
+  prepareRecordGroups,
+  setCurrentRecordGroupId,
+  type RecordGroup,
+} from "./recordGroups";
 
 type Status = "idle" | "recording" | "transcribing" | "done" | "error";
 
@@ -75,6 +83,8 @@ export default function App() {
   const [extracting, setExtracting] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [records, setRecords] = useState<StoredIntakeRecord[]>([]);
+  const [recordGroups, setRecordGroups] = useState<RecordGroup[]>([]);
+  const [currentRecordGroupId, setCurrentGroupId] = useState("");
   const [savingRecord, setSavingRecord] = useState(false);
   const [recordMessage, setRecordMessage] = useState("");
   const [summaryMessage, setSummaryMessage] = useState("");
@@ -96,7 +106,12 @@ export default function App() {
 
   useEffect(() => {
     void listIntakeRecords()
-      .then(setRecords)
+      .then((loadedRecords) => {
+        setRecords(loadedRecords);
+        const groups = prepareRecordGroups(loadedRecords);
+        setRecordGroups(groups);
+        setCurrentGroupId(getCurrentRecordGroupId(groups));
+      })
       .catch(() => setRecordMessage("저장된 기록을 불러오지 못했습니다."));
     return () => {
       stopLiveCapture();
@@ -324,6 +339,7 @@ export default function App() {
     setRecordMessage("");
     const record: StoredIntakeRecord = {
       id: crypto.randomUUID(),
+      recordGroupId: currentRecordGroupId,
       createdAt: new Date().toISOString(),
       transcript: transcript.trim(),
       intake,
@@ -351,10 +367,29 @@ export default function App() {
     }
   }
 
+  function selectRecordGroup(id: string) {
+    setCurrentRecordGroupId(id);
+    setCurrentGroupId(id);
+    setTranscript("");
+    setIntake(null);
+    setConfirmed(false);
+    setRecordMessage("");
+  }
+
+  function startNewRecordGroup() {
+    const group = createRecordGroup();
+    setRecordGroups((current) => [group, ...current]);
+    selectRecordGroup(group.id);
+    setMessage("새 증상 기록을 시작했습니다. 증상을 말하거나 입력해 주세요.");
+  }
+
   const busy = status === "recording" || status === "transcribing";
-  const timeline = buildTimeline(records);
-  const symptomEpisodes = buildSymptomEpisodes(records);
-  const visitSummary = buildVisitSummary(records, symptomEpisodes);
+  const visibleRecords = records.filter(
+    (record) => (record.recordGroupId || LEGACY_RECORD_GROUP_ID) === currentRecordGroupId,
+  );
+  const timeline = buildTimeline(visibleRecords);
+  const symptomEpisodes = buildSymptomEpisodes(visibleRecords);
+  const visitSummary = buildVisitSummary(visibleRecords, symptomEpisodes);
 
   async function copyVisitSummary() {
     if (!visitSummary) return;
@@ -396,6 +431,22 @@ export default function App() {
       <section className="card" aria-live="polite">
         <p className="eyebrow">MedMap 음성 입력</p>
         <h1>증상을 말로 기록해 보세요</h1>
+        <section className="record-group-picker" aria-label="증상 기록 묶음 선택">
+          <label htmlFor="record-group">현재 증상 기록</label>
+          <select
+            id="record-group"
+            value={currentRecordGroupId}
+            onChange={(event) => selectRecordGroup(event.target.value)}
+          >
+            {recordGroups.map((group) => (
+              <option key={group.id} value={group.id}>{group.name}</option>
+            ))}
+          </select>
+          <button className="button--secondary" type="button" onClick={startNewRecordGroup}>
+            새 증상 기록 시작
+          </button>
+          <p>현재 선택한 기록 안에서만 타임라인, PDF, QR을 만듭니다.</p>
+        </section>
         <p className={`status status--${status}`}>{message}</p>
 
         <div className="controls">
@@ -636,9 +687,9 @@ export default function App() {
         <section className="records" aria-label="저장된 증상 기록">
           <h2>저장된 증상 기록</h2>
           <p>이 기기의 현재 브라우저에만 보관됩니다.</p>
-          {records.length === 0 ? (
+          {visibleRecords.length === 0 ? (
             <p className="empty-result">아직 저장된 기록이 없습니다.</p>
-          ) : records.map((record) => (
+          ) : visibleRecords.map((record) => (
             <article className="record" key={record.id}>
               <time dateTime={record.createdAt}>
                 {new Intl.DateTimeFormat("ko-KR", {

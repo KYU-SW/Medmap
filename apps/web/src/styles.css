@@ -88,6 +88,28 @@ button:disabled {
   background: #fff0f0;
 }
 
+.record-group-picker {
+  margin: 20px 0;
+  padding: 16px;
+  border-radius: 14px;
+  background: #f2f9f7;
+}
+
+.record-group-picker label {
+  margin: 0 0 8px;
+}
+
+.record-group-picker button {
+  margin-top: 10px;
+}
+
+.record-group-picker p {
+  margin: 10px 0 0;
+  color: #52605d;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 label {
   display: block;
   margin-top: 24px;

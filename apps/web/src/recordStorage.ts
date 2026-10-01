@@ -1,5 +1,6 @@
 export type StoredIntakeRecord = {
   id: string;
+  recordGroupId?: string;
   createdAt: string;
   transcript: string;
   intake: {
