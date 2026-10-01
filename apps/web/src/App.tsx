@@ -28,6 +28,7 @@ type SymptomObservation = {
   onset: string | null;
   severity: string | null;
   frequency: string | null;
+  trend: "improving" | "worsening" | "unchanged" | null;
   source_text: string;
 };
 
@@ -573,6 +574,22 @@ export default function App() {
                     />
                   </label>
                 )}
+                {symptom.status === "present" && (
+                  <label>
+                    이전보다 변화
+                    <select
+                      value={symptom.trend ?? ""}
+                      onChange={(event) => updateSymptom(index, {
+                        trend: (event.target.value || null) as SymptomObservation["trend"],
+                      })}
+                    >
+                      <option value="">확인되지 않음</option>
+                      <option value="improving">호전 중</option>
+                      <option value="worsening">악화 중</option>
+                      <option value="unchanged">변화 없음</option>
+                    </select>
+                  </label>
+                )}
                 <p className="source-text">원문 근거: “{symptom.source_text}”</p>
               </div>
             ))}
@@ -622,6 +639,7 @@ export default function App() {
                       {` · ${symptom.status === "active" ? "현재 있음" : "사라짐"}`}
                       {` · 시작: ${symptom.statedOnset || "확인되지 않음"}`}
                       {` · 가장 심한 정도: ${symptom.peakSeverity || "확인되지 않음"}`}
+                      {symptom.latestTrend && ` · 최근 변화: ${symptom.latestTrend === "improving" ? "호전 중" : symptom.latestTrend === "worsening" ? "악화 중" : "변화 없음"}`}
                       {symptom.name === "구토" && symptom.frequencies.length > 0 && ` · 횟수: ${symptom.frequencies.join(", ")}`}
                       {` · ${symptom.recordCount}회 기록`}
                     </li>
@@ -684,6 +702,7 @@ export default function App() {
                   )}
                   <p>말한 시작 시점: {episode.statedOnset || "확인되지 않음"}</p>
                   <p>가장 심한 정도: {episode.peakSeverity || "확인되지 않음"}</p>
+                  <p>최근 변화: {episode.latestTrend === "improving" ? "호전 중" : episode.latestTrend === "worsening" ? "악화 중" : episode.latestTrend === "unchanged" ? "변화 없음" : "확인되지 않음"}</p>
                   {episode.name === "구토" && (
                     <p>기록된 횟수: {episode.frequencies.join(", ") || "확인되지 않음"}</p>
                   )}
@@ -716,6 +735,7 @@ export default function App() {
                       {` · ${symptom.change}`}
                       {symptom.status === "present" && ` · 시작: ${symptom.onset || "확인되지 않음"}`}
                       {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
+                      {symptom.status === "present" && symptom.trend && ` · 변화: ${symptom.trend === "improving" ? "호전 중" : symptom.trend === "worsening" ? "악화 중" : "변화 없음"}`}
                       {symptom.name === "구토" && symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
                     </li>
                   ))}
@@ -750,6 +770,7 @@ export default function App() {
                         {` · ${symptom.status === "present" ? "있음" : "없음"}`}
                         {symptom.status === "present" && ` · 시작: ${symptom.onset || "확인되지 않음"}`}
                         {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
+                        {symptom.status === "present" && symptom.trend && ` · 변화: ${symptom.trend === "improving" ? "호전 중" : symptom.trend === "worsening" ? "악화 중" : "변화 없음"}`}
                         {symptom.name === "구토" && symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
                       </li>
                     ))}

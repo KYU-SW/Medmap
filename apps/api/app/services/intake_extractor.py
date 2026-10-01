@@ -70,7 +70,10 @@ RULES = (
         "호흡곤란",
         re.compile(
             rf"숨(?:이|은|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}차|"
-            r"숨(?:을)?\s*쉬기(?:가)?\s*(?:힘들|어렵|어려)|호흡곤란"
+            rf"숨(?:을)?\s*쉬기(?:가)?\s*(?:힘들|어렵|어려|{IMPROVEMENT_PHRASE})|"
+            r"숨쉬기가\s*(?:전보다\s*)?편해졌|"
+            rf"호흡곤란(?:이|은|도)?\s*(?:{IMPROVEMENT_PHRASE})?|"
+            rf"숨찬\s*증상(?:이|은|도)?\s*{IMPROVEMENT_PHRASE}"
         ),
         re.compile(
             rf"숨(?:은|이)?\s*(?:안\s*차|차지\s*않)|"
@@ -108,7 +111,10 @@ RULES = (
     ),
     SymptomRule(
         "구토",
-        re.compile(r"구토|토(?:를|가)?\s*(?:했|해|하|했었)"),
+        re.compile(
+            r"구토\s*횟수(?:가|는|도)?[^,.!?。]{0,20}(?:줄었|늘었)|"
+            r"구토|토(?:를|가)?\s*(?:했|해|하|했었)"
+        ),
         re.compile(
             rf"구토(?:는|가|도)?\s*(?:없|{RESOLVED_STATE})|"
             rf"토(?:는|를)?\s*(?:안\s*했|하지\s*않)|"
@@ -145,6 +151,13 @@ FREQUENCY_PATTERN = re.compile(
     r"(?:(?:하루(?:에)?|오늘|어제)\s*)?"
     r"(?:\d+|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*"
     r"(?:번|회|차례)"
+)
+TREND_PATTERN = re.compile(
+    r"(?P<improving>(?:(?:조금|좀|많이|전보다|점점)\s*)?"
+    r"(?:괜찮아졌|나아졌|호전됐|좋아졌|덜해졌|줄었|완화됐|편해졌))|"
+    r"(?P<worsening>(?:(?:더|훨씬|점점|많이)\s*)?"
+    r"(?:심해졌|악화됐|나빠졌|더\s*아프|잦아졌|늘었))|"
+    r"(?P<unchanged>(?:그대로|비슷|여전|변화\s*없))"
 )
 MEDICATION_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20}\s*(?:약|제))"
@@ -358,6 +371,11 @@ def _severity_for_symptom(
         for pattern in (SEVERITY_PATTERN, PAIN_SCORE_PATTERN)
         for match in pattern.finditer(text)
     ):
+        if match.re is SEVERITY_PATTERN and re.match(
+            r"\s*(?:괜찮아졌|나아졌|호전됐|좋아졌|덜해졌|줄었|완화됐|편해졌)",
+            text[match.end():],
+        ):
+            continue
         owner = owner_for(match)
         owner_overlaps_current = owner[0] < end and owner[1] > start
         if owner != (start, end) and not owner_overlaps_current:
@@ -415,6 +433,48 @@ def _frequency_for_symptom(
     return _normalize_frequency(min(candidates, key=lambda item: item[0])[1].group(0))
 
 
+def _trend_for_symptom(
+    text: str,
+    start: int,
+    end: int,
+    symptom_positions: list[tuple[int, int]],
+) -> str | None:
+    candidates: list[tuple[int, re.Match[str]]] = []
+    for match in TREND_PATTERN.finditer(text):
+        distances: list[tuple[int, tuple[int, int]]] = []
+        for position in symptom_positions:
+            if match.end() <= position[0]:
+                distance = position[0] - match.end()
+            elif match.start() >= position[1]:
+                distance = match.start() - position[1]
+            else:
+                distance = 0
+            distances.append((distance, position))
+        if not distances:
+            continue
+        distance, owner = min(distances, key=lambda item: (item[0], item[1][0]))
+        if owner != (start, end) or distance > 32:
+            continue
+        between = (
+            text[match.end():start]
+            if match.end() <= start
+            else text[end:match.start()]
+            if match.start() >= end
+            else ""
+        )
+        if re.search(r"[.!?。]|(?:그리고|하지만|그러나|추가로)", between):
+            continue
+        candidates.append((distance, match))
+    if not candidates:
+        return None
+    match = min(candidates, key=lambda item: item[0])[1]
+    if match.group("improving"):
+        return "improving"
+    if match.group("worsening"):
+        return "worsening"
+    return "unchanged"
+
+
 def _extract_medications(text: str) -> list[str]:
     medications: list[str] = []
     clause_boundaries = re.compile(r"[.!?。]|(?:\s+)(?:그리고|하지만|그러나|또한)(?:\s+)")
@@ -461,6 +521,9 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
             if rule.name == "구토"
             else None
         )
+        trend = _trend_for_symptom(
+            normalized, evidence.start(), evidence.end(), positions
+        )
         symptom_positions.append(
             (evidence.start(), SymptomObservation(
                 name=rule.name,
@@ -469,6 +532,7 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
                 onset=onset if not is_absent else None,
                 severity=severity if not is_absent else None,
                 frequency=frequency if not is_absent else None,
+                trend=trend if not is_absent else None,
                 source_text=evidence.group(0),
             ))
         )

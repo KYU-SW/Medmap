@@ -36,6 +36,9 @@ export function visitSummaryText(summary: VisitSummary): string {
     `- ${symptom.name}: ${symptom.status === "active" ? "현재 있음" : "사라짐"}`
       + ` / 시작: ${symptom.statedOnset || "확인되지 않음"}`
       + ` / 가장 심한 정도: ${symptom.peakSeverity || "확인되지 않음"}`
+      + (symptom.latestTrend
+        ? ` / 최근 변화: ${symptom.latestTrend === "improving" ? "호전 중" : symptom.latestTrend === "worsening" ? "악화 중" : "변화 없음"}`
+        : "")
       + (symptom.name === "구토" && symptom.frequencies.length > 0
         ? ` / 횟수: ${symptom.frequencies.join(", ")}`
         : "")

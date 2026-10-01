@@ -12,6 +12,7 @@ export type SymptomEpisode = {
   statedOnset: string | null;
   peakSeverity: string | null;
   frequencies: string[];
+  latestTrend: StoredSymptom["trend"];
   recordCount: number;
 };
 
@@ -50,6 +51,7 @@ function startEpisode(
     statedOnset: symptom.onset,
     peakSeverity: symptom.severity,
     frequencies: symptom.frequency ? [symptom.frequency] : [],
+    latestTrend: symptom.trend,
     recordCount: 1,
   };
 }
@@ -73,6 +75,7 @@ export function buildSymptomEpisodes(records: StoredIntakeRecord[]): SymptomEpis
         if (symptom.frequency && !open.frequencies.includes(symptom.frequency)) {
           open.frequencies.push(symptom.frequency);
         }
+        if (symptom.trend) open.latestTrend = symptom.trend;
         if (!open.statedOnset && symptom.onset) open.statedOnset = symptom.onset;
         continue;
       }

@@ -190,9 +190,11 @@ def test_follow_up_improvement_resolution_and_medicine_are_linked_correctly() ->
     symptoms = symptoms_by_name(follow_up)
     assert set(symptoms) == {"두통", "구토", "복통"}
     assert symptoms["두통"]["status"] == "present"
-    assert symptoms["두통"]["severity"] == "경미함"
+    assert symptoms["두통"]["severity"] is None
+    assert symptoms["두통"]["trend"] == "improving"
     assert symptoms["구토"]["status"] == "present"
     assert symptoms["구토"]["frequency"] == "3회"
+    assert symptoms["구토"]["trend"] == "improving"
     assert symptoms["복통"]["status"] == "absent"
 
 
@@ -211,6 +213,31 @@ def test_abdominal_pain_resolution_expressions(text: str) -> None:
     symptom = extract(text)["symptoms"][0]
     assert symptom["name"] == "복통"
     assert symptom["status"] == "absent"
+
+
+@pytest.mark.parametrize(
+    ("text", "name", "trend"),
+    [
+        ("머리가 전보다 나아졌어요", "두통", "improving"),
+        ("열이 많이 내리고 좋아졌어요", "발열", "improving"),
+        ("기침이 많이 줄었어요", "기침", "improving"),
+        ("숨쉬기가 전보다 편해졌어요", "호흡곤란", "improving"),
+        ("가슴 답답함이 완화됐어요", "가슴 답답함", "improving"),
+        ("복통이 덜해졌어요", "복통", "improving"),
+        ("구토가 줄었어요", "구토", "improving"),
+        ("두통이 더 심해졌어요", "두통", "worsening"),
+        ("기침이 점점 악화됐어요", "기침", "worsening"),
+        ("복통이 전과 비슷해요", "복통", "unchanged"),
+        ("구토는 여전해요", "구토", "unchanged"),
+    ],
+)
+def test_change_expressions_across_supported_symptoms(
+    text: str, name: str, trend: str
+) -> None:
+    symptom = extract(text)["symptoms"][0]
+    assert symptom["name"] == name
+    assert symptom["status"] == "present"
+    assert symptom["trend"] == trend
 
 
 @pytest.mark.parametrize(

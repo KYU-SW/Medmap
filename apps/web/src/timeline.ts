@@ -31,6 +31,9 @@ function describeChange(previous: StoredSymptom | undefined, current: StoredSymp
     }`;
   }
   if (current.status === "absent") return "계속 없음";
+  if (current.trend === "improving") return "이전 기록보다 호전";
+  if (current.trend === "worsening") return "이전 기록보다 악화";
+  if (current.trend === "unchanged") return "이전 기록과 변화 없음";
 
   const previousValue = severityValue(previous.severity);
   const currentValue = severityValue(current.severity);

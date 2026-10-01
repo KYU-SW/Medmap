@@ -22,6 +22,7 @@ def test_extracts_present_and_absent_symptoms_with_time() -> None:
             "onset": "어제부터",
             "severity": None,
             "frequency": None,
+            "trend": None,
             "source_text": "머리가 아프",
         },
         {
@@ -31,6 +32,7 @@ def test_extracts_present_and_absent_symptoms_with_time() -> None:
             "onset": None,
             "severity": None,
             "frequency": None,
+            "trend": None,
             "source_text": "열은 없",
         },
     ]

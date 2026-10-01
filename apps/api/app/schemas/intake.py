@@ -14,6 +14,7 @@ class SymptomObservation(BaseModel):
     onset: str | None = None
     severity: str | None = None
     frequency: str | None = None
+    trend: Literal["improving", "worsening", "unchanged"] | None = None
     source_text: str
 
 
