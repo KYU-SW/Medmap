@@ -2,7 +2,7 @@
 
 작성일: 2026-10-01
 브랜치: `feature/stt-rebuild`
-마지막 커밋: `f06d3cf` Prevent duplicate and groupless intake record saves
+마지막 커밋: `22aae26` Add AI handoff and agent instructions
 
 ## 1. 프로젝트 개요
 
@@ -12,10 +12,11 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
 
 ## 2. Git 상태 (2026-10-01 확인)
 
-- 현재 브랜치 `feature/stt-rebuild`는 `origin/feature/stt-rebuild`와 같다. 작업 트리에 변경 사항이 없다.
-  이 HANDOFF.md와 AGENTS.md는 아직 커밋하지 않았다.
-- 2026-10-01: 프로젝트 루트에 Codex용 작업 규칙 파일 `AGENTS.md`를 추가했다.
-- main(`1feda4b`, 2026-09-28)보다 커밋 45개 앞서 있다. 아직 main에 병합하지 않았다.
+- 현재 브랜치 `feature/stt-rebuild`는 `origin/feature/stt-rebuild`와 같다(마지막 커밋 `22aae26`).
+- HANDOFF.md와 AGENTS.md는 `22aae26`에서 커밋했다.
+- 2026-10-01: Claude Code용 작업 규칙 파일 `CLAUDE.md`를 추가하고 이 HANDOFF.md의 Git 상태를 갱신했다.
+  이 두 변경은 아직 커밋하지 않았다.
+- main(`1feda4b`, 2026-09-28)보다 커밋 46개 앞서 있다. 아직 main에 병합하지 않았다.
 - 원격 저장소: https://github.com/minu2246/MedMap (비공개)
 
 ## 3. 구성
