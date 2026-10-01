@@ -216,6 +216,46 @@ def test_abdominal_pain_resolution_expressions(text: str) -> None:
 
 
 @pytest.mark.parametrize(
+    ("text", "name"),
+    [
+        ("두통은 이제 없어졌어요", "두통"),
+        ("머리가 이제 안 아파요", "두통"),
+        ("열은 이제 없어요", "발열"),
+        ("기침이 이제 멈췄어요", "기침"),
+        ("숨은 이제 안 차요", "호흡곤란"),
+        ("가슴이 이제 안 답답해요", "가슴 답답함"),
+        ("배가 이제 안 아파요", "복통"),
+        ("복통은 지금은 사라졌어요", "복통"),
+        ("구토는 이젠 없어요", "구토"),
+    ],
+)
+def test_resolution_with_time_adverb_is_absent(text: str, name: str) -> None:
+    symptoms = extract(text)["symptoms"]
+    assert len(symptoms) == 1
+    assert symptoms[0]["name"] == name
+    assert symptoms[0]["status"] == "absent"
+
+
+@pytest.mark.parametrize(
+    ("text", "name"),
+    [
+        ("하루에 두 번 토했어요", "구토"),
+        ("하루에 세 번 기침해요", "기침"),
+        ("일주일에 한 번 머리가 아파요", "두통"),
+    ],
+)
+def test_per_period_frequency_is_not_onset(text: str, name: str) -> None:
+    symptom = extract(text)["symptoms"][0]
+    assert symptom["name"] == name
+    assert symptom["onset"] is None
+
+
+def test_day_before_onset_still_parsed() -> None:
+    symptom = extract("하루 전에 머리가 아팠어요")["symptoms"][0]
+    assert symptom["onset"] == "1일 전"
+
+
+@pytest.mark.parametrize(
     ("text", "name", "trend"),
     [
         ("머리가 전보다 나아졌어요", "두통", "improving"),
