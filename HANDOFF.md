@@ -20,7 +20,7 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
   - 웹: `package.json`, `pnpm-lock.yaml`, `src/App.tsx`, `src/styles.css`, `src/recordStorage.ts`,
     `src/recordGroups.ts`, `src/visitSummary.ts`, 새 파일 `src/symptomOptions.ts`, `src/backup.ts`,
     `src/testRecords.ts`, 테스트 `src/*.test.ts` 5개
-- main(`1feda4b`, 2026-09-28)보다 커밋 46개 앞서 있다. 아직 main에 병합하지 않았다.
+- 2026-10-02: `feature/stt-rebuild`를 main에 fast-forward로 병합하고 원격 main에도 푸시했다. 두 브랜치는 같은 커밋을 가리킨다.
 - 원격 저장소: https://github.com/minu2246/MedMap (비공개)
 
 ## 3. 구성
@@ -143,7 +143,7 @@ corepack pnpm test   # vitest run
       과거력은 정해진 질환 이름만 인식한다.
 - 진료 중/후 기능과 DDXPlus 연구 트랙은 2026-10-02 이후 진행 예정(사용자 결정, 2026-10-01).
 - [ ] 테스트의 `StarletteDeprecationWarning` 정리 여부 검토
-- [ ] `feature/stt-rebuild`를 main에 언제 병합할지 결정
+- [x] `feature/stt-rebuild`를 main에 병합했다 (2026-10-02, fast-forward). 팀원 코드 통합 방식은 아직 정하지 않았다.
 
 ## 8. 팀원 코드베이스 통합 트랙
 
