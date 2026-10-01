@@ -10,6 +10,7 @@ export type StoredIntakeRecord = {
       body_site: string | null;
       onset: string | null;
       severity: string | null;
+      frequency?: string | null;
       source_text: string;
     }>;
     medications: string[];

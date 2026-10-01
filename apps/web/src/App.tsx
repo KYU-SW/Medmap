@@ -11,6 +11,7 @@ import { buildSymptomEpisodes } from "./symptomEpisodes";
 import { buildVisitSummary, visitSummaryText } from "./visitSummary";
 import {
   createRecordGroup,
+  deleteRecordGroup,
   getCurrentRecordGroupId,
   LEGACY_RECORD_GROUP_ID,
   prepareRecordGroups,
@@ -26,6 +27,7 @@ type SymptomObservation = {
   body_site: string | null;
   onset: string | null;
   severity: string | null;
+  frequency: string | null;
   source_text: string;
 };
 
@@ -383,6 +385,26 @@ export default function App() {
     setMessage("새 증상 기록을 시작했습니다. 증상을 말하거나 입력해 주세요.");
   }
 
+  async function removeCurrentRecordGroup() {
+    if (!currentRecordGroupId) return;
+    try {
+      await Promise.all(visibleRecords.map((record) => deleteIntakeRecord(record.id)));
+      setRecords((current) => current.filter(
+        (record) => (record.recordGroupId || LEGACY_RECORD_GROUP_ID) !== currentRecordGroupId,
+      ));
+      let remaining = deleteRecordGroup(currentRecordGroupId);
+      if (remaining.length === 0) {
+        const replacement = createRecordGroup();
+        remaining = [replacement];
+      }
+      setRecordGroups(remaining);
+      selectRecordGroup(remaining[0].id);
+      setRecordMessage("선택한 증상 기록 묶음을 삭제했습니다.");
+    } catch {
+      setRecordMessage("증상 기록 묶음을 삭제하지 못했습니다.");
+    }
+  }
+
   const busy = status === "recording" || status === "transcribing";
   const visibleRecords = records.filter(
     (record) => (record.recordGroupId || LEGACY_RECORD_GROUP_ID) === currentRecordGroupId,
@@ -444,6 +466,9 @@ export default function App() {
           </select>
           <button className="button--secondary" type="button" onClick={startNewRecordGroup}>
             새 증상 기록 시작
+          </button>
+          <button className="button--delete" type="button" onClick={() => void removeCurrentRecordGroup()}>
+            현재 증상 기록 묶음 삭제
           </button>
           <p>현재 선택한 기록 안에서만 타임라인, PDF, QR을 만듭니다.</p>
         </section>
@@ -538,6 +563,14 @@ export default function App() {
                     onChange={(event) => updateSymptom(index, { severity: event.target.value || null })}
                   />
                 </label>
+                <label>
+                  횟수
+                  <input
+                    value={symptom.frequency ?? ""}
+                    placeholder="확인되지 않음"
+                    onChange={(event) => updateSymptom(index, { frequency: event.target.value || null })}
+                  />
+                </label>
                 <p className="source-text">원문 근거: “{symptom.source_text}”</p>
               </div>
             ))}
@@ -587,6 +620,7 @@ export default function App() {
                       {` · ${symptom.status === "active" ? "현재 있음" : "사라짐"}`}
                       {` · 시작: ${symptom.statedOnset || "확인되지 않음"}`}
                       {` · 가장 심한 정도: ${symptom.peakSeverity || "확인되지 않음"}`}
+                      {symptom.frequencies.length > 0 && ` · 횟수: ${symptom.frequencies.join(", ")}`}
                       {` · ${symptom.recordCount}회 기록`}
                     </li>
                   ))}
@@ -648,6 +682,7 @@ export default function App() {
                   )}
                   <p>말한 시작 시점: {episode.statedOnset || "확인되지 않음"}</p>
                   <p>가장 심한 정도: {episode.peakSeverity || "확인되지 않음"}</p>
+                  <p>기록된 횟수: {episode.frequencies.join(", ") || "확인되지 않음"}</p>
                   <p>연결된 기록: {episode.recordCount}개</p>
                 </article>
               ))}
@@ -677,6 +712,7 @@ export default function App() {
                       {` · ${symptom.change}`}
                       {symptom.status === "present" && ` · 시작: ${symptom.onset || "확인되지 않음"}`}
                       {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
+                      {symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
                     </li>
                   ))}
                 </ul>
@@ -710,6 +746,7 @@ export default function App() {
                         {` · ${symptom.status === "present" ? "있음" : "없음"}`}
                         {symptom.status === "present" && ` · 시작: ${symptom.onset || "확인되지 않음"}`}
                         {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
+                        {symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
                       </li>
                     ))}
                   </ul>

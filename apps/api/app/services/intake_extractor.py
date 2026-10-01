@@ -110,6 +110,11 @@ PAIN_SCORE_PATTERN = re.compile(
     r"10\s*중(?:에|에서)?\s*\d{1,2}\s*(?:점|정도)?|"
     r"\d{1,3}\s*(?:점|정도))"
 )
+FREQUENCY_PATTERN = re.compile(
+    r"(?:(?:하루(?:에)?|오늘|어제)\s*)?"
+    r"(?:\d+|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*"
+    r"(?:번|회|차례)"
+)
 MEDICATION_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20}\s*(?:약|제))"
     r"(?:을|를|도|은|는)?\s*(?:먹|복용)"
@@ -203,6 +208,22 @@ def _normalize_onset(value: str | None) -> str | None:
     suffix = match.group(3)
     separator = "" if suffix == "째" else " "
     return f"{number}{match.group(2)}" + (f"{separator}{suffix}" if suffix else "")
+
+
+def _normalize_frequency(value: str) -> str:
+    number_words = {
+        "한": "1", "두": "2", "세": "3", "네": "4", "다섯": "5",
+        "여섯": "6", "일곱": "7", "여덟": "8", "아홉": "9", "열": "10",
+    }
+    match = re.search(
+        r"(\d+|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*(?:번|회|차례)",
+        value,
+    )
+    if not match:
+        return value
+    count = number_words.get(match.group(1), match.group(1))
+    period = "하루 " if re.search(r"하루(?:에)?", value) else ""
+    return f"{period}{count}회"
 
 
 def _nearest_value(
@@ -325,6 +346,43 @@ def _severity_for_symptom(
     return _severity(latest.group(0))
 
 
+def _frequency_for_symptom(
+    text: str,
+    start: int,
+    end: int,
+    symptom_positions: list[tuple[int, int]],
+) -> str | None:
+    candidates: list[tuple[int, re.Match[str]]] = []
+    for match in FREQUENCY_PATTERN.finditer(text):
+        distances = []
+        for position in symptom_positions:
+            if match.end() <= position[0]:
+                distance = position[0] - match.end()
+            elif match.start() >= position[1]:
+                distance = match.start() - position[1]
+            else:
+                distance = 0
+            distances.append((distance, position))
+        if not distances:
+            continue
+        distance, owner = min(distances, key=lambda item: (item[0], item[1][0]))
+        if owner != (start, end) or distance > 24:
+            continue
+        between = (
+            text[match.end():start]
+            if match.end() <= start
+            else text[end:match.start()]
+            if match.start() >= end
+            else ""
+        )
+        if re.search(r"[.!?。]|(?:그리고|하지만|그러나|추가로)", between):
+            continue
+        candidates.append((distance, match))
+    if not candidates:
+        return None
+    return _normalize_frequency(min(candidates, key=lambda item: item[0])[1].group(0))
+
+
 def _extract_medications(text: str) -> list[str]:
     medications: list[str] = []
     clause_boundaries = re.compile(r"[.!?。]|(?:\s+)(?:그리고|하지만|그러나|또한)(?:\s+)")
@@ -366,6 +424,9 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
         severity = _severity_for_symptom(
             normalized, evidence.start(), evidence.end(), positions
         )
+        frequency = _frequency_for_symptom(
+            normalized, evidence.start(), evidence.end(), positions
+        )
         symptom_positions.append(
             (evidence.start(), SymptomObservation(
                 name=rule.name,
@@ -373,6 +434,7 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
                 body_site=rule.body_site,
                 onset=onset if not is_absent else None,
                 severity=severity if not is_absent else None,
+                frequency=frequency if not is_absent else None,
                 source_text=evidence.group(0),
             ))
         )

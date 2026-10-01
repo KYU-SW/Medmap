@@ -13,6 +13,7 @@ class SymptomObservation(BaseModel):
     body_site: str | None = None
     onset: str | None = None
     severity: str | None = None
+    frequency: str | None = None
     source_text: str
 
 

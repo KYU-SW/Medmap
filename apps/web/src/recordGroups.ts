@@ -73,3 +73,12 @@ export function getCurrentRecordGroupId(groups: RecordGroup[]): string {
 export function setCurrentRecordGroupId(id: string): void {
   localStorage.setItem(CURRENT_GROUP_KEY, id);
 }
+
+export function deleteRecordGroup(id: string): RecordGroup[] {
+  const remaining = readSavedGroups().filter((group) => group.id !== id);
+  saveGroups(remaining);
+  if (localStorage.getItem(CURRENT_GROUP_KEY) === id) {
+    localStorage.removeItem(CURRENT_GROUP_KEY);
+  }
+  return remaining.sort((left, right) => right.createdAt.localeCompare(left.createdAt));
+}

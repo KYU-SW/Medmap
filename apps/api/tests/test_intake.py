@@ -21,6 +21,7 @@ def test_extracts_present_and_absent_symptoms_with_time() -> None:
             "body_site": "머리",
             "onset": "어제부터",
             "severity": None,
+            "frequency": None,
             "source_text": "머리가 아프",
         },
         {
@@ -29,6 +30,7 @@ def test_extracts_present_and_absent_symptoms_with_time() -> None:
             "body_site": None,
             "onset": None,
             "severity": None,
+            "frequency": None,
             "source_text": "열은 없",
         },
     ]
@@ -41,6 +43,18 @@ def test_extracts_severity_medication_and_allergy() -> None:
     assert result["symptoms"][0]["severity"] == "경미함"
     assert result["medications"] == ["당뇨약"]
     assert result["allergies"] == ["페니실린"]
+
+
+def test_extracts_symptom_frequency_expressions() -> None:
+    cases = {
+        "오늘 구토를 3번 했어요": "3회",
+        "두 차례 토했어요": "2회",
+        "하루에 4번 구토했어요": "하루 4회",
+        "기침을 다섯 번 했어요": "5회",
+    }
+    for text, expected in cases.items():
+        result = extract(text)
+        assert result["symptoms"][0]["frequency"] == expected, text
 
 
 def test_allergy_medicine_is_not_mistaken_for_an_allergen() -> None:
