@@ -2,7 +2,7 @@
 
 작성일: 2026-10-01
 브랜치: `feature/stt-rebuild`
-마지막 커밋: `291f13e` Add Claude project instructions
+마지막 커밋: `47d78ee` Expand pre-visit intake (이후 HANDOFF 갱신 커밋)
 
 ## 1. 프로젝트 개요
 
@@ -12,8 +12,8 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
 
 ## 2. Git 상태 (2026-10-01 확인)
 
-- 마지막 커밋은 `291f13e`(CLAUDE.md 추가)다. HANDOFF.md와 AGENTS.md는 `22aae26`에서 커밋했다.
-- 2026-10-01 작업(아래 4절 8~9번, 6절, 7절)은 **아직 커밋하지 않았다.** 변경 파일:
+- CLAUDE.md는 `291f13e`에서 커밋했다. HANDOFF.md와 AGENTS.md는 `22aae26`에서 커밋했다.
+- 2026-10-01 작업(아래 4절 8~9번, 6절, 7절)은 `47d78ee`에서 커밋했다. 아직 push하지 않았다. 변경 파일:
   - 문서: `HANDOFF.md`, `docs/INTAKE_EXTRACTION.md`, `docs/PRIVACY.md`
   - API: `app/services/intake_extractor.py`, `app/schemas/intake.py`, `tests/test_intake.py`,
     `tests/test_intake_scenarios.py`, 새 파일 `tests/test_intake_expanded.py`
