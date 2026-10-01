@@ -563,14 +563,16 @@ export default function App() {
                     onChange={(event) => updateSymptom(index, { severity: event.target.value || null })}
                   />
                 </label>
-                <label>
-                  횟수
-                  <input
-                    value={symptom.frequency ?? ""}
-                    placeholder="확인되지 않음"
-                    onChange={(event) => updateSymptom(index, { frequency: event.target.value || null })}
-                  />
-                </label>
+                {symptom.name === "구토" && (
+                  <label>
+                    횟수
+                    <input
+                      value={symptom.frequency ?? ""}
+                      placeholder="확인되지 않음"
+                      onChange={(event) => updateSymptom(index, { frequency: event.target.value || null })}
+                    />
+                  </label>
+                )}
                 <p className="source-text">원문 근거: “{symptom.source_text}”</p>
               </div>
             ))}
@@ -620,7 +622,7 @@ export default function App() {
                       {` · ${symptom.status === "active" ? "현재 있음" : "사라짐"}`}
                       {` · 시작: ${symptom.statedOnset || "확인되지 않음"}`}
                       {` · 가장 심한 정도: ${symptom.peakSeverity || "확인되지 않음"}`}
-                      {symptom.frequencies.length > 0 && ` · 횟수: ${symptom.frequencies.join(", ")}`}
+                      {symptom.name === "구토" && symptom.frequencies.length > 0 && ` · 횟수: ${symptom.frequencies.join(", ")}`}
                       {` · ${symptom.recordCount}회 기록`}
                     </li>
                   ))}
@@ -682,7 +684,9 @@ export default function App() {
                   )}
                   <p>말한 시작 시점: {episode.statedOnset || "확인되지 않음"}</p>
                   <p>가장 심한 정도: {episode.peakSeverity || "확인되지 않음"}</p>
-                  <p>기록된 횟수: {episode.frequencies.join(", ") || "확인되지 않음"}</p>
+                  {episode.name === "구토" && (
+                    <p>기록된 횟수: {episode.frequencies.join(", ") || "확인되지 않음"}</p>
+                  )}
                   <p>연결된 기록: {episode.recordCount}개</p>
                 </article>
               ))}
@@ -712,7 +716,7 @@ export default function App() {
                       {` · ${symptom.change}`}
                       {symptom.status === "present" && ` · 시작: ${symptom.onset || "확인되지 않음"}`}
                       {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
-                      {symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
+                      {symptom.name === "구토" && symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
                     </li>
                   ))}
                 </ul>
@@ -746,7 +750,7 @@ export default function App() {
                         {` · ${symptom.status === "present" ? "있음" : "없음"}`}
                         {symptom.status === "present" && ` · 시작: ${symptom.onset || "확인되지 않음"}`}
                         {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
-                        {symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
+                        {symptom.name === "구토" && symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
                       </li>
                     ))}
                   </ul>

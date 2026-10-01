@@ -50,11 +50,20 @@ def test_extracts_symptom_frequency_expressions() -> None:
         "오늘 구토를 3번 했어요": "3회",
         "두 차례 토했어요": "2회",
         "하루에 4번 구토했어요": "하루 4회",
-        "기침을 다섯 번 했어요": "5회",
     }
     for text, expected in cases.items():
         result = extract(text)
         assert result["symptoms"][0]["frequency"] == expected, text
+
+
+def test_frequency_is_not_added_to_symptoms_that_do_not_use_counts() -> None:
+    for text in (
+        "머리가 아팠어요 세 번 반복됐어요",
+        "배가 아팠어요 두 번 반복됐어요",
+        "기침을 했어요 다섯 번 반복됐어요",
+    ):
+        result = extract(text)
+        assert result["symptoms"][0]["frequency"] is None, text
 
 
 def test_allergy_medicine_is_not_mistaken_for_an_allergen() -> None:

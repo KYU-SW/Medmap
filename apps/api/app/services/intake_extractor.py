@@ -424,8 +424,10 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
         severity = _severity_for_symptom(
             normalized, evidence.start(), evidence.end(), positions
         )
-        frequency = _frequency_for_symptom(
-            normalized, evidence.start(), evidence.end(), positions
+        frequency = (
+            _frequency_for_symptom(normalized, evidence.start(), evidence.end(), positions)
+            if rule.name == "구토"
+            else None
         )
         symptom_positions.append(
             (evidence.start(), SymptomObservation(
