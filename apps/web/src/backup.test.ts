@@ -4,7 +4,7 @@ import { record, symptom } from "./testRecords";
 
 const groups = [{ id: "group-1", name: "증상 기록 1", createdAt: "2026-10-01T09:00:00.000Z" }];
 const records = [
-  record("a", "2026-10-01T09:00:00.000Z", [symptom("두통")], { medical_history: ["고혈압"] }),
+  record("a", "2026-10-01T09:00:00.000Z", [symptom("두통")], { medical_history: ["고혈압"], others_symptoms: [] }),
 ];
 
 describe("backup", () => {

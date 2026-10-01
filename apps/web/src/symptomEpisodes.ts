@@ -63,6 +63,8 @@ export function buildSymptomEpisodes(records: StoredIntakeRecord[]): SymptomEpis
 
   for (const record of [...records].sort((left, right) => left.createdAt.localeCompare(right.createdAt))) {
     for (const symptom of record.intake.symptoms) {
+      // "잘 모르겠어요" neither starts nor ends an episode.
+      if (symptom.status === "uncertain") continue;
       const open = openEpisodes.get(symptom.name);
       if (symptom.status === "present") {
         if (!open) {

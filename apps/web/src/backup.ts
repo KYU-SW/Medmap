@@ -38,7 +38,7 @@ function isGroup(value: unknown): value is RecordGroup {
 function isSymptom(value: unknown): boolean {
   return isObject(value)
     && typeof value.name === "string"
-    && (value.status === "present" || value.status === "absent")
+    && (value.status === "present" || value.status === "absent" || value.status === "uncertain")
     && typeof value.source_text === "string";
 }
 
@@ -56,6 +56,13 @@ function toRecord(value: unknown): StoredIntakeRecord | null {
     || !isStringList(intake.medications)
     || !isStringList(intake.allergies)
     || (intake.medical_history !== undefined && !isStringList(intake.medical_history))
+    || (intake.others_symptoms !== undefined && !(
+      Array.isArray(intake.others_symptoms) && intake.others_symptoms.every((item) =>
+        isObject(item)
+        && typeof item.person === "string"
+        && typeof item.symptom === "string"
+        && typeof item.source_text === "string")
+    ))
   ) {
     return null;
   }
@@ -69,6 +76,7 @@ function toRecord(value: unknown): StoredIntakeRecord | null {
       medications: intake.medications,
       allergies: intake.allergies,
       medical_history: (intake.medical_history as string[] | undefined) ?? [],
+      others_symptoms: (intake.others_symptoms as StoredIntakeRecord["intake"]["others_symptoms"]) ?? [],
       unrecognized_fragments: isStringList(intake.unrecognized_fragments) ? intake.unrecognized_fragments : [],
       needs_user_confirmation: false,
     },

@@ -112,6 +112,140 @@ def test_denied_medical_history_is_not_recorded() -> None:
 
 
 def test_reports_only_the_unsupported_part_of_a_sentence() -> None:
-    result = extract("머리가 아프고 손이 저려요")
+    result = extract("머리가 아프고 혀가 아파요")
     assert [item["name"] for item in result["symptoms"]] == ["두통"]
-    assert result["unrecognized_fragments"] == ["손이 저려요"]
+    assert result["unrecognized_fragments"] == ["혀가 아파요"]
+
+
+@pytest.mark.parametrize(
+    ("text", "name"),
+    [
+        ("머리통증이 있어요", "두통"),
+        ("머리 통증이 있어요", "두통"),
+        ("허리통증이 있어요", "요통"),
+        ("가슴통증이 있어요", "흉통"),
+        ("복부통증이 있어요", "복통"),
+        ("배 통증이 심해요", "복통"),
+        ("목감기에 걸렸어요", "인후통"),
+        ("코감기 기운이 있어요", "콧물"),
+        ("배탈이 났어요", "복통"),
+        ("위경련이 왔어요", "복통"),
+        ("배가 살살 아파요", "복통"),
+        ("배가 쿡쿡 쑤셔요", "복통"),
+        ("머리가 욱신욱신 아파요", "두통"),
+        ("허리가 뻐근해요", "요통"),
+        ("숨이 가빠요", "호흡곤란"),
+        ("몸이 무거워요", "피로"),
+        ("머리아파요", "두통"),
+        ("허리아파요", "요통"),
+    ],
+)
+def test_recognizes_compound_and_colloquial_expressions(text: str, name: str) -> None:
+    result = extract(text)
+    assert [item["name"] for item in result["symptoms"]] == [name], text
+    assert result["symptoms"][0]["status"] == "present"
+    assert result["unrecognized_fragments"] == []
+
+
+@pytest.mark.parametrize(
+    ("text", "name"),
+    [
+        ("가슴이 두근거려요", "두근거림"),
+        ("가슴이 벌렁벌렁해요", "두근거림"),
+        ("손발이 저려요", "저림"),
+        ("체했어요", "소화불량"),
+        ("소화가 안 돼요", "소화불량"),
+        ("속이 더부룩해요", "소화불량"),
+        ("속이 쓰려요", "속쓰림"),
+        ("속쓰려요", "속쓰림"),
+        ("입맛이 없어요", "식욕부진"),
+        ("잠을 못 자요", "불면"),
+        ("다리가 퉁퉁 부었어요", "부종"),
+        ("귀가 아파요", "귀 통증"),
+        ("눈이 따가워요", "눈 통증"),
+        ("이가 시려요", "치통"),
+        ("식은땀이 나요", "식은땀"),
+    ],
+)
+def test_recognizes_new_common_symptoms(text: str, name: str) -> None:
+    result = extract(text)
+    assert [item["name"] for item in result["symptoms"]] == [name], text
+    assert result["symptoms"][0]["status"] == "present"
+
+
+@pytest.mark.parametrize(
+    ("text", "name"),
+    [
+        ("두근거림은 없어요", "두근거림"),
+        ("저리지 않아요", "저림"),
+        ("소화는 잘 돼요", "소화불량"),
+        ("입맛은 괜찮아요", "식욕부진"),
+        ("잠은 잘 자요", "불면"),
+        ("부기는 빠졌어요", "부종"),
+        ("귀는 안 아파요", "귀 통증"),
+        ("땀은 안 나요", "식은땀"),
+        ("머리 통증은 없어요", "두통"),
+    ],
+)
+def test_recognizes_new_symptom_absence(text: str, name: str) -> None:
+    result = extract(text)
+    assert [item["name"] for item in result["symptoms"]] == [name], text
+    assert result["symptoms"][0]["status"] == "absent"
+
+
+@pytest.mark.parametrize(
+    ("text", "medication"),
+    [("두통약을 먹었어요", "두통약"), ("기침약을 먹었어요", "기침약"), ("설사약을 먹었어요", "설사약")],
+)
+def test_medicine_names_are_not_symptoms(text: str, medication: str) -> None:
+    result = extract(text)
+    assert result["symptoms"] == []
+    assert result["medications"] == [medication]
+
+
+@pytest.mark.parametrize("text", ["두통이 약간 있어요", "기침이 약해졌어요"])
+def test_yak_words_that_are_not_medicine_keep_the_symptom(text: str) -> None:
+    assert len(extract(text)["symptoms"]) == 1
+
+
+@pytest.mark.parametrize("text", ["아이가 아파요", "감기에 걸렸어요"])
+def test_vague_expressions_are_flagged_for_review(text: str) -> None:
+    result = extract(text)
+    assert result["symptoms"] == []
+    assert result["unrecognized_fragments"] == [text]
+
+
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("허리가 뻐근하고 아파요", [("요통", "present")]),
+        ("어제부터는 허리가 뻐근하고 아파요", [("요통", "present")]),
+        ("가슴이 답답하고 아파요", [("가슴 답답함", "present"), ("흉통", "present")]),
+        ("가슴이 답답하지만 아프진 않아요", [("가슴 답답함", "present"), ("흉통", "absent")]),
+        ("배가 더부룩하고 아파요", [("소화불량", "present"), ("복통", "present")]),
+        ("속이 쓰리고 아파요", [("속쓰림", "present"), ("복통", "present")]),
+        ("목이 칼칼하고 따끔거려요", [("인후통", "present")]),
+        ("눈이 따갑고 아파요", [("눈 통증", "present")]),
+    ],
+)
+def test_predicate_without_subject_borrows_previous_subject(text: str, expected: list) -> None:
+    result = extract(text)
+    assert [(item["name"], item["status"]) for item in result["symptoms"]] == expected, text
+    assert result["unrecognized_fragments"] == []
+
+
+def test_borrowed_subject_keeps_real_source_text() -> None:
+    symptoms = symptoms_by_name(extract("이틀 전부터 가슴이 답답하고 많이 아파요"))
+    assert symptoms["흉통"]["source_text"] == "가슴이 답답하고 많이 아파요"
+    assert symptoms["흉통"]["severity"] == "심함"
+
+
+@pytest.mark.parametrize(("text", "fragment"), [("열이 나고 아파요", "아파요"), ("코가 막히고 답답해요", "답답해요")])
+def test_ambiguous_predicate_without_subject_is_flagged(text: str, fragment: str) -> None:
+    assert extract(text)["unrecognized_fragments"] == [fragment]
+
+
+def test_time_adverb_before_borrowed_predicate() -> None:
+    result = extract("가슴이 답답하고 지금은 아파요")
+    assert [item["name"] for item in result["symptoms"]] == ["가슴 답답함", "흉통"]
+    assert result["unrecognized_fragments"] == []

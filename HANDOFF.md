@@ -13,14 +13,21 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
 ## 2. Git 상태 (2026-10-01 확인)
 
 - CLAUDE.md는 `291f13e`에서 커밋했다. HANDOFF.md와 AGENTS.md는 `22aae26`에서 커밋했다.
-- 2026-10-01 작업(아래 4절 8~9번, 6절, 7절)은 `47d78ee`에서 커밋했다. 아직 push하지 않았다. 변경 파일:
+- 2026-10-01 작업(아래 4절 8~9번, 6절, 7절)은 `47d78ee`에서 커밋하고 push했다. 변경 파일:
   - 문서: `HANDOFF.md`, `docs/INTAKE_EXTRACTION.md`, `docs/PRIVACY.md`
   - API: `app/services/intake_extractor.py`, `app/schemas/intake.py`, `tests/test_intake.py`,
     `tests/test_intake_scenarios.py`, 새 파일 `tests/test_intake_expanded.py`
   - 웹: `package.json`, `pnpm-lock.yaml`, `src/App.tsx`, `src/styles.css`, `src/recordStorage.ts`,
     `src/recordGroups.ts`, `src/visitSummary.ts`, 새 파일 `src/symptomOptions.ts`, `src/backup.ts`,
     `src/testRecords.ts`, 테스트 `src/*.test.ts` 5개
-- 2026-10-02: `feature/stt-rebuild`를 main에 fast-forward로 병합하고 원격 main에도 푸시했다. 두 브랜치는 같은 커밋을 가리킨다.
+- 2026-10-02: `feature/stt-rebuild`를 main에 fast-forward로 병합하고 원격 main에도 푸시했다(`7b989e5`).
+- 2026-10-02 합성어·구어 인식 확장, 주어 이어받기, 경고 증상 추가, 불확실·다른 사람·위험 증상 처리(아래 4절 10~12번)는
+  2026-10-02에 한 커밋으로 커밋했다(push하지 않음). 변경 파일:
+  - API: `app/services/intake_extractor.py`, `app/schemas/intake.py`, `tests/test_intake.py`, `tests/test_intake_scenarios.py`,
+    `tests/test_intake_expanded.py`, 새 파일 `tests/test_intake_red_flags.py`, `tests/test_intake_safety.py`
+  - 웹: `src/App.tsx`, `src/styles.css`, `src/recordStorage.ts`, `src/symptomOptions.ts`, `src/symptomEpisodes.ts`,
+    `src/timeline.ts`, `src/visitSummary.ts`, `src/backup.ts`, `src/backup.test.ts`, `src/symptomOptions.test.ts`, 새 파일 `src/safety.test.ts`
+  - 문서: `docs/INTAKE_EXTRACTION.md`, `HANDOFF.md`
 - 원격 저장소: https://github.com/minu2246/MedMap (비공개)
 
 ## 3. 구성
@@ -62,6 +69,24 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
    - 증상 직접 추가와 삭제(이름이 비면 저장 막음), 복용약·알레르기·과거력 직접 수정
    - 요약, PDF/QR 글, 저장 기록에 과거력 표시
    - 전체 기록 백업 파일(JSON) 내보내기와 가져오기. 같은 id 기록은 건너뛴다. 서버로 보내지 않는다.
+10. 2026-10-02 합성어·구어 인식 확장 (상세: docs/INTAKE_EXTRACTION.md)
+   - 지원 증상 21개 → 32개: 두근거림, 저림, 소화불량, 속쓰림, 식욕부진, 불면, 부종, 귀 통증, 눈 통증, 치통, 식은땀
+   - `머리통증`·`허리 통증` 같은 부위+통증, `목감기`·`코감기`·`배탈`·`위경련`·`체했어요`, `숨이 가빠요`, `몸이 무거워요`
+   - `살살`·`쿡쿡`·`욱신욱신`·`엄청` 같은 꾸밈말이 사이에 있어도 인식
+   - 버그 수정: `두통약`·`기침약`·`설사약`·`변비약`을 증상 있음으로 잡던 문제
+   - 미인식 경고 신호어 확대: `감기에 걸렸어요`, `아이가 아파요` 같은 말이 경고 없이 사라지지 않게 함
+11. 2026-10-02 주어 이어받기와 경고 증상 확장 (상세: docs/INTAKE_EXTRACTION.md)
+   - `가슴이 답답하고 아파요`처럼 주어 없는 뒷부분은 앞 절의 주어를 이어받아 흉통도 찾는다. `많이`, `지금은`은 주어로 보지 않는다
+   - 지원 증상 32개 → 49개: 가려움, 시야 이상, 떨림, 이명, 코피, 객혈, 토혈, 혈변, 혈뇨, 배뇨통, 빈뇨, 기절, 마비, 말 어눌함, 쉰 목소리, 체중 감소, 경련
+   - 피부 가려움은 발진에서 분리해 가려움으로 기록한다
+   - 과거력: `위염으로 진단받았어요`처럼 목록 밖 병명도 기록. 녹내장, 대상포진 등 질환 이름 추가, `대상포진을 앓았어요`의 `을`도 인식
+   - 버그 수정: 같은 증상이 문장에 두 번 나오면 두 번째 표현을 미인식으로 보여주던 문제
+12. 2026-10-02 불확실한 말, 다른 사람 증상, 위험 증상 안내 (상세: docs/INTAKE_EXTRACTION.md)
+   - 증상 상태에 `uncertain`(확실하지 않음) 추가. `잘 모르겠어요`, `같기도 하고` 등. 원인을 모르겠다는 말은 제외
+   - `남편도 기침을 해요`, `엄마가 고혈압이 있어요`는 환자 증상·과거력이 아니라 `others_symptoms`로 분리. 화면에서 본인 증상으로 옮길 수 있음
+   - 위험 증상(흉통, 객혈, 토혈, 혈변, 기절, 마비, 말 어눌함, 경련, 심한 호흡곤란·두통·복통)이 있으면 확인 화면과 요약에 119·응급실 안내
+   - 마침표 없는 STT 문장도 `~요` 뒤와 `근데`·`그런데`·`그래서`에서 절을 나눈다
+   - 버그 수정: `기침을 안 해요`·`설사를 안 했어요`(을/를 + 부정)를 있음으로 잡던 문제, `아이고 머리야`의 두통을 놓치던 문제
 
 ## 5. 실행 방법
 
@@ -83,7 +108,7 @@ cd apps\api
 .\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
 ```
 
-- 결과: **143 passed, 1 warning** (증상 확장 후, 2026-10-01). 확장 전에는 99 passed였다.
+- 결과: **260 passed, 1 warning** (2026-10-02 불확실·다른 사람 처리 후). 경고 증상 확장 후 242, 합성어 확장 후 192, 2026-10-01 확장 후 143, 그 전 99였다.
 - 경고: `StarletteDeprecationWarning`. `starlette.testclient`에서 `httpx`를 쓰는 방식이 deprecated라는 내용이다. 테스트 결과에는 영향이 없다.
 - 테스트 파일: `test_api.py`, `test_intake.py`, `test_intake_combinations.py`, `test_intake_scenarios.py`, `test_intake_expanded.py`
 - 기존 테스트 2개를 고쳤다. "허리 통증, 어지러움, 설사, 발진은 지원하지 않는다"를 확인하던 테스트로,
@@ -107,8 +132,8 @@ cd apps\web
 corepack pnpm test   # vitest run
 ```
 
-- 결과: **5 files, 24 tests passed**
-- 대상: `buildTimeline`, `buildSymptomEpisodes`, `buildVisitSummary`, `visitSummaryText`, `backup.ts`, `symptomOptions.ts`
+- 결과: **6 files, 31 tests passed** (2026-10-02)
+- 대상: `buildTimeline`, `buildSymptomEpisodes`, `buildVisitSummary`, `visitSummaryText`, `backup.ts`, `symptomOptions.ts`(위험 증상 판정 포함)
 - 아직 자동 테스트하지 않은 것: `recordStorage.ts`(IndexedDB), `recordGroups.ts`(localStorage), `App.tsx` 화면
 
 ### PC 브라우저 수동 확인 (2026-10-01, Chrome, 텍스트 입력)
@@ -117,6 +142,13 @@ corepack pnpm test   # vitest run
   증상 직접 추가, 이름이 비면 저장 차단, 알레르기 직접 수정, 저장 후 요약에 과거력 표시
 - 시험용으로 만든 기록 묶음은 확인 후 삭제했다. 기존 기록 묶음은 건드리지 않았다.
 - 확인하지 않은 것: 백업 내보내기/가져오기 버튼 실제 동작(파일 다운로드·선택 창이 필요해 단위 테스트로만 확인), 음성 입력, 휴대폰 화면
+
+### PC 브라우저 수동 확인 (2026-10-02, Chrome, 텍스트 입력, 저장하지 않음)
+
+- 문장 `어제부터 가슴이 답답하고 아파요 열이 있는 것 같기도 하고 잘 모르겠어요 남편도 기침을 해요`
+  → 가슴 답답함·흉통 있음, 발열 확실하지 않음, 남편 기침은 따로 표시, 흉통 위험 증상 안내 표시
+- `본인 증상으로 옮기기`를 누르면 기침이 환자 증상으로 옮겨지는 것을 확인했다.
+- 진료 전 요약의 위험 증상 안내는 기존 기록 묶음의 심한 복통으로 표시되는 것을 확인했다.
 
 ### 실제 기기 확인 (기존 문서 기준, 이번에 다시 확인하지 않음)
 
@@ -138,10 +170,16 @@ corepack pnpm test   # vitest run
 - [ ] 기록은 브라우저에만 있다(백업 파일로 옮길 수는 있음). 서버나 PatientState 연동과 진단 엔진은 아직 없다.
       서버 저장은 docs/PRIVACY.md 원칙(서버에 보관하지 않음)을 바꿔야 하므로 사용자 결정이 필요하다.
 - [ ] 백업 내보내기/가져오기를 실제 브라우저에서 한 번 눌러 확인
-- [ ] 증상 추출 남은 한계: 규칙 기반이라 목록에 없는 표현은 놓친다(손 저림, 두근거림, 눈 침침함 등).
-      한 문장 안에 같은 부위의 두 증상(예: `가슴이 답답하고 아파요`)은 하나만 잡고 나머지는 미인식으로 보여준다.
-      과거력은 정해진 질환 이름만 인식한다.
-- 진료 중/후 기능과 DDXPlus 연구 트랙은 2026-10-02 이후 진행 예정(사용자 결정, 2026-10-01).
+- [ ] 증상 추출 남은 한계 (2026-10-02 기준)
+      - 규칙 기반이라 49개 목록에 없는 증상은 확인 요청으로만 보여준다(혀 통증, 입안 헐음, 발가락 통증 등).
+      - 띄어쓰기 없이 주어가 생략된 긴 문장(`가슴이답답하고아파요`)은 앞 절 주어 이어받기를 하지 않는다.
+      - 과거력은 정해진 질환 이름이나 `OO 진단을 받았어요` 형태만 인식한다.
+      - 주어를 이어받아 찾은 증상(`가슴이 답답하고 아파요`의 흉통)은 앞 절의 시작 시점(`어제부터`)을 물려받지 않는다.
+      - 위험 증상 기준은 일반적인 응급 신호를 참고해 정한 것으로, 의료진 검토를 받지 않았다.
+      - 해결함: 주어 없이 이어지는 뒷부분(`가슴이 답답하고 아파요` → 가슴 답답함 + 흉통), 경고 증상 17개 추가,
+        `위염으로 진단받았어요` 같은 목록 밖 병명 기록
+- 진료 중/후 기능은 **보류**한다(사용자 결정, 2026-10-02). 구현 방식을 팀원과 아직 합의하지 않았고, 진료 전 단계를 먼저 완성한다.
+  2026-10-02에 DDXPlus 기반 설계 초안(`apps/api/app/knowledge/catalog.py`)을 만들다가 중단하고 삭제했다.
 - [ ] 테스트의 `StarletteDeprecationWarning` 정리 여부 검토
 - [x] `feature/stt-rebuild`를 main에 병합했다 (2026-10-02, fast-forward). 팀원 코드 통합 방식은 아직 정하지 않았다.
 

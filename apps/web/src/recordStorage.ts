@@ -6,7 +6,7 @@ export type StoredIntakeRecord = {
   intake: {
     symptoms: Array<{
       name: string;
-      status: "present" | "absent";
+      status: "present" | "absent" | "uncertain";
       body_site: string | null;
       onset: string | null;
       severity: string | null;
@@ -17,6 +17,7 @@ export type StoredIntakeRecord = {
     medications: string[];
     allergies: string[];
     medical_history?: string[];
+    others_symptoms?: Array<{ person: string; symptom: string; source_text: string }>;
     unrecognized_fragments: string[];
     needs_user_confirmation: boolean;
   };

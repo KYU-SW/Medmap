@@ -24,6 +24,7 @@ function severityValue(severity: string | null): number | null {
 }
 
 function describeChange(previous: StoredSymptom | undefined, current: StoredSymptom): string {
+  if (current.status === "uncertain") return "확실하지 않음";
   if (!previous) return current.status === "present" ? "처음 기록" : "없음으로 기록";
   if (previous.status !== current.status) {
     return `${previous.status === "present" ? "있음" : "없음"} → ${
@@ -54,7 +55,7 @@ export function buildTimeline(records: StoredIntakeRecord[]): TimelineEntry[] {
       createdAt: record.createdAt,
       symptoms: record.intake.symptoms.map((symptom) => {
         const previous = latestBySymptom.get(symptom.name);
-        latestBySymptom.set(symptom.name, symptom);
+        if (symptom.status !== "uncertain") latestBySymptom.set(symptom.name, symptom);
         return { ...symptom, change: describeChange(previous, symptom) };
       }),
     }));

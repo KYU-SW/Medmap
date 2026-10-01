@@ -201,6 +201,46 @@ select {
   margin: 8px 0 0;
 }
 
+.urgent-notice {
+  margin: 16px 0;
+  padding: 14px;
+  border: 2px solid #c0392b;
+  border-radius: 10px;
+  color: #7a1c13;
+  background: #fdecea;
+}
+
+.urgent-notice p {
+  margin: 8px 0 0;
+}
+
+.others-review {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid #9fb3c8;
+  border-radius: 10px;
+  color: #2c4157;
+  background: #eef4fa;
+}
+
+.others-review > p {
+  margin: 8px 0 0;
+}
+
+.others-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.others-item button {
+  width: auto;
+  margin-top: 0;
+  padding: 8px 12px;
+}
+
 .record-message {
   padding: 12px;
   border-radius: 10px;
@@ -431,6 +471,10 @@ select {
 }
 
 @media (max-width: 520px) {
+  .others-item {
+    grid-template-columns: 1fr;
+  }
+
   .backup-actions {
     grid-template-columns: 1fr;
   }

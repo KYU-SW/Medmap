@@ -8,7 +8,13 @@ import {
   type StoredIntakeRecord,
 } from "./recordStorage";
 import { createBackup, parseBackup } from "./backup";
-import { parseList, SUPPORTED_SYMPTOMS, tracksFrequency } from "./symptomOptions";
+import {
+  parseList,
+  SUPPORTED_SYMPTOMS,
+  tracksFrequency,
+  URGENT_NOTICE,
+  urgentSymptoms,
+} from "./symptomOptions";
 import { buildTimeline } from "./timeline";
 import { buildSymptomEpisodes } from "./symptomEpisodes";
 import { buildVisitSummary, visitSummaryText } from "./visitSummary";
@@ -27,7 +33,7 @@ type Status = "idle" | "recording" | "transcribing" | "done" | "error";
 
 type SymptomObservation = {
   name: string;
-  status: "present" | "absent";
+  status: "present" | "absent" | "uncertain";
   body_site: string | null;
   onset: string | null;
   severity: string | null;
@@ -41,8 +47,15 @@ type IntakeResult = {
   medications: string[];
   allergies: string[];
   medical_history: string[];
+  others_symptoms: OtherPersonSymptom[];
   unrecognized_fragments: string[];
   needs_user_confirmation: boolean;
+};
+
+type OtherPersonSymptom = {
+  person: string;
+  symptom: string;
+  source_text: string;
 };
 
 type ListDrafts = {
@@ -333,7 +346,11 @@ export default function App() {
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.detail || "의료정보를 정리하지 못했습니다.");
-      const result: IntakeResult = { ...data, medical_history: data.medical_history ?? [] };
+      const result: IntakeResult = {
+        ...data,
+        medical_history: data.medical_history ?? [],
+        others_symptoms: data.others_symptoms ?? [],
+      };
       setIntake(result);
       setListDrafts({
         medications: result.medications.join(", "),
@@ -379,6 +396,36 @@ export default function App() {
     setIntake((current) => current && ({
       ...current,
       symptoms: current.symptoms.filter((_, itemIndex) => itemIndex !== index),
+    }));
+    setConfirmed(false);
+  }
+
+  function moveOtherToPatient(index: number) {
+    setIntake((current) => {
+      if (!current) return current;
+      const item = current.others_symptoms[index];
+      return {
+        ...current,
+        others_symptoms: current.others_symptoms.filter((_, itemIndex) => itemIndex !== index),
+        symptoms: [...current.symptoms, {
+          name: item.symptom,
+          status: "present",
+          body_site: null,
+          onset: null,
+          severity: null,
+          frequency: null,
+          trend: null,
+          source_text: item.source_text,
+        }],
+      };
+    });
+    setConfirmed(false);
+  }
+
+  function removeOther(index: number) {
+    setIntake((current) => current && ({
+      ...current,
+      others_symptoms: current.others_symptoms.filter((_, itemIndex) => itemIndex !== index),
     }));
     setConfirmed(false);
   }
@@ -633,6 +680,12 @@ export default function App() {
         {intake && (
           <section className="intake" aria-label="정리된 의료정보">
             <h2>확인이 필요한 정보</h2>
+            {urgentSymptoms(intake.symptoms).length > 0 && (
+              <div className="urgent-notice" role="alert">
+                <strong>{urgentSymptoms(intake.symptoms).join(", ")}</strong>
+                <p>{URGENT_NOTICE}</p>
+              </div>
+            )}
             <p>잘못 정리된 내용은 직접 고친 뒤 확인해 주세요.</p>
             {intake.symptoms.length === 0 ? (
               <p className="empty-result">현재 규칙에서 찾은 증상이 없습니다.</p>
@@ -657,6 +710,7 @@ export default function App() {
                   >
                     <option value="present">있음</option>
                     <option value="absent">없음</option>
+                    <option value="uncertain">확실하지 않음</option>
                   </select>
                 </label>
                 <label>
@@ -739,6 +793,23 @@ export default function App() {
                 />
               </label>
             </div>
+            {intake.others_symptoms.length > 0 && (
+              <div className="others-review">
+                <strong>다른 사람에 대한 내용으로 보이는 표현</strong>
+                <p>환자 본인의 증상이 아니어서 따로 모았습니다. 본인 증상이면 옮겨 주세요.</p>
+                {intake.others_symptoms.map((item, index) => (
+                  <div className="others-item" key={`${item.person}-${item.symptom}-${index}`}>
+                    <span>{item.person}: {item.symptom} (“{item.source_text}”)</span>
+                    <button className="button--secondary" type="button" onClick={() => moveOtherToPatient(index)}>
+                      본인 증상으로 옮기기
+                    </button>
+                    <button className="button--delete" type="button" onClick={() => removeOther(index)}>
+                      삭제
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
             {intake.unrecognized_fragments.length > 0 && (
               <div className="review-warning" role="alert">
                 <strong>자동으로 정리하지 못한 표현</strong>
@@ -774,6 +845,12 @@ export default function App() {
                   timeStyle: "short",
                 }).format(new Date(visitSummary.lastRecordedAt))}
               </p>
+              {visitSummary.urgentSymptoms.length > 0 && (
+                <div className="urgent-notice" role="alert">
+                  <strong>{visitSummary.urgentSymptoms.join(", ")}</strong>
+                  <p>{URGENT_NOTICE}</p>
+                </div>
+              )}
               <div className="visit-summary-symptoms">
                 <strong>증상 변화</strong>
                 <ul>
@@ -793,6 +870,12 @@ export default function App() {
               <p><strong>기록 기간 중 복용약:</strong> {visitSummary.medications.join(", ") || "확인되지 않음"}</p>
               <p><strong>기록된 알레르기:</strong> {visitSummary.allergies.join(", ") || "확인되지 않음"}</p>
               <p><strong>과거력:</strong> {visitSummary.medicalHistory.join(", ") || "확인되지 않음"}</p>
+              {visitSummary.uncertainSymptoms.length > 0 && (
+                <p><strong>있는지 확실하지 않다고 한 증상:</strong> {visitSummary.uncertainSymptoms.join(", ")}</p>
+              )}
+              {visitSummary.othersSymptoms.length > 0 && (
+                <p><strong>주변 사람에 대해 말한 내용:</strong> {visitSummary.othersSymptoms.join(", ")}</p>
+              )}
               <p className="summary-notice">사용자가 확인한 기록의 요약이며 진단 결과가 아닙니다.</p>
               <div className="summary-actions">
                 <button className="button--secondary" type="button" onClick={() => void copyVisitSummary()}>
@@ -931,7 +1014,7 @@ export default function App() {
                     {record.intake.symptoms.map((symptom, index) => (
                       <li key={`${record.id}-${symptom.name}-${index}`}>
                         <strong>{symptom.name}</strong>
-                        {` · ${symptom.status === "present" ? "있음" : "없음"}`}
+                        {` · ${symptom.status === "present" ? "있음" : symptom.status === "absent" ? "없음" : "확실하지 않음"}`}
                         {symptom.status === "present" && ` · 시작: ${symptom.onset || "확인되지 않음"}`}
                         {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
                         {symptom.status === "present" && symptom.trend && ` · 변화: ${symptom.trend === "improving" ? "호전 중" : symptom.trend === "worsening" ? "악화 중" : "변화 없음"}`}
@@ -944,6 +1027,12 @@ export default function App() {
               <p><strong>복용약:</strong> {record.intake.medications.join(", ") || "확인되지 않음"}</p>
               <p><strong>알레르기:</strong> {record.intake.allergies.join(", ") || "확인되지 않음"}</p>
               <p><strong>과거력:</strong> {record.intake.medical_history?.join(", ") || "확인되지 않음"}</p>
+              {(record.intake.others_symptoms?.length ?? 0) > 0 && (
+                <p>
+                  <strong>주변 사람:</strong>{" "}
+                  {record.intake.others_symptoms!.map((item) => `${item.person} ${item.symptom}`).join(", ")}
+                </p>
+              )}
               <button className="button--delete" type="button" onClick={() => void removeRecord(record.id)}>
                 이 기록 삭제
               </button>

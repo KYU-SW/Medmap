@@ -1,6 +1,6 @@
 import type { StoredIntakeRecord } from "./recordStorage";
 import type { SymptomEpisode } from "./symptomEpisodes";
-import { tracksFrequency } from "./symptomOptions";
+import { tracksFrequency, urgentSymptoms } from "./symptomOptions";
 
 export type VisitSummary = {
   firstRecordedAt: string;
@@ -9,6 +9,9 @@ export type VisitSummary = {
   medications: string[];
   allergies: string[];
   medicalHistory: string[];
+  uncertainSymptoms: string[];
+  othersSymptoms: string[];
+  urgentSymptoms: string[];
 };
 
 export function buildVisitSummary(
@@ -27,6 +30,15 @@ export function buildVisitSummary(
     medications: [...new Set(ordered.flatMap((record) => record.intake.medications))],
     allergies: [...new Set(ordered.flatMap((record) => record.intake.allergies))],
     medicalHistory: [...new Set(ordered.flatMap((record) => record.intake.medical_history ?? []))],
+    uncertainSymptoms: [...new Set(ordered.flatMap((record) => record.intake.symptoms
+      .filter((symptom) => symptom.status === "uncertain")
+      .map((symptom) => symptom.name)))]
+      .filter((name) => !episodes.some((episode) => episode.name === name)),
+    othersSymptoms: [...new Set(ordered.flatMap((record) => (record.intake.others_symptoms ?? [])
+      .map((item) => `${item.person} ${item.symptom}`)))],
+    urgentSymptoms: urgentSymptoms(episodes
+      .filter((episode) => episode.status === "active")
+      .map((episode) => ({ name: episode.name, status: "present", severity: episode.peakSeverity }))),
   };
 }
 
@@ -50,8 +62,17 @@ export function visitSummaryText(summary: VisitSummary): string {
   return [
     "MedMap 진료 전 증상 요약",
     `기록 기간: ${dateFormatter.format(new Date(summary.firstRecordedAt))} ~ ${dateFormatter.format(new Date(summary.lastRecordedAt))}`,
+    ...(summary.urgentSymptoms.length > 0
+      ? [`빨리 진료가 필요할 수 있는 증상: ${summary.urgentSymptoms.join(", ")}`]
+      : []),
     "증상 변화",
     ...(symptomLines.length > 0 ? symptomLines : ["- 확인된 증상 없음"]),
+    ...(summary.uncertainSymptoms.length > 0
+      ? [`있는지 확실하지 않다고 한 증상: ${summary.uncertainSymptoms.join(", ")}`]
+      : []),
+    ...(summary.othersSymptoms.length > 0
+      ? [`주변 사람에 대해 말한 내용: ${summary.othersSymptoms.join(", ")}`]
+      : []),
     `기록 기간 중 복용약: ${summary.medications.join(", ") || "확인되지 않음"}`,
     `기록된 알레르기: ${summary.allergies.join(", ") || "확인되지 않음"}`,
     `과거력: ${summary.medicalHistory.join(", ") || "확인되지 않음"}`,

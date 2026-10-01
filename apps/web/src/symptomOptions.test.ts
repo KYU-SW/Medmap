@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { parseList, SUPPORTED_SYMPTOMS, tracksFrequency } from "./symptomOptions";
 
 describe("symptomOptions", () => {
-  it("lists 21 unique supported symptoms", () => {
-    expect(new Set(SUPPORTED_SYMPTOMS).size).toBe(21);
+  it("lists 49 unique supported symptoms", () => {
+    expect(new Set(SUPPORTED_SYMPTOMS).size).toBe(49);
   });
 
   it("tracks frequency only for vomiting and diarrhea", () => {
