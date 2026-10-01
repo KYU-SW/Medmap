@@ -125,7 +125,7 @@ export default function App() {
   useEffect(() => {
     setSummaryQrCode("");
     setSummaryMessage("");
-  }, [records]);
+  }, [records, currentRecordGroupId]);
 
   function stopLiveCapture() {
     if (liveIntervalRef.current !== null) {
