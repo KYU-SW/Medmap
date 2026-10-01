@@ -21,8 +21,9 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
     `src/recordGroups.ts`, `src/visitSummary.ts`, 새 파일 `src/symptomOptions.ts`, `src/backup.ts`,
     `src/testRecords.ts`, 테스트 `src/*.test.ts` 5개
 - 2026-10-02: `feature/stt-rebuild`를 main에 fast-forward로 병합하고 원격 main에도 푸시했다(`7b989e5`).
+  같은 날 `f5acbec`까지 다시 병합·푸시했다. main과 feature/stt-rebuild는 같은 커밋을 가리킨다.
 - 2026-10-02 합성어·구어 인식 확장, 주어 이어받기, 경고 증상 추가, 불확실·다른 사람·위험 증상 처리(아래 4절 10~12번)는
-  2026-10-02에 한 커밋으로 커밋했다(push하지 않음). 변경 파일:
+  `f5acbec`에서 커밋하고 push했다. 변경 파일:
   - API: `app/services/intake_extractor.py`, `app/schemas/intake.py`, `tests/test_intake.py`, `tests/test_intake_scenarios.py`,
     `tests/test_intake_expanded.py`, 새 파일 `tests/test_intake_red_flags.py`, `tests/test_intake_safety.py`
   - 웹: `src/App.tsx`, `src/styles.css`, `src/recordStorage.ts`, `src/symptomOptions.ts`, `src/symptomEpisodes.ts`,
