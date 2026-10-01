@@ -176,6 +176,43 @@ def test_compact_yesterday_night_and_together_expression() -> None:
     assert symptoms["구토"]["onset"] == "어젯밤"
 
 
+def test_follow_up_improvement_resolution_and_medicine_are_linked_correctly() -> None:
+    first = extract(
+        "어제부터 머리가 너무 아프고 배도 아팠어요 그리고 구토는 한 7번 정도 한 것 같아요 "
+        "약은 타이레놀 먹었어요"
+    )
+    assert first["medications"] == ["타이레놀"]
+    assert symptoms_by_name(first)["구토"]["frequency"] == "7회"
+
+    follow_up = extract(
+        "이제 머리는 조금 괜찮아졌고 구토 횟수도 3회로 줄었어요 복통은 사라졌어요"
+    )
+    symptoms = symptoms_by_name(follow_up)
+    assert set(symptoms) == {"두통", "구토", "복통"}
+    assert symptoms["두통"]["status"] == "present"
+    assert symptoms["두통"]["severity"] == "경미함"
+    assert symptoms["구토"]["status"] == "present"
+    assert symptoms["구토"]["frequency"] == "3회"
+    assert symptoms["복통"]["status"] == "absent"
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "복통은 없어졌어요",
+        "복통은 사라졌어요",
+        "복통은 완전히 가라앉았어요",
+        "복통은 다 나았어요",
+        "배가 더 이상 안 아파요",
+        "배가 아프지 않아요",
+    ],
+)
+def test_abdominal_pain_resolution_expressions(text: str) -> None:
+    symptom = extract(text)["symptoms"][0]
+    assert symptom["name"] == "복통"
+    assert symptom["status"] == "absent"
+
+
 @pytest.mark.parametrize(
     "text",
     [
