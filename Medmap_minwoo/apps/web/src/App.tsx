@@ -21,6 +21,7 @@ import {
   urgentSymptoms,
 } from "./symptomOptions";
 import { buildTimeline } from "./timeline";
+import { dayKey, monthGrid } from "./calendar";
 import { buildSymptomEpisodes } from "./symptomEpisodes";
 import { buildVisitSummary, profileText, visitSummaryText } from "./visitSummary";
 import {
@@ -56,6 +57,11 @@ const TREND_BADGE = {
   unchanged: { tone: "same", label: "= 변화 없음" },
 } as const;
 const TONE_MARK = { new: "+", worse: "↑", better: "↓", same: "=", unknown: "?" } as const;
+const TONE_LABEL = { new: "새 증상", worse: "악화", better: "호전", same: "비슷함", unknown: "확실하지 않음" } as const;
+
+function shortDate(value: string): string {
+  return new Intl.DateTimeFormat("ko-KR", { month: "long", day: "numeric" }).format(new Date(value));
+}
 // Plain words for the arrow-style changes on screen; the stored wording stays the same.
 const CHANGE_LABEL: Record<string, string> = { "있음 → 없음": "사라짐", "없음 → 있음": "다시 생김" };
 
@@ -196,6 +202,8 @@ export default function App() {
   const [recordMessage, setRecordMessage] = useState("");
   const [summaryMessage, setSummaryMessage] = useState("");
   const [summaryQrCode, setSummaryQrCode] = useState("");
+  const [calendarMonth, setCalendarMonth] = useState<Date | null>(null);
+  const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -648,6 +656,14 @@ export default function App() {
   );
   const timeline = buildTimeline(visibleRecords);
   const symptomEpisodes = buildSymptomEpisodes(visibleRecords);
+  // The calendar opens on the latest recorded day until the user picks another.
+  const latestEntry = timeline[timeline.length - 1];
+  const shownDay = selectedDay ?? (latestEntry ? dayKey(latestEntry.createdAt) : null);
+  const shownMonth = calendarMonth ?? (shownDay ? new Date(`${shownDay}T00:00:00`) : new Date());
+  const calendarCells = monthGrid(shownMonth.getFullYear(), shownMonth.getMonth(), timeline, symptomEpisodes);
+  const shownDayEntries = timeline.filter((entry) => dayKey(entry.createdAt) === shownDay);
+  const moveMonth = (offset: number) =>
+    setCalendarMonth(new Date(shownMonth.getFullYear(), shownMonth.getMonth() + offset, 1));
   const profile = recordGroups.find((group) => group.id === currentRecordGroupId)?.profile ?? {};
   const visitSummary = buildVisitSummary(visibleRecords, symptomEpisodes, profile);
   const step = view === "record" ? 1 : view === "review" ? 2 : view === "summary" ? 3 : 0;
@@ -1263,60 +1279,64 @@ export default function App() {
         {view === "history" && (
         <>
         <h2 className="step-title">지난 기록</h2>
-        <section className="episodes" aria-label="증상 발생 기간">
-          <h2>증상 발생 기간</h2>
-          <p>같은 증상이 나타난 때부터 사라진 때까지를 하나로 묶습니다.</p>
-          {symptomEpisodes.length === 0 ? (
-            <p className="empty-result">묶어서 표시할 증상 기록이 없습니다.</p>
-          ) : (
-            <div className="episode-list">
+        <section className="calendar" aria-label="증상 기록 달력">
+          <div className="calendar__head">
+            <button className="button--secondary" type="button" onClick={() => moveMonth(-1)} aria-label="이전 달">‹</button>
+            <h2>{shownMonth.getFullYear()}년 {shownMonth.getMonth() + 1}월</h2>
+            <button className="button--secondary" type="button" onClick={() => moveMonth(1)} aria-label="다음 달">›</button>
+          </div>
+          <div className="calendar__grid">
+            {["일", "월", "화", "수", "목", "금", "토"].map((weekday) => (
+              <span className="calendar__weekday" key={weekday}>{weekday}</span>
+            ))}
+            {calendarCells.map((cell, index) => cell ? (
+              <button
+                key={cell.key}
+                type="button"
+                className={`calendar__day${cell.inEpisode ? " calendar__day--episode" : ""}${cell.key === shownDay ? " calendar__day--selected" : ""}`}
+                onClick={() => setSelectedDay(cell.key)}
+                aria-pressed={cell.key === shownDay}
+                aria-label={`${cell.day}일${cell.tone ? `, 기록 있음 (${TONE_LABEL[cell.tone]})` : ""}`}
+              >
+                {cell.day}
+                {cell.tone && <span className={`calendar__dot calendar__dot--${cell.tone}`} />}
+              </button>
+            ) : <span key={`pad-${index}`} />)}
+          </div>
+          <p className="calendar__legend">
+            <span><i className="calendar__dot calendar__dot--worse" />악화</span>
+            <span><i className="calendar__dot calendar__dot--new" />새 증상</span>
+            <span><i className="calendar__dot calendar__dot--same" />비슷함</span>
+            <span><i className="calendar__dot calendar__dot--better" />호전</span>
+            <span><i className="calendar__swatch" />증상 기간</span>
+          </p>
+          {symptomEpisodes.length > 0 && (
+            <ul className="episode-lines">
               {symptomEpisodes.map((episode) => (
-                <article className="episode" key={episode.id}>
-                  <div className="episode-heading">
-                    <strong>{episode.name}</strong>
-                    <span className={`episode-status episode-status--${episode.status}`}>
-                      {episode.status === "active" ? "진행 중" : "종료됨"}
-                    </span>
-                  </div>
-                  <p>
-                    첫 기록: {new Intl.DateTimeFormat("ko-KR", {
-                      dateStyle: "medium",
-                      timeStyle: "short",
-                    }).format(new Date(episode.startedAt))}
-                  </p>
-                  {episode.endedAt && (
-                    <p>
-                      사라짐 기록: {new Intl.DateTimeFormat("ko-KR", {
-                        dateStyle: "medium",
-                        timeStyle: "short",
-                      }).format(new Date(episode.endedAt))}
-                    </p>
-                  )}
-                  {episode.bodySite && <p>부위: {episode.bodySite}</p>}
-                  <p>말한 시작 시점: {formatOnset(episode.statedOnset, episode.statedOnsetDate) || "확인되지 않음"}</p>
-                  <p>가장 심한 정도: {episode.peakSeverity || "확인되지 않음"}</p>
-                  <p>최근 변화: {episode.latestTrend === "improving" ? "호전 중" : episode.latestTrend === "worsening" ? "악화 중" : episode.latestTrend === "unchanged" ? "변화 없음" : "확인되지 않음"}</p>
-                  {tracksFrequency(episode.name) && (
-                    <p>기록된 횟수: {episode.frequencies.join(", ") || "확인되지 않음"}</p>
-                  )}
-                  <p>연결된 기록: {episode.recordCount}개</p>
-                </article>
+                <li key={episode.id}>
+                  <strong>{episode.name}</strong>
+                  <span className={`episode-status episode-status--${episode.status}`}>
+                    {episode.status === "active" ? "진행 중" : "종료됨"}
+                  </span>
+                  <span>
+                    {shortDate(episode.startedAt)} ~ {episode.endedAt ? shortDate(episode.endedAt) : ""}
+                    {episode.peakSeverity && ` · 최고 ${episode.peakSeverity}`}
+                  </span>
+                </li>
               ))}
-            </div>
+            </ul>
           )}
         </section>
-        <section className="timeline" aria-label="증상 변화 타임라인">
-          <h2>증상 변화 타임라인</h2>
-          <p>확인하고 저장한 기록만 시간순으로 연결합니다.</p>
-          {timeline.length === 0 ? (
-            <p className="empty-result">타임라인에 표시할 기록이 없습니다.</p>
-          ) : timeline.map((entry) => (
+        <section className="timeline" aria-label="선택한 날의 기록">
+          <h2>{shownDay ? `${Number(shownDay.slice(5, 7))}월 ${Number(shownDay.slice(8))}일 기록` : "기록"}</h2>
+          {shownDayEntries.length === 0 ? (
+            <p className="empty-result">
+              {timeline.length === 0 ? "아직 저장된 기록이 없습니다." : "이 날은 기록이 없습니다. 점이 찍힌 날을 눌러 보세요."}
+            </p>
+          ) : shownDayEntries.map((entry) => (
             <article className="timeline-entry" key={entry.id}>
               <time dateTime={entry.createdAt}>
-                {new Intl.DateTimeFormat("ko-KR", {
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                }).format(new Date(entry.createdAt))}
+                {new Intl.DateTimeFormat("ko-KR", { timeStyle: "short" }).format(new Date(entry.createdAt))}
               </time>
               {entry.symptoms.length === 0 ? (
                 <p>확인된 증상이 없습니다.</p>
@@ -1345,8 +1365,8 @@ export default function App() {
             </article>
           ))}
         </section>
-        <section className="records" aria-label="저장된 증상 기록">
-          <h2>저장된 증상 기록</h2>
+        <details className="history">
+          <summary>저장된 기록 관리·백업 ({visibleRecords.length}개)</summary>
           <p>이 기기의 현재 브라우저에만 보관됩니다.</p>
           <div className="backup-actions">
             <button className="button--secondary" type="button" onClick={exportBackup}>
@@ -1412,7 +1432,7 @@ export default function App() {
               </button>
             </article>
           ))}
-        </section>
+        </details>
         </>
         )}
         <p className="privacy-note">

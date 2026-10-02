@@ -833,36 +833,125 @@ textarea::placeholder {
 }
 
 /* ---------- History ---------- */
-.episodes,
-.timeline,
-.records {
+.timeline {
   margin-top: 24px;
   padding-top: 20px;
   border-top: 1px solid var(--color-border);
 }
 
-.records h2 {
-  margin-bottom: 4px;
-}
-
-.episode-list {
-  display: grid;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.episode {
-  padding: 14px 16px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-}
-
-.episode-heading {
+.calendar__head {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 8px;
+}
+
+.calendar__head button {
+  width: var(--touch);
+  margin: 0;
+  padding: 0;
+  font-size: 22px;
+}
+
+.calendar__head h2 {
+  margin: 0;
+}
+
+.calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.calendar__weekday {
+  color: var(--color-muted-foreground);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.calendar__day {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 6px;
+  justify-content: center;
+  gap: 2px;
+  min-height: var(--touch);
+  margin: 0;
+  padding: 4px 0;
+  border-radius: var(--radius-sm);
+  font-weight: 400;
+  color: var(--color-foreground);
+  background: transparent;
+}
+
+.calendar__day:hover:not(:disabled) {
+  background: var(--color-muted);
+}
+
+.calendar__day--episode,
+.calendar__day--episode:hover:not(:disabled) {
+  background: var(--color-warning-soft);
+}
+
+.calendar__day--selected,
+.calendar__day--selected:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  font-weight: 700;
+}
+
+.calendar__dot,
+.calendar__swatch {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.calendar__dot--worse { background: var(--color-destructive); }
+.calendar__dot--better { background: var(--color-accent); }
+.calendar__dot--new { background: var(--color-info); }
+.calendar__dot--same,
+.calendar__dot--unknown { background: var(--color-muted-foreground); }
+
+.calendar__swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  background: var(--color-warning-soft);
+}
+
+.calendar__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 10px 0 0;
+  color: var(--color-muted-foreground);
+  font-size: 14px;
+}
+
+.calendar__legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.episode-lines {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.episode-lines li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  padding: 8px 0;
+  border-top: 1px solid var(--color-border);
+  font-size: 15px;
 }
 
 .episode-status {
@@ -880,11 +969,6 @@ textarea::placeholder {
 .episode-status--resolved {
   color: var(--color-accent);
   background: var(--color-accent-soft);
-}
-
-.episode p {
-  margin: 4px 0 0;
-  font-size: 15px;
 }
 
 .timeline-entry {
