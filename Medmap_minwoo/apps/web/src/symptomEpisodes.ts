@@ -1,4 +1,5 @@
 import type { StoredIntakeRecord } from "./recordStorage";
+import { detailedSite } from "./symptomOptions";
 
 type StoredSymptom = StoredIntakeRecord["intake"]["symptoms"][number];
 
@@ -10,6 +11,8 @@ export type SymptomEpisode = {
   lastRecordedAt: string;
   endedAt: string | null;
   statedOnset: string | null;
+  statedOnsetDate: string | null;
+  bodySite: string | null;
   peakSeverity: string | null;
   frequencies: string[];
   latestTrend: StoredSymptom["trend"];
@@ -19,6 +22,7 @@ export type SymptomEpisode = {
 function severityValue(severity: string | null): number | null {
   if (!severity) return null;
   if (severity === "경미함") return 0.25;
+  if (severity === "중간") return 0.5;
   if (severity === "심함") return 0.75;
   const score = severity.match(/^(\d+)\/(\d+)점$/);
   if (!score) return null;
@@ -49,6 +53,8 @@ function startEpisode(
     lastRecordedAt: record.createdAt,
     endedAt: null,
     statedOnset: symptom.onset,
+    statedOnsetDate: symptom.onset_date ?? null,
+    bodySite: detailedSite(symptom.body_site),
     peakSeverity: symptom.severity,
     frequencies: symptom.frequency ? [symptom.frequency] : [],
     latestTrend: symptom.trend,
@@ -78,7 +84,12 @@ export function buildSymptomEpisodes(records: StoredIntakeRecord[]): SymptomEpis
           open.frequencies.push(symptom.frequency);
         }
         if (symptom.trend) open.latestTrend = symptom.trend;
-        if (!open.statedOnset && symptom.onset) open.statedOnset = symptom.onset;
+        const site = detailedSite(symptom.body_site);
+        if (site && site.length > (open.bodySite?.length ?? 0)) open.bodySite = site;
+        if (!open.statedOnset && symptom.onset) {
+          open.statedOnset = symptom.onset;
+          open.statedOnsetDate = symptom.onset_date ?? null;
+        }
         continue;
       }
 

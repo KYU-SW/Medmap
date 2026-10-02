@@ -9,6 +9,9 @@ import {
 } from "./recordStorage";
 import { createBackup, parseBackup } from "./backup";
 import {
+  detailedSite,
+  formatOnset,
+  localDateString,
   parseList,
   SUPPORTED_SYMPTOMS,
   tracksFrequency,
@@ -36,6 +39,7 @@ type SymptomObservation = {
   status: "present" | "absent" | "uncertain";
   body_site: string | null;
   onset: string | null;
+  onset_date?: string | null;
   severity: string | null;
   frequency: string | null;
   trend: "improving" | "worsening" | "unchanged" | null;
@@ -342,7 +346,7 @@ export default function App() {
       const response = await fetch("/v1/intake/extract", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ transcript }),
+        body: JSON.stringify({ transcript, reference_date: localDateString() }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.detail || "의료정보를 정리하지 못했습니다.");
@@ -383,6 +387,7 @@ export default function App() {
         status: "present",
         body_site: null,
         onset: null,
+        onset_date: null,
         severity: null,
         frequency: null,
         trend: null,
@@ -412,6 +417,7 @@ export default function App() {
           status: "present",
           body_site: null,
           onset: null,
+        onset_date: null,
           severity: null,
           frequency: null,
           trend: null,
@@ -701,6 +707,14 @@ export default function App() {
                   />
                 </label>
                 <label>
+                  부위
+                  <input
+                    value={symptom.body_site ?? ""}
+                    placeholder="확인되지 않음"
+                    onChange={(event) => updateSymptom(index, { body_site: event.target.value || null })}
+                  />
+                </label>
+                <label>
                   상태
                   <select
                     value={symptom.status}
@@ -718,8 +732,11 @@ export default function App() {
                   <input
                     value={symptom.onset ?? ""}
                     placeholder="확인되지 않음"
-                    onChange={(event) => updateSymptom(index, { onset: event.target.value || null })}
+                    onChange={(event) => updateSymptom(index, { onset: event.target.value || null, onset_date: null })}
                   />
+                  {symptom.onset_date && (
+                    <span className="onset-date">{formatOnset(symptom.onset, symptom.onset_date)}</span>
+                  )}
                 </label>
                 <label>
                   정도
@@ -857,8 +874,9 @@ export default function App() {
                   {visitSummary.symptoms.map((symptom) => (
                     <li key={`summary-${symptom.id}`}>
                       <strong>{symptom.name}</strong>
+                      {symptom.bodySite && ` · 부위: ${symptom.bodySite}`}
                       {` · ${symptom.status === "active" ? "현재 있음" : "사라짐"}`}
-                      {` · 시작: ${symptom.statedOnset || "확인되지 않음"}`}
+                      {` · 시작: ${formatOnset(symptom.statedOnset, symptom.statedOnsetDate) || "확인되지 않음"}`}
                       {` · 가장 심한 정도: ${symptom.peakSeverity || "확인되지 않음"}`}
                       {symptom.latestTrend && ` · 최근 변화: ${symptom.latestTrend === "improving" ? "호전 중" : symptom.latestTrend === "worsening" ? "악화 중" : "변화 없음"}`}
                       {tracksFrequency(symptom.name) && symptom.frequencies.length > 0 && ` · 횟수: ${symptom.frequencies.join(", ")}`}
@@ -928,7 +946,8 @@ export default function App() {
                       }).format(new Date(episode.endedAt))}
                     </p>
                   )}
-                  <p>말한 시작 시점: {episode.statedOnset || "확인되지 않음"}</p>
+                  {episode.bodySite && <p>부위: {episode.bodySite}</p>}
+                  <p>말한 시작 시점: {formatOnset(episode.statedOnset, episode.statedOnsetDate) || "확인되지 않음"}</p>
                   <p>가장 심한 정도: {episode.peakSeverity || "확인되지 않음"}</p>
                   <p>최근 변화: {episode.latestTrend === "improving" ? "호전 중" : episode.latestTrend === "worsening" ? "악화 중" : episode.latestTrend === "unchanged" ? "변화 없음" : "확인되지 않음"}</p>
                   {tracksFrequency(episode.name) && (
@@ -961,7 +980,8 @@ export default function App() {
                     <li key={`${entry.id}-${symptom.name}-${index}`}>
                       <strong>{symptom.name}</strong>
                       {` · ${symptom.change}`}
-                      {symptom.status === "present" && ` · 시작: ${symptom.onset || "확인되지 않음"}`}
+                      {detailedSite(symptom.body_site) && ` · 부위: ${symptom.body_site}`}
+                      {symptom.status === "present" && ` · 시작: ${formatOnset(symptom.onset, symptom.onset_date) || "확인되지 않음"}`}
                       {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
                       {symptom.status === "present" && symptom.trend && ` · 변화: ${symptom.trend === "improving" ? "호전 중" : symptom.trend === "worsening" ? "악화 중" : "변화 없음"}`}
                       {tracksFrequency(symptom.name) && symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
@@ -1015,7 +1035,8 @@ export default function App() {
                       <li key={`${record.id}-${symptom.name}-${index}`}>
                         <strong>{symptom.name}</strong>
                         {` · ${symptom.status === "present" ? "있음" : symptom.status === "absent" ? "없음" : "확실하지 않음"}`}
-                        {symptom.status === "present" && ` · 시작: ${symptom.onset || "확인되지 않음"}`}
+                        {detailedSite(symptom.body_site) && ` · 부위: ${symptom.body_site}`}
+                        {symptom.status === "present" && ` · 시작: ${formatOnset(symptom.onset, symptom.onset_date) || "확인되지 않음"}`}
                         {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
                         {symptom.status === "present" && symptom.trend && ` · 변화: ${symptom.trend === "improving" ? "호전 중" : symptom.trend === "worsening" ? "악화 중" : "변화 없음"}`}
                         {tracksFrequency(symptom.name) && symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
