@@ -37,3 +37,6 @@ coverage/
 # 컴퓨터별 절대 경로와 파일 크기 목록
 /LOCAL_FILE_INVENTORY.json
 /LOCAL_GIT_AUTH_STATUS.json
+
+# graphify code-graph output (regenerate with /graphify .)
+/graphify-out/
