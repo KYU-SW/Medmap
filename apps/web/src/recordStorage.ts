@@ -9,6 +9,7 @@ export type StoredIntakeRecord = {
       status: "present" | "absent" | "uncertain";
       body_site: string | null;
       onset: string | null;
+      onset_date?: string | null;
       severity: string | null;
       frequency?: string | null;
       trend?: "improving" | "worsening" | "unchanged" | null;

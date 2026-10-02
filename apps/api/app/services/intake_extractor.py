@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import date, timedelta
 import re
 
 from app.schemas.intake import IntakeExtractionResponse, OtherPersonSymptom, SymptomObservation
@@ -14,7 +15,11 @@ class SymptomRule:
 
 INTENSITY_WORD = (
     r"(?:아주|매우|너무|많이|조금|약간|심하게|살짝|계속|자꾸|되게|엄청|진짜|정말|좀|막|"
-    r"살살|콕콕|쿡쿡|찌릿찌릿|찌릿|욱신욱신|욱신|지끈지끈|지끈|따끔따끔|뻐근하게|찌르듯이?)"
+    r"살살|콕콕|쿡쿡|찌릿찌릿|찌릿|욱신욱신|욱신|지끈지끈|지끈|따끔따끔|뻐근하게|찌르듯이?|"
+    # How bad it is, said between the body part and the verb: "배가 참을 만하게 아파요".
+    r"데굴데굴|참을\s*만하게|견딜\s*만하게|죽을\s*(?:것\s*)?같이|미칠\s*(?:것\s*)?같이|"
+    r"(?:참을\s*만한|견딜\s*만한|구를|죽을|미칠|못\s*참을|잠을\s*못\s*잘)\s*(?:정도로|만큼)|"
+    r"심하(?:지는|진|지)\s*않(?:은데|지만|고))"
 )
 INTENSITY_PHRASE = rf"(?:{INTENSITY_WORD}\s*)*"
 IMPROVEMENT_PHRASE = (
@@ -27,6 +32,7 @@ RESOLVED_STATE = (
 )
 NOW_ADVERB = r"(?:(?:이제는?|이젠|지금은|현재는)\s*)?"
 PARTICLE = r"(?:은|는|이|가|도|을|를)?"
+JOINT_PART = r"무릎|어깨|발목|손목|팔꿈치|고관절|골반|손가락\s*관절|관절"
 ABSENT_ENDING = rf"{NOW_ADVERB}(?:없|{RESOLVED_STATE})"
 NOT_PAINFUL = r"(?:(?:더\s*이상\s*)?안\s*(?:아프|아파|아픈)|아프지(?:는|도)?\s*않|아프진\s*않)"
 INLINE_ONSET = (
@@ -289,7 +295,7 @@ RULES = (
     SymptomRule(
         "속쓰림",
         re.compile(
-            rf"속쓰림|(?:속|가슴|명치|위)(?:이|가)?\s*{INTENSITY_PHRASE}(?:쓰려|쓰리|쓰린|쓰림|타는)|"
+            rf"속쓰림|(?:속|가슴|명치|윗배|위)(?:이|가)?\s*{INTENSITY_PHRASE}(?:쓰려|쓰리|쓰린|쓰림|타는)|"
             r"신물(?:이)?\s*(?:올라|넘어)|위산\s*역류"
         ),
         re.compile(
@@ -474,11 +480,36 @@ RULES = (
         re.compile(r"(?<!위)경련|발작|(?:몸|팔|다리)(?:이|가)?\s*(?:뻣뻣해지|뒤틀리)"),
         re.compile(rf"(?:경련|발작){PARTICLE}\s*{ABSENT_ENDING}"),
     ),
+    SymptomRule(
+        "관절 통증",
+        re.compile(
+            rf"관절통|(?:{JOINT_PART})(?:이|가|은|는|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
+            r"(?:아프|아파|아팠|아픈|쑤시|쑤셔|시큰|시려|결려|붓|부었)|"
+            rf"(?:{JOINT_PART})\s*통증"
+        ),
+        re.compile(
+            rf"관절통{PARTICLE}\s*{ABSENT_ENDING}|(?:{JOINT_PART})(?:은|는|도)?\s*{NOW_ADVERB}{NOT_PAINFUL}"
+        ),
+        "관절",
+    ),
 )
 FREQUENCY_SYMPTOMS = {"구토", "설사"}
+SIDE_PATTERN = re.compile(r"(오른쪽|왼쪽|양쪽|우측|좌측|오른|왼)(?:\s*편)?")
+SIDE_NAMES = {"우측": "오른쪽", "오른": "오른쪽", "좌측": "왼쪽", "왼": "왼쪽"}
+# Symptoms without a fixed body site that still happen somewhere: "왼쪽 팔이 저려요".
+PART_SYMPTOMS = {"저림", "부종", "떨림", "마비", "가려움", "발진"}
+PART_WORDS = r"손발|손가락|발가락|손등|발등|손목|발목|손|발|팔다리|팔|다리|얼굴|입술|눈두덩|등|온몸|몸|피부|턱|혀"
+# Words that name a narrower place than the rule's body site when they start the evidence.
+SITE_WORD_PATTERN = re.compile(
+    rf"(?:아랫|윗|뒷|앞)?(?:배|머리)|명치|옆구리|{JOINT_PART}|가슴|허리|귀|눈|목"
+)
 
 ONSET_PATTERN = re.compile(
-    r"(?<![가-힣A-Za-z0-9])(?:어젯밤(?:부터)?|"
+    r"(?<![가-힣A-Za-z0-9])(?:"
+    r"\d{1,2}\s*월\s*\d{1,2}\s*일(?:\s*(?:쯤|경))?(?:\s*부터)?|"
+    r"(?:지난\s*주|저번\s*주|이번\s*주)\s*[월화수목금토일]요일(?:부터|쯤)?|"
+    r"[월화수목금토일]요일(?:부터|쯤)?|"
+    r"어젯밤(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제)\s*"
     r"(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제|방금|아침|점심|저녁|밤|새벽)(?:부터)?|"
@@ -490,7 +521,17 @@ ONSET_PATTERN = re.compile(
     r"(?:\d+|일|이|삼|사|오|육|칠|팔|구|십)\s*"
     r"(?:시간|일|주(?!일)|개월|달)(?!\s*에)(?:\s*(?:전부터|전|동안|째))?)"
 )
+MILD_SEVERITY = (
+    r"참을\s*만|견딜\s*만|살짝|가볍게|약하게|그럭저럭|별로\s*안\s*심|심하(?:지는|진|지)\s*않"
+)
+MODERATE_SEVERITY = r"보통|중간\s*정도|적당히"
+STRONG_SEVERITY = (
+    r"못\s*참|참기\s*(?:힘들|어렵)|견디기\s*(?:힘들|어렵)|죽을\s*(?:것\s*)?같|미칠\s*(?:것\s*)?같|"
+    r"잠(?:을)?\s*못\s*잘\s*(?:정도|만큼)|(?:걷지도|움직이지도|아무것도)\s*못\s*할\s*(?:정도|만큼)|"
+    r"데굴데굴|극심|엄청"
+)
 SEVERITY_PATTERN = re.compile(
+    rf"{MILD_SEVERITY}|{MODERATE_SEVERITY}|{STRONG_SEVERITY}|"
     r"매우\s*심(?:해|하|했)|너무\s*심(?:해|하|했)|심(?:해|하|했)|"
     r"아주|매우|너무|많이|조금|약간"
 )
@@ -524,7 +565,28 @@ MEDICATION_NAME_PATTERN = re.compile(
     r"(?=(?:과|와|을|를|도|은|는)?(?:\s|$))"
 )
 KNOWN_MEDICATION_PATTERN = re.compile(
-    r"타이레놀|아세트아미노펜|이부프로펜|애드빌|게보린|판피린"
+    r"타이레놀|아세트아미노펜|이부프로펜|애드빌|게보린|판피린|판콜(?:에이|에스)?|펜잘|부루펜|탁센|낙센|"
+    r"아스피린|아목시실린|오구멘틴|세파클러|클래리스로마이신|지르텍|알레그라|코대원|시네츄라|"
+    r"베아제|훼스탈|겔포스|개비스콘|스멕타|로페라마이드|넥시움|메트포르민|리피토|노바스크|"
+    r"와파린|엘리퀴스|씬지로이드|신지로이드|프레드니솔론|인슐린|벤토린|심비코트|"
+    r"테라플루|화이투벤|콜대원|이지엔6|까스활명수|활명수|후시딘|마데카솔"
+)
+# Generic drug name endings, e.g. 세팔렉신 is not listed but 아지트로마이신 ends in 마이신.
+DRUG_NAME_PATTERN = re.compile(
+    r"(?<![가-힣])[가-힣]{2,10}(?:마이신|실린|프로펜|스타틴|사르탄|프라졸|디핀|세핀|파린|플록사신)"
+)
+MEDICATION_VERB_PATTERN = re.compile(
+    r"먹|복용|처방|투여|맞았|맞고|흡입|뿌리|뿌려|바르|발라|발랐|붙이|붙여|붙였|마셨|마시|마셔"
+)
+DOSE_PATTERN = re.compile(
+    r"\d+(?:\.\d+)?\s*(?:mg|밀리그램|밀리|mcg|g|그램|ml|cc|정|알|캡슐|포|봉|방울|퍼프)|"
+    r"(?:한|두|세|반)\s*(?:알|정|포|봉|캡슐)"
+)
+MEDICATION_TIMING_PATTERN = re.compile(
+    r"하루(?:에)?\s*(?:\d+|한|두|세|네)\s*(?:번|회|차례)|(?:\d+|한|두|세|네|여섯)\s*시간\s*마다|"
+    r"하루(?=(?:에)?\s*(?:\d+|한|두|세|네|반)\s*(?:알|정|포|봉|캡슐))|"
+    r"(?:아침|점심|저녁|자기\s*전|식후|식전)(?:\s*(?:,|하고|이랑)?\s*(?:아침|점심|저녁|자기\s*전))*"
+    r"(?:\s*(?:에|마다|으로|로))?|(?:필요할|아플)\s*때"
 )
 ALLERGY_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20})\s*알레르기(?!\s*약)"
@@ -615,11 +677,62 @@ def _severity(text: str) -> str | None:
     if not match:
         return None
     value = match.group(0)
+    if re.fullmatch(MILD_SEVERITY, value):
+        return "경미함"
+    if re.fullmatch(MODERATE_SEVERITY, value):
+        return "중간"
+    if re.fullmatch(STRONG_SEVERITY, value):
+        return "심함"
     return (
         "심함"
         if "심" in value or "너무" in value or "많이" in value or "매우" in value or "아주" in value
         else "경미함"
     )
+
+
+def _onset_date(onset: str | None, reference: date | None) -> str | None:
+    """Turn a stated onset into a calendar date when the words fix a single day.
+
+    Vague spans ("2주 전", "한 달 동안", "엊그제") stay as words only.
+    """
+    if onset is None or reference is None:
+        return None
+    text = re.sub(r"\s+", "", onset)
+    month_day = re.match(r"(\d{1,2})월(\d{1,2})일", text)
+    if month_day:
+        try:
+            day = date(reference.year, int(month_day.group(1)), int(month_day.group(2)))
+            if day > reference:
+                day = day.replace(year=reference.year - 1)
+        except ValueError:
+            return None
+        return day.isoformat()
+    weekday_match = re.match(r"(지난주|저번주|이번주)?([월화수목금토일])요일", text)
+    if weekday_match:
+        weekday = "월화수목금토일".index(weekday_match.group(2))
+        week = weekday_match.group(1)
+        this_monday = reference - timedelta(days=reference.weekday())
+        if week in ("지난주", "저번주"):
+            day = this_monday - timedelta(days=7) + timedelta(days=weekday)
+        elif week == "이번주":
+            day = this_monday + timedelta(days=weekday)
+            if day > reference:
+                return None
+        else:
+            day = reference - timedelta(days=(reference.weekday() - weekday) % 7)
+        return day.isoformat()
+    if re.match(r"(?:오늘|방금|아침|점심)", text) or re.fullmatch(r"\d+시간(?:전부터|전|째)?", text):
+        return reference.isoformat()
+    if re.match(r"(?:어제|어젯밤)", text):
+        return (reference - timedelta(days=1)).isoformat()
+    if re.match(r"(?:그제|그저께)", text):
+        return (reference - timedelta(days=2)).isoformat()
+    days_ago = re.fullmatch(r"(\d+)일(전부터|전|째)", text)
+    if days_ago:
+        count = int(days_ago.group(1))
+        # "3일째" is the third day, so it started two days ago.
+        return (reference - timedelta(days=count - 1 if days_ago.group(2) == "째" else count)).isoformat()
+    return None
 
 
 def _normalize_onset(value: str | None) -> str | None:
@@ -890,20 +1003,40 @@ def _trend_for_symptom(
     return "unchanged"
 
 
-def _extract_medications(text: str) -> list[str]:
-    medications: list[str] = []
-    clause_boundaries = re.compile(r"[.!?。]|(?:\s+)(?:그리고|하지만|그러나|또한)(?:\s+)")
+def _extract_medications(text: str) -> tuple[list[str], list[str]]:
+    """Return medication lines for the record ("타이레놀 500mg 하루 2회") and the bare names."""
+    names: list[str] = []
+    lines: list[str] = []
+    clause_boundaries = re.compile(r"[.!?。]|(?:\s+)(?:그리고|하지만|그러나|또한)(?:\s+)|(?<=[가-힣]요)\s+")
     for clause in clause_boundaries.split(text):
-        if not re.search(r"먹|복용", clause):
+        if not MEDICATION_VERB_PATTERN.search(clause):
             continue
-        for value in MEDICATION_NAME_PATTERN.findall(clause):
-            normalized = re.sub(r"\s+", "", value)
-            if normalized not in medications:
-                medications.append(normalized)
-        for value in KNOWN_MEDICATION_PATTERN.findall(clause):
-            if value not in medications:
-                medications.append(value)
-    return medications
+        found: list[tuple[int, str]] = []
+        for match in MEDICATION_NAME_PATTERN.finditer(clause):
+            found.append((match.start(), re.sub(r"\s+", "", match.group(1))))
+        for pattern in (KNOWN_MEDICATION_PATTERN, DRUG_NAME_PATTERN):
+            for match in pattern.finditer(clause):
+                # "페니실린 알레르기" is an allergy, not a medicine being taken.
+                if not re.match(r"\s*알레르기", clause[match.end():]):
+                    found.append((match.start(), match.group(0)))
+        found.sort()
+        for index, (position, name) in enumerate(found):
+            if name in names or any(name in other or other in name for other in names):
+                continue
+            names.append(name)
+            # Dose and timing said right after the name, before the next medicine, belong to it.
+            next_position = found[index + 1][0] if index + 1 < len(found) else len(clause)
+            tail = clause[position + len(name):min(next_position, position + len(name) + 30)]
+            doses = [re.sub(r"(?<=\d)\s+", "", dose.group(0)) for dose in [DOSE_PATTERN.search(tail)] if dose]
+            timings = [
+                _normalize_frequency(timing.group(0)) if re.search(r"번|회|차례", timing.group(0))
+                else re.sub(r"\s*(?:에|으로|로)$", "", re.sub(r"\s+", " ", timing.group(0)))
+                for timing in [MEDICATION_TIMING_PATTERN.search(tail)] if timing
+            ]
+            # "하루 한 알" reads timing first; "500mg 하루 2회" reads dose first.
+            details = timings + doses if timings == ["하루"] else doses + timings
+            lines.append(" ".join([name, *details]))
+    return lines, names
 
 
 def _first_symptom_match(pattern: re.Pattern[str], text: str) -> re.Match[str] | None:
@@ -914,7 +1047,7 @@ def _first_symptom_match(pattern: re.Pattern[str], text: str) -> re.Match[str] |
     return None
 
 
-def extract_intake(text: str) -> IntakeExtractionResponse:
+def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtractionResponse:
     normalized = " ".join(text.strip().split())
     matches: list[tuple[SymptomRule, re.Match[str], bool]] = []
     for rule in RULES:
@@ -929,6 +1062,7 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
     positions = sorted((evidence.start(), evidence.end()) for _, evidence, _ in matches)
     symptoms: list[SymptomObservation] = []
     symptom_positions: list[tuple[int, SymptomObservation]] = []
+    onset_spans: list[tuple[int, int, str | None]] = []
     for rule, evidence, is_absent in matches:
         position_index = positions.index((evidence.start(), evidence.end()))
         previous_end = positions[position_index - 1][1] if position_index > 0 else 0
@@ -938,6 +1072,14 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
                 normalized, evidence.start(), evidence.end(), previous_end, next_start
             )
         )
+        if onset is None and isinstance(evidence, _CarriedEvidence):
+            # "어제부터 가슴이 답답하고 아파요": the borrowed subject brings its onset along.
+            subject_start = evidence.end() - len(evidence.group(0))
+            onset = next(
+                (value for start, end, value in onset_spans if start <= subject_start < end),
+                None,
+            )
+        onset_spans.append((evidence.start(), evidence.end(), onset))
         severity = _severity_for_symptom(
             normalized, evidence.start(), evidence.end(), positions
         )
@@ -962,8 +1104,9 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
             (evidence.start(), SymptomObservation(
                 name=rule.name,
                 status="uncertain" if is_uncertain else "absent" if is_absent else "present",
-                body_site=rule.body_site,
+                body_site=_body_site_for(normalized, evidence, rule),
                 onset=onset if not is_absent else None,
+                onset_date=_onset_date(onset, reference_date) if not is_absent else None,
                 severity=severity if not is_absent else None,
                 frequency=frequency if not is_absent else None,
                 trend=trend if not is_absent else None,
@@ -981,7 +1124,7 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
                 OtherPersonSymptom(person=person, symptom=item.name, source_text=item.source_text)
             )
 
-    medications = _extract_medications(normalized)
+    medications, medication_names = _extract_medications(normalized)
     allergies = list(dict.fromkeys(ALLERGY_PATTERN.findall(normalized)))
     medical_history, others_history = _extract_medical_history(normalized)
     others_symptoms += others_history
@@ -1012,7 +1155,7 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
         if not fragment or not MEDICAL_SIGNAL_PATTERN.search(fragment):
             continue
         recognized = any(span_start < end and span_end > start for span_start, span_end in evidence_spans)
-        recognized = recognized or any(medication in re.sub(r"\s+", "", fragment) for medication in medications)
+        recognized = recognized or any(name in re.sub(r"\s+", "", fragment) for name in medication_names)
         recognized = recognized or any(allergen in fragment for allergen in allergies)
         if not recognized:
             unrecognized_fragments.append(fragment)
@@ -1024,6 +1167,41 @@ def extract_intake(text: str) -> IntakeExtractionResponse:
         others_symptoms=others_symptoms,
         unrecognized_fragments=unrecognized_fragments,
     )
+
+
+def _body_site_for(text: str, evidence, rule: SymptomRule) -> str | None:
+    """Add side and sub-site to the body site: "오른쪽 아랫배", "뒷머리", "왼쪽 무릎", "왼쪽 팔"."""
+    # Carried evidence starts at the predicate; its text begins with the borrowed subject.
+    start = evidence.end() - len(evidence.group(0))
+    clause_start = max(
+        (match.end() for match in SUBCLAUSE_SPLIT_PATTERN.finditer(text, 0, start)), default=0
+    )
+    if rule.body_site is None:
+        if rule.name not in PART_SYMPTOMS:
+            return None
+        part = re.match(rf"({PART_WORDS})", evidence.group(0))
+        if part:
+            site, site_start = part.group(1), start
+        else:
+            before = re.search(
+                rf"({PART_WORDS})(?:이|가|에|도|은|는)?\s*{INTENSITY_PHRASE}$", text[clause_start:start]
+            )
+            if before is None:
+                return None
+            site, site_start = before.group(1), clause_start + before.start(1)
+    else:
+        lead = text[max(0, start - 2):start]
+        prefix = next((word for word in ("아랫", "윗", "뒷", "앞") if lead.endswith(word)), "")
+        site_start = start - len(prefix)
+        site = rule.body_site
+        site_match = SITE_WORD_PATTERN.match(prefix + evidence.group(0))
+        if site_match and site_match.group(0) not in ("배", "머리", "가슴", "허리", "귀", "눈", "목"):
+            site = re.sub(r"\s+", " ", site_match.group(0))
+    # Only a side word right before the place counts: not "오른쪽으로 누우면 배가 아파요".
+    side = re.search(rf"{SIDE_PATTERN.pattern}\s*$", text[clause_start:site_start])
+    if side:
+        return f"{SIDE_NAMES.get(side.group(1), side.group(1))} {site}"
+    return site
 
 
 def _other_person_for(text: str, evidence_start: int) -> str | None:

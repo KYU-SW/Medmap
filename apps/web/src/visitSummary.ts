@@ -1,6 +1,6 @@
 import type { StoredIntakeRecord } from "./recordStorage";
 import type { SymptomEpisode } from "./symptomEpisodes";
-import { tracksFrequency, urgentSymptoms } from "./symptomOptions";
+import { formatOnset, tracksFrequency, urgentSymptoms } from "./symptomOptions";
 
 export type VisitSummary = {
   firstRecordedAt: string;
@@ -48,8 +48,8 @@ export function visitSummaryText(summary: VisitSummary): string {
     timeStyle: "short",
   });
   const symptomLines = summary.symptoms.map((symptom) =>
-    `- ${symptom.name}: ${symptom.status === "active" ? "현재 있음" : "사라짐"}`
-      + ` / 시작: ${symptom.statedOnset || "확인되지 않음"}`
+    `- ${symptom.name}${symptom.bodySite ? `(${symptom.bodySite})` : ""}: ${symptom.status === "active" ? "현재 있음" : "사라짐"}`
+      + ` / 시작: ${formatOnset(symptom.statedOnset, symptom.statedOnsetDate) || "확인되지 않음"}`
       + ` / 가장 심한 정도: ${symptom.peakSeverity || "확인되지 않음"}`
       + (symptom.latestTrend
         ? ` / 최근 변화: ${symptom.latestTrend === "improving" ? "호전 중" : symptom.latestTrend === "worsening" ? "악화 중" : "변화 없음"}`

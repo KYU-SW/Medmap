@@ -34,7 +34,12 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
   (PC 전역 Git 설정에 이름이 없음). 이후 스크립트가 개인 저장소의 user.name·user.email을 팀 복사본에 설정한다.
 - 팀원의 `MedMap/` 폴더는 건드리지 않는다.
 
+
 ## 2-1. Git 상태 (2026-10-01 확인)
+- 2026-10-02 기록 품질 보완(4절 13번)은 커밋하고 두 저장소에 push했다. 변경 파일: API `app/services/intake_extractor.py`, `app/schemas/intake.py`,
+  `app/api/routes/intake.py`, `tests/test_intake.py`, 새 파일 `tests/test_intake_record_quality.py` / 웹 `src/App.tsx`, `src/styles.css`,
+  `src/recordStorage.ts`, `src/symptomOptions.ts`, `src/symptomEpisodes.ts`, `src/timeline.ts`, `src/visitSummary.ts`, `src/symptomOptions.test.ts`,
+  새 파일 `src/recordQuality.test.ts` / 문서 `docs/INTAKE_EXTRACTION.md`, `HANDOFF.md`
 
 - CLAUDE.md는 `291f13e`에서 커밋했다. HANDOFF.md와 AGENTS.md는 `22aae26`에서 커밋했다.
 - 2026-10-01 작업(아래 4절 8~9번, 6절, 7절)은 `47d78ee`에서 커밋하고 push했다. 변경 파일:
@@ -112,6 +117,13 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
    - 위험 증상(흉통, 객혈, 토혈, 혈변, 기절, 마비, 말 어눌함, 경련, 심한 호흡곤란·두통·복통)이 있으면 확인 화면과 요약에 119·응급실 안내
    - 마침표 없는 STT 문장도 `~요` 뒤와 `근데`·`그런데`·`그래서`에서 절을 나눈다
    - 버그 수정: `기침을 안 해요`·`설사를 안 했어요`(을/를 + 부정)를 있음으로 잡던 문제, `아이고 머리야`의 두통을 놓치던 문제
+13. 2026-10-02 기록 품질: 시작 날짜, 정도, 위치, 약 (상세: docs/INTAKE_EXTRACTION.md)
+   - 요청에 `reference_date`(사용자 오늘 날짜)를 받아 하루가 정해지는 시작 시점을 `onset_date`로 변환. `10월 1일`, `지난주 월요일` 인식
+   - 주어를 이어받은 증상이 앞 절의 시작 시점도 이어받는다
+   - 정도: `참을 만해요`·`살짝`(경미함), `보통`(중간), `못 참겠어요`·`잠을 못 잘 정도`·`데굴데굴`(심함)
+   - 위치: `오른쪽 아랫배`, `윗배`, `뒷머리`, `왼쪽 무릎`, 저림·부종 등은 주어에서 부위(`왼쪽 팔`). `관절 통증` 추가(증상 50개)
+   - 약: 흔한 약 이름·약 이름 끝말 인식, 용량·복용 시점 기록(`타이레놀 500mg 하루 2회`). `페니실린 알레르기`는 약에서 제외
+   - 웹: 날짜 표시(`어제부터 (10월 1일)`), 부위 입력칸과 기록·타임라인·요약의 부위 표시, `중간` 정도 비교
 
 ## 5. 실행 방법
 
@@ -133,7 +145,7 @@ cd apps\api
 .\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
 ```
 
-- 결과: **260 passed, 1 warning** (2026-10-02 불확실·다른 사람 처리 후). 경고 증상 확장 후 242, 합성어 확장 후 192, 2026-10-01 확장 후 143, 그 전 99였다.
+- 결과: **307 passed, 1 warning** (2026-10-02 기록 품질 보완 후). 불확실·다른 사람 처리 후 260, 경고 증상 확장 후 242, 합성어 확장 후 192, 2026-10-01 확장 후 143, 그 전 99였다.
 - 경고: `StarletteDeprecationWarning`. `starlette.testclient`에서 `httpx`를 쓰는 방식이 deprecated라는 내용이다. 테스트 결과에는 영향이 없다.
 - 테스트 파일: `test_api.py`, `test_intake.py`, `test_intake_combinations.py`, `test_intake_scenarios.py`, `test_intake_expanded.py`
 - 기존 테스트 2개를 고쳤다. "허리 통증, 어지러움, 설사, 발진은 지원하지 않는다"를 확인하던 테스트로,
@@ -157,7 +169,7 @@ cd apps\web
 corepack pnpm test   # vitest run
 ```
 
-- 결과: **6 files, 31 tests passed** (2026-10-02)
+- 결과: **7 files, 37 tests passed** (2026-10-02 기록 품질 보완 후)
 - 대상: `buildTimeline`, `buildSymptomEpisodes`, `buildVisitSummary`, `visitSummaryText`, `backup.ts`, `symptomOptions.ts`(위험 증상 판정 포함)
 - 아직 자동 테스트하지 않은 것: `recordStorage.ts`(IndexedDB), `recordGroups.ts`(localStorage), `App.tsx` 화면
 
@@ -175,6 +187,12 @@ corepack pnpm test   # vitest run
 - `본인 증상으로 옮기기`를 누르면 기침이 환자 증상으로 옮겨지는 것을 확인했다.
 - 진료 전 요약의 위험 증상 안내는 기존 기록 묶음의 심한 복통으로 표시되는 것을 확인했다.
 
+
+### PC 브라우저 수동 확인 (2026-10-02 기록 품질, Chrome, 저장하지 않음)
+
+- `어제부터 오른쪽 아랫배가 참을 만하게 아파요 타이레놀 500mg을 하루 두 번 먹었어요`
+  → 복통·부위 오른쪽 아랫배·경미함·`어제부터 (10월 1일)`, 복용약 `타이레놀 500mg 하루 2회`
+- `어제부터 오른쪽 아랫배가 아프고 왼쪽 팔이 저려요` → 확인 화면 부위 칸에 `오른쪽 아랫배`, `왼쪽 팔`
 ### 실제 기기 확인 (기존 문서 기준, 이번에 다시 확인하지 않음)
 
 - PC 브라우저: 실제 목소리 한국어 변환과 의료 테스트 문장 5개 인식을 확인했다. (PROJECT_STRUCTURE.md)
@@ -199,7 +217,8 @@ corepack pnpm test   # vitest run
       - 규칙 기반이라 49개 목록에 없는 증상은 확인 요청으로만 보여준다(혀 통증, 입안 헐음, 발가락 통증 등).
       - 띄어쓰기 없이 주어가 생략된 긴 문장(`가슴이답답하고아파요`)은 앞 절 주어 이어받기를 하지 않는다.
       - 과거력은 정해진 질환 이름이나 `OO 진단을 받았어요` 형태만 인식한다.
-      - 주어를 이어받아 찾은 증상(`가슴이 답답하고 아파요`의 흉통)은 앞 절의 시작 시점(`어제부터`)을 물려받지 않는다.
+      - (2026-10-02 해결) 주어를 이어받은 증상도 앞 절의 시작 시점을 이어받는다.
+      - 시작 날짜는 하루로 정해지는 말만 바꾼다(`2주 전`, `엊그제`는 글자로만). 약 용량·시점은 약 이름 바로 뒤 30자 안만 본다.
       - 위험 증상 기준은 일반적인 응급 신호를 참고해 정한 것으로, 의료진 검토를 받지 않았다.
       - 해결함: 주어 없이 이어지는 뒷부분(`가슴이 답답하고 아파요` → 가슴 답답함 + 흉통), 경고 증상 17개 추가,
         `위염으로 진단받았어요` 같은 목록 밖 병명 기록

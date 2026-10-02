@@ -15,6 +15,7 @@ export type TimelineEntry = {
 function severityValue(severity: string | null): number | null {
   if (!severity) return null;
   if (severity === "경미함") return 0.25;
+  if (severity === "중간") return 0.5;
   if (severity === "심함") return 0.75;
   const score = severity.match(/^(\d+)\/(\d+)점$/);
   if (!score) return null;

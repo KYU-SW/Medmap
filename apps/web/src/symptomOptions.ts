@@ -5,8 +5,28 @@ export const SUPPORTED_SYMPTOMS = [
   "두근거림", "저림", "소화불량", "속쓰림", "식욕부진", "불면", "부종",
   "귀 통증", "눈 통증", "치통", "식은땀",
   "가려움", "시야 이상", "떨림", "이명", "코피", "객혈", "토혈", "혈변", "혈뇨",
-  "배뇨통", "빈뇨", "기절", "마비", "말 어눌함", "쉰 목소리", "체중 감소", "경련",
+  "배뇨통", "빈뇨", "기절", "마비", "말 어눌함", "쉰 목소리", "체중 감소", "경련", "관절 통증",
 ];
+
+// The patient's local calendar date, which the server uses to turn "어제부터" into a date.
+export function localDateString(now = new Date()): string {
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${now.getFullYear()}-${month}-${day}`;
+}
+
+// Body sites that only repeat what the symptom name already says (두통 → 머리).
+const DEFAULT_SITES = new Set(["머리", "복부", "가슴", "목", "코", "귀", "눈", "허리", "피부", "치아", "관절"]);
+
+export function detailedSite(site: string | null | undefined): string | null {
+  return site && !DEFAULT_SITES.has(site) ? site : null;
+}
+
+export function formatOnset(onset: string | null | undefined, onsetDate?: string | null): string | null {
+  if (!onset) return null;
+  const date = onsetDate?.match(/^\d{4}-(\d{2})-(\d{2})$/);
+  return date ? `${onset} (${Number(date[1])}월 ${Number(date[2])}일)` : onset;
+}
 
 const FREQUENCY_SYMPTOMS = new Set(["구토", "설사"]);
 

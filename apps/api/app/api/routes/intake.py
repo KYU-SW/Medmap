@@ -9,5 +9,5 @@ router = APIRouter()
 
 @router.post("/extract", response_model=IntakeExtractionResponse)
 def extract(request: IntakeExtractionRequest) -> IntakeExtractionResponse:
-    return extract_intake(request.transcript)
+    return extract_intake(request.transcript, request.reference_date)
 

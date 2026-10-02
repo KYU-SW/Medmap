@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Literal
 
 from pydantic import BaseModel, Field
@@ -5,6 +6,8 @@ from pydantic import BaseModel, Field
 
 class IntakeExtractionRequest(BaseModel):
     transcript: str = Field(min_length=1, max_length=5000)
+    # The patient's local date; relative onsets such as "어제부터" become dates from it.
+    reference_date: date | None = None
 
 
 class SymptomObservation(BaseModel):
@@ -12,6 +15,7 @@ class SymptomObservation(BaseModel):
     status: Literal["present", "absent", "uncertain"]
     body_site: str | None = None
     onset: str | None = None
+    onset_date: str | None = None
     severity: str | None = None
     frequency: str | None = None
     trend: Literal["improving", "worsening", "unchanged"] | None = None
