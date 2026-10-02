@@ -1,0 +1,39 @@
+# 재다운로드 가능한 원본 데이터와 다운로드 중간 파일
+/data/
+*.part
+
+# Python 환경과 캐시
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+*.tsbuildinfo
+
+# 인증정보
+.env
+.env.*
+!.env.example
+
+# 로컬 대용량 실험 산출물: 설정과 요약 결과는 별도로 커밋
+/checkpoints/
+/runs/
+/local-cache/
+
+# Node / frontend build
+node_modules/
+dist/
+coverage/
+
+# Local media used for STT development
+/tests/fixtures/audio/private/
+*.wav
+*.webm
+*.m4a
+*.mp3
+!tests/fixtures/audio/README.md
+
+# 컴퓨터별 절대 경로와 파일 크기 목록
+/LOCAL_FILE_INVENTORY.json
+/LOCAL_GIT_AUTH_STATUS.json
