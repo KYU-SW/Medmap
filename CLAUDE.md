@@ -14,6 +14,7 @@ Claude Code가 이 프로젝트에서 작업할 때 따르는 규칙이다. (Cod
 - push를 요청받으면 개인 저장소(`minu2246/MedMap`)와 공개 팀 저장소(`KYU-SW/Medmap`의 `Medmap_minwoo/`) 두 곳에
   모두 올린다. 순서와 명령은 `AGENTS.md`의 Git 절과 HANDOFF.md 2절을 따른다.
 - 팀원 코드 통합은 사용자가 통합하자고 할 때만 시작하고, 그때 HANDOFF.md 8절의 쟁점을 먼저 물어본다.
+- 팀원 진행 상황은 https://github.com/KYU-SW/Medmap/tree/main/MedMap 에서 확인한다(읽기만 한다).
 - 삭제가 필요하면 삭제 후보를 먼저 보여주고, 사용자 승인을 받은 뒤 삭제한다.
 
 ## 작업 종료

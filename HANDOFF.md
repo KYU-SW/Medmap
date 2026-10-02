@@ -212,6 +212,10 @@ corepack pnpm test   # vitest run
 
 상세: TEAM_PROGRESS_REVIEW_2026-09-29.md
 
+- **팀원 진행 상황은 https://github.com/KYU-SW/Medmap/tree/main/MedMap 에서 확인한다** (사용자 지정, 2026-10-02).
+  코드는 `MedMap/code/`, 주차별 기록은 `MedMap/week*/`, 전체 설명은 저장소 최상위 `README.md`다.
+  팀원 상황을 확인할 때는 이 폴더의 최신 커밋과 README를 다시 읽고, 이 문서의 이전 기록보다 그쪽을 우선한다.
+
 - 팀원은 별도 코드베이스에서 DDXPlus 진단 엔진, Information Gain 기반 다음 질문, PatientState와 세션 API,
   한국어 mapper, Whisper STT, Clinical Summary, HTTPS 데모 등을 구현했다고 보고했다.
   팀원 보고의 마지막 master 병합 커밋은 `ebc854f`다.
