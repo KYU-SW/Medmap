@@ -53,8 +53,8 @@ python -m venv .venv
 이 PC에서 설치 없이 다시 실행하려면 다음과 같이 실행한다.
 
 ```powershell
-$medmapPython = 'C:\Users\alsdn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
-& $medmapPython -X utf8 'C:\Users\alsdn\Documents\Codex\2026-09-28\files-pasted-by-the-user-it\outputs\MedMap\02_inspect.py'
+$medmapPython = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+& $medmapPython -X utf8 .\02_inspect.py   # MedMap 폴더에서 실행
 ```
 
 마지막 파일명을 01_download.py 또는 03_audit.py로 바꿔 각 단계를 실행할 수 있다. 앱 번들 경로는 다른 PC에서는 다를 수 있다.

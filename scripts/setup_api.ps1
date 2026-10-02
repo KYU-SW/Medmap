@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Stop'
 $medmapRoot = Split-Path -Parent $PSScriptRoot
 $medmapApi = Join-Path $medmapRoot 'apps\api'
-$medmapRuntimePython = 'C:\Users\alsdn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+$medmapRuntimePython = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
 $medmapVenvPython = Join-Path $medmapApi '.venv\Scripts\python.exe'
 $medmapCache = Join-Path $medmapRoot 'local-cache'
 

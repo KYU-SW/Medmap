@@ -10,7 +10,29 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
 서로 맞지 않는 부분을 다시 확인하도록 돕는 진단 안전망 프로젝트다.
 (상세: README.md, PROJECT_BRIEF.txt)
 
-## 2. Git 상태 (2026-10-01 확인)
+## 2. 저장소와 올리는 방법 (2026-10-02부터)
+
+이 프로젝트는 저장소 두 곳에 함께 올린다.
+
+| 저장소 | 공개 | 위치 | 역할 |
+|---|---|---|---|
+| https://github.com/minu2246/MedMap | 비공개 | 저장소 전체 | 개인 저장소. 작업 원본 |
+| https://github.com/KYU-SW/Medmap | **공개** | `Medmap_minwoo/` 폴더 | 팀 통합 저장소. 팀원 작업은 `MedMap/` 폴더 |
+
+올리는 순서 (사용자가 커밋·push를 요청했을 때만):
+1. `feature/stt-rebuild`에 커밋하고 `main`을 fast-forward로 맞춘 뒤 두 브랜치를 `origin`(개인)에 push한다.
+2. `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\sync_team_repo.ps1`을 실행한다.
+   - 개인 저장소 `main`을 커밋 이력째 팀 저장소 `main`의 `Medmap_minwoo/`로 넣는다(`git subtree`).
+   - 팀 저장소 작업용 복사본은 `local-cache/team-repo/`에 둔다(Git 제외).
+   - 로컬 `main`과 `origin/main`이 다르면 멈춘다.
+
+주의:
+- 팀 저장소는 공개라 올리는 순간 공개된다. 비밀번호·토큰·실제 환자 정보, PC 경로·내부 IP를 넣지 않는다.
+  2026-10-02에 README, `scripts/setup_api.ps1`, `docs/MOBILE_TEST.md`의 사용자 경로와 내부 IP를 일반 표기로 바꿨다.
+  예전 커밋에는 원래 값이 남아 있고, 커밋 작성자 이메일도 이력과 함께 공개된다(사용자가 이력 전체 공개를 선택).
+- 팀원의 `MedMap/` 폴더는 건드리지 않는다.
+
+## 2-1. Git 상태 (2026-10-01 확인)
 
 - CLAUDE.md는 `291f13e`에서 커밋했다. HANDOFF.md와 AGENTS.md는 `22aae26`에서 커밋했다.
 - 2026-10-01 작업(아래 4절 8~9번, 6절, 7절)은 `47d78ee`에서 커밋하고 push했다. 변경 파일:
@@ -44,7 +66,7 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
   - `timeline.ts` 증상 변화 타임라인 / `visitSummary.ts` 진료 전 요약
   - `symptomOptions.ts` 지원 증상 목록, 횟수 기록 대상 / `backup.ts` 기록 백업 파일 만들기와 검증
 - 루트의 `01_download.py`, `02_inspect.py`, `03_audit.py`: DDXPlus 다운로드, 구조 확인, 통계 감사 (연구 트랙)
-- `scripts/`: 실행, 설치, 모바일 HTTPS, 임시 터널, 저장소 감사와 정리용 PowerShell 스크립트
+- `scripts/`: 실행, 설치, 모바일 HTTPS, 임시 터널, 저장소 감사와 정리, 팀 저장소 올리기(`sync_team_repo.ps1`)용 PowerShell 스크립트
 
 ## 4. 지금까지 진행한 작업 (feature/stt-rebuild)
 
@@ -194,7 +216,8 @@ corepack pnpm test   # vitest run
 - 이 코드는 공용 저장소에서 **아직 확인하지 못했다.** 그래서 구현 내용과 테스트 수치(backend 244, frontend 217 등)는
   **팀원 보고 상태**로만 다룬다.
 - 다음 할 일(검토 문서 Phase 0~1):
-  - [ ] 팀원 저장소 URL, 브랜치, 커밋 확인
+  - [x] 팀원 저장소 확인 (2026-10-02): https://github.com/KYU-SW/Medmap (공개, main 1개, 커밋 2개 `4f69e8b`·`87a0cf8`).
+        원본 개발 저장소 이력(`08cbbd3`, `fb2d7f0`)은 들어 있지 않다. 코드는 `MedMap/code/`. 테스트 수치(백엔드 404, 프런트 293)는 README 기준이며 직접 실행하지 않았다.
   - [ ] 실행 및 테스트 명령 확보
   - [ ] STEP16B/17A 재현 자료 확보
   - [ ] 공용 저장소에 통합 브랜치 생성
