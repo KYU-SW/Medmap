@@ -584,6 +584,8 @@ export default function App() {
   const symptomEpisodes = buildSymptomEpisodes(visibleRecords);
   const profile = recordGroups.find((group) => group.id === currentRecordGroupId)?.profile ?? {};
   const visitSummary = buildVisitSummary(visibleRecords, symptomEpisodes, profile);
+  const step = confirmed ? 3 : intake ? 2 : 1;
+  const currentGroupName = recordGroups.find((group) => group.id === currentRecordGroupId)?.name;
 
   function updateProfile(changes: Partial<PatientProfile>) {
     if (!currentRecordGroupId) return;
@@ -665,10 +667,22 @@ export default function App() {
   return (
     <main className="page">
       <section className="card" aria-live="polite">
-        <p className="eyebrow">MedMap 음성 입력</p>
-        <h1>증상을 말로 기록해 보세요</h1>
-        <section className="record-group-picker" aria-label="증상 기록 묶음 선택">
-          <label htmlFor="record-group">현재 증상 기록</label>
+        <p className="eyebrow">MedMap 진료 전 기록</p>
+        <h1>증상을 기록하고 진료 때 보여 주세요</h1>
+        <ol className="steps" aria-label="사용 순서">
+          {["증상 말하기", "정리된 내용 확인", "진료 전 요약 보여 주기"].map((label, index) => (
+            <li
+              key={label}
+              className={index + 1 === step ? "steps__item steps__item--current" : "steps__item"}
+              aria-current={index + 1 === step ? "step" : undefined}
+            >
+              <span>{index + 1}</span>{label}
+            </li>
+          ))}
+        </ol>
+        <details className="record-group-picker">
+          <summary>현재 기록: {currentGroupName ?? "불러오는 중"}</summary>
+          <label htmlFor="record-group">기록 묶음 바꾸기</label>
           <select
             id="record-group"
             value={currentRecordGroupId}
@@ -684,8 +698,8 @@ export default function App() {
           <button className="button--delete" type="button" onClick={() => void removeCurrentRecordGroup()}>
             현재 증상 기록 묶음 삭제
           </button>
-          <p>현재 선택한 기록 안에서만 타임라인, PDF, QR을 만듭니다.</p>
-        </section>
+          <p>아픈 기간마다 기록 묶음을 나누면, 요약·타임라인·PDF·QR이 그 묶음 안에서만 만들어집니다.</p>
+        </details>
         <details className="patient-profile">
           <summary>기본 정보 (선택)</summary>
           <p>진료 전 요약에 함께 적힙니다. 이 브라우저에만 저장됩니다.</p>
@@ -750,6 +764,7 @@ export default function App() {
             </select>
           </label>
         </details>
+        <h2 className="step-title">1. 증상을 말하거나 적어 주세요</h2>
         <p className={`status status--${status}`}>{message}</p>
 
         <div className="controls">
@@ -800,7 +815,7 @@ export default function App() {
 
         {intake && (
           <section className="intake" aria-label="정리된 의료정보">
-            <h2>확인이 필요한 정보</h2>
+            <h2 className="step-title">2. 정리된 내용을 확인해 주세요</h2>
             {urgentSymptoms(intake.symptoms).length > 0 && (
               <div className="urgent-notice" role="alert">
                 <strong>{urgentSymptoms(intake.symptoms).join(", ")}</strong>
@@ -1021,7 +1036,7 @@ export default function App() {
         )}
         {recordMessage && <p className="record-message">{recordMessage}</p>}
         <section className="visit-summary" aria-label="진료 전 요약">
-          <h2>진료 전 요약</h2>
+          <h2 className="step-title">3. 진료 전 요약</h2>
           <p>병원에서 보여줄 수 있도록 확인한 기록을 짧게 정리합니다.</p>
           {!visitSummary ? (
             <p className="empty-result">요약할 기록이 없습니다.</p>
@@ -1095,6 +1110,8 @@ export default function App() {
             </div>
           )}
         </section>
+        <details className="history">
+        <summary>지난 기록 보기 ({visibleRecords.length}개) · 증상 발생 기간 · 타임라인 · 백업</summary>
         <section className="episodes" aria-label="증상 발생 기간">
           <h2>증상 발생 기간</h2>
           <p>같은 증상이 나타난 때부터 사라진 때까지를 하나로 묶습니다.</p>
@@ -1238,6 +1255,7 @@ export default function App() {
             </article>
           ))}
         </section>
+        </details>
         <p className="privacy-note">
           음성은 글자로 바꾸는 동안만 사용합니다. 확인한 기록은 이 브라우저 안에만
           저장되며 서버에는 보관하지 않습니다.
