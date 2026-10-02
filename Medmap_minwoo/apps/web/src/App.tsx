@@ -20,7 +20,7 @@ import {
 } from "./symptomOptions";
 import { buildTimeline } from "./timeline";
 import { buildSymptomEpisodes } from "./symptomEpisodes";
-import { buildVisitSummary, visitSummaryText } from "./visitSummary";
+import { buildVisitSummary, profileText, visitSummaryText } from "./visitSummary";
 import {
   createRecordGroup,
   deleteRecordGroup,
@@ -54,6 +54,8 @@ type IntakeResult = {
   allergies: string[];
   medical_history: string[];
   others_symptoms: OtherPersonSymptom[];
+  // Basic information said in this transcript; saved to the record group after review.
+  profile: PatientProfile;
   unrecognized_fragments: string[];
   needs_user_confirmation: boolean;
 };
@@ -356,6 +358,7 @@ export default function App() {
         ...data,
         medical_history: data.medical_history ?? [],
         others_symptoms: data.others_symptoms ?? [],
+        profile: data.profile ?? {},
       };
       setIntake(result);
       setListDrafts({
@@ -477,6 +480,10 @@ export default function App() {
       await saveIntakeRecord(record);
       setRecords((current) => [record, ...current]);
       setConfirmed(true);
+      const said = Object.fromEntries(
+        Object.entries(intake.profile).filter(([, value]) => value !== null && value !== undefined),
+      ) as PatientProfile;
+      if (Object.keys(said).length > 0) updateProfile(said);
       setRecordMessage("이 브라우저에 기록을 저장했습니다.");
     } catch {
       setConfirmed(false);
@@ -882,6 +889,20 @@ export default function App() {
                 />
               </label>
             </div>
+            {profileText(intake.profile) && (
+              <div className="others-review">
+                <strong>말에서 찾은 기본 정보</strong>
+                <p>{profileText(intake.profile)}</p>
+                <p>저장하면 기본 정보 칸에 반영됩니다.</p>
+                <button
+                  className="button--secondary"
+                  type="button"
+                  onClick={() => setIntake((current) => current && { ...current, profile: {} })}
+                >
+                  반영하지 않기
+                </button>
+              </div>
+            )}
             {intake.others_symptoms.length > 0 && (
               <div className="others-review">
                 <strong>다른 사람에 대한 내용으로 보이는 표현</strong>

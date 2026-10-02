@@ -37,6 +37,8 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
 
 
 ## 2-1. Git 상태 (2026-10-02 갱신)
+- 2026-10-02 말에서 기본 정보 찾기(4절 15번)는 커밋하고 두 저장소에 push했다. 변경 파일: API `app/services/intake_extractor.py`,
+  `app/schemas/intake.py`, 새 파일 `tests/test_intake_profile.py` / 웹 `src/App.tsx` / 문서 `docs/INTAKE_EXTRACTION.md`, `HANDOFF.md`
 - 2026-10-02 STT 힌트·기본 정보(4절 14번)는 커밋하고 두 저장소에 push했다. 변경 파일: API `app/services/stt_service.py`, `scripts/transcribe_file.py`,
   `.env.example` / 웹 `src/App.tsx`, `src/styles.css`, `src/recordGroups.ts`, `src/backup.ts`, `src/visitSummary.ts`, `src/recordQuality.test.ts` /
   문서 `docs/STT_SPEC.md`, `HANDOFF.md`
@@ -134,7 +136,12 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
      실제 모델에 무음 1초로 호출해 `hotwords`를 받아들이는 것만 확인했다.
    - 기본 정보: 기록 묶음마다 나이·성별·임신 가능성(여성만)·흡연·음주를 고르는 접이식 칸. localStorage에 묶음과 함께 저장하고,
      진료 전 요약 첫 줄(`기본 정보: 34세 / 여성 / ...`)과 백업 파일에 들어간다. 바꾸면 만든 QR은 지운다.
-     말에서 나이·성별을 자동으로 뽑지는 않는다. **브라우저에서 아직 열어 보지 않았다.**
+     **브라우저에서 아직 열어 보지 않았다.**
+15. 2026-10-02 말에서 기본 정보 찾기 (상세: docs/INTAKE_EXTRACTION.md)
+   - 응답에 `profile`(나이·성별·임신·흡연·음주) 추가. 다른 사람이 주어인 말(`남편이 담배를 피워요`)과 `3살 때`는 제외
+   - 웹: 확인 화면에 `말에서 찾은 기본 정보` 표시, 저장하면 기록 묶음의 기본 정보 칸에 반영(`반영하지 않기` 가능)
+   - 버그 수정: `34살이에요`를 체중 감소 신호어(`살이`)로 오인해 미인식으로 띄우던 문제
+   - **브라우저에서 아직 확인하지 않았다.**
 
 ## 5. 실행 방법
 
@@ -156,7 +163,7 @@ cd apps\api
 .\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
 ```
 
-- 결과: **307 passed, 1 warning** (2026-10-02 기록 품질 보완 후). 불확실·다른 사람 처리 후 260, 경고 증상 확장 후 242, 합성어 확장 후 192, 2026-10-01 확장 후 143, 그 전 99였다.
+- 결과: **325 passed, 1 warning** (2026-10-02 기본 정보 찾기 추가 후). 기록 품질 보완 후 307, 불확실·다른 사람 처리 후 260, 경고 증상 확장 후 242, 합성어 확장 후 192, 2026-10-01 확장 후 143, 그 전 99였다.
 - 경고: `StarletteDeprecationWarning`. `starlette.testclient`에서 `httpx`를 쓰는 방식이 deprecated라는 내용이다. 테스트 결과에는 영향이 없다.
 - 테스트 파일: `test_api.py`, `test_intake.py`, `test_intake_combinations.py`, `test_intake_scenarios.py`, `test_intake_expanded.py`
 - 기존 테스트 2개를 고쳤다. "허리 통증, 어지러움, 설사, 발진은 지원하지 않는다"를 확인하던 테스트로,
