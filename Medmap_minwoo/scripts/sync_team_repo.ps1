@@ -76,10 +76,10 @@ if ($LASTEXITCODE -eq 0) {
 }
 $range = if ($lastSource) { "$lastSource..$localMain" } else { '-20' }
 $included = & git -C $medmapRoot log --format='- %h %s' $range
-$message = @(
-    "Update $teamPrefix from minu2246/MedMap", '',
-    'Personal commits included:', $included, '',
-    "Source-Commit: $localMain"
+$message = (
+    @("Update $teamPrefix from minu2246/MedMap", '', 'Personal commits included:') +
+    @($included) +
+    @('', "Source-Commit: $localMain")
 ) -join "`n"
 $messageFile = Join-Path $env:TEMP 'medmap-team-commit.txt'
 [IO.File]::WriteAllText($messageFile, $message, (New-Object Text.UTF8Encoding $false))
