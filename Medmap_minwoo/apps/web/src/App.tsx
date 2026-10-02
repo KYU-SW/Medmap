@@ -36,6 +36,60 @@ import {
   type RecordGroup,
 } from "./recordGroups";
 
+type View = "home" | "record" | "review" | "summary" | "history" | "profile";
+const VIEWS: View[] = ["home", "record", "review", "summary", "history", "profile"];
+
+// One task per screen; the hash keeps the phone back button working.
+function readView(): View {
+  const name = window.location.hash.replace(/^#\/?/, "");
+  return VIEWS.includes(name as View) ? (name as View) : "home";
+}
+
+function go(view: View) {
+  window.location.hash = view === "home" ? "" : `/${view}`;
+}
+
+const STATUS_LABEL = { present: "있음", absent: "없음", uncertain: "확실하지 않음" } as const;
+const TREND_BADGE = {
+  improving: { tone: "better", label: "↓ 호전 중" },
+  worsening: { tone: "worse", label: "↑ 악화 중" },
+  unchanged: { tone: "same", label: "= 변화 없음" },
+} as const;
+const TONE_MARK = { new: "+", worse: "↑", better: "↓", same: "=", unknown: "?" } as const;
+// Plain words for the arrow-style changes on screen; the stored wording stays the same.
+const CHANGE_LABEL: Record<string, string> = { "있음 → 없음": "사라짐", "없음 → 있음": "다시 생김" };
+
+// One labelled group of short items in the visit summary (medicines, allergies, history ...).
+function ChipBlock({ title, items, kind }: { title: string; items: string[]; kind: string }) {
+  return (
+    <section className={`info-block info-block--${kind}${items.length === 0 ? " info-block--empty" : ""}`}>
+      <h3>{title}</h3>
+      {items.length > 0 ? (
+        <ul className="chips">
+          {items.map((item) => <li key={item}>{item}</li>)}
+        </ul>
+      ) : (
+        <p className="info-block__empty">확인되지 않음</p>
+      )}
+    </section>
+  );
+}
+
+const ACTION_ICONS = {
+  copy: <><rect x="9" y="9" width="12" height="12" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></>,
+  pdf: <><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5" /><path d="M9 14h6M9 17h4" /></>,
+  qr: <><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><path d="M14 14h3v3h-3zM21 14v3M14 21h3M20 21h1" /></>,
+};
+
+function ActionIcon({ name }: { name: keyof typeof ACTION_ICONS }) {
+  return (
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.8"
+      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {ACTION_ICONS[name]}
+    </svg>
+  );
+}
+
 type Status = "idle" | "recording" | "transcribing" | "done" | "error";
 
 type SymptomObservation = {
@@ -121,6 +175,16 @@ export default function App() {
   const [intake, setIntake] = useState<IntakeResult | null>(null);
   const [listDrafts, setListDrafts] = useState<ListDrafts>(EMPTY_LIST_DRAFTS);
   const [backupMessage, setBackupMessage] = useState("");
+  const [view, setView] = useState<View>(readView);
+
+  useEffect(() => {
+    const onHashChange = () => {
+      setView(readView());
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
   const [skippedQuestions, setSkippedQuestions] = useState<Set<string>>(new Set());
   const [answerDrafts, setAnswerDrafts] = useState<Record<string, string>>({});
   const [extracting, setExtracting] = useState(false);
@@ -372,6 +436,7 @@ export default function App() {
         allergies: result.allergies.join(", "),
         medical_history: result.medical_history.join(", "),
       });
+      go("review");
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "의료정보를 정리하지 못했습니다.");
@@ -520,6 +585,7 @@ export default function App() {
         Object.entries(intake.profile).filter(([, value]) => value !== null && value !== undefined),
       ) as PatientProfile;
       if (Object.keys(said).length > 0) updateProfile(said);
+      go("summary");
       setRecordMessage("이 브라우저에 기록을 저장했습니다.");
     } catch {
       setConfirmed(false);
@@ -584,7 +650,15 @@ export default function App() {
   const symptomEpisodes = buildSymptomEpisodes(visibleRecords);
   const profile = recordGroups.find((group) => group.id === currentRecordGroupId)?.profile ?? {};
   const visitSummary = buildVisitSummary(visibleRecords, symptomEpisodes, profile);
-  const step = confirmed ? 3 : intake ? 2 : 1;
+  const step = view === "record" ? 1 : view === "review" ? 2 : view === "summary" ? 3 : 0;
+
+  function startNewEntry() {
+    setTranscript("");
+    setIntake(null);
+    setConfirmed(false);
+    setRecordMessage("");
+    go("record");
+  }
   const currentGroupName = recordGroups.find((group) => group.id === currentRecordGroupId)?.name;
 
   function updateProfile(changes: Partial<PatientProfile>) {
@@ -667,8 +741,15 @@ export default function App() {
   return (
     <main className="page">
       <section className="card" aria-live="polite">
-        <p className="eyebrow">MedMap 진료 전 기록</p>
-        <h1>증상을 기록하고 진료 때 보여 주세요</h1>
+        {view === "home" ? (
+          <>
+            <p className="eyebrow">MedMap 진료 전 기록</p>
+            <h1>증상을 기록하고 진료 때 보여 주세요</h1>
+          </>
+        ) : (
+          <button className="back-link" type="button" onClick={() => go("home")}>← 처음 화면</button>
+        )}
+        {step > 0 && (
         <ol className="steps" aria-label="사용 순서">
           {["증상 말하기", "정리된 내용 확인", "진료 전 요약 보여 주기"].map((label, index) => (
             <li
@@ -680,6 +761,8 @@ export default function App() {
             </li>
           ))}
         </ol>
+        )}
+        {view === "home" && (
         <details className="record-group-picker">
           <summary>현재 기록: {currentGroupName ?? "불러오는 중"}</summary>
           <label htmlFor="record-group">기록 묶음 바꾸기</label>
@@ -700,8 +783,24 @@ export default function App() {
           </button>
           <p>아픈 기간마다 기록 묶음을 나누면, 요약·타임라인·PDF·QR이 그 묶음 안에서만 만들어집니다.</p>
         </details>
-        <details className="patient-profile">
-          <summary>기본 정보 (선택)</summary>
+        )}
+        {view === "home" && (
+          <div className="home-menu">
+            <button className="home-menu__primary" type="button" onClick={startNewEntry}>새 증상 기록하기</button>
+            <button className="button--secondary" type="button" onClick={() => go("summary")} disabled={!visitSummary}>
+              진료 전 요약 보기
+            </button>
+            <button className="button--secondary" type="button" onClick={() => go("history")}>
+              지난 기록 보기 ({visibleRecords.length}개)
+            </button>
+            <button className="button--secondary" type="button" onClick={() => go("profile")}>
+              기본 정보 {profileText(profile) ? `(${profileText(profile)})` : "입력"}
+            </button>
+          </div>
+        )}
+        {view === "profile" && (
+        <section className="patient-profile">
+          <h2 className="step-title">기본 정보 (선택)</h2>
           <p>진료 전 요약에 함께 적힙니다. 이 브라우저에만 저장됩니다.</p>
           <label>
             나이
@@ -763,7 +862,11 @@ export default function App() {
               <option value="no">음주 안 함</option>
             </select>
           </label>
-        </details>
+          <button type="button" onClick={() => go("home")}>완료</button>
+        </section>
+        )}
+        {view === "record" && (
+        <>
         <h2 className="step-title">1. 증상을 말하거나 적어 주세요</h2>
         <p className={`status status--${status}`}>{message}</p>
 
@@ -805,15 +908,22 @@ export default function App() {
         />
 
         <button
-          className="button--secondary"
           type="button"
           onClick={extractMedicalInformation}
           disabled={!transcript.trim() || extracting || busy}
         >
-          {extracting ? "정리 중…" : "증상 정보 정리"}
+          {extracting ? "정리 중…" : "다음: 증상 정리하기"}
         </button>
+        </>
+        )}
 
-        {intake && (
+        {view === "review" && !intake && (
+          <div className="empty-step">
+            <p className="empty-result">정리된 내용이 없습니다. 먼저 증상을 말하거나 적어 주세요.</p>
+            <button type="button" onClick={() => go("record")}>증상 말하기로 가기</button>
+          </div>
+        )}
+        {view === "review" && intake && (
           <section className="intake" aria-label="정리된 의료정보">
             <h2 className="step-title">2. 정리된 내용을 확인해 주세요</h2>
             {urgentSymptoms(intake.symptoms).length > 0 && (
@@ -874,7 +984,15 @@ export default function App() {
             {intake.symptoms.length === 0 ? (
               <p className="empty-result">현재 규칙에서 찾은 증상이 없습니다.</p>
             ) : intake.symptoms.map((symptom, index) => (
-              <div className="observation" key={`${symptom.name}-${index}`}>
+              <div
+                className={urgentSymptoms([symptom]).length > 0 ? "observation observation--urgent" : "observation"}
+                key={`${symptom.name}-${index}`}
+              >
+                <div className="observation-header">
+                  <strong className="observation-name">{symptom.name || "새 증상"}</strong>
+                  <span className={`badge badge--${symptom.status}`}>{STATUS_LABEL[symptom.status]}</span>
+                  {detailedSite(symptom.body_site) && <span className="badge badge--site">{symptom.body_site}</span>}
+                </div>
                 <label>
                   증상
                   <input
@@ -1035,6 +1153,8 @@ export default function App() {
           </section>
         )}
         {recordMessage && <p className="record-message">{recordMessage}</p>}
+        {view === "summary" && (
+        <>
         <section className="visit-summary" aria-label="진료 전 요약">
           <h2 className="step-title">3. 진료 전 요약</h2>
           <p>병원에서 보여줄 수 있도록 확인한 기록을 짧게 정리합니다.</p>
@@ -1042,18 +1162,23 @@ export default function App() {
             <p className="empty-result">요약할 기록이 없습니다.</p>
           ) : (
             <div className="visit-summary-card">
-              <p>
-                <strong>기록 기간</strong><br />
-                {new Intl.DateTimeFormat("ko-KR", {
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                }).format(new Date(visitSummary.firstRecordedAt))}
-                {" ~ "}
-                {new Intl.DateTimeFormat("ko-KR", {
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                }).format(new Date(visitSummary.lastRecordedAt))}
+              <p className="summary-meta">
+                <span className="summary-meta__label">기록 기간</span>
+                <span>
+                  {new Intl.DateTimeFormat("ko-KR", {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  }).format(new Date(visitSummary.firstRecordedAt))}
+                  {" ~ "}
+                  {new Intl.DateTimeFormat("ko-KR", {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  }).format(new Date(visitSummary.lastRecordedAt))}
+                </span>
               </p>
+              {visitSummary.profile && (
+                <ChipBlock title="기본 정보" kind="profile" items={visitSummary.profile.split(" / ")} />
+              )}
               {visitSummary.urgentSymptoms.length > 0 && (
                 <div className="urgent-notice" role="alert">
                   <strong>{visitSummary.urgentSymptoms.join(", ")}</strong>
@@ -1062,41 +1187,60 @@ export default function App() {
               )}
               <div className="visit-summary-symptoms">
                 <strong>증상 변화</strong>
-                <ul>
+                <ul className="symptom-list">
                   {visitSummary.symptoms.map((symptom) => (
-                    <li key={`summary-${symptom.id}`}>
-                      <strong>{symptom.name}</strong>
-                      {symptom.bodySite && ` · 부위: ${symptom.bodySite}`}
-                      {` · ${symptom.status === "active" ? "현재 있음" : "사라짐"}`}
-                      {` · 시작: ${formatOnset(symptom.statedOnset, symptom.statedOnsetDate) || "확인되지 않음"}`}
-                      {` · 가장 심한 정도: ${symptom.peakSeverity || "확인되지 않음"}`}
-                      {symptom.latestTrend && ` · 최근 변화: ${symptom.latestTrend === "improving" ? "호전 중" : symptom.latestTrend === "worsening" ? "악화 중" : "변화 없음"}`}
-                      {tracksFrequency(symptom.name) && symptom.frequencies.length > 0 && ` · 횟수: ${symptom.frequencies.join(", ")}`}
-                      {` · ${symptom.recordCount}회 기록`}
+                    <li key={`summary-${symptom.id}`} className="symptom-row">
+                      <div className="symptom-row__head">
+                        <strong>{symptom.name}</strong>
+                        <span className={`badge badge--${symptom.status === "active" ? "present" : "resolved"}`}>
+                          {symptom.status === "active" ? "현재 있음" : "사라짐"}
+                        </span>
+                        {symptom.latestTrend && (
+                          <span className={`trend trend--${TREND_BADGE[symptom.latestTrend].tone}`}>
+                            {TREND_BADGE[symptom.latestTrend].label}
+                          </span>
+                        )}
+                      </div>
+                      <dl className="facts">
+                        {symptom.bodySite && <div><dt>부위</dt><dd>{symptom.bodySite}</dd></div>}
+                        <div><dt>시작</dt><dd>{formatOnset(symptom.statedOnset, symptom.statedOnsetDate) || "확인되지 않음"}</dd></div>
+                        <div><dt>가장 심한 정도</dt><dd>{symptom.peakSeverity || "확인되지 않음"}</dd></div>
+                        {tracksFrequency(symptom.name) && symptom.frequencies.length > 0 && (
+                          <div><dt>횟수</dt><dd>{symptom.frequencies.join(", ")}</dd></div>
+                        )}
+                        <div><dt>기록</dt><dd>{symptom.recordCount}회</dd></div>
+                      </dl>
                     </li>
                   ))}
                 </ul>
               </div>
-              <p><strong>기록 기간 중 복용약:</strong> {visitSummary.medications.join(", ") || "확인되지 않음"}</p>
-              <p><strong>기록된 알레르기:</strong> {visitSummary.allergies.join(", ") || "확인되지 않음"}</p>
-              {visitSummary.profile && <p><strong>기본 정보:</strong> {visitSummary.profile}</p>}
-              <p><strong>과거력:</strong> {visitSummary.medicalHistory.join(", ") || "확인되지 않음"}</p>
-              {visitSummary.uncertainSymptoms.length > 0 && (
-                <p><strong>있는지 확실하지 않다고 한 증상:</strong> {visitSummary.uncertainSymptoms.join(", ")}</p>
-              )}
-              {visitSummary.othersSymptoms.length > 0 && (
-                <p><strong>주변 사람에 대해 말한 내용:</strong> {visitSummary.othersSymptoms.join(", ")}</p>
-              )}
+              <div className="info-grid">
+                <ChipBlock title="알레르기" kind="allergy" items={visitSummary.allergies} />
+                <ChipBlock title="기록 기간 중 복용약" kind="medication" items={visitSummary.medications} />
+                <ChipBlock title="과거력" kind="history" items={visitSummary.medicalHistory} />
+                {visitSummary.uncertainSymptoms.length > 0 && (
+                  <ChipBlock title="있는지 확실하지 않다고 한 증상" kind="uncertain" items={visitSummary.uncertainSymptoms} />
+                )}
+                {visitSummary.othersSymptoms.length > 0 && (
+                  <ChipBlock title="주변 사람에 대해 말한 내용" kind="others" items={visitSummary.othersSymptoms} />
+                )}
+              </div>
               <p className="summary-notice">사용자가 확인한 기록의 요약이며 진단 결과가 아닙니다.</p>
-              <div className="summary-actions">
-                <button className="button--secondary" type="button" onClick={() => void copyVisitSummary()}>
-                  요약 복사
+              <div className="summary-actions" aria-label="요약 보내기">
+                <button className="button--secondary action-tile" type="button" onClick={() => void copyVisitSummary()}>
+                  <ActionIcon name="copy" />
+                  <span className="action-tile__label">요약 복사</span>
+                  <span className="action-tile__hint">문자·메모에 붙여넣기</span>
                 </button>
-                <button className="button--secondary" type="button" onClick={printVisitSummary}>
-                  PDF로 저장
+                <button className="button--secondary action-tile" type="button" onClick={printVisitSummary}>
+                  <ActionIcon name="pdf" />
+                  <span className="action-tile__label">PDF로 저장</span>
+                  <span className="action-tile__hint">파일·인쇄</span>
                 </button>
-                <button className="button--secondary" type="button" onClick={() => void toggleVisitSummaryQr()}>
-                  {summaryQrCode ? "QR 숨기기" : "QR 만들기"}
+                <button className="button--secondary action-tile" type="button" onClick={() => void toggleVisitSummaryQr()}>
+                  <ActionIcon name="qr" />
+                  <span className="action-tile__label">{summaryQrCode ? "QR 숨기기" : "QR 만들기"}</span>
+                  <span className="action-tile__hint">의사 카메라로 읽기</span>
                 </button>
               </div>
               {summaryQrCode && (
@@ -1110,8 +1254,15 @@ export default function App() {
             </div>
           )}
         </section>
-        <details className="history">
-        <summary>지난 기록 보기 ({visibleRecords.length}개) · 증상 발생 기간 · 타임라인 · 백업</summary>
+        <div className="next-actions">
+          <button type="button" onClick={startNewEntry}>새 증상 기록하기</button>
+          <button className="button--secondary" type="button" onClick={() => go("history")}>지난 기록 보기</button>
+        </div>
+        </>
+        )}
+        {view === "history" && (
+        <>
+        <h2 className="step-title">지난 기록</h2>
         <section className="episodes" aria-label="증상 발생 기간">
           <h2>증상 발생 기간</h2>
           <p>같은 증상이 나타난 때부터 사라진 때까지를 하나로 묶습니다.</p>
@@ -1170,16 +1321,23 @@ export default function App() {
               {entry.symptoms.length === 0 ? (
                 <p>확인된 증상이 없습니다.</p>
               ) : (
-                <ul>
+                <ul className="symptom-list">
                   {entry.symptoms.map((symptom, index) => (
-                    <li key={`${entry.id}-${symptom.name}-${index}`}>
-                      <strong>{symptom.name}</strong>
-                      {` · ${symptom.change}`}
-                      {detailedSite(symptom.body_site) && ` · 부위: ${symptom.body_site}`}
-                      {symptom.status === "present" && ` · 시작: ${formatOnset(symptom.onset, symptom.onset_date) || "확인되지 않음"}`}
-                      {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
-                      {symptom.status === "present" && symptom.trend && ` · 변화: ${symptom.trend === "improving" ? "호전 중" : symptom.trend === "worsening" ? "악화 중" : "변화 없음"}`}
-                      {tracksFrequency(symptom.name) && symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
+                    <li key={`${entry.id}-${symptom.name}-${index}`} className="symptom-row">
+                      <div className="symptom-row__head">
+                        <strong>{symptom.name}</strong>
+                        <span className={`trend trend--${symptom.tone}`}>
+                          {TONE_MARK[symptom.tone]} {CHANGE_LABEL[symptom.change] ?? symptom.change}
+                        </span>
+                      </div>
+                      {symptom.status === "present" && (
+                        <dl className="facts">
+                          {detailedSite(symptom.body_site) && <div><dt>부위</dt><dd>{symptom.body_site}</dd></div>}
+                          <div><dt>시작</dt><dd>{formatOnset(symptom.onset, symptom.onset_date) || "확인되지 않음"}</dd></div>
+                          <div><dt>정도</dt><dd>{symptom.severity || "확인되지 않음"}</dd></div>
+                          {tracksFrequency(symptom.name) && symptom.frequency && <div><dt>횟수</dt><dd>{symptom.frequency}</dd></div>}
+                        </dl>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -1255,7 +1413,8 @@ export default function App() {
             </article>
           ))}
         </section>
-        </details>
+        </>
+        )}
         <p className="privacy-note">
           음성은 글자로 바꾸는 동안만 사용합니다. 확인한 기록은 이 브라우저 안에만
           저장되며 서버에는 보관하지 않습니다.

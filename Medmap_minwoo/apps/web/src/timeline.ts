@@ -2,9 +2,22 @@ import type { StoredIntakeRecord } from "./recordStorage";
 
 type StoredSymptom = StoredIntakeRecord["intake"]["symptoms"][number];
 
+export type ChangeTone = "new" | "worse" | "better" | "same" | "unknown";
+
 export type TimelineSymptom = StoredSymptom & {
   change: string;
+  tone: ChangeTone;
 };
+
+// How the change reads at a glance: worse (↑), better (↓), unchanged (=), new, or not sure.
+export function changeTone(change: string): ChangeTone {
+  if (change === "확실하지 않음") return "unknown";
+  if (change === "처음 기록") return "new";
+  if (change === "없음 → 있음") return "worse";
+  if (change === "있음 → 없음" || change.includes("호전") || change.includes("약함")) return "better";
+  if (change.includes("악화") || change.includes("강함")) return "worse";
+  return "same";
+}
 
 export type TimelineEntry = {
   id: string;
@@ -57,7 +70,8 @@ export function buildTimeline(records: StoredIntakeRecord[]): TimelineEntry[] {
       symptoms: record.intake.symptoms.map((symptom) => {
         const previous = latestBySymptom.get(symptom.name);
         if (symptom.status !== "uncertain") latestBySymptom.set(symptom.name, symptom);
-        return { ...symptom, change: describeChange(previous, symptom) };
+        const change = describeChange(previous, symptom);
+        return { ...symptom, change, tone: changeTone(change) };
       }),
     }));
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildTimeline } from "./timeline";
+import { buildTimeline, changeTone } from "./timeline";
 import { record, symptom } from "./testRecords";
 
 function changes(records: Parameters<typeof buildTimeline>[0]): string[][] {
@@ -64,5 +64,12 @@ describe("buildTimeline", () => {
       ["비슷한 정도로 지속"],
       ["계속 있음"],
     ]);
+  });
+});
+
+describe("changeTone", () => {
+  it("reads each change as worse, better, same, new or unknown", () => {
+    expect(["처음 기록", "없음 → 있음", "있음 → 없음", "이전 기록보다 호전", "이전 기록보다 강함", "계속 있음", "확실하지 않음", "없음으로 기록"]
+      .map(changeTone)).toEqual(["new", "worse", "better", "better", "worse", "same", "unknown", "same"]);
   });
 });
