@@ -24,6 +24,11 @@ if ($localMain -ne $pushedMain) {
 if (-not (Test-Path -LiteralPath (Join-Path $teamClone '.git'))) {
     Invoke-MedMapGit clone $teamRemote $teamClone
 }
+# Commit as the same author as the personal repository.
+foreach ($setting in 'user.name', 'user.email') {
+    $value = & git -C $medmapRoot config --get $setting
+    if ($value) { Invoke-MedMapGit -C $teamClone config $setting $value.Trim() }
+}
 Invoke-MedMapGit -C $teamClone checkout main
 Invoke-MedMapGit -C $teamClone pull --ff-only origin main
 
