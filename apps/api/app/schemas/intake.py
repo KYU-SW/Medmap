@@ -28,11 +28,22 @@ class OtherPersonSymptom(BaseModel):
     source_text: str
 
 
+class PatientProfileHints(BaseModel):
+    """Basic information the patient said about themself; the web app saves it after review."""
+
+    age: int | None = None
+    sex: Literal["female", "male"] | None = None
+    pregnancy: Literal["yes", "no", "unknown"] | None = None
+    smoking: Literal["current", "former", "never"] | None = None
+    drinking: Literal["yes", "no"] | None = None
+
+
 class IntakeExtractionResponse(BaseModel):
     symptoms: list[SymptomObservation]
     medications: list[str]
     allergies: list[str]
     medical_history: list[str] = Field(default_factory=list)
     others_symptoms: list[OtherPersonSymptom] = Field(default_factory=list)
+    profile: PatientProfileHints = Field(default_factory=PatientProfileHints)
     unrecognized_fragments: list[str] = Field(default_factory=list)
     needs_user_confirmation: bool = True

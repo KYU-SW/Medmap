@@ -2,7 +2,12 @@ from dataclasses import dataclass
 from datetime import date, timedelta
 import re
 
-from app.schemas.intake import IntakeExtractionResponse, OtherPersonSymptom, SymptomObservation
+from app.schemas.intake import (
+    IntakeExtractionResponse,
+    OtherPersonSymptom,
+    PatientProfileHints,
+    SymptomObservation,
+)
 
 
 @dataclass(frozen=True)
@@ -623,12 +628,35 @@ MEDICAL_SIGNAL_PATTERN = re.compile(
     r"두드러기|변비|피곤|쑤시|쑤셔|울렁|몸살|현기증|침침|이명|수술|진단|"
     r"감기|배탈|체했|체한|소화|입맛|식욕|잠을|잠이|쓰려|쓰리|더부룩|벌렁|땀|경련|"
     r"뻐근|결려|결리|무거|시려|시리|따가|따갑|가빠|가쁘|떨려|떨리|떨림|화끈|어둡|흐릿|흐려|토할|피가|피를|멍|"
-    r"침침|간지|소변|오줌|기절|쓰러|정신을|의식|힘이|어눌|발음|쉬었|목소리|체중|몸무게|살이|발작|헐었|헐어"
+    r"침침|간지|소변|오줌|기절|쓰러|정신을|의식|힘이|어눌|발음|쉬었|목소리|체중|몸무게|살이\s*빠|발작|헐었|헐어"
 )
 CLAUSE_SPLIT_PATTERN = re.compile(r"[.!?。]|(?:\s+)(?:그리고|추가로|하지만|그러나|또한)(?:\s+)")
 UNCERTAIN_PATTERN = re.compile(
     r"모르겠|잘\s*모르|확실(?:하지|치|하진)\s*않|헷갈|긴가민가|애매|같기도|"
     r"있는지\s*없는지|인지\s*아닌지|기억(?:이)?\s*(?:잘\s*)?안\s*나"
+)
+AGE_PATTERN = re.compile(
+    r"(?<![\d.])(\d{1,3})\s*(?:살|세)(?!\s*때)(?:이에요|예요|입니다|이고|인데|이요|요)?|나이(?:는|가)?\s*(\d{1,3})"
+)
+SEX_PATTERN = re.compile(
+    r"(?<![가-힣])(?:(?P<female>여자|여성)|남자|남성)(?=이에요|예요|입니다|이고|인데|이요|고\s|요)"
+)
+# Checked in order: negations first so "담배는 안 피워요" is not read as smoking.
+PREGNANCY_PATTERNS = (
+    ("unknown", re.compile(r"임신(?:인지|했는지|한\s*건지)\s*(?:잘\s*)?모르|임신\s*여부(?:는)?\s*(?:잘\s*)?모르")),
+    ("no", re.compile(r"임신(?:은|이|도)?\s*(?:아니|안\s*했|하지\s*않|아닙니다)|임신\s*가능성(?:은|이)?\s*없")),
+    ("yes", re.compile(r"임신\s*(?:중|\d+\s*주|했|한\s*(?:것|거)\s*같|일\s*수도|가능성(?:이)?\s*있)")),
+)
+SMOKING_PATTERNS = (
+    ("former", re.compile(r"담배(?:는|를|도)?\s*(?:\S+\s+){0,3}(?:끊었|끊은|끊고)|금연(?:\s*중|했|한\s*지)|예전에\s*(?:담배를?\s*)?피웠")),
+    ("never", re.compile(
+        r"담배(?:는|를|도)?\s*(?:안\s*(?:피워|피우|펴|핍|피운)|피우지\s*않|피운\s*적(?:이|은)?\s*없)|비흡연|흡연(?:은|도)?\s*안\s*해"
+    )),
+    ("current", re.compile(r"담배(?:를|는|도)?\s*(?:\S+\s+){0,3}(?:피워|피우|펴|핍|피고|태워)|흡연(?:해|하|자|\s*중)")),
+)
+DRINKING_PATTERNS = (
+    ("no", re.compile(r"술(?:은|을|도)?\s*(?:안\s*(?:마셔|마시|먹)|못\s*마셔|마시지\s*않|끊었|입에도\s*안)|금주")),
+    ("yes", re.compile(r"(?<![가-힣])술(?:을|은|도)?\s*(?:\S+\s*)?(?:마셔|마시|마셨|먹어|먹고|먹었)|음주(?:를|는)?\s*(?:해|하|자주|가끔)")),
 )
 OTHER_PERSON = (
     r"남편|아내|와이프|부인|엄마|어머니|아빠|아버지|아이|애|아기|애기|아들|딸|동생|형|누나|언니|오빠|"
@@ -1165,6 +1193,7 @@ def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtra
         allergies=allergies,
         medical_history=medical_history,
         others_symptoms=others_symptoms,
+        profile=_extract_profile(normalized),
         unrecognized_fragments=unrecognized_fragments,
     )
 
@@ -1340,6 +1369,36 @@ def _subclause_spans(text: str) -> list[tuple[int, int]]:
         start = boundary.end()
     spans.append((start, len(text)))
     return spans
+
+
+def _extract_profile(text: str) -> PatientProfileHints:
+    """Age, sex, pregnancy, smoking and drinking the patient said about themself."""
+
+    def own(pattern: re.Pattern[str]) -> re.Match[str] | None:
+        # "남편이 담배를 피워요", "아이가 5살이에요" are about someone else.
+        return next(
+            (match for match in pattern.finditer(text) if _other_person_for(text, match.start()) is None),
+            None,
+        )
+
+    age_match = own(AGE_PATTERN)
+    age = next((int(value) for value in age_match.groups() if value), None) if age_match else None
+    sex_match = own(SEX_PATTERN)
+    sex = None if sex_match is None else "female" if sex_match.group("female") else "male"
+
+    def first_label(patterns: tuple[tuple[str, re.Pattern[str]], ...]) -> str | None:
+        return next((label for label, pattern in patterns if own(pattern)), None)
+
+    pregnancy = first_label(PREGNANCY_PATTERNS)
+    if pregnancy and sex is None:
+        sex = "female"
+    return PatientProfileHints(
+        age=age if age is not None and 0 <= age <= 130 else None,
+        sex=sex,
+        pregnancy=pregnancy,
+        smoking=first_label(SMOKING_PATTERNS),
+        drinking=first_label(DRINKING_PATTERNS),
+    )
 
 
 def _extract_medical_history(text: str) -> tuple[list[str], list[OtherPersonSymptom]]:
