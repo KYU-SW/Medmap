@@ -2,7 +2,8 @@
 
 작성일: 2026-10-01 (최종 갱신 2026-10-02)
 브랜치: `feature/stt-rebuild`
-마지막 커밋: `git log -1`로 확인한다. 2026-10-02 기준 개인 저장소 `19325fc`, 팀 저장소 `479a96f`까지 올렸다.
+마지막 커밋: `git log -1`로 확인한다. 2026-10-02 기록 품질 보완까지 개인 저장소 `c06149f`, 팀 저장소 `0244108`에 올렸다
+(이 줄을 고친 HANDOFF 갱신 커밋이 그 뒤에 하나 더 있다).
 
 ## 1. 프로젝트 개요
 
@@ -35,7 +36,7 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
 - 팀원의 `MedMap/` 폴더는 건드리지 않는다.
 
 
-## 2-1. Git 상태 (2026-10-01 확인)
+## 2-1. Git 상태 (2026-10-02 갱신)
 - 2026-10-02 기록 품질 보완(4절 13번)은 커밋하고 두 저장소에 push했다. 변경 파일: API `app/services/intake_extractor.py`, `app/schemas/intake.py`,
   `app/api/routes/intake.py`, `tests/test_intake.py`, 새 파일 `tests/test_intake_record_quality.py` / 웹 `src/App.tsx`, `src/styles.css`,
   `src/recordStorage.ts`, `src/symptomOptions.ts`, `src/symptomEpisodes.ts`, `src/timeline.ts`, `src/visitSummary.ts`, `src/symptomOptions.test.ts`,
