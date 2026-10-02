@@ -32,7 +32,20 @@ function isGroup(value: unknown): value is RecordGroup {
   return isObject(value)
     && typeof value.id === "string"
     && typeof value.name === "string"
-    && typeof value.createdAt === "string";
+    && typeof value.createdAt === "string"
+    && (value.profile === undefined || isProfile(value.profile));
+}
+
+function isProfile(value: unknown): boolean {
+  const allowed: Record<string, Array<unknown>> = {
+    sex: ["female", "male", null],
+    pregnancy: ["yes", "no", "unknown", null],
+    smoking: ["current", "former", "never", null],
+    drinking: ["yes", "no", null],
+  };
+  return isObject(value)
+    && (value.age === undefined || value.age === null || (Number.isInteger(value.age) && Number(value.age) >= 0 && Number(value.age) <= 130))
+    && Object.entries(allowed).every(([key, options]) => value[key] === undefined || options.includes(value[key]));
 }
 
 function isSymptom(value: unknown): boolean {

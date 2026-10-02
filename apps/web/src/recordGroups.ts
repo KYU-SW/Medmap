@@ -2,10 +2,19 @@ import type { StoredIntakeRecord } from "./recordStorage";
 
 export const LEGACY_RECORD_GROUP_ID = "existing-records";
 
+export type PatientProfile = {
+  age?: number | null;
+  sex?: "female" | "male" | null;
+  pregnancy?: "yes" | "no" | "unknown" | null;
+  smoking?: "current" | "former" | "never" | null;
+  drinking?: "yes" | "no" | null;
+};
+
 export type RecordGroup = {
   id: string;
   name: string;
   createdAt: string;
+  profile?: PatientProfile;
 };
 
 const GROUPS_KEY = "medmap-record-groups";
@@ -73,6 +82,12 @@ export function mergeRecordGroups(incoming: RecordGroup[]): RecordGroup[] {
     groups.push(group);
     knownIds.add(group.id);
   }
+  saveGroups(groups);
+  return groups.sort((left, right) => right.createdAt.localeCompare(left.createdAt));
+}
+
+export function updateRecordGroupProfile(id: string, profile: PatientProfile): RecordGroup[] {
+  const groups = readSavedGroups().map((group) => (group.id === id ? { ...group, profile } : group));
   saveGroups(groups);
   return groups.sort((left, right) => right.createdAt.localeCompare(left.createdAt));
 }

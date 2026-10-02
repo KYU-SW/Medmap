@@ -29,6 +29,8 @@ import {
   mergeRecordGroups,
   prepareRecordGroups,
   setCurrentRecordGroupId,
+  updateRecordGroupProfile,
+  type PatientProfile,
   type RecordGroup,
 } from "./recordGroups";
 
@@ -158,7 +160,7 @@ export default function App() {
   useEffect(() => {
     setSummaryQrCode("");
     setSummaryMessage("");
-  }, [records, currentRecordGroupId]);
+  }, [records, recordGroups, currentRecordGroupId]);
 
   function stopLiveCapture() {
     if (liveIntervalRef.current !== null) {
@@ -537,7 +539,13 @@ export default function App() {
   );
   const timeline = buildTimeline(visibleRecords);
   const symptomEpisodes = buildSymptomEpisodes(visibleRecords);
-  const visitSummary = buildVisitSummary(visibleRecords, symptomEpisodes);
+  const profile = recordGroups.find((group) => group.id === currentRecordGroupId)?.profile ?? {};
+  const visitSummary = buildVisitSummary(visibleRecords, symptomEpisodes, profile);
+
+  function updateProfile(changes: Partial<PatientProfile>) {
+    if (!currentRecordGroupId) return;
+    setRecordGroups(updateRecordGroupProfile(currentRecordGroupId, { ...profile, ...changes }));
+  }
 
   async function copyVisitSummary() {
     if (!visitSummary) return;
@@ -635,6 +643,70 @@ export default function App() {
           </button>
           <p>현재 선택한 기록 안에서만 타임라인, PDF, QR을 만듭니다.</p>
         </section>
+        <details className="patient-profile">
+          <summary>기본 정보 (선택)</summary>
+          <p>진료 전 요약에 함께 적힙니다. 이 브라우저에만 저장됩니다.</p>
+          <label>
+            나이
+            <input
+              type="number"
+              min={0}
+              max={130}
+              value={profile.age ?? ""}
+              onChange={(event) => updateProfile({
+                age: event.target.value === "" ? null : Math.min(130, Math.max(0, Math.floor(Number(event.target.value)))),
+              })}
+            />
+          </label>
+          <label>
+            성별
+            <select
+              value={profile.sex ?? ""}
+              onChange={(event) => updateProfile({ sex: (event.target.value || null) as PatientProfile["sex"] })}
+            >
+              <option value="">선택 안 함</option>
+              <option value="female">여성</option>
+              <option value="male">남성</option>
+            </select>
+          </label>
+          {profile.sex === "female" && (
+            <label>
+              임신 가능성
+              <select
+                value={profile.pregnancy ?? ""}
+                onChange={(event) => updateProfile({ pregnancy: (event.target.value || null) as PatientProfile["pregnancy"] })}
+              >
+                <option value="">선택 안 함</option>
+                <option value="yes">임신 중이거나 가능성 있음</option>
+                <option value="no">임신 아님</option>
+                <option value="unknown">모름</option>
+              </select>
+            </label>
+          )}
+          <label>
+            흡연
+            <select
+              value={profile.smoking ?? ""}
+              onChange={(event) => updateProfile({ smoking: (event.target.value || null) as PatientProfile["smoking"] })}
+            >
+              <option value="">선택 안 함</option>
+              <option value="current">흡연</option>
+              <option value="former">과거 흡연</option>
+              <option value="never">비흡연</option>
+            </select>
+          </label>
+          <label>
+            음주
+            <select
+              value={profile.drinking ?? ""}
+              onChange={(event) => updateProfile({ drinking: (event.target.value || null) as PatientProfile["drinking"] })}
+            >
+              <option value="">선택 안 함</option>
+              <option value="yes">음주</option>
+              <option value="no">음주 안 함</option>
+            </select>
+          </label>
+        </details>
         <p className={`status status--${status}`}>{message}</p>
 
         <div className="controls">
@@ -887,6 +959,7 @@ export default function App() {
               </div>
               <p><strong>기록 기간 중 복용약:</strong> {visitSummary.medications.join(", ") || "확인되지 않음"}</p>
               <p><strong>기록된 알레르기:</strong> {visitSummary.allergies.join(", ") || "확인되지 않음"}</p>
+              {visitSummary.profile && <p><strong>기본 정보:</strong> {visitSummary.profile}</p>}
               <p><strong>과거력:</strong> {visitSummary.medicalHistory.join(", ") || "확인되지 않음"}</p>
               {visitSummary.uncertainSymptoms.length > 0 && (
                 <p><strong>있는지 확실하지 않다고 한 증상:</strong> {visitSummary.uncertainSymptoms.join(", ")}</p>

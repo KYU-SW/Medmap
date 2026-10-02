@@ -29,6 +29,22 @@ class SpeechModelUnavailableError(RuntimeError):
     """Raised when the local Whisper model cannot be loaded or executed."""
 
 
+# Symptom and medicine words the intake rules look for. Passed to Whisper as hotwords
+# only when MEDMAP_STT_HOTWORDS=medical; the effect is not measured yet, so it is off.
+MEDICAL_HOTWORDS = (
+    "두통 발열 기침 가래 콧물 코막힘 인후통 호흡곤란 흉통 복통 구토 설사 변비 메스꺼움 "
+    "어지러움 오한 몸살 근육통 요통 두드러기 가려움 객혈 토혈 혈변 혈뇨 배뇨통 빈뇨 "
+    "이명 마비 경련 저림 부종 명치 옆구리 타이레놀 아목시실린"
+)
+
+
+def resolve_hotwords(value: str | None) -> str | None:
+    """"medical" picks MEDICAL_HOTWORDS, other text is used as-is, empty turns it off."""
+    if not value or not value.strip():
+        return None
+    return MEDICAL_HOTWORDS if value.strip() == "medical" else value.strip()
+
+
 class FasterWhisperService:
     """Lazy-loaded, local-only Korean speech recognition service."""
 
@@ -37,10 +53,12 @@ class FasterWhisperService:
         model_name: str = "turbo",
         device: str = "cpu",
         compute_type: str = "int8",
+        hotwords: str | None = None,
     ) -> None:
         self.model_name = model_name
         self.device = device
         self.compute_type = compute_type
+        self.hotwords = hotwords
         self._model = None
         self._model_lock = Lock()
         self._inference_lock = Lock()
@@ -86,6 +104,7 @@ class FasterWhisperService:
                     beam_size=5,
                     vad_filter=True,
                     condition_on_previous_text=False,
+                    hotwords=self.hotwords,
                 )
                 text = " ".join(
                     segment.text.strip() for segment in segments if segment.text.strip()
@@ -142,5 +161,6 @@ def get_stt_service() -> FasterWhisperService:
             model_name=os.getenv("MEDMAP_STT_MODEL", "turbo"),
             device=device,
             compute_type=os.getenv("MEDMAP_STT_COMPUTE_TYPE", default_compute_type),
+            hotwords=resolve_hotwords(os.getenv("MEDMAP_STT_HOTWORDS")),
         )
     return _service

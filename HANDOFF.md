@@ -37,6 +37,9 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
 
 
 ## 2-1. Git 상태 (2026-10-02 갱신)
+- 2026-10-02 STT 힌트·기본 정보(4절 14번)는 커밋하고 두 저장소에 push했다. 변경 파일: API `app/services/stt_service.py`, `scripts/transcribe_file.py`,
+  `.env.example` / 웹 `src/App.tsx`, `src/styles.css`, `src/recordGroups.ts`, `src/backup.ts`, `src/visitSummary.ts`, `src/recordQuality.test.ts` /
+  문서 `docs/STT_SPEC.md`, `HANDOFF.md`
 - 2026-10-02 기록 품질 보완(4절 13번)은 커밋하고 두 저장소에 push했다. 변경 파일: API `app/services/intake_extractor.py`, `app/schemas/intake.py`,
   `app/api/routes/intake.py`, `tests/test_intake.py`, 새 파일 `tests/test_intake_record_quality.py` / 웹 `src/App.tsx`, `src/styles.css`,
   `src/recordStorage.ts`, `src/symptomOptions.ts`, `src/symptomEpisodes.ts`, `src/timeline.ts`, `src/visitSummary.ts`, `src/symptomOptions.test.ts`,
@@ -125,6 +128,13 @@ MedMap은 환자가 말한 증상과 시간에 따른 변화를 연결하고, �
    - 위치: `오른쪽 아랫배`, `윗배`, `뒷머리`, `왼쪽 무릎`, 저림·부종 등은 주어에서 부위(`왼쪽 팔`). `관절 통증` 추가(증상 50개)
    - 약: 흔한 약 이름·약 이름 끝말 인식, 용량·복용 시점 기록(`타이레놀 500mg 하루 2회`). `페니실린 알레르기`는 약에서 제외
    - 웹: 날짜 표시(`어제부터 (10월 1일)`), 부위 입력칸과 기록·타임라인·요약의 부위 표시, `중간` 정도 비교
+14. 2026-10-02 STT 의료 용어 힌트와 기본 정보
+   - STT: `MEDMAP_STT_HOTWORDS=medical`로 켜면 증상·약 이름을 Whisper `hotwords`로 넘긴다. **기본 꺼짐, 효과 미측정**.
+     실제 녹음으로 `scripts.transcribe_file --hotwords medical` 켠/끈 결과를 비교한 뒤 기본값을 정한다(docs/STT_SPEC.md).
+     실제 모델에 무음 1초로 호출해 `hotwords`를 받아들이는 것만 확인했다.
+   - 기본 정보: 기록 묶음마다 나이·성별·임신 가능성(여성만)·흡연·음주를 고르는 접이식 칸. localStorage에 묶음과 함께 저장하고,
+     진료 전 요약 첫 줄(`기본 정보: 34세 / 여성 / ...`)과 백업 파일에 들어간다. 바꾸면 만든 QR은 지운다.
+     말에서 나이·성별을 자동으로 뽑지는 않는다. **브라우저에서 아직 열어 보지 않았다.**
 
 ## 5. 실행 방법
 
@@ -170,7 +180,7 @@ cd apps\web
 corepack pnpm test   # vitest run
 ```
 
-- 결과: **7 files, 37 tests passed** (2026-10-02 기록 품질 보완 후)
+- 결과: **7 files, 40 tests passed** (2026-10-02 기본 정보 추가 후). 기록 품질 보완 후 37
 - 대상: `buildTimeline`, `buildSymptomEpisodes`, `buildVisitSummary`, `visitSummaryText`, `backup.ts`, `symptomOptions.ts`(위험 증상 판정 포함)
 - 아직 자동 테스트하지 않은 것: `recordStorage.ts`(IndexedDB), `recordGroups.ts`(localStorage), `App.tsx` 화면
 
@@ -215,7 +225,7 @@ corepack pnpm test   # vitest run
       서버 저장은 docs/PRIVACY.md 원칙(서버에 보관하지 않음)을 바꿔야 하므로 사용자 결정이 필요하다.
 - [ ] 백업 내보내기/가져오기를 실제 브라우저에서 한 번 눌러 확인
 - [ ] 증상 추출 남은 한계 (2026-10-02 기준)
-      - 규칙 기반이라 49개 목록에 없는 증상은 확인 요청으로만 보여준다(혀 통증, 입안 헐음, 발가락 통증 등).
+      - 규칙 기반이라 50개 목록에 없는 증상은 확인 요청으로만 보여준다(혀 통증, 입안 헐음, 발가락 통증 등).
       - 띄어쓰기 없이 주어가 생략된 긴 문장(`가슴이답답하고아파요`)은 앞 절 주어 이어받기를 하지 않는다.
       - 과거력은 정해진 질환 이름이나 `OO 진단을 받았어요` 형태만 인식한다.
       - (2026-10-02 해결) 주어를 이어받은 증상도 앞 절의 시작 시점을 이어받는다.
@@ -225,7 +235,8 @@ corepack pnpm test   # vitest run
         `위염으로 진단받았어요` 같은 목록 밖 병명 기록
 - 진료 중/후 기능은 **보류**한다(사용자 결정, 2026-10-02). 구현 방식을 팀원과 아직 합의하지 않았고, 진료 전 단계를 먼저 완성한다.
   2026-10-02에 DDXPlus 기반 설계 초안(`apps/api/app/knowledge/catalog.py`)을 만들다가 중단하고 삭제했다.
-- [ ] 테스트의 `StarletteDeprecationWarning` 정리 여부 검토
+- [x] `StarletteDeprecationWarning` 검토(2026-10-02): FastAPI TestClient가 내는 외부 라이브러리 경고이고 결과에 영향이 없다.
+      없애려면 새 패키지 `httpx2`가 필요해 그대로 둔다. starlette가 httpx 지원을 끊으면 바꾼다.
 - [x] `feature/stt-rebuild`를 main에 병합했다 (2026-10-02, fast-forward). 팀원 코드 통합 방식은 아직 정하지 않았다.
 
 ## 8. 팀원 코드베이스 통합 트랙
