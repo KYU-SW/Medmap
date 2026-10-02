@@ -239,6 +239,47 @@ select {
   margin: 8px 0 0;
 }
 
+.follow-up {
+  margin: 16px 0;
+  padding: 14px;
+  border: 1px solid #7eb5aa;
+  border-radius: 10px;
+  background: #f3faf8;
+}
+
+.follow-up-item {
+  margin-top: 12px;
+}
+
+.follow-up-item p {
+  margin: 0 0 8px;
+}
+
+.follow-up-choices,
+.follow-up-answer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.follow-up-choices button,
+.follow-up-answer button {
+  width: auto;
+  margin-top: 0;
+  padding: 8px 12px;
+}
+
+.follow-up-answer {
+  margin-top: 6px;
+}
+
+.follow-up-answer input {
+  flex: 1 1 160px;
+  width: auto;
+  margin-top: 0;
+}
+
 .others-review {
   margin-top: 18px;
   padding: 14px;

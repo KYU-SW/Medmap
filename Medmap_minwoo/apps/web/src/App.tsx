@@ -10,11 +10,13 @@ import {
 import { createBackup, parseBackup } from "./backup";
 import {
   detailedSite,
+  followUpQuestions,
   formatOnset,
   localDateString,
   parseList,
   SUPPORTED_SYMPTOMS,
   tracksFrequency,
+  type FollowUpQuestion,
   URGENT_NOTICE,
   urgentSymptoms,
 } from "./symptomOptions";
@@ -119,6 +121,8 @@ export default function App() {
   const [intake, setIntake] = useState<IntakeResult | null>(null);
   const [listDrafts, setListDrafts] = useState<ListDrafts>(EMPTY_LIST_DRAFTS);
   const [backupMessage, setBackupMessage] = useState("");
+  const [skippedQuestions, setSkippedQuestions] = useState<Set<string>>(new Set());
+  const [answerDrafts, setAnswerDrafts] = useState<Record<string, string>>({});
   const [extracting, setExtracting] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [records, setRecords] = useState<StoredIntakeRecord[]>([]);
@@ -361,6 +365,8 @@ export default function App() {
         profile: data.profile ?? {},
       };
       setIntake(result);
+      setSkippedQuestions(new Set());
+      setAnswerDrafts({});
       setListDrafts({
         medications: result.medications.join(", "),
         allergies: result.allergies.join(", "),
@@ -372,6 +378,36 @@ export default function App() {
     } finally {
       setExtracting(false);
     }
+  }
+
+  async function answerFollowUp(question: FollowUpQuestion, answer: string) {
+    const value = answer.trim();
+    const index = intake?.symptoms.findIndex((symptom) => symptom.name === question.symptom) ?? -1;
+    if (!value || !intake || index < 0) return;
+    if (question.field !== "onset") {
+      updateSymptom(index, { [question.field]: value });
+      return;
+    }
+    // Reuse the extractor so "어제부터" gets the same wording and date as a spoken onset.
+    let onset: Pick<SymptomObservation, "onset" | "onset_date"> = { onset: value, onset_date: null };
+    try {
+      const response = await fetch("/v1/intake/extract", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          transcript: `${value} ${intake.symptoms[index].source_text}`,
+          reference_date: localDateString(),
+        }),
+      });
+      const data = await response.json();
+      const found = response.ok
+        ? (data.symptoms as SymptomObservation[]).find((symptom) => symptom.name === question.symptom && symptom.onset)
+        : undefined;
+      if (found) onset = { onset: found.onset, onset_date: found.onset_date ?? null };
+    } catch {
+      // Keep the words as typed; the date stays empty.
+    }
+    updateSymptom(index, onset);
   }
 
   function updateSymptom(index: number, changes: Partial<SymptomObservation>) {
@@ -769,6 +805,54 @@ export default function App() {
               <div className="urgent-notice" role="alert">
                 <strong>{urgentSymptoms(intake.symptoms).join(", ")}</strong>
                 <p>{URGENT_NOTICE}</p>
+              </div>
+            )}
+            {followUpQuestions(intake.symptoms).filter((question) => !skippedQuestions.has(question.key)).length > 0 && (
+              <div className="follow-up">
+                <strong>추가로 알려 주세요</strong>
+                {followUpQuestions(intake.symptoms)
+                  .filter((question) => !skippedQuestions.has(question.key))
+                  .map((question) => (
+                    <div className="follow-up-item" key={question.key}>
+                      <p>{question.question}</p>
+                      {question.choices && (
+                        <div className="follow-up-choices">
+                          {question.choices.map((choice) => (
+                            <button
+                              className="button--secondary"
+                              type="button"
+                              key={choice}
+                              onClick={() => void answerFollowUp(question, choice)}
+                            >
+                              {choice}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                      <div className="follow-up-answer">
+                        <input
+                          value={answerDrafts[question.key] ?? ""}
+                          placeholder={question.field === "onset" ? "예: 어제부터, 3일 전부터" : "직접 입력"}
+                          aria-label={question.question}
+                          onChange={(event) => setAnswerDrafts((current) => ({ ...current, [question.key]: event.target.value }))}
+                        />
+                        <button
+                          className="button--secondary"
+                          type="button"
+                          onClick={() => void answerFollowUp(question, answerDrafts[question.key] ?? "")}
+                        >
+                          입력
+                        </button>
+                        <button
+                          className="button--secondary"
+                          type="button"
+                          onClick={() => setSkippedQuestions((current) => new Set(current).add(question.key))}
+                        >
+                          건너뛰기
+                        </button>
+                      </div>
+                    </div>
+                  ))}
               </div>
             )}
             <p>잘못 정리된 내용은 직접 고친 뒤 확인해 주세요.</p>

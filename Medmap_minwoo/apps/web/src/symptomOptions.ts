@@ -30,6 +30,55 @@ export function formatOnset(onset: string | null | undefined, onsetDate?: string
 
 const FREQUENCY_SYMPTOMS = new Set(["구토", "설사"]);
 
+// Where exactly it hurts, offered when the record only has the default site (복통 → 복부).
+export const SITE_CHOICES: Record<string, string[]> = {
+  복통: ["윗배", "명치", "아랫배", "오른쪽 아랫배", "왼쪽 아랫배", "오른쪽 옆구리", "왼쪽 옆구리", "배 전체"],
+  두통: ["앞머리", "뒷머리", "정수리", "오른쪽 머리", "왼쪽 머리", "머리 전체"],
+  흉통: ["가슴 가운데", "왼쪽 가슴", "오른쪽 가슴"],
+  요통: ["허리 가운데", "오른쪽 허리", "왼쪽 허리"],
+  "관절 통증": ["무릎", "어깨", "발목", "손목", "팔꿈치", "고관절"],
+};
+const SEVERITY_QUESTION_SYMPTOMS = new Set([
+  ...Object.keys(SITE_CHOICES), "인후통", "귀 통증", "눈 통증", "치통", "호흡곤란", "가슴 답답함",
+]);
+
+export type FollowUpQuestion = {
+  key: string;
+  symptom: string;
+  field: "onset" | "body_site" | "severity" | "frequency";
+  question: string;
+  choices?: string[];
+};
+
+// Pre-visit questions for what the patient has not said yet: when it started, where exactly, how bad, how often.
+export function followUpQuestions(
+  symptoms: Array<{
+    name: string;
+    status: string;
+    onset: string | null;
+    body_site: string | null;
+    severity: string | null;
+    frequency?: string | null;
+  }>,
+): FollowUpQuestion[] {
+  return symptoms.filter((symptom) => symptom.status === "present" && symptom.name).flatMap((symptom) => {
+    const questions: FollowUpQuestion[] = [];
+    const ask = (field: FollowUpQuestion["field"], question: string, choices?: string[]) =>
+      questions.push({ key: `${symptom.name}:${field}`, symptom: symptom.name, field, question, choices });
+    if (!symptom.onset) ask("onset", `${symptom.name} 증상은 언제부터 있었나요?`);
+    if (SITE_CHOICES[symptom.name] && !detailedSite(symptom.body_site)) {
+      ask("body_site", `${symptom.name}: 정확히 어디가 아픈가요?`, SITE_CHOICES[symptom.name]);
+    }
+    if (SEVERITY_QUESTION_SYMPTOMS.has(symptom.name) && !symptom.severity) {
+      ask("severity", `${symptom.name}: 얼마나 심한가요?`, ["경미함", "중간", "심함"]);
+    }
+    if (tracksFrequency(symptom.name) && !symptom.frequency) {
+      ask("frequency", `${symptom.name}: 하루에 몇 번 했나요?`, ["하루 1회", "하루 2회", "하루 3회", "하루 4회 이상"]);
+    }
+    return questions;
+  });
+}
+
 // Symptoms that should send the patient to care quickly, whatever the cause.
 const URGENT_SYMPTOMS = new Set(["흉통", "객혈", "토혈", "혈변", "기절", "마비", "말 어눌함", "경련"]);
 // Common symptoms that are urgent only when the patient says they are severe.
