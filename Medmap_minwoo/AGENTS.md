@@ -22,6 +22,17 @@
 
 ## Git
 - 사용자가 요청하지 않으면 `git commit`과 `git push`를 하지 않는다.
+- 이 프로젝트는 저장소 두 곳에 올린다. 사용자가 push를 요청하면 **두 곳 모두** 올린다. (상세: HANDOFF.md 2절)
+  1. 개인 저장소 `minu2246/MedMap`(비공개): `feature/stt-rebuild`에 커밋하고 `main`을 fast-forward로 맞춘 뒤
+     `git push origin main feature/stt-rebuild`
+  2. 팀 통합 저장소 `KYU-SW/Medmap`(**공개**)의 `Medmap_minwoo/` 폴더:
+     `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\sync_team_repo.ps1`
+- 팀 저장소는 공개라 올리기 전에 비밀번호·토큰·실제 환자 정보·PC 경로·내부 IP가 없는지 확인한다.
+- 팀 저장소의 팀원 폴더(`MedMap/`)와 최상위 파일은 수정하지 않는다.
+
+## 팀원 코드 통합
+- 사용자가 통합하자고 말하기 전에는 통합 작업을 하거나 먼저 제안하지 않는다.
+- 사용자가 통합을 시작하면 HANDOFF.md 8절의 통합 쟁점을 보여주고 어떻게 할지 먼저 물어본다.
 
 ## 삭제
 - 프로젝트 원본, 데이터, 설정 파일을 마음대로 삭제하지 않는다.
