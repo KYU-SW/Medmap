@@ -24,6 +24,14 @@ Windows 방화벽 안내가 나타나면 개인 네트워크만 허용한다. �
 같은 인증서 파일을 설치하고 `https://<PC의 IP>:5173`을 Chrome에서 연다.
 안드로이드 버전에 따라 사용자 인증서 설치 메뉴 이름이 다를 수 있다.
 
+인증서 없이 시험하는 방법 (2026-10-03 실제 확인):
+
+1. PC에서 `run_api.ps1`과 `run_web_desktop.ps1`(HTTP)을 실행한다.
+2. 휴대폰 Chrome 앱에서 `chrome://flags`를 열고 `insecure`로 검색한다.
+3. `Insecure origins treated as secure` 항목의 입력칸에 `http://<PC의 IP>:5173`을 넣고 Enabled로 바꾼 뒤 Relaunch를 누른다.
+4. `http://<PC의 IP>:5173`을 연다. 이 설정이 없으면 "이 브라우저에서는 음성 녹음을 지원하지 않습니다"가 나온다.
+5. 시험이 끝나면 이 설정을 Default로 돌린다. 카카오톡 등 앱 안의 브라우저나 삼성 인터넷에는 적용되지 않는다.
+
 ## 시험 후 정리
 
 - 아이폰·안드로이드에서 `MedMap Local Test CA` 프로파일 또는 사용자 인증서를 삭제한다.

@@ -14,7 +14,7 @@ Write-Host 'Use only non-sensitive test sentences during development.'
 
 Push-Location $webDirectory
 try {
-    & pnpm dev
+    & corepack pnpm dev
 } finally {
     Pop-Location
 }

@@ -8,7 +8,7 @@ Write-Host 'Desktop URL: http://127.0.0.1:5173'
 
 Push-Location $webDirectory
 try {
-    & pnpm dev
+    & corepack pnpm dev
 } finally {
     Pop-Location
 }
