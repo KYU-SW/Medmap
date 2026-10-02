@@ -1,3 +1,4 @@
+import type { PatientProfile } from "./recordGroups";
 import type { StoredIntakeRecord } from "./recordStorage";
 import type { SymptomEpisode } from "./symptomEpisodes";
 import { formatOnset, tracksFrequency, urgentSymptoms } from "./symptomOptions";
@@ -12,11 +13,27 @@ export type VisitSummary = {
   uncertainSymptoms: string[];
   othersSymptoms: string[];
   urgentSymptoms: string[];
+  profile: string | null;
 };
+
+export function profileText(profile: PatientProfile | undefined): string | null {
+  if (!profile) return null;
+  const parts = [
+    profile.age != null ? `${profile.age}세` : null,
+    profile.sex === "female" ? "여성" : profile.sex === "male" ? "남성" : null,
+    profile.sex === "female" && profile.pregnancy
+      ? { yes: "임신 중이거나 가능성 있음", no: "임신 아님", unknown: "임신 여부 모름" }[profile.pregnancy]
+      : null,
+    profile.smoking ? { current: "흡연", former: "과거 흡연", never: "비흡연" }[profile.smoking] : null,
+    profile.drinking ? { yes: "음주", no: "음주 안 함" }[profile.drinking] : null,
+  ].filter(Boolean);
+  return parts.length > 0 ? parts.join(" / ") : null;
+}
 
 export function buildVisitSummary(
   records: StoredIntakeRecord[],
   episodes: SymptomEpisode[],
+  profile?: PatientProfile,
 ): VisitSummary | null {
   if (records.length === 0) return null;
   const ordered = [...records].sort((left, right) => left.createdAt.localeCompare(right.createdAt));
@@ -36,6 +53,7 @@ export function buildVisitSummary(
       .filter((name) => !episodes.some((episode) => episode.name === name)),
     othersSymptoms: [...new Set(ordered.flatMap((record) => (record.intake.others_symptoms ?? [])
       .map((item) => `${item.person} ${item.symptom}`)))],
+    profile: profileText(profile),
     urgentSymptoms: urgentSymptoms(episodes
       .filter((episode) => episode.status === "active")
       .map((episode) => ({ name: episode.name, status: "present", severity: episode.peakSeverity }))),
@@ -61,6 +79,7 @@ export function visitSummaryText(summary: VisitSummary): string {
   );
   return [
     "MedMap 진료 전 증상 요약",
+    ...(summary.profile ? [`기본 정보: ${summary.profile}`] : []),
     `기록 기간: ${dateFormatter.format(new Date(summary.firstRecordedAt))} ~ ${dateFormatter.format(new Date(summary.lastRecordedAt))}`,
     ...(summary.urgentSymptoms.length > 0
       ? [`빨리 진료가 필요할 수 있는 증상: ${summary.urgentSymptoms.join(", ")}`]

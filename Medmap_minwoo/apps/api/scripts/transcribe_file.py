@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 from pathlib import Path
 import sys
 
-from app.services.stt_service import FasterWhisperService
+from app.services.stt_service import FasterWhisperService, resolve_hotwords
 
 
 def parse_args():
@@ -13,6 +13,11 @@ def parse_args():
     parser.add_argument("--model", default="turbo", help="Whisper 모델 이름")
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--compute-type", default=None)
+    parser.add_argument(
+        "--hotwords",
+        default=None,
+        help='Whisper 힌트 단어. "medical"이면 의료 용어 목록을 쓴다. 같은 파일로 켜고 끈 결과를 비교한다.',
+    )
     return parser.parse_args()
 
 
@@ -27,6 +32,7 @@ def main() -> int:
         model_name=args.model,
         device=args.device,
         compute_type=compute_type,
+        hotwords=resolve_hotwords(args.hotwords),
     )
     result = service.transcribe(args.audio.read_bytes(), "application/octet-stream")
     print(result.text)

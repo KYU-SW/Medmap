@@ -2,7 +2,8 @@ import { describe, expect, it } from "vitest";
 import { buildSymptomEpisodes } from "./symptomEpisodes";
 import { record, symptom } from "./testRecords";
 import { buildTimeline } from "./timeline";
-import { buildVisitSummary, visitSummaryText } from "./visitSummary";
+import { createBackup, parseBackup } from "./backup";
+import { buildVisitSummary, profileText, visitSummaryText } from "./visitSummary";
 
 describe("record quality", () => {
   it("keeps the stated onset date on the episode and in the summary text", () => {
@@ -47,5 +48,28 @@ describe("body sites", () => {
   it("does not repeat the default site of a symptom", () => {
     const records = [record("a", "2026-10-01T09:00:00.000Z", [symptom("두통", { body_site: "머리" })])];
     expect(buildSymptomEpisodes(records)[0].bodySite).toBeNull();
+  });
+});
+
+describe("basic patient information", () => {
+  const records = [record("a", "2026-10-01T09:00:00.000Z", [symptom("두통")])];
+
+  it("is summarized in one line, pregnancy only for women", () => {
+    expect(profileText({ age: 34, sex: "female", pregnancy: "no", smoking: "never", drinking: "yes" }))
+      .toBe("34세 / 여성 / 임신 아님 / 비흡연 / 음주");
+    expect(profileText({ sex: "male", pregnancy: "yes" })).toBe("남성");
+    expect(profileText({})).toBeNull();
+  });
+
+  it("appears in the visit summary text", () => {
+    const summary = buildVisitSummary(records, buildSymptomEpisodes(records), { age: 70, smoking: "former" })!;
+    expect(visitSummaryText(summary).split("\n")[1]).toBe("기본 정보: 70세 / 과거 흡연");
+  });
+
+  it("travels with the record group in a backup", () => {
+    const groups = [{ id: "group-1", name: "기록", createdAt: "2026-10-01T09:00:00.000Z", profile: { age: 34, sex: "female" as const } }];
+    expect(parseBackup(JSON.stringify(createBackup(groups, records))).groups).toEqual(groups);
+    const broken = [{ ...groups[0], profile: { age: -1 } }];
+    expect(() => parseBackup(JSON.stringify(createBackup(broken, records)))).toThrow("올바르지 않은 기록");
   });
 });

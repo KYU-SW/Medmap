@@ -75,3 +75,17 @@ file: 녹음 파일
 연속 대화에서 지연이 문제가 될 때 별도 단계로 구현한다.
 
 모델은 첫 실행 때 내려받으므로 인터넷 연결과 추가 저장공간이 필요하다.
+
+## 의료 용어 힌트 (2026-10-02, 기본 꺼짐)
+
+`MEDMAP_STT_HOTWORDS=medical`로 켜면 증상·약 이름 목록(`stt_service.py`의 `MEDICAL_HOTWORDS`)을
+Whisper `hotwords`로 넘긴다. 다른 글자를 넣으면 그 단어들을 그대로 쓴다. 비우면 꺼진다.
+
+효과는 아직 측정하지 않았다. 힌트가 오히려 오인식을 늘릴 수 있으므로, 실제 녹음 파일로 켜고 끈 결과를
+비교한 뒤에 기본값을 정한다.
+
+```powershell
+cd apps\api
+.\.venv\Scripts\python.exe -m scripts.transcribe_file <녹음 파일> --device cuda
+.\.venv\Scripts\python.exe -m scripts.transcribe_file <녹음 파일> --device cuda --hotwords medical
+```
