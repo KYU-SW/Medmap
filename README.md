@@ -29,13 +29,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_web_desktop.ps
 ```
 
 브라우저에서 `http://127.0.0.1:5173`을 열고 녹음한다. 모델·패키지·가상환경은
-저장소 안의 Git 제외 폴더에 모이며, 위치와 정리 순서는 `LOCAL_STORAGE_PLAN.md`에 기록한다.
+저장소 안의 Git 제외 폴더(`local-cache/`, `apps/api/.venv`, `apps/web/node_modules`)에 모인다.
 Windows에서 프로젝트 전용 NVIDIA 라이브러리가 설치되어 있으면 `run_api.ps1`이 GPU를
 자동으로 사용하고, 없으면 CPU로 실행한다.
 
 ## DDXPlus 첫 분석
 
-사용자가 제공한 프로젝트 기준안은 PROJECT_BRIEF.txt에 보존했다. 현재 범위는 데이터 확보·구조 확인·통계·부분 관찰 설계다.
+현재 범위는 데이터 확보·구조 확인·통계·부분 관찰 설계다.
 
 ## 실행 준비
 

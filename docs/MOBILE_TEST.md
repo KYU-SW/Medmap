@@ -29,4 +29,3 @@ Windows 방화벽 안내가 나타나면 개인 네트워크만 허용한다. �
 - 아이폰·안드로이드에서 `MedMap Local Test CA` 프로파일 또는 사용자 인증서를 삭제한다.
 - PC에서는 `local-cache/mobile-https/`를 삭제한다.
 - 인증서 개인키는 `local-cache/mobile-https/ca-key.pem`이며 Git에서 제외한다.
-- 프로젝트 전체 정리 때는 `LOCAL_STORAGE_PLAN.md`의 순서를 따른다.
