@@ -40,3 +40,13 @@ coverage/
 
 # graphify code-graph output (regenerate with /graphify .)
 /graphify-out/
+
+# AI agent rules, handoff notes and personal/local management docs: keep on this PC only
+/AGENTS.md
+/CLAUDE.md
+/HANDOFF.md
+/PROJECT_BRIEF.txt
+/TEAM_PROGRESS_REVIEW_2026-09-29.md
+/FILE_MANAGEMENT.md
+/LOCAL_STORAGE_PLAN.md
+/SETUP_GIT_AUTH.ps1
