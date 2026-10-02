@@ -1,0 +1,149 @@
+{
+  "schema_version": "medmap-clinical-summary-v1",
+  "chief_complaint": {
+    "question_id": "E_53",
+    "status": "POSITIVE",
+    "values": [],
+    "question_ko": "이번에 진료를 받으려는 이유와 관련해서 어딘가 통증이 있나요?",
+    "question_original": "Do you have pain related to the reason you're here today?",
+    "answer_ko": "있음",
+    "is_fallback": false,
+    "label_ko": "통증"
+  },
+  "confirmed_positive": [
+    {
+      "question_id": "E_100",
+      "status": "POSITIVE",
+      "values": [],
+      "question_ko": "기침이 나나요?",
+      "question_original": "Do you have a cough?",
+      "answer_ko": "있음",
+      "is_fallback": false
+    }
+  ],
+  "confirmed_negative": [
+    {
+      "question_id": "E_91",
+      "status": "NEGATIVE",
+      "values": [],
+      "question_ko": "열이 있나요? (느낌으로든 체온계로 잰 것이든)",
+      "question_original": "Do you have a fever (either felt or measured)?",
+      "answer_ko": "없음",
+      "is_fallback": false
+    }
+  ],
+  "confirmed_values": [
+    {
+      "question_id": "E_55",
+      "status": "VALUE",
+      "values": ["V_89"],
+      "question_ko": "통증이 어느 부위에 있나요?",
+      "question_original": "Where is the pain located?",
+      "answer_ko": "코 주변",
+      "is_fallback": false
+    },
+    {
+      "question_id": "E_56",
+      "status": "VALUE",
+      "values": ["2"],
+      "question_ko": "통증이 며칠째인가요?",
+      "question_original": "How many days have you had the pain?",
+      "answer_ko": "2",
+      "is_fallback": false
+    }
+  ],
+  "not_applicable": [
+    {
+      "question_id": "E_204",
+      "status": "NOT_APPLICABLE",
+      "values": ["V_10"],
+      "question_ko": "임신 중이신가요?",
+      "question_original": "Are you currently pregnant?",
+      "answer_ko": "해당 없음",
+      "is_fallback": false
+    }
+  ],
+  "unknown": [
+    {
+      "question_id": "E_300",
+      "status": "UNKNOWN",
+      "values": [],
+      "question_ko": "Do you have a rare peripheral tingling sensation?",
+      "question_original": "Do you have a rare peripheral tingling sensation?",
+      "answer_ko": "잘 모르겠어요",
+      "is_fallback": true
+    }
+  ],
+  "answered_questions": [
+    {
+      "question_id": "E_53",
+      "status": "POSITIVE",
+      "values": [],
+      "question_ko": "이번에 진료를 받으려는 이유와 관련해서 어딘가 통증이 있나요?",
+      "question_original": "Do you have pain related to the reason you're here today?",
+      "answer_ko": "있음",
+      "is_fallback": false
+    },
+    {
+      "question_id": "E_100",
+      "status": "POSITIVE",
+      "values": [],
+      "question_ko": "기침이 나나요?",
+      "question_original": "Do you have a cough?",
+      "answer_ko": "있음",
+      "is_fallback": false
+    },
+    {
+      "question_id": "E_91",
+      "status": "NEGATIVE",
+      "values": [],
+      "question_ko": "열이 있나요? (느낌으로든 체온계로 잰 것이든)",
+      "question_original": "Do you have a fever (either felt or measured)?",
+      "answer_ko": "없음",
+      "is_fallback": false
+    },
+    {
+      "question_id": "E_55",
+      "status": "VALUE",
+      "values": ["V_89"],
+      "question_ko": "통증이 어느 부위에 있나요?",
+      "question_original": "Where is the pain located?",
+      "answer_ko": "코 주변",
+      "is_fallback": false
+    },
+    {
+      "question_id": "E_56",
+      "status": "VALUE",
+      "values": ["2"],
+      "question_ko": "통증이 며칠째인가요?",
+      "question_original": "How many days have you had the pain?",
+      "answer_ko": "2",
+      "is_fallback": false
+    },
+    {
+      "question_id": "E_204",
+      "status": "NOT_APPLICABLE",
+      "values": ["V_10"],
+      "question_ko": "임신 중이신가요?",
+      "question_original": "Are you currently pregnant?",
+      "answer_ko": "해당 없음",
+      "is_fallback": false
+    },
+    {
+      "question_id": "E_300",
+      "status": "UNKNOWN",
+      "values": [],
+      "question_ko": "Do you have a rare peripheral tingling sensation?",
+      "question_original": "Do you have a rare peripheral tingling sensation?",
+      "answer_ko": "잘 모르겠어요",
+      "is_fallback": true
+    }
+  ],
+  "diagnosis_candidates": [
+    { "name": "Anemia", "display_name": "Anemia", "is_fallback": true, "probability": 0.23933228850364685 },
+    { "name": "URTI", "display_name": "URTI", "is_fallback": true, "probability": 0.17142263054847717 },
+    { "name": "Chronic rhinosinusitis", "display_name": "Chronic rhinosinusitis", "is_fallback": true, "probability": 0.08021262288093567 }
+  ],
+  "questions_used": 3,
+  "disclaimer": "현재까지 입력하고 확인한 내용을 진료 전 참고용으로 정리한 것입니다.\n진단 결과가 아니며, 진단에는 의료진의 평가가 필요합니다."
+}

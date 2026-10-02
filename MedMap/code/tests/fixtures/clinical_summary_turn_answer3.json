@@ -1,0 +1,104 @@
+{
+ "schema_version": "medmap-turn-v1",
+ "diagnoses": [
+  {
+   "name": "URTI",
+   "probability": 0.3879264295101166
+  },
+  {
+   "name": "PSVT",
+   "probability": 0.078973688185215
+  },
+  {
+   "name": "HIV (initial infection)",
+   "probability": 0.078282430768013
+  }
+ ],
+ "diagnoses_before": [
+  {
+   "name": "Anemia",
+   "probability": 0.2837451696395874
+  },
+  {
+   "name": "URTI",
+   "probability": 0.2550954818725586
+  },
+  {
+   "name": "PSVT",
+   "probability": 0.06545351445674896
+  }
+ ],
+ "next_question": null,
+ "stop_reason": "MAX_QUESTIONS",
+ "n_asked": 7,
+ "questions_asked_in_session": 3,
+ "model_context": "k3",
+ "model_context_match": false,
+ "session": {
+  "schema_version": "medmap-session-v1",
+  "patient_state": {
+   "age": 45,
+   "sex": "M",
+   "model_context": "k3",
+   "initial_evidence": "E_53",
+   "answers": [
+    {
+     "question_id": "E_53",
+     "kind": "POSITIVE",
+     "value": null
+    },
+    {
+     "question_id": "E_55",
+     "kind": "VALUE",
+     "value": [
+      "V_89"
+     ]
+    },
+    {
+     "question_id": "E_56",
+     "kind": "VALUE",
+     "value": [
+      "2"
+     ]
+    },
+    {
+     "question_id": "E_204",
+     "kind": "VALUE",
+     "value": [
+      "V_10"
+     ]
+    },
+    {
+     "question_id": "E_54",
+     "kind": "VALUE",
+     "value": [
+      "V_11"
+     ]
+    },
+    {
+     "question_id": "E_57",
+     "kind": "VALUE",
+     "value": [
+      "V_123"
+     ]
+    },
+    {
+     "question_id": "E_146",
+     "kind": "NEGATIVE",
+     "value": null
+    }
+   ],
+   "asked_question_ids": [
+    "E_53",
+    "E_55",
+    "E_56",
+    "E_204",
+    "E_54",
+    "E_57",
+    "E_146"
+   ],
+   "n_additional_questions": 6
+  }
+ },
+ "max_questions": 3
+}

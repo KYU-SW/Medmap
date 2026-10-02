@@ -1,0 +1,14 @@
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.env
+logs/
+# 원본 데이터는 올리지 않는다. 예외: 서버 실행에 필요한 DDXPlus 질문 사전(CC BY 4.0)
+/MedMap/code/data/*
+!/MedMap/code/data/ddxplus/
+/MedMap/code/data/ddxplus/*
+!/MedMap/code/data/ddxplus/en/
+/MedMap/code/data/ddxplus/en/*
+!/MedMap/code/data/ddxplus/en/release_evidences.json
+!/MedMap/code/data/ddxplus/en/NOTICE.md

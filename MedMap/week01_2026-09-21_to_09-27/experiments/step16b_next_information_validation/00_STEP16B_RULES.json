@@ -1,0 +1,220 @@
+{
+ "version": "STEP16B_V2_SAFE_SEMANTICS",
+ "created": "2026-09-23",
+ "supersedes": "STEP16A prereg V1 (answer semantics default-fill)",
+ "forbidden_paths": [
+  "data/ddxplus/en/release_validate_patients",
+  "data/ddxplus/en/release_test_patients",
+  "data/ddxplus/en/release_conditions.json"
+ ],
+ "source": {
+  "file": "data/ddxplus/en/release_train_patients",
+  "rows": 1025602
+ },
+ "split": {
+  "key": "sha256(f\"{row_index}|{AGE}|{SEX}|{PATHOLOGY}|{EVIDENCES}\")",
+  "holdout_rule": "int(hex[:8],16)%10<2",
+  "holdout_name": "STEP16B_HOLDOUT",
+  "train_name": "STEP16B_TRAIN",
+  "holdout_locked_until": "single evaluation run after freeze"
+ },
+ "answer_semantics": {
+  "binary": "token present=POS, absent=NEG (closed-world)",
+  "gated_cm": {
+   "parent_unasked": "not a candidate",
+   "parent_negative": "not a candidate / NA",
+   "parent_positive_with_token": "explicit value",
+   "parent_positive_without_token": "UNSAFE — default generation forbidden, raise"
+  },
+  "toplevel_cm_absent": "UNSAFE",
+  "parent_child_source": "release_evidences.json code_question, re-derived at runtime"
+ },
+ "excluded_questions": [
+  "E_134",
+  "E_152"
+ ],
+ "excluded_reason": "TRAIN audit parent-positive missing child value: E_134 11538, E_152 150",
+ "reintroduction": "forbidden after seeing results",
+ "view_protocol": {
+  "k": [
+   3,
+   5,
+   10
+  ],
+  "initial": "INITIAL_EVIDENCE revealed first and excluded from k draws",
+  "sampling": "uniform over currently eligible safe questions, sequential, no repeat",
+  "rng_key": "(SPLIT_ID, seed, row_index)",
+  "SPLIT_ID": {
+   "step16b_train": 11,
+   "step16b_holdout": 12
+  },
+  "train_seed": 42,
+  "holdout_seeds": [
+   42,
+   43,
+   44
+  ]
+ },
+ "model": {
+  "estimator": "LogisticRegression",
+  "C": 1.0,
+  "solver": "lbfgs",
+  "max_iter": 300,
+  "random_state": 42,
+  "per_k": true,
+  "trained_on": "STEP16B_TRAIN only",
+  "retrain_after_question": false,
+  "reuse_step16a_models": false
+ },
+ "ig": {
+  "alpha": 1.0,
+  "log_base": 2,
+  "estimated_on": "STEP16B_TRAIN only",
+  "formula": "IG(q)=H(post)-sum_a P(a)H(post_a)",
+  "tie": "ascending evidence id",
+  "na_count_rule": "n_d - patients_with_token - parent_positive_missing; parent_positive_missing must be 0 for included questions"
+ },
+ "pools": {
+  "SAFE_FULL_POOL": "unasked AND currently eligible (visible parent POS) AND not excluded",
+  "SAFE_BINARY_POOL": "SAFE_FULL_POOL AND data_type==B",
+  "identical_pool_for_random_and_ig": true,
+  "disease_symptom_restriction": false
+ },
+ "cohort": {
+  "descriptive": "full HOLDOUT",
+  "simulation": "SIM_COHORT = first 10000 holdout rows by ascending split key hex",
+  "fixed_before_results": true
+ },
+ "selectors": {
+  "primary": [
+   "RANDOM",
+   "INTERNAL_IG"
+  ],
+  "secondary": [
+   "PROFILE_FACT_ONLY",
+   "BINARY_ONLY_RANDOM",
+   "BINARY_ONLY_IG"
+  ],
+  "random_seeds": [
+   1000,
+   1001,
+   1002,
+   1003,
+   1004,
+   1005,
+   1006,
+   1007,
+   1008,
+   1009,
+   1010,
+   1011,
+   1012,
+   1013,
+   1014,
+   1015,
+   1016,
+   1017,
+   1018,
+   1019,
+   1020,
+   1021,
+   1022,
+   1023,
+   1024,
+   1025,
+   1026,
+   1027,
+   1028,
+   1029,
+   1030,
+   1031,
+   1032,
+   1033,
+   1034,
+   1035,
+   1036,
+   1037,
+   1038,
+   1039,
+   1040,
+   1041,
+   1042,
+   1043,
+   1044,
+   1045,
+   1046,
+   1047,
+   1048,
+   1049
+  ],
+  "binary_random_seeds": [
+   1000,
+   1001,
+   1002,
+   1003,
+   1004,
+   1005,
+   1006,
+   1007,
+   1008,
+   1009
+  ],
+  "random_aggregation": "mean over draws per patient/view before pairing",
+  "selector_input_keys": [
+   "visible",
+   "posterior",
+   "top",
+   "pool",
+   "seed"
+  ]
+ },
+ "profile": {
+  "table": "exp/step16a_next_information/04b_pair_contrast_table_primary.csv",
+  "role": "secondary reference only, not a success criterion",
+  "population": "top1/top2 is a pilot pair",
+  "abstain": "no priority>0 candidate"
+ },
+ "endpoints": {
+  "primary": "RECOVERY@1Q on initially wrong, paired INTERNAL_IG - RANDOM",
+  "secondary": [
+   "RECOVERY@3Q",
+   "CORRECT_TO_WRONG@1Q",
+   "CORRECT_TO_WRONG@3Q",
+   "initial/after accuracy",
+   "truth rank mean/median",
+   "top3",
+   "net accuracy change",
+   "abstain rate",
+   "mean questions",
+   "binary-only sensitivity",
+   "profile reference"
+  ]
+ },
+ "bootstrap": {
+  "n": 1000,
+  "seed": 42,
+  "unit": "patient cluster",
+  "vectorized": true,
+  "reports": [
+   "IG-RANDOM",
+   "BINARY_IG-BINARY_RANDOM"
+  ]
+ },
+ "verdict_rules": {
+  "NEXT_INFORMATION_ENGINE_GO": "IG>RANDOM AND paired 95% CI lower>0 AND binary-only point estimate>0 AND IG net accuracy change>=0",
+  "NEXT_INFORMATION_ENGINE_PARTIAL_GO": "CI lower>0 but binary-only direction or net accuracy fails",
+  "NEXT_INFORMATION_ENGINE_NO_GO": "CI includes 0 or IG<=RANDOM",
+  "INVALID": "any invalid condition"
+ },
+ "invalid_conditions": [
+  "original VALIDATION or TEST read",
+  "holdout used for training/IG/rule decisions",
+  "preregistration SHA mismatch or post-run edit",
+  "UNSAFE state on an included question",
+  "hidden answer accessed before selection",
+  "step1 pool mismatch between RANDOM and IG",
+  "repeated question",
+  "post-hoc rule/exclusion/population change"
+ ],
+ "step16a_status": "VALID_UNDER_PREREG_V1 BUT ANSWER_SEMANTICS_SENSITIVITY_UNRESOLVED (preserved, not modified)"
+}

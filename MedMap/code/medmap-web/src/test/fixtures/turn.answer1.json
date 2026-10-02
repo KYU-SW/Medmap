@@ -1,0 +1,1265 @@
+{
+ "schema_version": "medmap-turn-v1",
+ "diagnoses": [
+  {
+   "name": "Anemia",
+   "probability": 0.23933228850364685
+  },
+  {
+   "name": "URTI",
+   "probability": 0.17142263054847717
+  },
+  {
+   "name": "Chronic rhinosinusitis",
+   "probability": 0.08021262288093567
+  }
+ ],
+ "diagnoses_before": [
+  {
+   "name": "Anemia",
+   "probability": 0.23933228850364685
+  },
+  {
+   "name": "URTI",
+   "probability": 0.17142263054847717
+  },
+  {
+   "name": "Chronic rhinosinusitis",
+   "probability": 0.08021262288093567
+  }
+ ],
+ "next_question": {
+  "question_id": "E_57",
+  "question_text": "Does the pain radiate to another location?",
+  "answer_type": "MULTI_CHOICE",
+  "answer_type_raw": "MULTI",
+  "possible_values": [
+   "V_123",
+   "V_14",
+   "V_15",
+   "V_16",
+   "V_17",
+   "V_18",
+   "V_19",
+   "V_20",
+   "V_21",
+   "V_22",
+   "V_23",
+   "V_24",
+   "V_25",
+   "V_26",
+   "V_27",
+   "V_28",
+   "V_29",
+   "V_30",
+   "V_31",
+   "V_32",
+   "V_33",
+   "V_34",
+   "V_35",
+   "V_36",
+   "V_37",
+   "V_38",
+   "V_39",
+   "V_40",
+   "V_41",
+   "V_42",
+   "V_43",
+   "V_44",
+   "V_45",
+   "V_46",
+   "V_47",
+   "V_48",
+   "V_49",
+   "V_50",
+   "V_51",
+   "V_52",
+   "V_53",
+   "V_54",
+   "V_55",
+   "V_56",
+   "V_57",
+   "V_58",
+   "V_59",
+   "V_60",
+   "V_61",
+   "V_62",
+   "V_63",
+   "V_64",
+   "V_65",
+   "V_66",
+   "V_67",
+   "V_68",
+   "V_69",
+   "V_70",
+   "V_72",
+   "V_73",
+   "V_74",
+   "V_75",
+   "V_76",
+   "V_77",
+   "V_78",
+   "V_79",
+   "V_80",
+   "V_81",
+   "V_82",
+   "V_83",
+   "V_84",
+   "V_85",
+   "V_87",
+   "V_88",
+   "V_89",
+   "V_90",
+   "V_91",
+   "V_92",
+   "V_93",
+   "V_94",
+   "V_95",
+   "V_96",
+   "V_97",
+   "V_98",
+   "V_99",
+   "V_100",
+   "V_101",
+   "V_102",
+   "V_103",
+   "V_104",
+   "V_105",
+   "V_106",
+   "V_108",
+   "V_109",
+   "V_110",
+   "V_111",
+   "V_113",
+   "V_114",
+   "V_115",
+   "V_116",
+   "V_117",
+   "V_118",
+   "V_119",
+   "V_120",
+   "V_121",
+   "V_122",
+   "V_124",
+   "V_125",
+   "V_126",
+   "V_127",
+   "V_128",
+   "V_129",
+   "V_130",
+   "V_131",
+   "V_132",
+   "V_133",
+   "V_134",
+   "V_135",
+   "V_136",
+   "V_137",
+   "V_139",
+   "V_140",
+   "V_141",
+   "V_142",
+   "V_143",
+   "V_144",
+   "V_145",
+   "V_146",
+   "V_147",
+   "V_148",
+   "V_149",
+   "V_150",
+   "V_151",
+   "V_152",
+   "V_153",
+   "V_155",
+   "V_158",
+   "V_159",
+   "V_160",
+   "V_162",
+   "V_163",
+   "V_164",
+   "V_165",
+   "V_166",
+   "V_167",
+   "V_168",
+   "V_169",
+   "V_170",
+   "V_171",
+   "V_172",
+   "V_173",
+   "V_174",
+   "V_175",
+   "V_176",
+   "V_177",
+   "V_178",
+   "V_185",
+   "V_186",
+   "V_187",
+   "V_188",
+   "V_189",
+   "V_190",
+   "V_194",
+   "V_195",
+   "V_197"
+  ],
+  "information_gain": 0.9891129256183269,
+  "explanation": null,
+  "question_ko": "통증이 다른 부위로 퍼지나요? (해당하는 곳을 모두 고르세요)",
+  "question_original": "Does the pain radiate to another location?",
+  "choices": [
+   {
+    "value": "V_123",
+    "label": "없음",
+    "original_label": "nowhere",
+    "is_fallback": false
+   },
+   {
+    "value": "V_14",
+    "label": "엉덩뼈 날개(오른쪽)",
+    "original_label": "iliac wing(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_15",
+    "label": "엉덩뼈 날개(왼쪽)",
+    "original_label": "iliac wing(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_16",
+    "label": "사타구니(오른쪽)",
+    "original_label": "groin(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_17",
+    "label": "사타구니(왼쪽)",
+    "original_label": "groin(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_18",
+    "label": "겨드랑이(오른쪽)",
+    "original_label": "axilla(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_19",
+    "label": "겨드랑이(왼쪽)",
+    "original_label": "axilla(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_20",
+    "label": "편도(오른쪽)",
+    "original_label": "tonsil(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_21",
+    "label": "편도(왼쪽)",
+    "original_label": "tonsil(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_22",
+    "label": "항문",
+    "original_label": "anus",
+    "is_fallback": false
+   },
+   {
+    "value": "V_23",
+    "label": "발목 뒤(오른쪽)",
+    "original_label": "posterior aspect of the ankle(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_24",
+    "label": "발목 뒤(왼쪽)",
+    "original_label": "posterior aspect of the ankle(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_25",
+    "label": "뒤통수",
+    "original_label": "back of head",
+    "is_fallback": false
+   },
+   {
+    "value": "V_26",
+    "label": "뒷목",
+    "original_label": "back of the neck",
+    "is_fallback": false
+   },
+   {
+    "value": "V_27",
+    "label": "아래팔(오른쪽)",
+    "original_label": "forearm(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_28",
+    "label": "아래팔(왼쪽)",
+    "original_label": "forearm(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_29",
+    "label": "아래쪽 가슴",
+    "original_label": "lower chest",
+    "is_fallback": false
+   },
+   {
+    "value": "V_30",
+    "label": "위팔 앞쪽(이두근)(오른쪽)",
+    "original_label": "biceps(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_31",
+    "label": "위팔 앞쪽(이두근)(왼쪽)",
+    "original_label": "biceps(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_32",
+    "label": "입",
+    "original_label": "mouth",
+    "is_fallback": false
+   },
+   {
+    "value": "V_33",
+    "label": "목젖뼈(갑상연골)",
+    "original_label": "thyroid cartilage",
+    "is_fallback": false
+   },
+   {
+    "value": "V_34",
+    "label": "발목(오른쪽)",
+    "original_label": "ankle(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_35",
+    "label": "발목(왼쪽)",
+    "original_label": "ankle(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_36",
+    "label": "음핵",
+    "original_label": "clitoris",
+    "is_fallback": false
+   },
+   {
+    "value": "V_37",
+    "label": "꼬리뼈",
+    "original_label": "coccyx",
+    "is_fallback": false
+   },
+   {
+    "value": "V_38",
+    "label": "목뼈",
+    "original_label": "cervical spine",
+    "is_fallback": false
+   },
+   {
+    "value": "V_39",
+    "label": "등뼈",
+    "original_label": "thoracic spine",
+    "is_fallback": false
+   },
+   {
+    "value": "V_40",
+    "label": "허리뼈",
+    "original_label": "lumbar spine",
+    "is_fallback": false
+   },
+   {
+    "value": "V_41",
+    "label": "입꼬리(오른쪽)",
+    "original_label": "commissure(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_42",
+    "label": "입꼬리(왼쪽)",
+    "original_label": "commissure(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_43",
+    "label": "발 바깥쪽(오른쪽)",
+    "original_label": "lateral side of the foot(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_44",
+    "label": "발 바깥쪽(왼쪽)",
+    "original_label": "lateral side of the foot(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_45",
+    "label": "팔꿈치(오른쪽)",
+    "original_label": "elbow(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_46",
+    "label": "팔꿈치(왼쪽)",
+    "original_label": "elbow(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_47",
+    "label": "무릎 뒤 오금(오른쪽)",
+    "original_label": "popliteal fossa(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_48",
+    "label": "무릎 뒤 오금(왼쪽)",
+    "original_label": "popliteal fossa(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_49",
+    "label": "엉덩뼈 능선(오른쪽)",
+    "original_label": "iliac crest(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_50",
+    "label": "엉덩뼈 능선(왼쪽)",
+    "original_label": "iliac crest(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_51",
+    "label": "허벅지(오른쪽)",
+    "original_label": "thigh(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_52",
+    "label": "허벅지(왼쪽)",
+    "original_label": "thigh(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_53",
+    "label": "목 옆(오른쪽)",
+    "original_label": "side of the neck(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_54",
+    "label": "목 옆(왼쪽)",
+    "original_label": "side of the neck(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_55",
+    "label": "가슴 옆(오른쪽)",
+    "original_label": "side of the chest(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_56",
+    "label": "가슴 옆(왼쪽)",
+    "original_label": "side of the chest(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_57",
+    "label": "아랫니(오른쪽)",
+    "original_label": "lower teeth(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_58",
+    "label": "아랫니(왼쪽)",
+    "original_label": "lower teeth(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_59",
+    "label": "윗니(오른쪽)",
+    "original_label": "upper teeth(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_60",
+    "label": "윗니(왼쪽)",
+    "original_label": "upper teeth(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_61",
+    "label": "혀 위",
+    "original_label": "above the tongue",
+    "is_fallback": false
+   },
+   {
+    "value": "V_62",
+    "label": "정수리",
+    "original_label": "top of the head",
+    "is_fallback": false
+   },
+   {
+    "value": "V_63",
+    "label": "약지손가락(오른쪽)",
+    "original_label": "finger (ring finger)(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_64",
+    "label": "약지손가락(왼쪽)",
+    "original_label": "finger (ring finger)(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_65",
+    "label": "새끼손가락(오른쪽)",
+    "original_label": "finger (little finger)(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_66",
+    "label": "새끼손가락(왼쪽)",
+    "original_label": "finger (little finger)(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_67",
+    "label": "검지손가락(오른쪽)",
+    "original_label": "finger (index)(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_68",
+    "label": "검지손가락(왼쪽)",
+    "original_label": "finger (index)(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_69",
+    "label": "중지손가락(오른쪽)",
+    "original_label": "finger (middle)(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_70",
+    "label": "중지손가락(왼쪽)",
+    "original_label": "finger (middle)(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_72",
+    "label": "발등(오른쪽)",
+    "original_label": "dorsal aspect of the foot(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_73",
+    "label": "발등(왼쪽)",
+    "original_label": "dorsal aspect of the foot(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_74",
+    "label": "손목 바깥쪽(오른쪽)",
+    "original_label": "dorsal aspect of the wrist(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_75",
+    "label": "손목 바깥쪽(왼쪽)",
+    "original_label": "dorsal aspect of the wrist(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_76",
+    "label": "손등(오른쪽)",
+    "original_label": "dorsal aspect of the hand(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_77",
+    "label": "손등(왼쪽)",
+    "original_label": "dorsal aspect of the hand(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_78",
+    "label": "아래팔 안쪽(오른쪽)",
+    "original_label": "palmar side of the forearm(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_79",
+    "label": "아래팔 안쪽(왼쪽)",
+    "original_label": "palmar side of the forearm(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_80",
+    "label": "손목 안쪽(오른쪽)",
+    "original_label": "palmar face of the wrist(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_81",
+    "label": "손목 안쪽(왼쪽)",
+    "original_label": "palmar face of the wrist(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_82",
+    "label": "엉덩이(오른쪽)",
+    "original_label": "buttock(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_83",
+    "label": "엉덩이(왼쪽)",
+    "original_label": "buttock(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_84",
+    "label": "옆구리(오른쪽)",
+    "original_label": "flank(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_85",
+    "label": "옆구리(왼쪽)",
+    "original_label": "flank(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_87",
+    "label": "아랫배 옆쪽(오른쪽)",
+    "original_label": "iliac fossa(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_88",
+    "label": "아랫배 옆쪽(왼쪽)",
+    "original_label": "iliac fossa(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_89",
+    "label": "이마",
+    "original_label": "forehead",
+    "is_fallback": false
+   },
+   {
+    "value": "V_90",
+    "label": "아래 잇몸",
+    "original_label": "lower gum",
+    "is_fallback": false
+   },
+   {
+    "value": "V_91",
+    "label": "위 잇몸",
+    "original_label": "upper gum",
+    "is_fallback": false
+   },
+   {
+    "value": "V_92",
+    "label": "무릎(오른쪽)",
+    "original_label": "knee(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_93",
+    "label": "무릎(왼쪽)",
+    "original_label": "knee(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_94",
+    "label": "귀두",
+    "original_label": "glans",
+    "is_fallback": false
+   },
+   {
+    "value": "V_95",
+    "label": "대음순(오른쪽)",
+    "original_label": "labia majora(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_96",
+    "label": "대음순(왼쪽)",
+    "original_label": "labia majora(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_97",
+    "label": "엄지발가락(오른쪽)",
+    "original_label": "big toe(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_98",
+    "label": "엄지발가락(왼쪽)",
+    "original_label": "big toe(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_99",
+    "label": "고관절(엉덩관절)(오른쪽)",
+    "original_label": "hip(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_100",
+    "label": "고관절(엉덩관절)(왼쪽)",
+    "original_label": "hip(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_101",
+    "label": "위쪽 가슴",
+    "original_label": "upper chest",
+    "is_fallback": false
+   },
+   {
+    "value": "V_102",
+    "label": "처녀막",
+    "original_label": "hymen",
+    "is_fallback": false
+   },
+   {
+    "value": "V_103",
+    "label": "갈비뼈 아래(오른쪽)",
+    "original_label": "hypochondrium(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_104",
+    "label": "갈비뼈 아래(왼쪽)",
+    "original_label": "hypochondrium(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_105",
+    "label": "허벅지 뒤쪽(햄스트링)(오른쪽)",
+    "original_label": "ischio jambier(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_106",
+    "label": "허벅지 뒤쪽(햄스트링)(왼쪽)",
+    "original_label": "ischio jambier(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_108",
+    "label": "뺨(오른쪽)",
+    "original_label": "cheek(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_109",
+    "label": "뺨(왼쪽)",
+    "original_label": "cheek(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_110",
+    "label": "볼 안쪽(오른쪽)",
+    "original_label": "internal cheek(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_111",
+    "label": "볼 안쪽(왼쪽)",
+    "original_label": "internal cheek(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_113",
+    "label": "콩팥 부위(옆구리 뒤)(오른쪽)",
+    "original_label": "renal fossa(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_114",
+    "label": "콩팥 부위(옆구리 뒤)(왼쪽)",
+    "original_label": "renal fossa(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_115",
+    "label": "목젖",
+    "original_label": "uvula",
+    "is_fallback": false
+   },
+   {
+    "value": "V_116",
+    "label": "아랫입술(오른쪽)",
+    "original_label": "bottom lip(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_117",
+    "label": "윗입술(오른쪽)",
+    "original_label": "upper lip(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_118",
+    "label": "턱끝",
+    "original_label": "chin",
+    "is_fallback": false
+   },
+   {
+    "value": "V_119",
+    "label": "종아리(오른쪽)",
+    "original_label": "calf(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_120",
+    "label": "종아리(왼쪽)",
+    "original_label": "calf(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_121",
+    "label": "턱",
+    "original_label": "jaw",
+    "is_fallback": false
+   },
+   {
+    "value": "V_122",
+    "label": "코",
+    "original_label": "nose",
+    "is_fallback": false
+   },
+   {
+    "value": "V_124",
+    "label": "뒤통수 아래",
+    "original_label": "occiput",
+    "is_fallback": false
+   },
+   {
+    "value": "V_125",
+    "label": "눈(오른쪽)",
+    "original_label": "eye(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_126",
+    "label": "눈(왼쪽)",
+    "original_label": "eye(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_127",
+    "label": "어깨뼈(오른쪽)",
+    "original_label": "scapula(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_128",
+    "label": "어깨뼈(왼쪽)",
+    "original_label": "scapula(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_129",
+    "label": "귀(오른쪽)",
+    "original_label": "ear(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_130",
+    "label": "귀(왼쪽)",
+    "original_label": "ear(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_131",
+    "label": "첫째 발가락(오른쪽)",
+    "original_label": "toe (1)(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_132",
+    "label": "첫째 발가락(왼쪽)",
+    "original_label": "toe (1)(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_133",
+    "label": "둘째 발가락(오른쪽)",
+    "original_label": "toe (2)(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_134",
+    "label": "둘째 발가락(왼쪽)",
+    "original_label": "toe (2)(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_135",
+    "label": "셋째 발가락(오른쪽)",
+    "original_label": "toe (3)(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_136",
+    "label": "셋째 발가락(왼쪽)",
+    "original_label": "toe (3)(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_137",
+    "label": "입천장",
+    "original_label": "palace",
+    "is_fallback": false
+   },
+   {
+    "value": "V_139",
+    "label": "질벽",
+    "original_label": "vaginal wall",
+    "is_fallback": false
+   },
+   {
+    "value": "V_140",
+    "label": "질벽(오른쪽)",
+    "original_label": "vaginal wall(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_141",
+    "label": "질벽(왼쪽)",
+    "original_label": "vaginal wall(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_142",
+    "label": "손바닥(오른쪽)",
+    "original_label": "palm(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_143",
+    "label": "손바닥(왼쪽)",
+    "original_label": "palm(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_144",
+    "label": "넷째 발가락(오른쪽)",
+    "original_label": "little toe (4)(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_145",
+    "label": "넷째 발가락(왼쪽)",
+    "original_label": "little toe (4)(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_146",
+    "label": "소음순(오른쪽)",
+    "original_label": "labia minora(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_147",
+    "label": "소음순(왼쪽)",
+    "original_label": "labia minora(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_148",
+    "label": "인두(목구멍)",
+    "original_label": "pharynx",
+    "is_fallback": false
+   },
+   {
+    "value": "V_149",
+    "label": "발바닥(오른쪽)",
+    "original_label": "sole(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_150",
+    "label": "발바닥(왼쪽)",
+    "original_label": "sole(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_151",
+    "label": "엄지손가락(오른쪽)",
+    "original_label": "thumb(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_152",
+    "label": "엄지손가락(왼쪽)",
+    "original_label": "thumb(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_153",
+    "label": "치골",
+    "original_label": "pubis",
+    "is_fallback": false
+   },
+   {
+    "value": "V_155",
+    "label": "음경",
+    "original_label": "penis",
+    "is_fallback": false
+   },
+   {
+    "value": "V_158",
+    "label": "음낭",
+    "original_label": "scrotum",
+    "is_fallback": false
+   },
+   {
+    "value": "V_159",
+    "label": "유방(오른쪽)",
+    "original_label": "breast(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_160",
+    "label": "유방(왼쪽)",
+    "original_label": "breast(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_162",
+    "label": "혀 아래",
+    "original_label": "under the tongue",
+    "is_fallback": false
+   },
+   {
+    "value": "V_163",
+    "label": "턱 아래",
+    "original_label": "under the jaw",
+    "is_fallback": false
+   },
+   {
+    "value": "V_164",
+    "label": "발뒤꿈치(오른쪽)",
+    "original_label": "heel(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_165",
+    "label": "발뒤꿈치(왼쪽)",
+    "original_label": "heel(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_166",
+    "label": "관자놀이(오른쪽)",
+    "original_label": "temple(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_167",
+    "label": "관자놀이(왼쪽)",
+    "original_label": "temple(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_168",
+    "label": "고환(오른쪽)",
+    "original_label": "testicle(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_169",
+    "label": "고환(왼쪽)",
+    "original_label": "testicle(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_170",
+    "label": "등쪽 가슴(오른쪽)",
+    "original_label": "posterior chest wall(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_171",
+    "label": "등쪽 가슴(왼쪽)",
+    "original_label": "posterior chest wall(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_172",
+    "label": "정강이(오른쪽)",
+    "original_label": "tibia(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_173",
+    "label": "정강이(왼쪽)",
+    "original_label": "tibia(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_174",
+    "label": "기관(숨관)",
+    "original_label": "trachea",
+    "is_fallback": false
+   },
+   {
+    "value": "V_175",
+    "label": "어깨 위 근육(승모근)(오른쪽)",
+    "original_label": "trapezius(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_176",
+    "label": "어깨 위 근육(승모근)(왼쪽)",
+    "original_label": "trapezius(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_177",
+    "label": "위팔 뒤쪽(삼두근)(오른쪽)",
+    "original_label": "triceps(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_178",
+    "label": "위팔 뒤쪽(삼두근)(왼쪽)",
+    "original_label": "triceps(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_185",
+    "label": "요도",
+    "original_label": "urethra",
+    "is_fallback": false
+   },
+   {
+    "value": "V_186",
+    "label": "질",
+    "original_label": "vagina",
+    "is_fallback": false
+   },
+   {
+    "value": "V_187",
+    "label": "배",
+    "original_label": "belly",
+    "is_fallback": false
+   },
+   {
+    "value": "V_188",
+    "label": "입술 붉은 부분(오른쪽)",
+    "original_label": "vermilion(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_189",
+    "label": "입술 붉은 부분(왼쪽)",
+    "original_label": "vermilion(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_190",
+    "label": "질 어귀",
+    "original_label": "vulval vestibule",
+    "is_fallback": false
+   },
+   {
+    "value": "V_194",
+    "label": "어깨(오른쪽)",
+    "original_label": "shoulder(R)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_195",
+    "label": "어깨(왼쪽)",
+    "original_label": "shoulder(L)",
+    "is_fallback": false
+   },
+   {
+    "value": "V_197",
+    "label": "명치",
+    "original_label": "epigastric",
+    "is_fallback": false
+   },
+   {
+    "value": null,
+    "label": "잘 모르겠어요",
+    "original_label": null,
+    "is_fallback": false
+   }
+  ],
+  "is_fallback": false
+ },
+ "stop_reason": null,
+ "n_asked": 5,
+ "questions_asked_in_session": 1,
+ "model_context": "k3",
+ "model_context_match": false,
+ "session": {
+  "schema_version": "medmap-session-v1",
+  "patient_state": {
+   "age": 45,
+   "sex": "M",
+   "model_context": "k3",
+   "initial_evidence": "E_53",
+   "answers": [
+    {
+     "question_id": "E_53",
+     "kind": "POSITIVE",
+     "value": null
+    },
+    {
+     "question_id": "E_55",
+     "kind": "VALUE",
+     "value": [
+      "V_89"
+     ]
+    },
+    {
+     "question_id": "E_56",
+     "kind": "VALUE",
+     "value": [
+      "2"
+     ]
+    },
+    {
+     "question_id": "E_204",
+     "kind": "VALUE",
+     "value": [
+      "V_10"
+     ]
+    },
+    {
+     "question_id": "E_54",
+     "kind": "VALUE",
+     "value": [
+      "V_11"
+     ]
+    }
+   ],
+   "asked_question_ids": [
+    "E_53",
+    "E_55",
+    "E_56",
+    "E_204",
+    "E_54"
+   ],
+   "n_additional_questions": 4
+  }
+ },
+ "max_questions": 3
+}

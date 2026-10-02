@@ -1,0 +1,11 @@
+# MedMap 백엔드(엔진 + API) 실행·테스트에 필요한 패키지. 버전은 개발 환경 기준(docs/environment_ai_env_pip_freeze_2026-09-21.txt).
+# scikit-learn 버전은 학습된 model_k*.pkl 과 맞아야 한다.
+fastapi==0.141.1
+uvicorn[standard]==0.53.0
+pydantic==2.13.4
+numpy==2.1.2
+scipy==1.17.1
+pandas==3.0.3
+scikit-learn==1.9.0
+# 테스트용
+httpx==0.28.1

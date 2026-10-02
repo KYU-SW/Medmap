@@ -1,0 +1,785 @@
+{
+ "schema": "medmap.initial_evidence_ko/1",
+ "source": "release_train_patients INITIAL_EVIDENCE 고유값 96개(TRAIN 1,025,602명 전수 집계, 2026-09-25). STEP17A dev 집계와 같은 집합",
+ "note": "표시·검색용 static presentation. 매퍼 alias가 아니다(medmap/intake/ 무변경). 신규 69개 문구 사용자 검수 완료(2026-09-25: E_150·E_202·E_13 사용자 확정, E_188 직역 정정 승인)",
+ "frequent_ids": [
+  "E_53",
+  "E_66",
+  "E_201",
+  "E_181",
+  "E_91",
+  "E_129",
+  "E_45",
+  "E_151"
+ ],
+ "items": [
+  {
+   "evidence_id": "E_53",
+   "train_rank": 1,
+   "train_count": 188480,
+   "label_ko": "통증",
+   "detail_ko": "이번에 진료를 받으려는 이유와 관련해서 어딘가 통증이 있나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_66",
+   "train_rank": 2,
+   "train_count": 86081,
+   "label_ko": "숨이 참",
+   "detail_ko": "숨이 차거나 숨쉬기가 뚜렷하게 힘든가요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_201",
+   "train_rank": 3,
+   "train_count": 75741,
+   "label_ko": "기침",
+   "detail_ko": "기침이 있나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_181",
+   "train_rank": 4,
+   "train_count": 49190,
+   "label_ko": "코막힘·맑은 콧물",
+   "detail_ko": "코가 막히거나 맑은 콧물이 나오나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_91",
+   "train_rank": 5,
+   "train_count": 42317,
+   "label_ko": "열",
+   "detail_ko": "열이 있나요? (느낌으로든 체온계로 잰 것이든)",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_129",
+   "train_rank": 6,
+   "train_count": 26917,
+   "label_ko": "피부 이상(발진·붉어짐)",
+   "detail_ko": "이번 진료와 관련해서 피부에 병변, 발적(붉어짐) 또는 이상이 있나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_45",
+   "train_rank": 7,
+   "train_count": 24216,
+   "label_ko": "기침할 때 피가 나옴",
+   "detail_ko": "기침할 때 피가 섞여 나온 적이 있나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_151",
+   "train_rank": 8,
+   "train_count": 23220,
+   "label_ko": "몸이 부음",
+   "detail_ko": "몸의 한 곳 이상이 부어 있나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_50",
+   "train_rank": 9,
+   "train_count": 20673,
+   "label_ko": "땀이 많이 남",
+   "detail_ko": "평소보다 땀이 뚜렷하게 많이 나나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_77",
+   "train_rank": 10,
+   "train_count": 20508,
+   "label_ko": "색이 있는 가래",
+   "detail_ko": "평소보다 색이 있거나 양이 많은 가래가 나오는 기침을 하나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_155",
+   "train_rank": 11,
+   "train_count": 18769,
+   "label_ko": "가슴 두근거림",
+   "detail_ko": "심장이 빠르게 뛰거나 불규칙하게 뛰는 느낌, 또는 두근거림이 있나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_148",
+   "train_rank": 12,
+   "train_count": 18541,
+   "label_ko": "메스꺼움·구역질",
+   "detail_ko": "메스껍거나 토할 것 같은가요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_214",
+   "train_rank": 13,
+   "train_count": 18539,
+   "label_ko": "숨 내쉴 때 쌕쌕거림",
+   "detail_ko": "숨을 내쉴 때 쌕쌕거리는 소리가 나는 것을 느꼈나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_89",
+   "train_rank": 14,
+   "train_count": 17857,
+   "label_ko": "계속 피곤함·잠을 자도 개운하지 않음",
+   "detail_ko": "계속 피로하거나 잠을 자도 개운하지 않나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_218",
+   "train_rank": 15,
+   "train_count": 16344,
+   "label_ko": "움직이면 심해지고 쉬면 나아지는 증상",
+   "detail_ko": "몸을 움직이면 증상이 심해지고 쉬면 나아지나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_194",
+   "train_rank": 16,
+   "train_count": 15696,
+   "label_ko": "숨 들이쉴 때 높은 소리",
+   "detail_ko": "숨을 들이쉴 때 높은 소리(그렁거림)가 나는 것을 느낀 적이 있나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_82",
+   "train_rank": 17,
+   "train_count": 15279,
+   "label_ko": "어지럽고 쓰러질 것 같음",
+   "detail_ko": "머리가 핑 돌고 어지럽거나 곧 쓰러질 것 같은 느낌이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_97",
+   "train_rank": 18,
+   "train_count": 15231,
+   "label_ko": "목 아픔",
+   "detail_ko": "목이 아픈가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_220",
+   "train_rank": 19,
+   "train_count": 13573,
+   "label_ko": "숨을 깊이 쉬면 심해지는 통증",
+   "detail_ko": "숨을 깊게 들이쉬면 통증이 심해지나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_144",
+   "train_rank": 20,
+   "train_count": 12670,
+   "label_ko": "온몸 근육통",
+   "detail_ko": "온몸 여기저기 근육이 아픈가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_76",
+   "train_rank": 21,
+   "train_count": 12559,
+   "label_ko": "가벼운 어지러움",
+   "detail_ko": "약간 어지럽거나 머리가 띵한가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_217",
+   "train_rank": 22,
+   "train_count": 11827,
+   "label_ko": "누우면 심해지고 앉으면 나아지는 증상",
+   "detail_ko": "누우면 증상이 심해지고 앉으면 나아지나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_88",
+   "train_rank": 23,
+   "train_count": 10090,
+   "label_ko": "일상생활이 힘들 만큼 피곤함",
+   "detail_ko": "너무 피곤해서 평소 하던 일을 못 하거나 하루 종일 누워 지내나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_162",
+   "train_rank": 24,
+   "train_count": 9446,
+   "label_ko": "뜻하지 않은 체중 감소",
+   "detail_ko": "최근 3개월 동안 일부러 빼지 않았는데 체중이 줄었나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_212",
+   "train_rank": 25,
+   "train_count": 9426,
+   "label_ko": "목소리 변화(쉰 목소리)",
+   "detail_ko": "목소리가 더 낮아지거나 작아지거나 쉰 소리(목소리가 잠긴 상태)로 변한 것을 느꼈나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_51",
+   "train_rank": 26,
+   "train_count": 8942,
+   "label_ko": "설사",
+   "detail_ko": "설사를 하거나 대변 보는 횟수가 늘었나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_161",
+   "train_rank": 27,
+   "train_count": 8458,
+   "label_ko": "입맛이 없음·금방 배부름",
+   "detail_ko": "최근 입맛이 없거나 평소보다 금방 배가 부른가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_9",
+   "train_rank": 28,
+   "train_count": 7532,
+   "label_ko": "림프절(멍울) 부음",
+   "detail_ko": "림프절(목·겨드랑이·사타구니의 멍울)이 붓거나 아픈가요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_169",
+   "train_rank": 29,
+   "train_count": 6976,
+   "label_ko": "코나 목 안쪽 가려움",
+   "detail_ko": "코 속이나 목 뒤쪽이 가렵나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_103",
+   "train_rank": 30,
+   "train_count": 6963,
+   "label_ko": "냄새를 못 맡음",
+   "detail_ko": "냄새를 맡지 못하게 되었나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_140",
+   "train_rank": 31,
+   "train_count": 6496,
+   "label_ko": "검은 변",
+   "detail_ko": "최근 석탄처럼 검은 변을 본 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_182",
+   "train_rank": 32,
+   "train_count": 6413,
+   "label_ko": "누런·초록 콧물",
+   "detail_ko": "초록색이나 누런색 콧물이 나오나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_175",
+   "train_rank": 33,
+   "train_count": 6054,
+   "label_ko": "새로 생긴 피로·몸살 기운",
+   "detail_ko": "이번 진료와 관련해 새로 생긴 피로감, 막연한 불편감, 온몸이 쑤시는 근육통, 또는 전반적인 컨디션 변화가 있나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_170",
+   "train_rank": 34,
+   "train_count": 6013,
+   "label_ko": "눈이 심하게 가려움",
+   "detail_ko": "한쪽 또는 양쪽 눈이 심하게 가려운가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_159",
+   "train_rank": 35,
+   "train_count": 5830,
+   "label_ko": "의식을 잃음",
+   "detail_ko": "의식을 잃은 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_157",
+   "train_rank": 36,
+   "train_count": 5758,
+   "label_ko": "양팔·양다리·입 주변 저림",
+   "detail_ko": "최근 양팔과 양다리, 입 주변이 저리거나 감각이 둔해졌나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_96",
+   "train_rank": 37,
+   "train_count": 5597,
+   "label_ko": "최근 체중 증가",
+   "detail_ko": "최근 체중이 늘었나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_203",
+   "train_rank": 38,
+   "train_count": 5459,
+   "label_ko": "심한 기침 발작",
+   "detail_ko": "기침이 발작처럼 심하게 몰아서 나오나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_172",
+   "train_rank": 39,
+   "train_count": 5392,
+   "label_ko": "눈꺼풀이 잘 안 올라감",
+   "detail_ko": "한쪽 또는 양쪽 눈꺼풀을 뜨거나 올리기 힘든가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_84",
+   "train_rank": 40,
+   "train_count": 5381,
+   "label_ko": "양팔·양다리 힘 빠짐",
+   "detail_ko": "양팔이나 양다리에 힘이 빠지나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_127",
+   "train_rank": 41,
+   "train_count": 4984,
+   "label_ko": "눈물이 많이 남",
+   "detail_ko": "눈물이 지나치게 많이 나오나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_179",
+   "train_rank": 42,
+   "train_count": 4923,
+   "label_ko": "변에 붉은 피·핏덩어리",
+   "detail_ko": "대변에 선홍색 피나 핏덩어리가 섞여 나온 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_154",
+   "train_rank": 43,
+   "train_count": 4918,
+   "label_ko": "피부가 창백함",
+   "detail_ko": "피부가 평소보다 많이 창백한가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_164",
+   "train_rank": 44,
+   "train_count": 4770,
+   "label_ko": "심장이 매우 불규칙하게 뜀",
+   "detail_ko": "심장이 매우 불규칙하거나 제멋대로 뛰는 느낌이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_176",
+   "train_rank": 45,
+   "train_count": 4499,
+   "label_ko": "팔다리·얼굴 마비나 힘 빠짐",
+   "detail_ko": "지금 또는 이전에 팔다리나 얼굴에 힘이 빠지거나 마비된 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_210",
+   "train_rank": 46,
+   "train_count": 4471,
+   "label_ko": "피를 토함",
+   "detail_ko": "최근 피나 커피 찌꺼기 같은 것을 토한 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_65",
+   "train_rank": 47,
+   "train_count": 4449,
+   "label_ko": "삼키기 어려움",
+   "detail_ko": "삼키기 어렵거나 삼킬 때 걸리는 느낌이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_173",
+   "train_rank": 48,
+   "train_count": 4441,
+   "label_ko": "속쓰림(타는 느낌이 목으로 올라옴)",
+   "detail_ko": "위에서 시작해 목으로 올라오는 타는 느낌이 있고, 입에서 쓴맛이 나기도 하나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_219",
+   "train_rank": 49,
+   "train_count": 4385,
+   "label_ko": "밤에 심해지는 증상",
+   "detail_ko": "증상이 밤에 더 심한가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_215",
+   "train_rank": 50,
+   "train_count": 4382,
+   "label_ko": "먹고 나면 심해지는 증상",
+   "detail_ko": "음식을 먹고 나면 증상이 심해지나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_177",
+   "train_rank": 51,
+   "train_count": 4232,
+   "label_ko": "몸 어딘가의 저림·감각 저하",
+   "detail_ko": "지금 또는 이전에 몸 어딘가가 저리거나 감각이 둔해진 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_114",
+   "train_rank": 52,
+   "train_count": 4140,
+   "label_ko": "짜증·기분 변화가 심함",
+   "detail_ko": "최근 짜증이 늘었거나 기분이 크게 오르내리나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_14",
+   "train_rank": 53,
+   "train_count": 4088,
+   "label_ko": "가만히 있어도 가슴 통증",
+   "detail_ko": "가만히 쉬고 있을 때도 가슴이 아픈가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_94",
+   "train_rank": 54,
+   "train_count": 4054,
+   "label_ko": "오한(춥고 떨림)",
+   "detail_ko": "오한이 들거나 몸이 떨린 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_92",
+   "train_rank": 55,
+   "train_count": 3712,
+   "label_ko": "볼이 갑자기 빨개짐",
+   "detail_ko": "볼이 갑자기 빨개진 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_193",
+   "train_rank": 56,
+   "train_count": 3518,
+   "label_ko": "근육 경련(얼굴·목 등)",
+   "detail_ko": "얼굴이나 목 등 몸 어딘가에 성가신 근육 경련이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_168",
+   "train_rank": 57,
+   "train_count": 3484,
+   "label_ko": "혀를 입 안에 두기 어려움",
+   "detail_ko": "혀를 입 안에 두고 있기가 어려운가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_192",
+   "train_rank": 58,
+   "train_count": 3422,
+   "label_ko": "목 근육 경련으로 고개를 못 돌림",
+   "detail_ko": "목 근육이 뭉치거나 경련이 나서 고개를 한쪽으로 돌리기 어려운가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_205",
+   "train_rank": 59,
+   "train_count": 3352,
+   "label_ko": "입이 안 벌어지거나 벌릴 때 턱 통증",
+   "detail_ko": "갑자기 입을 벌리기 어렵거나 벌릴 때 턱이 아픈가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_128",
+   "train_rank": 60,
+   "train_count": 3073,
+   "label_ko": "잠깐 숨이 막혀 말도 못 함",
+   "detail_ko": "아주 잠깐 숨이 막혀 숨을 쉬거나 말을 할 수 없었던 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_211",
+   "train_rank": 61,
+   "train_count": 3065,
+   "label_ko": "여러 번 토함",
+   "detail_ko": "여러 번 토했거나 토하려고 여러 번 애쓴 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_166",
+   "train_rank": 62,
+   "train_count": 3040,
+   "label_ko": "기침한 뒤 토함",
+   "detail_ko": "기침을 한 뒤에 토한 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_180",
+   "train_rank": 63,
+   "train_count": 3013,
+   "label_ko": "눈동자를 원하는 방향으로 못 움직임",
+   "detail_ko": "눈동자 방향을 마음대로 조절할 수 없나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_83",
+   "train_rank": 64,
+   "train_count": 3010,
+   "label_ko": "얼굴·눈 근육 힘 빠짐",
+   "detail_ko": "얼굴 근육이나 눈 근육에 힘이 빠진 것을 느꼈나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_43",
+   "train_rank": 65,
+   "train_count": 2914,
+   "label_ko": "경련하며 의식을 잃음·멍해짐",
+   "detail_ko": "심한 근육 경련과 함께 의식을 잃거나, 잠깐 멍해지는 발작이 있었나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_74",
+   "train_rank": 66,
+   "train_count": 2901,
+   "label_ko": "눈 전체가 충혈됨",
+   "detail_ko": "한쪽 또는 양쪽 눈이 전체적으로 빨갛게 충혈되었나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_30",
+   "train_rank": 67,
+   "train_count": 2843,
+   "label_ko": "배가 부풀어 오름",
+   "detail_ko": "배가 안에서 밀어내듯 빵빵하게 부풀어 오른 느낌이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_221",
+   "train_rank": 68,
+   "train_count": 2833,
+   "label_ko": "기침·힘줄 때 심해지는 증상",
+   "detail_ko": "기침하거나 무거운 것을 들거나 배변하려고 힘을 줄 때 증상이나 통증이 심해지나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_13",
+   "train_rank": 69,
+   "train_count": 2726,
+   "label_ko": "2주 사이 악화·적은 활동에도 증상 발생",
+   "detail_ko": "지난 2주 동안 증상이 점점 심해지고, 더 적게 움직여도 증상이 생기나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_93",
+   "train_rank": 70,
+   "train_count": 2718,
+   "label_ko": "발 저림·감각 저하",
+   "detail_ko": "발이 저리거나 감각이 둔한가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_42",
+   "train_rank": 71,
+   "train_count": 2705,
+   "label_ko": "알레르기 물질에 닿거나 먹음",
+   "detail_ko": "알레르기가 있는 물질에 닿거나 그것을 먹은 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_188",
+   "train_rank": 72,
+   "train_count": 2697,
+   "label_ko": "색이 옅은 변과 진한 소변",
+   "detail_ko": "변 색이 옅고 소변 색이 진한가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_111",
+   "train_rank": 73,
+   "train_count": 2542,
+   "label_ko": "죽을 것 같은 두려움",
+   "detail_ko": "죽을 것 같다고 느끼거나 곧 죽을까 봐 두려웠던 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_156",
+   "train_rank": 74,
+   "train_count": 2518,
+   "label_ko": "한쪽 얼굴 마비·힘 빠짐",
+   "detail_ko": "한쪽 얼굴에 힘이 빠지거나 마비된 적이 있나요? (지금은 나았어도 포함)",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_190",
+   "train_rank": 75,
+   "train_count": 2472,
+   "label_ko": "침이 많이 나옴",
+   "detail_ko": "평소보다 침이 많이 나오나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_171",
+   "train_rank": 76,
+   "train_count": 2344,
+   "label_ko": "내 몸이나 주변이 낯설게 느껴짐",
+   "detail_ko": "내 몸이나 주변에서 분리된 것 같은 느낌이 드나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_52",
+   "train_rank": 77,
+   "train_count": 2331,
+   "label_ko": "물체가 둘로 보임",
+   "detail_ko": "하나의 물체가 두 개로 겹치거나 나란히 보이나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_63",
+   "train_rank": 78,
+   "train_count": 2300,
+   "label_ko": "말하기 어려움·발음이 어눌함",
+   "detail_ko": "말을 하거나 발음하기가 어려운가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_163",
+   "train_rank": 79,
+   "train_count": 2283,
+   "label_ko": "질 분비물",
+   "detail_ko": "질 분비물이 있었나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_150",
+   "train_rank": 80,
+   "train_count": 2271,
+   "label_ko": "대변·방귀 배출 가능 여부",
+   "detail_ko": "증상이 심해진 뒤에도 대변을 보거나 방귀를 뀔 수 있었나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_67",
+   "train_rank": 81,
+   "train_count": 2222,
+   "label_ko": "자다가 숨이 막혀 깸",
+   "detail_ko": "숨이 막히거나 숨이 차서 밤에 잠에서 깨나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_38",
+   "train_rank": 82,
+   "train_count": 1992,
+   "label_ko": "턱 통증·힘 빠짐",
+   "detail_ko": "턱이 아프거나 힘이 빠지나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_206",
+   "train_rank": 83,
+   "train_count": 1861,
+   "label_ko": "입안이 헐거나 아픈 궤양",
+   "detail_ko": "입안에 아픈 궤양이나 헌 곳이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_75",
+   "train_rank": 84,
+   "train_count": 1743,
+   "label_ko": "숨이 막히는 느낌",
+   "detail_ko": "숨이 막히거나 질식할 것 같은 느낌이 있나요(있었나요)?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_33",
+   "train_rank": 85,
+   "train_count": 1707,
+   "label_ko": "몸을 앞으로 숙이면 나아지는 통증",
+   "detail_ko": "앞으로 몸을 숙이면 통증이 나아지나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_145",
+   "train_rank": 86,
+   "train_count": 1654,
+   "label_ko": "월경량이 많거나 기간이 김",
+   "detail_ko": "월경량이 아주 많거나 월경 기간이 아주 긴가요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_90",
+   "train_rank": 87,
+   "train_count": 1437,
+   "label_ko": "피로·스트레스로 심해지는 근력 저하",
+   "detail_ko": "근력이 떨어지는 증상이 피곤하거나 스트레스를 받으면 심해지나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_112",
+   "train_rank": 88,
+   "train_count": 1430,
+   "label_ko": "기침 발작 뒤 쌕쌕거리는 숨소리",
+   "detail_ko": "숨을 들이쉴 때 쌕쌕거리거나, 기침 후에 숨소리가 거칠어지나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_64",
+   "train_rank": 89,
+   "train_count": 1367,
+   "label_ko": "조금만 움직여도 숨이 참",
+   "detail_ko": "아주 조금만 움직여도 숨이 차나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_216",
+   "train_rank": 90,
+   "train_count": 1204,
+   "label_ko": "움직이면 심해지는 통증",
+   "detail_ko": "움직이면 통증이 심해지나요?",
+   "detail_source": "question_labels_ko"
+  },
+  {
+   "evidence_id": "E_174",
+   "train_rank": 91,
+   "train_count": 1020,
+   "label_ko": "뜻하지 않은 체중 감소·식욕 저하",
+   "detail_ko": "일부러 빼지 않았는데 체중이 줄거나 입맛이 없어졌나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_202",
+   "train_rank": 92,
+   "train_count": 454,
+   "label_ko": "숨 들이쉴 때 소리가 나는 발작적 기침",
+   "detail_ko": "몰아치듯 기침한 뒤 숨을 들이쉴 때 소리가 나는 발작적인 기침이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_178",
+   "train_rank": 93,
+   "train_count": 104,
+   "label_ko": "이상한 출혈이나 멍",
+   "detail_ko": "이번 진료와 관련해 평소와 다른 출혈이나 멍을 발견했나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_39",
+   "train_rank": 94,
+   "train_count": 77,
+   "label_ko": "헷갈리거나 정신이 혼란스러움",
+   "detail_ko": "최근 정신이 혼란스럽거나 시간·장소가 헷갈린 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_23",
+   "train_rank": 95,
+   "train_count": 30,
+   "label_ko": "자는 동안 숨이 멈춤",
+   "detail_ko": "자는 동안 잠시 숨이 멈춘 적이 있나요?",
+   "detail_source": "new_static_presentation"
+  },
+  {
+   "evidence_id": "E_32",
+   "train_rank": 96,
+   "train_count": 23,
+   "label_ko": "식욕 감소",
+   "detail_ko": "입맛이 줄었나요?",
+   "detail_source": "new_static_presentation"
+  }
+ ]
+}

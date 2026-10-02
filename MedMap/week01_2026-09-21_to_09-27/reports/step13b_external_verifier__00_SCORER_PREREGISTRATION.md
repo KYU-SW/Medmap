@@ -1,0 +1,20 @@
+# STEP 13B — 외부 verifier B 점수식 사전등록 (TEST 열람 전 고정, 2026-09-21)
+- **version**: step13b-v1
+- **date**: 2026-09-21
+- **primary_verifier**: B_STRICT
+- **secondary_verifier**: B_LENIENT
+- **relation_score**: {"positive": "+1 if >=1 allowed source has a positive relation (strict set for B_STRICT, lenient set for B_LENIENT)", "negative": "-1 only if an explicit NOT/EXCLUDED annotation exists (HPO qualifier NOT, DisMech frequency EXCLUDED) and no positive", "missing": "0 = unknown (open-world). NEVER treated as negative. No epsilon."}
+- **support**: support(d,p) = sum_{f in evaluable(p)} rel(d,f) / |evaluable(p)|; evaluable(p) = observed COMMON findings of p that have >=1 nonzero relation with any of the 49 diseases in the KB. If |evaluable(p)|=0 -> KNOWLEDGE_UNAVAILABLE (score NaN, kept, not dropped). Diseases with zero relations in KB are flagged disease_knowledge_unavailable.
+- **b_score**: B = max_{alt != wd, alt in 49 diseases (same candidate set as A')} support(alt,p) - support(wd,p). No source counts, TF-IDF, cooccurrence, frequency in the score.
+- **strict_set**: sources_strict from STEP11 FINAL 08b rules, recomputed over all 49 diseases x 83 COMMON findings (not restricted to DDXPlus-listed pairs): HPO/OKG aspect P & non-self & non-familial; HSDN cooccurrence>=2 & disease map EXACT/PARTIAL; DisMech with PMID; MEDLINE cooccurrence>=2; Wikidata with reference; UMLS DIRECT_FINDING & no HPO/OMIM lineage overlap. Self-reference (finding name == disease name) removed.
+- **lenient_set**: any positive relation in STEP11 FINAL sources incl. UMLS POSSIBLE/AMBIGUOUS; self-reference and NON_FINDING removed.
+- **source_genealogy**: {"PUBMED_COOCCURRENCE": ["HSDN", "MEDLINE", "UMLS:MSH"], "PHENOTYPE_ONTOLOGY": ["HPO", "OPTIMUSKG", "UMLS:OMIM", "UMLS:HPO"], "CURATED_CLINICAL": ["DISMECH"], "TERMINOLOGY_RELATION": ["UMLS:<other SAB>"], "COMMUNITY_KG": ["WIKIDATA"]}
+- **candidate_set**: all 49 DDXPlus diseases for both A' and B
+- **reachable**: EXTERNAL_REACHABLE iff wd has >=1 strict relation in KB AND truth has >=1 strict relation in KB AND not concept_collision AND patient not KNOWLEDGE_UNAVAILABLE; else EXTERNAL_UNREACHABLE with reason
+- **collision**: concept_collision(truth,wd) iff the two diseases share an identical external concept id in any strict source mapping fixed in Step10/11 (HSDN mesh_id, DisMech file, MEDLINE doid, OptimusKG node id, HPO disease id) — decided before TEST, not changed after
+- **generic_findings**: file 00_preregistered_generic_findings.csv; Primary includes them; sensitivity analysis excludes them
+- **threshold_rule**: thresholds chosen on VALIDATION correct group only: quantile giving FPR 10% (primary), 5%, 20%; applied unchanged to TEST
+- **primary_endpoint**: wrong-diagnosis detection sensitivity at FPR=10% (TEST, ALL) and AUROC in confidence>=0.9 TEST subset; REF(max confidence) vs A' vs B_STRICT
+- **secondary**: ["FPR 5%", "FPR 20%", "AUROC", "AUPRC", "reachable recall", "strata bins [<0.5,0.5-0.7,0.7-0.8,0.8-0.9,>=0.9]", "B_LENIENT", "generic-excluded sensitivity"]
+- **incremental_rule**: combined = 0.5*z(-confidence)+0.5*z(verifier) with z mean/std from VALIDATION; no fitting on TEST
+- **test_policy**: TEST executed exactly once; no modification after viewing

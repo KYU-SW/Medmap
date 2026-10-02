@@ -1,0 +1,17 @@
+# MANUAL_SOURCE_REQUEST (STEP15 v2)
+
+Generated 2026-09-21T23:16:32. These documents were blocked (HTTP 403 / JS-gated) or contained no clinical content in the accessible abstract. No bypass was attempted. 
+If needed, download manually and place files in `data/disease_profiles_v2/manual_sources/<disease_slug>/`; a later builder pass can add facts with new source_ids (facts below were NOT written from these documents).
+
+| # | Disease | Document | Official URL | Why needed | Format |
+|---|---|---|---|---|---|
+| 1 | Acute rhinosinusitis | IDSA Clinical Practice Guideline for Acute Bacterial Rhinosinusitis (Chow et al. 2012, Clin Infect Dis 54:e72) | https://academic.oup.com/cid/article/54/8/e72/364306 | Tier1 society guideline with explicit ABRS clinical criteria (10-day / double-worsening / severe onset); OUP returned HTTP 403 | PDF |
+| 2 | Chronic rhinosinusitis | StatPearls: Chronic Rhinosinusitis (NCBI Bookshelf NBK441934) | https://www.ncbi.nlm.nih.gov/books/NBK441934/ | Bookshelf HTML is JS/captcha-gated to curl; optional Tier3 backup only | HTML (save page as .html) |
+| 3 | Viral pharyngitis | IDSA GAS pharyngitis guideline full text (Shulman et al. 2012, CID 55:e86) | https://academic.oup.com/cid/article/55/10/e86/321183 | Full text lists viral-suggestive features (conjunctivitis, coryza, cough, hoarseness, ulcers); abstract has no clinical content; OUP 403 | PDF |
+| 4 | Stable angina | 2021 AHA/ACC/ASE/CHEST/SAEM/SCCT/SCMR Chest Pain Guideline (Circulation 144:e368) | https://www.ahajournals.org/doi/10.1161/CIR.0000000000001029 | Tier1 guideline defining typical/atypical angina descriptors; ahajournals 403, PubMed abstract has no clinical content | PDF |
+| 5 | Stable angina | 2023 AHA/ACC Chronic Coronary Disease guideline (Circulation 148:e9) | https://www.ahajournals.org/doi/10.1161/CIR.0000000000001168 | Tier1 definition of stable angina / CCD; not attempted after repeated 403 on same host | PDF |
+| 6 | Unstable angina | 2025 ACC/AHA/ACEP/NAEMSP/SCAI ACS Guideline (or 2014 AHA/ACC NSTE-ACS, Circulation 130:e344) | https://www.ahajournals.org/doi/10.1161/CIR.0000000000000134 | Tier1 definition of unstable angina (rest angina >20 min, new-onset, crescendo); ahajournals 403, PubMed record has no abstract | PDF |
+| 7 | Acute HIV infection | NIH Clinicalinfo: Acute and Recent (Early) HIV Infection (Adult and Adolescent ARV Guidelines) | https://clinicalinfo.hiv.gov/en/guidelines/hiv-clinical-guidelines-adult-and-adolescent-arv/acute-and-recent-early-hiv-infection | Tier1 clinical description of acute retroviral syndrome signs/symptoms with frequencies and lab staging; HTTP 403 | HTML or PDF |
+| 8 | PSVT | 2015 ACC/AHA/HRS Guideline for the Management of Adult Patients With SVT (Circulation 133:e506 / JACC 67:e27) | https://www.ahajournals.org/doi/10.1161/CIR.0000000000000311 | Tier1 definitions (PSVT, AVNRT/AVRT), symptom list, ECG criteria; ahajournals/JACC/HRS all 403, PubMed record has no abstract | PDF |
+| 9 | PSVT | 2019 ESC Guidelines for the management of patients with SVT (Eur Heart J 41:655) | https://academic.oup.com/eurheartj/article/41/5/655/5556821 | Second Tier1 guideline source for PSVT; OUP 403 | PDF |
+| 10 | Acute COPD exacerbation | ERS/ATS guideline: Management of COPD exacerbations (Wedzicha 2017, Eur Respir J 49:1600791) full text | https://erj.ersjournals.com/content/49/3/1600791 | Full text (abstract lacks clinical content); optional since GOLD 2025 + NICE NG115 already Tier1 | PDF |

@@ -1,0 +1,7377 @@
+{
+ "schema": "medmap.intake_mapper_eval/3",
+ "note": "blind v3 최종 gate — 작성 A(opus)+B(sonnet), 매퍼·alias·negative_policy 비공개. v1/v2/v3 유사도>=0.80 기계 제외(exp/intake_mapper_v1_2/01_v3_assembly_rule.json).",
+ "annotation_rules": [
+  "R1 명시적 진술만 라벨링: 화자(환자)가 명시적으로 가지고 있다고 말하면 POSITIVE, 명시적으로 부정하면 NEGATIVE(question_ko/question_en 의미 기준).",
+  "R2 OR형 질문(E_181, E_169, E_89, E_175, E_105, E_53 등): 한 부분이라도 언급되면 POSITIVE. 문장 전체가 질문 전체를 부정할 때만 NEGATIVE.",
+  "R3 조건부 evidence: E_77은 색이 있거나 평소보다 많은 가래여야 POSITIVE(단순 '가래 나와요'는 라벨 없음, '가래 안 나와요'는 NEGATIVE). E_182는 초록/누런 콧물 필요. E_50은 뚜렷하게 증가한 땀. E_70은 뚜렷한 과체중. E_78은 과음. E_209는 예방접종 전체 완료.",
+  "R4 통증: 어디든 명시적 통증이 있으면 E_53 POSITIVE(수식어 evidence와 동시에도 가능). '몸이 아파요(아프다=병났다)'는 라벨 없음.",
+  "R5 지속 표현: '안 멎어요/안 떨어져요/안 멈춰요/안 빠져요/안 가라앉아요'는 증상이 계속됨을 의미 -> POSITIVE.",
+  "R6 시제 고정 규칙: 매퍼는 현재 상태만 기록. 과거로만 서술되거나 현재와 대조되는 과거 서술은 라벨 없음. 단 질문 자체가 이력/기간을 묻는 evidence(E_0, E_69, E_104, E_105, E_116, E_120, E_123, E_124, E_189, E_209, E_226)는 질문의 시간 범위를 따른다. 흡연/음주/체중은 현재 상태 기준('담배 끊었어요' -> NEGATIVE).",
+  "R7 라벨 없음 대상: hedge/추측('~인 것 같아요','~일지도'), 질문, 조건/가정문, 타인의 증상, 병명만 언급('감기 같아요','독감이래요'), 호전 진술, 막연한 진술('몸이 안 좋아요').",
+  "R8 이중부정: 의미가 명확하면('열이 없지는 않아요') 의미대로 라벨링(POSITIVE)하고 note에 명시.",
+  "R9 부정 범위는 언급 단위: '열은 없는데 기침은 나요' -> E_91 NEGATIVE + E_201 POSITIVE(부정이 다른 절로 퍼지지 않음).",
+  "R10 동일 구절이 2개 이상 evidence로 동등하게 해석되고 질문 텍스트로 하나를 특정할 수 없으면 라벨 없음(note에 사유 기록)."
+ ],
+ "items": [
+  {
+   "id": "A001",
+   "category": "single_positive",
+   "text": "요즘 아침에 일어나면 기침이 쿨럭쿨럭 나와서 식구들 깰까 봐 조심하고 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침이 쿨럭쿨럭 나와서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A002",
+   "category": "single_positive",
+   "text": "새벽마다 가래가 끓어서 화장실 가서 뱉어 보면 누런 가래가 나와요.",
+   "gold": [
+    {
+     "evidence_id": "E_77",
+     "status": "POSITIVE",
+     "span": "누런 가래가 나와요"
+    }
+   ],
+   "note": "'가래가 끓어서'는 R3상 단독 라벨 불가, 색 언급 구절로 E_77",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A003",
+   "category": "single_positive",
+   "text": "어제 저녁부터 체온계로 재 보니 38도 넘게 열이 나고 있습니다.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "38도 넘게 열이 나고 있습니다"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A004",
+   "category": "single_positive",
+   "text": "가만히 앉아 있어도 숨이 차서 손님하고 말하기가 힘들어요.",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "가만히 앉아 있어도 숨이 차서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A005",
+   "category": "single_positive",
+   "text": "점심 먹고 나서부터 속이 느글느글하고 토할 것 같아요.",
+   "gold": [
+    {
+     "evidence_id": "E_148",
+     "status": "POSITIVE",
+     "span": "속이 느글느글하고 토할 것 같아요"
+    }
+   ],
+   "note": "'토할 것 같다'는 구역감 자체, hedge 아님",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A006",
+   "category": "single_positive",
+   "text": "누워 있으면 심장이 벌렁벌렁 빨리 뛰는 게 느껴져서 잠이 잘 안 와요.",
+   "gold": [
+    {
+     "evidence_id": "E_155",
+     "status": "POSITIVE",
+     "span": "심장이 벌렁벌렁 빨리 뛰는 게 느껴져서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A007",
+   "category": "single_positive",
+   "text": "환절기라 그런지 맑은 콧물이 줄줄 흘러서 휴지를 달고 삽니다.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "맑은 콧물이 줄줄 흘러서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A008",
+   "category": "single_positive",
+   "text": "아침에 코를 풀면 누런 콧물이 덩어리져서 나와요.",
+   "gold": [
+    {
+     "evidence_id": "E_182",
+     "status": "POSITIVE",
+     "span": "누런 콧물이 덩어리져서 나와요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A009",
+   "category": "single_positive",
+   "text": "사흘 전부터 목소리가 잠겨서 전화를 받으면 다들 누구냐고 물어봐요.",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목소리가 잠겨서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A010",
+   "category": "single_positive",
+   "text": "목 뒤쪽이 간질간질 가려워서 물을 자꾸 마시게 되네요.",
+   "gold": [
+    {
+     "evidence_id": "E_169",
+     "status": "POSITIVE",
+     "span": "목 뒤쪽이 간질간질 가려워서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A011",
+   "category": "single_positive",
+   "text": "팔 안쪽에 붉은 반점이 올라왔는데 이번에 아프면서 같이 생겼어요.",
+   "gold": [
+    {
+     "evidence_id": "E_129",
+     "status": "POSITIVE",
+     "span": "붉은 반점이 올라왔는데"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A012",
+   "category": "single_positive",
+   "text": "오후만 되면 양쪽 발목이 퉁퉁 부어서 신발이 꽉 끼어요.",
+   "gold": [
+    {
+     "evidence_id": "E_151",
+     "status": "POSITIVE",
+     "span": "양쪽 발목이 퉁퉁 부어서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A013",
+   "category": "single_positive",
+   "text": "일도 안 했는데 식은땀이 줄줄 흘러서 러닝셔츠가 다 젖어요.",
+   "gold": [
+    {
+     "evidence_id": "E_50",
+     "status": "POSITIVE",
+     "span": "식은땀이 줄줄 흘러서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A014",
+   "category": "single_positive",
+   "text": "목 옆에 콩알만 한 멍울이 만져지는데 전보다 부어 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_9",
+     "status": "POSITIVE",
+     "span": "멍울이 만져지는데 전보다 부어 있어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A015",
+   "category": "single_positive",
+   "text": "요새 가래를 뱉으면 빨간 피가 섞여 나와서 겁이 납니다.",
+   "gold": [
+    {
+     "evidence_id": "E_45",
+     "status": "POSITIVE",
+     "span": "빨간 피가 섞여 나와서"
+    }
+   ],
+   "note": "피 섞인 가래는 E_45로만, E_77(누런/양 증가)로 보지 않음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A016",
+   "category": "single_positive",
+   "text": "오른쪽 옆구리가 콕콕 쑤시듯이 아파서 왔습니다.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "옆구리가 콕콕 쑤시듯이 아파서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A017",
+   "category": "single_positive",
+   "text": "잠을 여덟 시간을 자도 개운하지가 않고 아침부터 몸이 무거워요.",
+   "gold": [
+    {
+     "evidence_id": "E_89",
+     "status": "POSITIVE",
+     "span": "잠을 여덟 시간을 자도 개운하지가 않고"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A019",
+   "category": "single_positive",
+   "text": "이번에 아프기 시작하면서 전반적으로 컨디션이 뚝 떨어지고 새로 피로감이 몰려와요.",
+   "gold": [
+    {
+     "evidence_id": "E_175",
+     "status": "POSITIVE",
+     "span": "새로 피로감이 몰려와요"
+    }
+   ],
+   "note": "'새로 생긴' 피로 → E_175(E_89 아님)",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A020",
+   "category": "single_positive",
+   "text": "숨 들이쉴 때 목에서 휘파람 같은 높은 소리가 나요.",
+   "gold": [
+    {
+     "evidence_id": "E_194",
+     "status": "POSITIVE",
+     "span": "휘파람 같은 높은 소리가 나요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A021",
+   "category": "single_positive",
+   "text": "밤에 숨을 내쉴 때마다 가슴에서 쌕쌕 소리가 들려요.",
+   "gold": [
+    {
+     "evidence_id": "E_214",
+     "status": "POSITIVE",
+     "span": "숨을 내쉴 때마다 가슴에서 쌕쌕 소리가 들려요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A022",
+   "category": "single_positive",
+   "text": "숨을 들이쉴 때 쌕쌕거리는 소리가 나서 집사람이 걱정을 합니다.",
+   "gold": [
+    {
+     "evidence_id": "E_112",
+     "status": "POSITIVE",
+     "span": "숨을 들이쉴 때 쌕쌕거리는 소리가 나서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A023",
+   "category": "single_positive",
+   "text": "당뇨가 있어서 10년째 약을 먹고 있습니다.",
+   "gold": [
+    {
+     "evidence_id": "E_69",
+     "status": "POSITIVE",
+     "span": "당뇨가 있어서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A024",
+   "category": "single_positive",
+   "text": "혈압약을 매일 아침 한 알씩 먹고 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_104",
+     "status": "POSITIVE",
+     "span": "혈압약을 매일 아침 한 알씩 먹고 있어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A025",
+   "category": "single_positive",
+   "text": "하루에 담배 한 갑 정도 피웁니다, 끊어야 하는 건 아는데 잘 안 되네요.",
+   "gold": [
+    {
+     "evidence_id": "E_79",
+     "status": "POSITIVE",
+     "span": "하루에 담배 한 갑 정도 피웁니다"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A026",
+   "category": "single_positive",
+   "text": "저녁마다 소주 두 병씩은 마셔야 잠이 와요.",
+   "gold": [
+    {
+     "evidence_id": "E_78",
+     "status": "POSITIVE",
+     "span": "저녁마다 소주 두 병씩은 마셔야"
+    }
+   ],
+   "note": "매일 소주 2병 = 과음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A027",
+   "category": "single_positive",
+   "text": "천식이 있어서 흡입기를 늘 가방에 넣고 다녀요.",
+   "gold": [
+    {
+     "evidence_id": "E_124",
+     "status": "POSITIVE",
+     "span": "천식이 있어서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A028",
+   "category": "single_positive",
+   "text": "몇 년 전에 COPD 진단받고 지금도 호흡기내과 다니고 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_123",
+     "status": "POSITIVE",
+     "span": "COPD 진단받고"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A029",
+   "category": "single_positive",
+   "text": "저는 원래 알레르기 체질이라 꽃가루 날리면 바로 반응이 와요.",
+   "gold": [
+    {
+     "evidence_id": "E_226",
+     "status": "POSITIVE",
+     "span": "원래 알레르기 체질이라"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A030",
+   "category": "single_positive",
+   "text": "지난주에 감기를 호되게 앓아서 며칠 일을 쉬었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_116",
+     "status": "POSITIVE",
+     "span": "지난주에 감기를 호되게 앓아서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A031",
+   "category": "single_negative",
+   "text": "체온은 아침저녁으로 재 보는데 열은 전혀 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열은 전혀 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A032",
+   "category": "single_negative",
+   "text": "목은 좀 칼칼해도 기침은 하나도 안 나와요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "기침은 하나도 안 나와요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A033",
+   "category": "single_negative",
+   "text": "기침할 때 피가 나온 적은 한 번도 없습니다.",
+   "gold": [
+    {
+     "evidence_id": "E_45",
+     "status": "NEGATIVE",
+     "span": "피가 나온 적은 한 번도 없습니다"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A034",
+   "category": "single_negative",
+   "text": "아파트 계단을 5층까지 올라가도 숨이 차지는 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "NEGATIVE",
+     "span": "숨이 차지는 않아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A035",
+   "category": "single_negative",
+   "text": "밥은 잘 먹고 있고 메스껍거나 토할 것 같은 건 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_148",
+     "status": "NEGATIVE",
+     "span": "메스껍거나 토할 것 같은 건 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A036",
+   "category": "single_negative",
+   "text": "심장이 두근거리거나 하는 건 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_155",
+     "status": "NEGATIVE",
+     "span": "심장이 두근거리거나 하는 건 없어요"
+    }
+   ],
+   "note": "'~거나 하는 건' 포괄 부정으로 전체 부정",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A037",
+   "category": "single_negative",
+   "text": "땀은 평소랑 똑같이 나고 더 많이 나지는 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_50",
+     "status": "NEGATIVE",
+     "span": "더 많이 나지는 않아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A038",
+   "category": "single_negative",
+   "text": "피부에는 뭐 올라온 것도 없고 붉어진 데도 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_129",
+     "status": "NEGATIVE",
+     "span": "피부에는 뭐 올라온 것도 없고 붉어진 데도 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A039",
+   "category": "single_negative",
+   "text": "다리든 얼굴이든 부은 데는 한 군데도 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_151",
+     "status": "NEGATIVE",
+     "span": "부은 데는 한 군데도 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A041",
+   "category": "single_negative",
+   "text": "누런 콧물이나 퍼런 콧물은 안 나와요.",
+   "gold": [
+    {
+     "evidence_id": "E_182",
+     "status": "NEGATIVE",
+     "span": "누런 콧물이나 퍼런 콧물은 안 나와요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A042",
+   "category": "single_negative",
+   "text": "코가 막히지도 않고 콧물도 없어서 코 쪽은 멀쩡해요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "NEGATIVE",
+     "span": "코가 막히지도 않고 콧물도 없어서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A043",
+   "category": "single_negative",
+   "text": "코나 목이 가렵거나 하진 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_169",
+     "status": "NEGATIVE",
+     "span": "코나 목이 가렵거나 하진 않아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A044",
+   "category": "single_negative",
+   "text": "목소리가 쉬거나 변한 건 없어요, 노래방도 다녀왔는걸요.",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "NEGATIVE",
+     "span": "목소리가 쉬거나 변한 건 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A045",
+   "category": "single_negative",
+   "text": "가래는 거의 없고 색깔 있는 가래는 나온 적이 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_77",
+     "status": "NEGATIVE",
+     "span": "색깔 있는 가래는 나온 적이 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A046",
+   "category": "single_negative",
+   "text": "병원 오긴 했는데 어디 딱히 아픈 데는 없어요, 검사 결과 들으러 왔어요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "NEGATIVE",
+     "span": "어디 딱히 아픈 데는 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A047",
+   "category": "single_negative",
+   "text": "담배는 평생 입에 대 본 적도 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_79",
+     "status": "NEGATIVE",
+     "span": "담배는 평생 입에 대 본 적도 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A048",
+   "category": "single_negative",
+   "text": "술은 명절에 한두 잔 정도지 많이 마시진 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_78",
+     "status": "NEGATIVE",
+     "span": "많이 마시진 않아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A049",
+   "category": "single_negative",
+   "text": "당뇨는 없고 혈당도 늘 정상이라고 했어요.",
+   "gold": [
+    {
+     "evidence_id": "E_69",
+     "status": "NEGATIVE",
+     "span": "당뇨는 없고"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A050",
+   "category": "single_negative",
+   "text": "혈압은 정상이고 혈압약 같은 건 안 먹어요.",
+   "gold": [
+    {
+     "evidence_id": "E_104",
+     "status": "NEGATIVE",
+     "span": "혈압은 정상이고 혈압약 같은 건 안 먹어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A051",
+   "category": "single_negative",
+   "text": "심장마비나 협심증 같은 건 앓아 본 적이 없습니다.",
+   "gold": [
+    {
+     "evidence_id": "E_105",
+     "status": "NEGATIVE",
+     "span": "심장마비나 협심증 같은 건 앓아 본 적이 없습니다"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A052",
+   "category": "single_negative",
+   "text": "천식은 없고 기관지 넓히는 약도 써 본 적 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_124",
+     "status": "NEGATIVE",
+     "span": "천식은 없고 기관지 넓히는 약도 써 본 적 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A053",
+   "category": "single_negative",
+   "text": "폐가 안 좋다는 말은 들어 본 적 없고 COPD도 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_123",
+     "status": "NEGATIVE",
+     "span": "COPD도 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A054",
+   "category": "single_negative",
+   "text": "코에 물혹 같은 건 없다고 이비인후과에서 들었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_120",
+     "status": "NEGATIVE",
+     "span": "코에 물혹 같은 건 없다고"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A055",
+   "category": "single_negative",
+   "text": "최근에 바이러스 같은 거 걸린 적 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_0",
+     "status": "NEGATIVE",
+     "span": "최근에 바이러스 같은 거 걸린 적 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A056",
+   "category": "single_negative",
+   "text": "요 2주 동안은 감기 한 번 안 걸렸어요.",
+   "gold": [
+    {
+     "evidence_id": "E_116",
+     "status": "NEGATIVE",
+     "span": "요 2주 동안은 감기 한 번 안 걸렸어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A057",
+   "category": "single_negative",
+   "text": "HIV 양성인 사람하고 관계한 적은 없습니다.",
+   "gold": [
+    {
+     "evidence_id": "E_189",
+     "status": "NEGATIVE",
+     "span": "HIV 양성인 사람하고 관계한 적은 없습니다"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A058",
+   "category": "single_negative",
+   "text": "키에 비해 몸무게는 보통이라 살찐 편은 아니에요.",
+   "gold": [
+    {
+     "evidence_id": "E_70",
+     "status": "NEGATIVE",
+     "span": "살찐 편은 아니에요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A059",
+   "category": "single_negative",
+   "text": "알레르기 같은 건 하나도 없어요, 뭘 먹어도 괜찮아요.",
+   "gold": [
+    {
+     "evidence_id": "E_226",
+     "status": "NEGATIVE",
+     "span": "알레르기 같은 건 하나도 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A060",
+   "category": "single_negative",
+   "text": "잠은 푹 자고 일어나면 개운해요, 피곤한 것도 없고요.",
+   "gold": [
+    {
+     "evidence_id": "E_89",
+     "status": "NEGATIVE",
+     "span": "잠은 푹 자고 일어나면 개운해요, 피곤한 것도 없고요"
+    }
+   ],
+   "note": "OR 양쪽 모두 부정",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A061",
+   "category": "mixed_pos_neg",
+   "text": "열은 없는데 기침이 쿨럭쿨럭 멈추질 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열은 없는데"
+    },
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침이 쿨럭쿨럭 멈추질 않아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A062",
+   "category": "mixed_pos_neg",
+   "text": "코는 꽉 막혔는데 열은 안 나요, 아침에 재 봤어요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "코는 꽉 막혔는데"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열은 안 나요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A063",
+   "category": "mixed_pos_neg",
+   "text": "누런 가래가 끓어서 자꾸 뱉어 내는데 피는 안 섞여 나와요.",
+   "gold": [
+    {
+     "evidence_id": "E_77",
+     "status": "POSITIVE",
+     "span": "누런 가래가 끓어서"
+    },
+    {
+     "evidence_id": "E_45",
+     "status": "NEGATIVE",
+     "span": "피는 안 섞여 나와요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A064",
+   "category": "mixed_pos_neg",
+   "text": "숨이 차긴 한데 심장이 이상하게 뛰거나 두근거리는 건 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨이 차긴 한데"
+    },
+    {
+     "evidence_id": "E_155",
+     "status": "NEGATIVE",
+     "span": "심장이 이상하게 뛰거나 두근거리는 건 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A066",
+   "category": "mixed_pos_neg",
+   "text": "담배는 끊은 지 5년 됐고요, 술은 요즘도 매일 막걸리 두세 병씩 합니다.",
+   "gold": [
+    {
+     "evidence_id": "E_79",
+     "status": "NEGATIVE",
+     "span": "담배는 끊은 지 5년 됐고요"
+    },
+    {
+     "evidence_id": "E_78",
+     "status": "POSITIVE",
+     "span": "매일 막걸리 두세 병씩 합니다"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A067",
+   "category": "mixed_pos_neg",
+   "text": "혈압약은 먹고 있는데 당뇨는 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_104",
+     "status": "POSITIVE",
+     "span": "혈압약은 먹고 있는데"
+    },
+    {
+     "evidence_id": "E_69",
+     "status": "NEGATIVE",
+     "span": "당뇨는 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A068",
+   "category": "mixed_pos_neg",
+   "text": "목소리가 쉬어서 갈라지는데 기침은 안 해요.",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목소리가 쉬어서 갈라지는데"
+    },
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "기침은 안 해요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A069",
+   "category": "mixed_pos_neg",
+   "text": "발등이 부어서 양말 자국이 깊게 남는데 아픈 데는 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_151",
+     "status": "POSITIVE",
+     "span": "발등이 부어서"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "NEGATIVE",
+     "span": "아픈 데는 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A070",
+   "category": "mixed_pos_neg",
+   "text": "밤에 자고 나면 이불이 축축할 정도로 땀이 나는데 열은 안 재 봐서 모르겠어요.",
+   "gold": [
+    {
+     "evidence_id": "E_50",
+     "status": "POSITIVE",
+     "span": "이불이 축축할 정도로 땀이 나는데"
+    }
+   ],
+   "note": "열은 모름 → E_91 라벨 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A071",
+   "category": "mixed_pos_neg",
+   "text": "맑은 콧물은 흐르는데 누렇거나 퍼런 건 아니에요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "맑은 콧물은 흐르는데"
+    },
+    {
+     "evidence_id": "E_182",
+     "status": "NEGATIVE",
+     "span": "누렇거나 퍼런 건 아니에요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A072",
+   "category": "mixed_pos_neg",
+   "text": "목 뒤가 근질근질 가려운데 콧물이나 코막힘은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_169",
+     "status": "POSITIVE",
+     "span": "목 뒤가 근질근질 가려운데"
+    },
+    {
+     "evidence_id": "E_181",
+     "status": "NEGATIVE",
+     "span": "콧물이나 코막힘은 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A073",
+   "category": "mixed_pos_neg",
+   "text": "천식도 없고 흡입기 같은 것도 써 본 적 없는데, 알레르기는 잘 생기는 편이에요.",
+   "gold": [
+    {
+     "evidence_id": "E_124",
+     "status": "NEGATIVE",
+     "span": "천식도 없고 흡입기 같은 것도 써 본 적 없는데"
+    },
+    {
+     "evidence_id": "E_226",
+     "status": "POSITIVE",
+     "span": "알레르기는 잘 생기는 편이에요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A074",
+   "category": "mixed_pos_neg",
+   "text": "팔다리에 빨간 두드러기가 올라왔는데 부은 데는 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_129",
+     "status": "POSITIVE",
+     "span": "빨간 두드러기가 올라왔는데"
+    },
+    {
+     "evidence_id": "E_151",
+     "status": "NEGATIVE",
+     "span": "부은 데는 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A075",
+   "category": "mixed_pos_neg",
+   "text": "요새 가래에 피가 비치는데 숨이 차지는 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_45",
+     "status": "POSITIVE",
+     "span": "가래에 피가 비치는데"
+    },
+    {
+     "evidence_id": "E_66",
+     "status": "NEGATIVE",
+     "span": "숨이 차지는 않아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A076",
+   "category": "mixed_pos_neg",
+   "text": "심장이 불규칙하게 툭툭 뛰는데 숨찬 건 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_155",
+     "status": "POSITIVE",
+     "span": "심장이 불규칙하게 툭툭 뛰는데"
+    },
+    {
+     "evidence_id": "E_66",
+     "status": "NEGATIVE",
+     "span": "숨찬 건 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A077",
+   "category": "mixed_pos_neg",
+   "text": "잠을 자도 피곤이 안 풀리는데 열이나 기침은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_89",
+     "status": "POSITIVE",
+     "span": "잠을 자도 피곤이 안 풀리는데"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열이나 기침은 없어요"
+    },
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "열이나 기침은 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A078",
+   "category": "mixed_pos_neg",
+   "text": "당뇨가 있어서 인슐린 맞고 있고, 담배는 안 피웁니다.",
+   "gold": [
+    {
+     "evidence_id": "E_69",
+     "status": "POSITIVE",
+     "span": "당뇨가 있어서"
+    },
+    {
+     "evidence_id": "E_79",
+     "status": "NEGATIVE",
+     "span": "담배는 안 피웁니다"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A079",
+   "category": "mixed_pos_neg",
+   "text": "예방접종은 빠짐없이 다 맞았고요, 최근에 감기 걸린 적도 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_209",
+     "status": "POSITIVE",
+     "span": "예방접종은 빠짐없이 다 맞았고요"
+    },
+    {
+     "evidence_id": "E_116",
+     "status": "NEGATIVE",
+     "span": "최근에 감기 걸린 적도 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A080",
+   "category": "mixed_pos_neg",
+   "text": "목 옆에 멍울이 부었는데 열은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_9",
+     "status": "POSITIVE",
+     "span": "멍울이 부었는데"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열은 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A081",
+   "category": "mixed_pos_neg",
+   "text": "머리가 지끈지끈 아픈데 속이 메슥거리거나 토할 것 같진 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "머리가 지끈지끈 아픈데"
+    },
+    {
+     "evidence_id": "E_148",
+     "status": "NEGATIVE",
+     "span": "속이 메슥거리거나 토할 것 같진 않아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A082",
+   "category": "mixed_pos_neg",
+   "text": "누런 콧물이 계속 나오는데 코나 목이 가렵진 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_182",
+     "status": "POSITIVE",
+     "span": "누런 콧물이 계속 나오는데"
+    },
+    {
+     "evidence_id": "E_169",
+     "status": "NEGATIVE",
+     "span": "코나 목이 가렵진 않아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A083",
+   "category": "mixed_pos_neg",
+   "text": "기운이 없어서 며칠째 출근도 못 하고 누워 지내는데, 땀이 많이 나진 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_88",
+     "status": "POSITIVE",
+     "span": "출근도 못 하고 누워 지내는데"
+    },
+    {
+     "evidence_id": "E_50",
+     "status": "NEGATIVE",
+     "span": "땀이 많이 나진 않아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A084",
+   "category": "mixed_pos_neg",
+   "text": "숨을 내쉴 때 쌕쌕 소리는 안 나는데 숨이 좀 차요.",
+   "gold": [
+    {
+     "evidence_id": "E_214",
+     "status": "NEGATIVE",
+     "span": "쌕쌕 소리는 안 나는데"
+    },
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨이 좀 차요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A085",
+   "category": "mixed_pos_neg",
+   "text": "의사 선생님이 비만이라고 하셨는데 술은 입에도 안 대요.",
+   "gold": [
+    {
+     "evidence_id": "E_70",
+     "status": "POSITIVE",
+     "span": "비만이라고 하셨는데"
+    },
+    {
+     "evidence_id": "E_78",
+     "status": "NEGATIVE",
+     "span": "술은 입에도 안 대요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A086",
+   "category": "or_and",
+   "text": "목이 좀 칼칼하긴 한데 기침하거나 열이 나진 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "기침하거나 열이 나진 않아요"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "기침하거나 열이 나진 않아요"
+    }
+   ],
+   "note": "'A하거나 B하진 않아요' → 둘 다 부정",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A087",
+   "category": "or_and",
+   "text": "콧물도 기침도 없고 그냥 목소리만 쉬었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "콧물도 기침도 없고"
+    },
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목소리만 쉬었어요"
+    }
+   ],
+   "note": "E_181은 콧물만 부정(코막힘 미언급) → R2 라벨 없음; '쉬었어요'는 결과상태=현재",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A088",
+   "category": "or_and",
+   "text": "열도 없고 기침도 없어요, 그런데 숨이 차요.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열도 없고"
+    },
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "기침도 없어요"
+    },
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨이 차요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A089",
+   "category": "or_and",
+   "text": "코막힘이랑 맑은 콧물은 있는데 누렇거나 퍼런 콧물은 안 나와요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "코막힘이랑 맑은 콧물은 있는데"
+    },
+    {
+     "evidence_id": "E_182",
+     "status": "NEGATIVE",
+     "span": "누렇거나 퍼런 콧물은 안 나와요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A090",
+   "category": "or_and",
+   "text": "기침이랑 가래는 있는데 열은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침이랑 가래는 있는데"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열은 없어요"
+    }
+   ],
+   "note": "단순 가래 → E_77 라벨 없음(R3)",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A091",
+   "category": "or_and",
+   "text": "코가 막히지도 않고 콧물이 흐르지도 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "NEGATIVE",
+     "span": "코가 막히지도 않고 콧물이 흐르지도 않아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A092",
+   "category": "or_and",
+   "text": "코는 안 막히는데 콧물은 줄줄 흘러요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "콧물은 줄줄 흘러요"
+    }
+   ],
+   "note": "R2: 한쪽 부정 + 다른 쪽 긍정 → POSITIVE",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A093",
+   "category": "or_and",
+   "text": "코는 가려운데 목 뒤쪽은 괜찮아요.",
+   "gold": [
+    {
+     "evidence_id": "E_169",
+     "status": "POSITIVE",
+     "span": "코는 가려운데"
+    }
+   ],
+   "note": "R2: 한 부분 긍정 → POSITIVE",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A094",
+   "category": "or_and",
+   "text": "당뇨도 없고 고혈압도 없고 혈압약도 안 먹어요.",
+   "gold": [
+    {
+     "evidence_id": "E_69",
+     "status": "NEGATIVE",
+     "span": "당뇨도 없고"
+    },
+    {
+     "evidence_id": "E_104",
+     "status": "NEGATIVE",
+     "span": "고혈압도 없고 혈압약도 안 먹어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A095",
+   "category": "or_and",
+   "text": "메스껍지도 않고 토할 것 같지도 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_148",
+     "status": "NEGATIVE",
+     "span": "메스껍지도 않고 토할 것 같지도 않아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A096",
+   "category": "or_and",
+   "text": "속이 느글느글하긴 한데 토할 것 같진 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_148",
+     "status": "POSITIVE",
+     "span": "속이 느글느글하긴 한데"
+    }
+   ],
+   "note": "R2: 구역감 긍정, 구토감만 부정 → POSITIVE",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A097",
+   "category": "or_and",
+   "text": "숨이 차거나 가슴이 두근거리거나 그런 건 전혀 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "NEGATIVE",
+     "span": "숨이 차거나 가슴이 두근거리거나 그런 건 전혀 없어요"
+    },
+    {
+     "evidence_id": "E_155",
+     "status": "NEGATIVE",
+     "span": "숨이 차거나 가슴이 두근거리거나 그런 건 전혀 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A098",
+   "category": "or_and",
+   "text": "피곤하긴 늘 피곤한데 잠은 그럭저럭 개운하게 자요.",
+   "gold": [
+    {
+     "evidence_id": "E_89",
+     "status": "POSITIVE",
+     "span": "피곤하긴 늘 피곤한데"
+    }
+   ],
+   "note": "R2: 지속 피로 긍정 → POSITIVE",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A099",
+   "category": "or_and",
+   "text": "심근경색은 없었는데 협심증 때문에 약을 먹고 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_105",
+     "status": "POSITIVE",
+     "span": "협심증 때문에 약을 먹고 있어요"
+    }
+   ],
+   "note": "R2",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A100",
+   "category": "or_and",
+   "text": "천식 진단은 없는데 예전에 기관지 확장제 흡입기를 써 본 적은 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_124",
+     "status": "POSITIVE",
+     "span": "기관지 확장제 흡입기를 써 본 적은 있어요"
+    }
+   ],
+   "note": "R2 + 이력형(R6)",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A101",
+   "category": "or_and",
+   "text": "기침이랑 가래랑 열까지 다 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침이랑 가래랑 열까지 다 있어요"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "기침이랑 가래랑 열까지 다 있어요"
+    }
+   ],
+   "note": "단순 가래 → E_77 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A102",
+   "category": "or_and",
+   "text": "목소리도 변한 거 없고 기침도 안 해요.",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "NEGATIVE",
+     "span": "목소리도 변한 거 없고"
+    },
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "기침도 안 해요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A103",
+   "category": "or_and",
+   "text": "팔에 빨간 게 올라오거나 가렵거나 한 적 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_129",
+     "status": "NEGATIVE",
+     "span": "팔에 빨간 게 올라오거나 가렵거나 한 적 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A104",
+   "category": "or_and",
+   "text": "몸 어디 부은 데도 없고 멍울 같은 것도 안 만져져요.",
+   "gold": [
+    {
+     "evidence_id": "E_151",
+     "status": "NEGATIVE",
+     "span": "몸 어디 부은 데도 없고"
+    },
+    {
+     "evidence_id": "E_9",
+     "status": "NEGATIVE",
+     "span": "멍울 같은 것도 안 만져져요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A105",
+   "category": "or_and",
+   "text": "담배도 술도 안 해요.",
+   "gold": [
+    {
+     "evidence_id": "E_79",
+     "status": "NEGATIVE",
+     "span": "담배도 술도 안 해요"
+    },
+    {
+     "evidence_id": "E_78",
+     "status": "NEGATIVE",
+     "span": "담배도 술도 안 해요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A106",
+   "category": "or_and",
+   "text": "COPD나 천식 같은 폐 질환은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_123",
+     "status": "NEGATIVE",
+     "span": "COPD나 천식 같은 폐 질환은 없어요"
+    }
+   ],
+   "note": "E_124는 천식만 부정(기관지확장제 미언급) → R2 라벨 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A107",
+   "category": "or_and",
+   "text": "코가 막히고 누런 콧물도 나오고 목 뒤까지 가려워요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "코가 막히고"
+    },
+    {
+     "evidence_id": "E_182",
+     "status": "POSITIVE",
+     "span": "누런 콧물도 나오고"
+    },
+    {
+     "evidence_id": "E_169",
+     "status": "POSITIVE",
+     "span": "목 뒤까지 가려워요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A108",
+   "category": "or_and",
+   "text": "쌕쌕 소리는 숨 들이쉴 때만 나고 내쉴 때는 안 나요.",
+   "gold": [
+    {
+     "evidence_id": "E_112",
+     "status": "POSITIVE",
+     "span": "쌕쌕 소리는 숨 들이쉴 때만 나고"
+    },
+    {
+     "evidence_id": "E_214",
+     "status": "NEGATIVE",
+     "span": "내쉴 때는 안 나요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A109",
+   "category": "or_and",
+   "text": "열이 나거나 땀을 많이 흘리거나 하진 않고, 기침만 좀 나요.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열이 나거나 땀을 많이 흘리거나 하진 않고"
+    },
+    {
+     "evidence_id": "E_50",
+     "status": "NEGATIVE",
+     "span": "열이 나거나 땀을 많이 흘리거나 하진 않고"
+    },
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침만 좀 나요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A110",
+   "category": "or_and",
+   "text": "가슴이 두근거리고 숨도 차고 땀도 비 오듯 쏟아져요.",
+   "gold": [
+    {
+     "evidence_id": "E_155",
+     "status": "POSITIVE",
+     "span": "가슴이 두근거리고"
+    },
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨도 차고"
+    },
+    {
+     "evidence_id": "E_50",
+     "status": "POSITIVE",
+     "span": "땀도 비 오듯 쏟아져요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A111",
+   "category": "idiom",
+   "text": "기침이 장난 아니게 나와서 밤새 한숨도 못 잤어요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침이 장난 아니게 나와서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A112",
+   "category": "idiom",
+   "text": "목이 아파 죽겠어요, 침 삼키기도 힘들어요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "목이 아파 죽겠어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A113",
+   "category": "idiom",
+   "text": "코가 꽉 막혀서 미치겠어요, 입으로만 숨 쉬고 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "코가 꽉 막혀서 미치겠어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A114",
+   "category": "idiom",
+   "text": "열이 말도 못하게 올라서 얼음찜질을 하고 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열이 말도 못하게 올라서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A115",
+   "category": "idiom",
+   "text": "아닌 게 아니라 요즘 가래가 누렇게 끓어서 걱정이에요.",
+   "gold": [
+    {
+     "evidence_id": "E_77",
+     "status": "POSITIVE",
+     "span": "가래가 누렇게 끓어서"
+    }
+   ],
+   "note": "'아닌 게 아니라'=강조, 부정 아님",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A116",
+   "category": "idiom",
+   "text": "머리가 깨질 것 같이 아파서 일을 손에 못 잡겠어요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "머리가 깨질 것 같이 아파서"
+    }
+   ],
+   "note": "'깨질 것 같이'는 관용 강조, hedge 아님",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A117",
+   "category": "idiom",
+   "text": "땀이 비 오듯 쏟아져서 하루에 옷을 세 번은 갈아입어요.",
+   "gold": [
+    {
+     "evidence_id": "E_50",
+     "status": "POSITIVE",
+     "span": "땀이 비 오듯 쏟아져서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A118",
+   "category": "idiom",
+   "text": "숨이 차서 죽는 줄 알았어요, 지금도 조금만 걸으면 숨이 턱까지 차요.",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "지금도 조금만 걸으면 숨이 턱까지 차요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A119",
+   "category": "idiom",
+   "text": "속이 뒤집어질 것 같아서 아무것도 못 먹겠어요.",
+   "gold": [
+    {
+     "evidence_id": "E_148",
+     "status": "POSITIVE",
+     "span": "속이 뒤집어질 것 같아서"
+    }
+   ],
+   "note": "관용 표현 = 구역감",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A120",
+   "category": "idiom",
+   "text": "기침을 했다 하면 숨넘어가게 해서 옆 사람이 다 놀라요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침을 했다 하면 숨넘어가게 해서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A121",
+   "category": "idiom",
+   "text": "심장이 터질 것처럼 쿵쾅거려서 가만히 있을 수가 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_155",
+     "status": "POSITIVE",
+     "span": "심장이 터질 것처럼 쿵쾅거려서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A122",
+   "category": "idiom",
+   "text": "피곤해서 죽겠어요, 자고 일어나도 몸이 천근만근이에요.",
+   "gold": [
+    {
+     "evidence_id": "E_89",
+     "status": "POSITIVE",
+     "span": "자고 일어나도 몸이 천근만근이에요"
+    }
+   ],
+   "note": "비개운한 수면 → E_89",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A123",
+   "category": "idiom",
+   "text": "목소리가 다 갈라져서 말도 못하게 쉬었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목소리가 다 갈라져서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A124",
+   "category": "idiom",
+   "text": "콧물이 수도꼭지 튼 것처럼 줄줄 흘러요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "콧물이 수도꼭지 튼 것처럼 줄줄 흘러요"
+    }
+   ],
+   "note": "색 미언급 콧물 → E_181",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A125",
+   "category": "idiom",
+   "text": "허리가 끊어질 것 같이 아파서 움직일 때마다 곡소리가 나요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "허리가 끊어질 것 같이 아파서"
+    },
+    {
+     "evidence_id": "E_216",
+     "status": "POSITIVE",
+     "span": "움직일 때마다 곡소리가 나요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A126",
+   "category": "mot",
+   "text": "열은 따로 못 느꼈어요, 체온계로 재도 36도대였어요.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열은 따로 못 느꼈어요"
+    }
+   ],
+   "note": "못 느꼈다=없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A127",
+   "category": "mot",
+   "text": "숨을 못 쉬겠어요, 가슴이 꽉 조이는 것 같아요.",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨을 못 쉬겠어요"
+    }
+   ],
+   "note": "'조이는 것 같아요'는 통증 명시 아님+hedge → E_53 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A128",
+   "category": "mot",
+   "text": "기침 때문에 밤에 잠을 못 자요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침 때문에"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A129",
+   "category": "mot",
+   "text": "잠을 못 자서 그런지 하루 종일 머리가 멍해요.",
+   "gold": [],
+   "note": "불면·멍함은 41개에 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A130",
+   "category": "mot",
+   "text": "코가 가려워서 못 참겠어요, 자꾸 비비게 돼요.",
+   "gold": [
+    {
+     "evidence_id": "E_169",
+     "status": "POSITIVE",
+     "span": "코가 가려워서 못 참겠어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A131",
+   "category": "mot",
+   "text": "심장이 두근거리는 건 못 느꼈어요.",
+   "gold": [
+    {
+     "evidence_id": "E_155",
+     "status": "NEGATIVE",
+     "span": "심장이 두근거리는 건 못 느꼈어요"
+    }
+   ],
+   "note": "두근거림 전반 부정으로 봄",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A132",
+   "category": "mot",
+   "text": "피가 섞여 나오는 건 못 봤어요, 가래만 하얗게 나와요.",
+   "gold": [
+    {
+     "evidence_id": "E_45",
+     "status": "NEGATIVE",
+     "span": "피가 섞여 나오는 건 못 봤어요"
+    }
+   ],
+   "note": "흰 가래 → E_77 라벨 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A133",
+   "category": "mot",
+   "text": "너무 기운이 없어서 요 며칠 밭에도 못 나가고 누워만 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_88",
+     "status": "POSITIVE",
+     "span": "밭에도 못 나가고 누워만 있어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A134",
+   "category": "mot",
+   "text": "목이 잠겨서 말을 제대로 못 하겠어요.",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목이 잠겨서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A135",
+   "category": "mot",
+   "text": "숨이 차서 계단 한 층도 못 올라가요.",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨이 차서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A136",
+   "category": "mot",
+   "text": "술은 체질적으로 못 마셔서 한 잔도 안 해요.",
+   "gold": [
+    {
+     "evidence_id": "E_78",
+     "status": "NEGATIVE",
+     "span": "술은 체질적으로 못 마셔서 한 잔도 안 해요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A137",
+   "category": "mot",
+   "text": "속이 메슥거려서 오늘 아침을 못 먹었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_148",
+     "status": "POSITIVE",
+     "span": "속이 메슥거려서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A138",
+   "category": "mot",
+   "text": "잠을 푹 못 자고 자꾸 깨서 아침에 일어나도 개운하지 못해요.",
+   "gold": [
+    {
+     "evidence_id": "E_89",
+     "status": "POSITIVE",
+     "span": "아침에 일어나도 개운하지 못해요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A139",
+   "category": "mot",
+   "text": "허리를 못 펴겠어요, 펴려고 하면 아파서요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "펴려고 하면 아파서요"
+    },
+    {
+     "evidence_id": "E_216",
+     "status": "POSITIVE",
+     "span": "펴려고 하면 아파서요"
+    }
+   ],
+   "note": "동작 시 통증 → E_216",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A140",
+   "category": "mot",
+   "text": "땀이 많이 나는지는 잘 못 느끼겠어요.",
+   "gold": [],
+   "note": "불확실 진술(hedge) → 라벨 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A141",
+   "category": "an",
+   "text": "요즘은 기침은 안 해요, 목만 좀 칼칼해요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "기침은 안 해요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A142",
+   "category": "an",
+   "text": "아까 체온 재 보니 열은 안 나요.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열은 안 나요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A143",
+   "category": "an",
+   "text": "안 아픈 건 아닌데 참을 만해요, 명치 쪽이요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "안 아픈 건 아닌데"
+    }
+   ],
+   "note": "R8 이중부정 → POSITIVE",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A145",
+   "category": "an",
+   "text": "해열제를 먹어도 열이 안 떨어져요.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열이 안 떨어져요"
+    }
+   ],
+   "note": "R5",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A146",
+   "category": "an",
+   "text": "담배는 이제 안 피워요, 작년에 끊었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_79",
+     "status": "NEGATIVE",
+     "span": "담배는 이제 안 피워요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A147",
+   "category": "an",
+   "text": "땀은 평소보다 많이 안 나요.",
+   "gold": [
+    {
+     "evidence_id": "E_50",
+     "status": "NEGATIVE",
+     "span": "땀은 평소보다 많이 안 나요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A148",
+   "category": "an",
+   "text": "코는 안 막혀요, 그런데 재채기가 자꾸 나요.",
+   "gold": [],
+   "note": "R2: 코막힘만 부정(콧물 미언급) → 라벨 없음; 재채기 미지원",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A151",
+   "category": "an",
+   "text": "누런 가래가 안 끊기고 계속 올라와요.",
+   "gold": [
+    {
+     "evidence_id": "E_77",
+     "status": "POSITIVE",
+     "span": "누런 가래가 안 끊기고"
+    }
+   ],
+   "note": "R5",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A152",
+   "category": "an",
+   "text": "목소리는 안 변했어요, 예전 그대로예요.",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "NEGATIVE",
+     "span": "목소리는 안 변했어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A153",
+   "category": "an",
+   "text": "숨이 안 차는 건 아닌데 걸을 만은 해요.",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨이 안 차는 건 아닌데"
+    }
+   ],
+   "note": "R8 이중부정 → POSITIVE",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A154",
+   "category": "an",
+   "text": "밤에 식은땀이 안 멈추고 계속 나서 베개가 젖어요.",
+   "gold": [
+    {
+     "evidence_id": "E_50",
+     "status": "POSITIVE",
+     "span": "식은땀이 안 멈추고 계속 나서"
+    }
+   ],
+   "note": "R5",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A155",
+   "category": "an",
+   "text": "기운이 안 나서 출근을 안 하고 이틀째 누워 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_88",
+     "status": "POSITIVE",
+     "span": "출근을 안 하고 이틀째 누워 있어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A156",
+   "category": "ani",
+   "text": "열이 나는 건 아니에요, 아까도 재 봤어요.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열이 나는 건 아니에요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A157",
+   "category": "ani",
+   "text": "기침하는 건 아니고 목소리가 쉬어서 왔어요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "기침하는 건 아니고"
+    },
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목소리가 쉬어서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A158",
+   "category": "ani",
+   "text": "누렇거나 퍼런 콧물이 아니라 맑은 콧물이 계속 흘러요.",
+   "gold": [
+    {
+     "evidence_id": "E_182",
+     "status": "NEGATIVE",
+     "span": "누렇거나 퍼런 콧물이 아니라"
+    },
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "맑은 콧물이 계속 흘러요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A159",
+   "category": "ani",
+   "text": "숨이 찬 건 아닌 것 같아요, 그냥 좀 답답해요.",
+   "gold": [],
+   "note": "hedge → 라벨 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A160",
+   "category": "ani",
+   "text": "당뇨는 아니라고 건강검진에서 들었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_69",
+     "status": "NEGATIVE",
+     "span": "당뇨는 아니라고"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A161",
+   "category": "ani",
+   "text": "살찐 체형은 아니고 오히려 마른 편이에요.",
+   "gold": [
+    {
+     "evidence_id": "E_70",
+     "status": "NEGATIVE",
+     "span": "살찐 체형은 아니고"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A162",
+   "category": "ani",
+   "text": "아픈 게 아니라 그냥 가슴이 답답한 거예요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "NEGATIVE",
+     "span": "아픈 게 아니라"
+    }
+   ],
+   "note": "통증 자체 부정 → E_53 NEGATIVE",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A163",
+   "category": "ani",
+   "text": "감기는 아닌 것 같은데 목이 계속 간지러워요.",
+   "gold": [
+    {
+     "evidence_id": "E_169",
+     "status": "POSITIVE",
+     "span": "목이 계속 간지러워요"
+    }
+   ],
+   "note": "병명 hedge 부분은 라벨 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A164",
+   "category": "ani",
+   "text": "혈압이 높은 건 아니고 혈압약도 안 먹어요.",
+   "gold": [
+    {
+     "evidence_id": "E_104",
+     "status": "NEGATIVE",
+     "span": "혈압이 높은 건 아니고 혈압약도 안 먹어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A165",
+   "category": "ani",
+   "text": "두근거리는 게 아니라 가슴이 쿡쿡 쑤시듯 아파요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "가슴이 쿡쿡 쑤시듯 아파요"
+    },
+    {
+     "evidence_id": "E_155",
+     "status": "NEGATIVE",
+     "span": "두근거리는 게 아니라"
+    }
+   ],
+   "note": "E_155는 두근거림만 부정(빠름/불규칙 미언급) → R2 라벨 없음 | [검수] 두근거림(palpitations)은 E_155 포괄어로 취급 — A131/B184 '두근거리는 건 없어요'=NEGATIVE와 일관, 'X가 아니라'=부정(A157/B161과 일관)",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A166",
+   "category": "ani",
+   "text": "술을 많이 마시는 건 아니에요, 한 달에 한두 번 맥주 한 캔 정도예요.",
+   "gold": [
+    {
+     "evidence_id": "E_78",
+     "status": "NEGATIVE",
+     "span": "술을 많이 마시는 건 아니에요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A167",
+   "category": "ani",
+   "text": "제가 아니라 손주가 열이 나서요, 저는 괜찮아요.",
+   "gold": [],
+   "note": "타인 증상; '괜찮아요' 막연",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A168",
+   "category": "ani",
+   "text": "코가 막힌 게 아니라 맑은 콧물이 목 뒤로 넘어가요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "맑은 콧물이 목 뒤로 넘어가요"
+    }
+   ],
+   "note": "R2: 코막힘 부정 + 맑은 콧물 긍정 → POSITIVE",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A169",
+   "category": "ani",
+   "text": "몸살은 아니고요, 기침만 쿨럭쿨럭 해요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침만 쿨럭쿨럭 해요"
+    }
+   ],
+   "note": "'몸살 아님'은 병명 → 라벨 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A170",
+   "category": "ani",
+   "text": "누워만 있는 건 아니지만 너무 피곤해서 일은 못 하고 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_88",
+     "status": "POSITIVE",
+     "span": "너무 피곤해서 일은 못 하고 있어요"
+    }
+   ],
+   "note": "R2: 한 부분 긍정 → POSITIVE",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A172",
+   "category": "tense_contrast",
+   "text": "며칠 전에 기침이 좀 났었어요.",
+   "gold": [],
+   "note": "과거만 서술 → R6 라벨 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A173",
+   "category": "tense_contrast",
+   "text": "예전엔 담배를 하루 두 갑씩 피웠는데 지금은 끊었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_79",
+     "status": "NEGATIVE",
+     "span": "지금은 끊었어요"
+    }
+   ],
+   "note": "R6 흡연 현재 기준",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A174",
+   "category": "tense_contrast",
+   "text": "어렸을 때 천식이 있어서 흡입기를 썼었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_124",
+     "status": "POSITIVE",
+     "span": "어렸을 때 천식이 있어서"
+    }
+   ],
+   "note": "이력형 질문 → POSITIVE",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A175",
+   "category": "tense_contrast",
+   "text": "작년에 심근경색으로 스텐트를 넣었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_105",
+     "status": "POSITIVE",
+     "span": "작년에 심근경색으로 스텐트를 넣었어요"
+    }
+   ],
+   "note": "이력형",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A176",
+   "category": "tense_contrast",
+   "text": "3주 전에 감기를 앓았는데 지금은 다 나았어요.",
+   "gold": [],
+   "note": "E_116 2주 범위 밖, 명시 부정도 아님 → 라벨 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A177",
+   "category": "tense_contrast",
+   "text": "열흘 전쯤 감기 걸려서 고생했었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_116",
+     "status": "POSITIVE",
+     "span": "열흘 전쯤 감기 걸려서"
+    }
+   ],
+   "note": "2주 이내 → POSITIVE",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A178",
+   "category": "tense_contrast",
+   "text": "한 달 전쯤 코로나에 걸렸었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_0",
+     "status": "POSITIVE",
+     "span": "코로나에 걸렸었어요"
+    }
+   ],
+   "note": "최근 바이러스 감염 이력",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A179",
+   "category": "tense_contrast",
+   "text": "젊을 땐 술을 말술로 마셨는데 요즘은 한 잔도 안 해요.",
+   "gold": [
+    {
+     "evidence_id": "E_78",
+     "status": "NEGATIVE",
+     "span": "요즘은 한 잔도 안 해요"
+    }
+   ],
+   "note": "R6 음주 현재 기준",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A180",
+   "category": "tense_contrast",
+   "text": "원래는 코가 막혔었는데 요즘은 콧물이 맑게 줄줄 흘러요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "요즘은 콧물이 맑게 줄줄 흘러요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A181",
+   "category": "tense_contrast",
+   "text": "처음엔 맑은 콧물이었는데 이제는 누런 콧물이 나와요.",
+   "gold": [
+    {
+     "evidence_id": "E_182",
+     "status": "POSITIVE",
+     "span": "이제는 누런 콧물이 나와요"
+    }
+   ],
+   "note": "과거 맑은 콧물은 대조 과거 → E_181 라벨 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A182",
+   "category": "tense_contrast",
+   "text": "어제까지는 숨이 찼는데 오늘은 괜찮아요.",
+   "gold": [],
+   "note": "과거 + 호전 → 라벨 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A183",
+   "category": "tense_contrast",
+   "text": "몇 년 전부터 코에 물혹이 있어서 이비인후과 다녀요.",
+   "gold": [
+    {
+     "evidence_id": "E_120",
+     "status": "POSITIVE",
+     "span": "코에 물혹이 있어서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A184",
+   "category": "tense_contrast",
+   "text": "살이 많이 쪘었는데 운동해서 지금은 정상 체중이에요.",
+   "gold": [
+    {
+     "evidence_id": "E_70",
+     "status": "NEGATIVE",
+     "span": "지금은 정상 체중이에요"
+    }
+   ],
+   "note": "R6 체중 현재 기준",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A185",
+   "category": "tense_contrast",
+   "text": "지난달 건강검진 때 당뇨 진단을 받았어요.",
+   "gold": [
+    {
+     "evidence_id": "E_69",
+     "status": "POSITIVE",
+     "span": "당뇨 진단을 받았어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A186",
+   "category": "tense_contrast",
+   "text": "두 달 전에 HIV 양성인 사람하고 관계가 있었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_189",
+     "status": "POSITIVE",
+     "span": "HIV 양성인 사람하고 관계가 있었어요"
+    }
+   ],
+   "note": "12개월 이내",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A187",
+   "category": "tense_contrast",
+   "text": "어릴 때 맞아야 할 예방접종은 다 맞았다고 어머니가 그러셨어요.",
+   "gold": [
+    {
+     "evidence_id": "E_209",
+     "status": "POSITIVE",
+     "span": "예방접종은 다 맞았다고"
+    }
+   ],
+   "note": "본인 이력 전언 → POSITIVE",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A188",
+   "category": "tense_contrast",
+   "text": "그저께는 속이 메스꺼웠는데 지금은 좀 가라앉았어요.",
+   "gold": [],
+   "note": "과거 + 호전 → 라벨 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A189",
+   "category": "tense_contrast",
+   "text": "전엔 계단 오를 때만 숨이 찼는데 요즘은 가만히 있어도 숨이 차요.",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "요즘은 가만히 있어도 숨이 차요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A190",
+   "category": "tense_contrast",
+   "text": "예전엔 쌕쌕거린 적이 없었는데 이번 주 들어서 숨 내쉴 때 쌕쌕 소리가 나요.",
+   "gold": [
+    {
+     "evidence_id": "E_214",
+     "status": "POSITIVE",
+     "span": "숨 내쉴 때 쌕쌕 소리가 나요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A191",
+   "category": "persistence",
+   "text": "기침이 보름째 안 떨어져서 약국 약을 세 번이나 바꿨어요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침이 보름째 안 떨어져서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A192",
+   "category": "persistence",
+   "text": "해열제를 두 번 먹었는데도 열이 안 내려가요.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열이 안 내려가요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A193",
+   "category": "persistence",
+   "text": "코막힘이 안 뚫려서 밤새 입 벌리고 자요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "코막힘이 안 뚫려서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A194",
+   "category": "persistence",
+   "text": "쉰 목소리가 한 달째 안 돌아와요.",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "쉰 목소리가 한 달째 안 돌아와요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A195",
+   "category": "persistence",
+   "text": "피로가 아무리 쉬어도 안 풀려서 늘 몸이 무거워요.",
+   "gold": [
+    {
+     "evidence_id": "E_89",
+     "status": "POSITIVE",
+     "span": "피로가 아무리 쉬어도 안 풀려서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A196",
+   "category": "persistence",
+   "text": "누런 콧물이 약을 먹어도 계속 안 멈춰요.",
+   "gold": [
+    {
+     "evidence_id": "E_182",
+     "status": "POSITIVE",
+     "span": "누런 콧물이 약을 먹어도 계속 안 멈춰요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A197",
+   "category": "persistence",
+   "text": "명치 통증이 사흘째 안 가라앉아요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "명치 통증이 사흘째 안 가라앉아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A198",
+   "category": "persistence",
+   "text": "얼굴 부기가 아침에 일어나서 한참 지나도 안 빠져요.",
+   "gold": [
+    {
+     "evidence_id": "E_151",
+     "status": "POSITIVE",
+     "span": "얼굴 부기가 아침에 일어나서 한참 지나도 안 빠져요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A199",
+   "category": "persistence",
+   "text": "두드러기가 연고를 발라도 안 없어져요.",
+   "gold": [
+    {
+     "evidence_id": "E_129",
+     "status": "POSITIVE",
+     "span": "두드러기가 연고를 발라도 안 없어져요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A200",
+   "category": "persistence",
+   "text": "목 뒤 가려운 게 약을 먹어도 안 멎어요.",
+   "gold": [
+    {
+     "evidence_id": "E_169",
+     "status": "POSITIVE",
+     "span": "목 뒤 가려운 게 약을 먹어도 안 멎어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A201",
+   "category": "persistence",
+   "text": "헛구역질이 아침마다 나서 양치할 때 안 멈춰요.",
+   "gold": [
+    {
+     "evidence_id": "E_148",
+     "status": "POSITIVE",
+     "span": "헛구역질이 아침마다 나서"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A202",
+   "category": "persistence",
+   "text": "숨찬 게 좀처럼 안 가시네요, 동네 한 바퀴도 힘들어요.",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨찬 게 좀처럼 안 가시네요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A203",
+   "category": "multi_symptom",
+   "text": "사흘 전부터 열이 오르고 기침이 나며, 누런 가래까지 끓어요.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열이 오르고"
+    },
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침이 나며"
+    },
+    {
+     "evidence_id": "E_77",
+     "status": "POSITIVE",
+     "span": "누런 가래까지 끓어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A204",
+   "category": "multi_symptom",
+   "text": "숨을 깊이 들이쉬면 오른쪽 가슴이 찌르듯 아프고, 앞으로 숙이면 좀 덜해요.",
+   "gold": [
+    {
+     "evidence_id": "E_220",
+     "status": "POSITIVE",
+     "span": "숨을 깊이 들이쉬면"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "오른쪽 가슴이 찌르듯 아프고"
+    },
+    {
+     "evidence_id": "E_33",
+     "status": "POSITIVE",
+     "span": "앞으로 숙이면 좀 덜해요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A205",
+   "category": "multi_symptom",
+   "text": "기침이 심하게 나는데, 기침할 때랑 무거운 걸 들 때 배가 땅기듯 아파요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침이 심하게 나는데"
+    },
+    {
+     "evidence_id": "E_221",
+     "status": "POSITIVE",
+     "span": "기침할 때랑 무거운 걸 들 때"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "배가 땅기듯 아파요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A206",
+   "category": "multi_symptom",
+   "text": "계단 두 층만 올라가도 숨이 차고 가슴이 두근거리는데, 앉아서 쉬면 가라앉아요.",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨이 차고"
+    },
+    {
+     "evidence_id": "E_155",
+     "status": "POSITIVE",
+     "span": "가슴이 두근거리는데"
+    },
+    {
+     "evidence_id": "E_218",
+     "status": "POSITIVE",
+     "span": "앉아서 쉬면 가라앉아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A207",
+   "category": "multi_symptom",
+   "text": "코가 막히고 목 뒤가 가렵고 재채기가 나요, 원래 알레르기 체질이에요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "코가 막히고"
+    },
+    {
+     "evidence_id": "E_169",
+     "status": "POSITIVE",
+     "span": "목 뒤가 가렵고"
+    },
+    {
+     "evidence_id": "E_226",
+     "status": "POSITIVE",
+     "span": "원래 알레르기 체질이에요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A208",
+   "category": "multi_symptom",
+   "text": "온몸 근육이 두들겨 맞은 것처럼 쑤시고 열도 나요, 지난주에 식구가 독감이었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_175",
+     "status": "POSITIVE",
+     "span": "온몸 근육이 두들겨 맞은 것처럼 쑤시고"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "온몸 근육이 두들겨 맞은 것처럼 쑤시고"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열도 나요"
+    }
+   ],
+   "note": "전신 근육통=E_175, 명시 통증이라 R4로 E_53 동시; 식구 독감은 타인",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A209",
+   "category": "multi_symptom",
+   "text": "당뇨랑 고혈압이 있어서 약을 먹고 있고 담배도 하루 반 갑 피워요.",
+   "gold": [
+    {
+     "evidence_id": "E_69",
+     "status": "POSITIVE",
+     "span": "당뇨랑"
+    },
+    {
+     "evidence_id": "E_104",
+     "status": "POSITIVE",
+     "span": "고혈압이 있어서"
+    },
+    {
+     "evidence_id": "E_79",
+     "status": "POSITIVE",
+     "span": "담배도 하루 반 갑 피워요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A210",
+   "category": "multi_symptom",
+   "text": "목에 멍울이 서고 밤마다 식은땀이 흥건하고 기운이 없어서 누워만 지내요.",
+   "gold": [
+    {
+     "evidence_id": "E_9",
+     "status": "POSITIVE",
+     "span": "목에 멍울이 서고"
+    },
+    {
+     "evidence_id": "E_50",
+     "status": "POSITIVE",
+     "span": "밤마다 식은땀이 흥건하고"
+    },
+    {
+     "evidence_id": "E_88",
+     "status": "POSITIVE",
+     "span": "누워만 지내요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A211",
+   "category": "multi_symptom",
+   "text": "천식이 있는데 요즘 숨 내쉴 때 쌕쌕 소리가 나고 숨이 차요.",
+   "gold": [
+    {
+     "evidence_id": "E_124",
+     "status": "POSITIVE",
+     "span": "천식이 있는데"
+    },
+    {
+     "evidence_id": "E_214",
+     "status": "POSITIVE",
+     "span": "숨 내쉴 때 쌕쌕 소리가 나고"
+    },
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨이 차요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A212",
+   "category": "multi_symptom",
+   "text": "기침도 나고 가래에 피가 섞여 나오고 열도 있어요, 살도 많이 빠졌어요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침도 나고"
+    },
+    {
+     "evidence_id": "E_45",
+     "status": "POSITIVE",
+     "span": "가래에 피가 섞여 나오고"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열도 있어요"
+    }
+   ],
+   "note": "체중감소 미지원",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A213",
+   "category": "multi_symptom",
+   "text": "오른쪽 무릎이 부어서 걸을 때마다 아파요.",
+   "gold": [
+    {
+     "evidence_id": "E_151",
+     "status": "POSITIVE",
+     "span": "오른쪽 무릎이 부어서"
+    },
+    {
+     "evidence_id": "E_216",
+     "status": "POSITIVE",
+     "span": "걸을 때마다 아파요"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "걸을 때마다 아파요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A214",
+   "category": "multi_symptom",
+   "text": "속이 메슥거리고 땀이 비 오듯 나고 가슴이 조이듯 아파요, 협심증 약도 먹고 있고요.",
+   "gold": [
+    {
+     "evidence_id": "E_148",
+     "status": "POSITIVE",
+     "span": "속이 메슥거리고"
+    },
+    {
+     "evidence_id": "E_50",
+     "status": "POSITIVE",
+     "span": "땀이 비 오듯 나고"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "가슴이 조이듯 아파요"
+    },
+    {
+     "evidence_id": "E_105",
+     "status": "POSITIVE",
+     "span": "협심증 약도 먹고 있고요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A215",
+   "category": "multi_symptom",
+   "text": "누런 콧물이 나오고 목소리가 쉬었는데, 예방접종은 몇 개 못 맞았어요.",
+   "gold": [
+    {
+     "evidence_id": "E_182",
+     "status": "POSITIVE",
+     "span": "누런 콧물이 나오고"
+    },
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목소리가 쉬었는데"
+    },
+    {
+     "evidence_id": "E_209",
+     "status": "NEGATIVE",
+     "span": "예방접종은 몇 개 못 맞았어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A216",
+   "category": "multi_symptom",
+   "text": "숨 들이쉴 때 목에서 휘파람 같은 소리가 나고 목소리도 쉬었고 열도 좀 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_194",
+     "status": "POSITIVE",
+     "span": "숨 들이쉴 때 목에서 휘파람 같은 소리가 나고"
+    },
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목소리도 쉬었고"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열도 좀 있어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A217",
+   "category": "multi_symptom",
+   "text": "기침을 달고 사는데 한바탕 하고 나면 숨소리가 그르렁거려요, COPD도 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침을 달고 사는데"
+    },
+    {
+     "evidence_id": "E_112",
+     "status": "POSITIVE",
+     "span": "한바탕 하고 나면 숨소리가 그르렁거려요"
+    },
+    {
+     "evidence_id": "E_123",
+     "status": "POSITIVE",
+     "span": "COPD도 있어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A218",
+   "category": "multi_symptom",
+   "text": "팔다리에 붉은 발진이 나고 열이 나고 목 멍울이 부었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_129",
+     "status": "POSITIVE",
+     "span": "팔다리에 붉은 발진이 나고"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열이 나고"
+    },
+    {
+     "evidence_id": "E_9",
+     "status": "POSITIVE",
+     "span": "목 멍울이 부었어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A219",
+   "category": "multi_symptom",
+   "text": "요즘 자도 개운하지 않고 가슴이 불규칙하게 뛰고 발목도 부어요.",
+   "gold": [
+    {
+     "evidence_id": "E_89",
+     "status": "POSITIVE",
+     "span": "자도 개운하지 않고"
+    },
+    {
+     "evidence_id": "E_155",
+     "status": "POSITIVE",
+     "span": "가슴이 불규칙하게 뛰고"
+    },
+    {
+     "evidence_id": "E_151",
+     "status": "POSITIVE",
+     "span": "발목도 부어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A220",
+   "category": "multi_symptom",
+   "text": "코가 막히고 맑은 콧물이 나고 코 안이 가려워요, 코에 물혹도 있고요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "코가 막히고 맑은 콧물이 나고"
+    },
+    {
+     "evidence_id": "E_169",
+     "status": "POSITIVE",
+     "span": "코 안이 가려워요"
+    },
+    {
+     "evidence_id": "E_120",
+     "status": "POSITIVE",
+     "span": "코에 물혹도 있고요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A221",
+   "category": "multi_symptom",
+   "text": "열도 나고 기침도 하고 가래도 누렇고 숨도 차고 가슴도 아파요.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열도 나고"
+    },
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침도 하고"
+    },
+    {
+     "evidence_id": "E_77",
+     "status": "POSITIVE",
+     "span": "가래도 누렇고"
+    },
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨도 차고"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "가슴도 아파요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A222",
+   "category": "multi_symptom",
+   "text": "술을 매일 소주 한 병 넘게 마시고 담배도 피우고 체중도 많이 나가요.",
+   "gold": [
+    {
+     "evidence_id": "E_78",
+     "status": "POSITIVE",
+     "span": "술을 매일 소주 한 병 넘게 마시고"
+    },
+    {
+     "evidence_id": "E_79",
+     "status": "POSITIVE",
+     "span": "담배도 피우고"
+    },
+    {
+     "evidence_id": "E_70",
+     "status": "POSITIVE",
+     "span": "체중도 많이 나가요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A223",
+   "category": "multi_symptom",
+   "text": "움직이면 가슴 통증이 심해지고 숨 깊이 쉬어도 아픈데, 앞으로 숙여도 안 나아져요.",
+   "gold": [
+    {
+     "evidence_id": "E_216",
+     "status": "POSITIVE",
+     "span": "움직이면 가슴 통증이 심해지고"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "가슴 통증"
+    },
+    {
+     "evidence_id": "E_220",
+     "status": "POSITIVE",
+     "span": "숨 깊이 쉬어도 아픈데"
+    },
+    {
+     "evidence_id": "E_33",
+     "status": "NEGATIVE",
+     "span": "앞으로 숙여도 안 나아져요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A224",
+   "category": "multi_symptom",
+   "text": "구역질이 나고 온몸 기운이 쭉 빠지면서 새로 피로가 몰려와요.",
+   "gold": [
+    {
+     "evidence_id": "E_148",
+     "status": "POSITIVE",
+     "span": "구역질이 나고"
+    },
+    {
+     "evidence_id": "E_175",
+     "status": "POSITIVE",
+     "span": "새로 피로가 몰려와요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A225",
+   "category": "multi_symptom",
+   "text": "예방접종은 다 맞았는데 지난주에 감기 앓고 나서 계속 기침해요.",
+   "gold": [
+    {
+     "evidence_id": "E_209",
+     "status": "POSITIVE",
+     "span": "예방접종은 다 맞았는데"
+    },
+    {
+     "evidence_id": "E_116",
+     "status": "POSITIVE",
+     "span": "지난주에 감기 앓고"
+    },
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "계속 기침해요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A226",
+   "category": "multi_symptom",
+   "text": "최근에 대상포진 앓았고 피부에 물집이 남아 있고 그 자리가 쓰리게 아파요.",
+   "gold": [
+    {
+     "evidence_id": "E_0",
+     "status": "POSITIVE",
+     "span": "최근에 대상포진 앓았고"
+    },
+    {
+     "evidence_id": "E_129",
+     "status": "POSITIVE",
+     "span": "피부에 물집이 남아 있고"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "쓰리게 아파요"
+    }
+   ],
+   "note": "대상포진=바이러스 감염",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A227",
+   "category": "multi_symptom",
+   "text": "HIV 양성인 파트너랑 반년 전에도 관계했고, 요즘 목 멍울이 붓고 열이 나요.",
+   "gold": [
+    {
+     "evidence_id": "E_189",
+     "status": "POSITIVE",
+     "span": "HIV 양성인 파트너랑 반년 전에도 관계했고"
+    },
+    {
+     "evidence_id": "E_9",
+     "status": "POSITIVE",
+     "span": "목 멍울이 붓고"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열이 나요"
+    }
+   ],
+   "note": "",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A228",
+   "category": "zero_control",
+   "text": "남편이 요 며칠 기침을 쿨럭쿨럭 해서 같이 왔어요.",
+   "gold": [],
+   "note": "타인",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A229",
+   "category": "zero_control",
+   "text": "손녀가 어젯밤부터 열이 난다고 해서 걱정이에요.",
+   "gold": [],
+   "note": "타인",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A230",
+   "category": "zero_control",
+   "text": "열이 나면 해열제를 먹어도 되는 건가요?",
+   "gold": [],
+   "note": "질문/조건",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A232",
+   "category": "zero_control",
+   "text": "병원에서 독감이래요, 그래서 약 받으러 왔어요.",
+   "gold": [],
+   "note": "병명만",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A234",
+   "category": "zero_control",
+   "text": "몸이 아파서 왔어요, 나이 드니까 다 그렇지요.",
+   "gold": [],
+   "note": "R4 '몸이 아파요'",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A235",
+   "category": "zero_control",
+   "text": "혹시 숨이 차면 바로 응급실 가야 하나요?",
+   "gold": [],
+   "note": "질문",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A236",
+   "category": "zero_control",
+   "text": "감기 같아요, 환절기만 되면 이래요.",
+   "gold": [],
+   "note": "병명 hedge",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A237",
+   "category": "zero_control",
+   "text": "옆집 할머니가 폐렴이라고 해서 저도 겁이 나서 왔어요.",
+   "gold": [],
+   "note": "타인/병명",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A238",
+   "category": "zero_control",
+   "text": "기침은 많이 좋아졌어요, 이제 거의 괜찮아요.",
+   "gold": [],
+   "note": "호전 진술",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A239",
+   "category": "zero_control",
+   "text": "혹시 제가 당뇨일 수도 있을까요?",
+   "gold": [],
+   "note": "질문/hedge",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A240",
+   "category": "zero_control",
+   "text": "열이 날지도 몰라서 미리 해열제를 사 뒀어요.",
+   "gold": [],
+   "note": "추측",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A241",
+   "category": "zero_control",
+   "text": "아들이 담배를 너무 많이 피워서 제가 대신 상담하려고요.",
+   "gold": [],
+   "note": "타인",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A242",
+   "category": "zero_control",
+   "text": "컨디션이 그냥 그래요, 뭐라 설명하기가 어렵네요.",
+   "gold": [],
+   "note": "막연",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A243",
+   "category": "unsupported_symptom_like",
+   "text": "아침에 일어날 때 핑 도는 것처럼 어지러워요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A244",
+   "category": "unsupported_symptom_like",
+   "text": "며칠째 설사를 하루에 네다섯 번씩 해요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A245",
+   "category": "unsupported_symptom_like",
+   "text": "입맛이 통 없어서 밥을 반 공기도 못 먹어요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A246",
+   "category": "unsupported_symptom_like",
+   "text": "눈이 침침하고 자꾸 눈물이 나요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A247",
+   "category": "unsupported_symptom_like",
+   "text": "귀가 먹먹하고 윙 하는 소리가 들려요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A248",
+   "category": "unsupported_symptom_like",
+   "text": "밤에 소변을 보러 서너 번씩 깨요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A249",
+   "category": "unsupported_symptom_like",
+   "text": "손발이 저리고 감각이 둔해요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A250",
+   "category": "unsupported_symptom_like",
+   "text": "가래가 좀 나와요, 색깔은 그냥 하얘요.",
+   "gold": [],
+   "note": "R3 단순 흰 가래 → 라벨 없음",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A251",
+   "category": "unsupported_symptom_like",
+   "text": "재채기가 하루 종일 연달아 나요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A252",
+   "category": "unsupported_symptom_like",
+   "text": "냄새를 잘 못 맡겠어요, 음식 냄새가 안 나요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A253",
+   "category": "unsupported_symptom_like",
+   "text": "변비가 심해서 사흘째 화장실을 못 갔어요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A254",
+   "category": "unsupported_symptom_like",
+   "text": "손이 자꾸 떨려서 숟가락 들기가 힘들어요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A255",
+   "category": "unsupported_symptom_like",
+   "text": "입이 바짝바짝 마르고 물을 자꾸 찾게 돼요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A256",
+   "category": "unsupported_symptom_like",
+   "text": "딸꾹질이 한번 시작하면 한참 안 멈춰요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A257",
+   "category": "unsupported_symptom_like",
+   "text": "코피가 아침에 두 번이나 났어요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A258",
+   "category": "unsupported_symptom_like",
+   "text": "요즘 살이 쭉쭉 빠져서 옷이 헐렁해요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A259",
+   "category": "unsupported_symptom_like",
+   "text": "눈꺼풀이 파르르 떨려서 신경이 쓰여요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "A260",
+   "category": "unsupported_symptom_like",
+   "text": "목에 뭐가 걸린 것처럼 이물감이 있어요.",
+   "gold": [],
+   "note": "41개 미지원 증상",
+   "source_writer": "A_opus"
+  },
+  {
+   "id": "B001",
+   "category": "single_positive",
+   "text": "며칠째 기침이 나요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침이 나요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B002",
+   "category": "single_positive",
+   "text": "그게 열이 있어요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열이 있어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B003",
+   "category": "single_positive",
+   "text": "오늘 아픈 데가 있어요...",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "아픈 데가 있어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B004",
+   "category": "single_positive",
+   "text": "있잖아요 숨쉬기가 뚜렷하게 힘들어요 어떡하죠",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨쉬기가 뚜렷하게 힘들어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B005",
+   "category": "single_positive",
+   "text": "코가 막혀요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "코가 막혀요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B006",
+   "category": "single_positive",
+   "text": "요즘 가래가 누렇게 많이 나와요",
+   "gold": [
+    {
+     "evidence_id": "E_77",
+     "status": "POSITIVE",
+     "span": "가래가 누렇게 많이 나와요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B007",
+   "category": "single_positive",
+   "text": "지금 누런 콧물이 나와요 개아파요",
+   "gold": [
+    {
+     "evidence_id": "E_182",
+     "status": "POSITIVE",
+     "span": "누런 콧물이 나와요"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "개아파요"
+    }
+   ],
+   "note": "[검수] R4: '개아파요'는 명시적 통증 진술 → E_53 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B008",
+   "category": "single_positive",
+   "text": "있잖아요 다리가 부었어요",
+   "gold": [
+    {
+     "evidence_id": "E_151",
+     "status": "POSITIVE",
+     "span": "다리가 부었어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B009",
+   "category": "single_positive",
+   "text": "오늘 심장이 두근거려요 넘 힘드네요",
+   "gold": [
+    {
+     "evidence_id": "E_155",
+     "status": "POSITIVE",
+     "span": "심장이 두근거려요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B010",
+   "category": "single_positive",
+   "text": "오늘 자고 일어나도 개운하질 않아요 어떡하죠",
+   "gold": [
+    {
+     "evidence_id": "E_89",
+     "status": "POSITIVE",
+     "span": "자고 일어나도 개운하질 않아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B011",
+   "category": "single_positive",
+   "text": "오늘 목소리가 작아졌어요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목소리가 작아졌어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B012",
+   "category": "single_positive",
+   "text": "며칠째 속이 메스꺼워요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_148",
+     "status": "POSITIVE",
+     "span": "속이 메스꺼워요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B013",
+   "category": "single_positive",
+   "text": "그게 사타구니 쪽 멍울이 부었어요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_9",
+     "status": "POSITIVE",
+     "span": "사타구니 쪽 멍울이 부었어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B014",
+   "category": "single_positive",
+   "text": "피부에 이상한 병변이 생겼어요...",
+   "gold": [
+    {
+     "evidence_id": "E_129",
+     "status": "POSITIVE",
+     "span": "피부에 이상한 병변이 생겼어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B015",
+   "category": "single_positive",
+   "text": "저 요새 당뇨 진단받았어요 어떡하죠",
+   "gold": [
+    {
+     "evidence_id": "E_69",
+     "status": "POSITIVE",
+     "span": "당뇨 진단받았어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B016",
+   "category": "single_positive",
+   "text": "며칠째 혈압약 먹고 있어요 넘 힘드네요",
+   "gold": [
+    {
+     "evidence_id": "E_104",
+     "status": "POSITIVE",
+     "span": "혈압약 먹고 있어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B017",
+   "category": "single_positive",
+   "text": "담배 피워요 어떡하죠",
+   "gold": [
+    {
+     "evidence_id": "E_79",
+     "status": "POSITIVE",
+     "span": "담배 피워요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B018",
+   "category": "single_positive",
+   "text": "지금 천식이 있어요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_124",
+     "status": "POSITIVE",
+     "span": "천식이 있어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B019",
+   "category": "single_positive",
+   "text": "저 원래 알레르기가 잘 생기는 편이에요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_226",
+     "status": "POSITIVE",
+     "span": "저 원래 알레르기가 잘 생기는 편이에요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B020",
+   "category": "single_positive",
+   "text": "저 요새 요새 술을 너무 많이 마셔요",
+   "gold": [
+    {
+     "evidence_id": "E_78",
+     "status": "POSITIVE",
+     "span": "요새 술을 너무 많이 마셔요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B021",
+   "category": "single_positive",
+   "text": "요즘 예전에 심근경색이 있었어요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_105",
+     "status": "POSITIVE",
+     "span": "예전에 심근경색이 있었어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B023",
+   "category": "single_positive",
+   "text": "지금 비염 폴립 진단받은 적 있어요 어떡하죠",
+   "gold": [
+    {
+     "evidence_id": "E_120",
+     "status": "POSITIVE",
+     "span": "비염 폴립 진단받은 적 있어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B024",
+   "category": "single_positive",
+   "text": "오늘 COPD 있어요 넘 힘드네요",
+   "gold": [
+    {
+     "evidence_id": "E_123",
+     "status": "POSITIVE",
+     "span": "COPD 있어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B025",
+   "category": "single_positive",
+   "text": "하루종일 누워 지내요...",
+   "gold": [
+    {
+     "evidence_id": "E_88",
+     "status": "POSITIVE",
+     "span": "하루종일 누워 지내요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B026",
+   "category": "single_positive",
+   "text": "그게 목 뒤쪽이 가려워요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_169",
+     "status": "POSITIVE",
+     "span": "목 뒤쪽이 가려워요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B027",
+   "category": "single_positive",
+   "text": "요새 전에 없던 피로감이 생겼어요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_175",
+     "status": "POSITIVE",
+     "span": "요새 전에 없던 피로감이 생겼어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B028",
+   "category": "single_positive",
+   "text": "아 진짜 최근에 바이러스 감염됐다고 진단받았어요 어떡하죠",
+   "gold": [
+    {
+     "evidence_id": "E_0",
+     "status": "POSITIVE",
+     "span": "최근에 바이러스 감염됐다고 진단받았어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B029",
+   "category": "single_positive",
+   "text": "그게 최근에 HIV 양성인 사람이랑 성관계한 적 있어요 개아파요",
+   "gold": [
+    {
+     "evidence_id": "E_189",
+     "status": "POSITIVE",
+     "span": "최근에 HIV 양성인 사람이랑 성관계한 적 있어요"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "개아파요"
+    }
+   ],
+   "note": "[검수] R4: '개아파요'는 명시적 통증 진술 → E_53 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B030",
+   "category": "single_positive",
+   "text": "저 요새 숨 들이쉴 때 삑 소리 나는 걸 느낀 적 있어요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_194",
+     "status": "POSITIVE",
+     "span": "숨 들이쉴 때 삑 소리 나는 걸 느낀 적 있어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B031",
+   "category": "single_negative",
+   "text": "기침은 없어요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "기침은 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B033",
+   "category": "single_negative",
+   "text": "딱히 아픈 데는 없어요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "NEGATIVE",
+     "span": "딱히 아픈 데는 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B034",
+   "category": "single_negative",
+   "text": "요즘 숨차거나 숨쉬기 힘든 건 없어요 개아파요",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "NEGATIVE",
+     "span": "숨차거나 숨쉬기 힘든 건 없어요"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "개아파요"
+    }
+   ],
+   "note": "[검수] R4: '개아파요'는 명시적 통증 진술 → E_53 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B035",
+   "category": "single_negative",
+   "text": "코 막히거나 콧물 나는 건 없어요...",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "NEGATIVE",
+     "span": "코 막히거나 콧물 나는 건 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B036",
+   "category": "single_negative",
+   "text": "아 진짜 가래에 색깔 있거나 양 많은 건 아니에요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_77",
+     "status": "NEGATIVE",
+     "span": "가래에 색깔 있거나 양 많은 건 아니에요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B037",
+   "category": "single_negative",
+   "text": "며칠째 콧물 색깔이 진하거나 그런 건 아니에요 넘 힘드네요",
+   "gold": [
+    {
+     "evidence_id": "E_182",
+     "status": "NEGATIVE",
+     "span": "콧물 색깔이 진하거나 그런 건 아니에요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B038",
+   "category": "single_negative",
+   "text": "부은 데는 없어요...",
+   "gold": [
+    {
+     "evidence_id": "E_151",
+     "status": "NEGATIVE",
+     "span": "부은 데는 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B039",
+   "category": "single_negative",
+   "text": "며칠째 심장 빠르거나 불규칙하게 뛰는 느낌은 없어요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_155",
+     "status": "NEGATIVE",
+     "span": "심장 빠르거나 불규칙하게 뛰는 느낌은 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B040",
+   "category": "single_negative",
+   "text": "있잖아요 피로하거나 잠 못 잔 개운함 문제는 없어요 어떡하죠",
+   "gold": [
+    {
+     "evidence_id": "E_89",
+     "status": "NEGATIVE",
+     "span": "피로하거나 잠 못 잔 개운함 문제는 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B041",
+   "category": "single_negative",
+   "text": "목소리는 그대로예요 어떡하죠",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "NEGATIVE",
+     "span": "목소리는 그대로예요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B042",
+   "category": "single_negative",
+   "text": "그게 메스껍거나 토할 것 같은 느낌은 없어요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_148",
+     "status": "NEGATIVE",
+     "span": "메스껍거나 토할 것 같은 느낌은 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B043",
+   "category": "single_negative",
+   "text": "오늘 멍울 같은 건 안 만져져요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_9",
+     "status": "NEGATIVE",
+     "span": "멍울 같은 건 안 만져져요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B044",
+   "category": "single_negative",
+   "text": "피부엔 이상 없어요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_129",
+     "status": "NEGATIVE",
+     "span": "피부엔 이상 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B045",
+   "category": "single_negative",
+   "text": "아 진짜 당뇨 같은 건 없어요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_69",
+     "status": "NEGATIVE",
+     "span": "당뇨 같은 건 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B046",
+   "category": "single_negative",
+   "text": "혈압약은 안 먹어요 어떡하죠",
+   "gold": [],
+   "note": "[검수] R2: 혈압약만 부정, 고혈압 여부 미언급 → 질문 전체 부정 아님",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B047",
+   "category": "single_negative",
+   "text": "담배는 안 펴요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_79",
+     "status": "NEGATIVE",
+     "span": "담배는 안 펴요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B048",
+   "category": "single_negative",
+   "text": "지금 천식이나 기관지확장제 쓴 적 없어요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_124",
+     "status": "NEGATIVE",
+     "span": "천식이나 기관지확장제 쓴 적 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B049",
+   "category": "single_negative",
+   "text": "요즘 알레르기 잘 생기는 체질은 아니에요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_226",
+     "status": "NEGATIVE",
+     "span": "알레르기 잘 생기는 체질은 아니에요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B050",
+   "category": "single_negative",
+   "text": "요즘 술 의존 같은 건 없어요 걱정되네요",
+   "gold": [],
+   "note": "[검수] R2: 알코올 의존만 부정, 과음 여부 미언급 → 질문 전체 부정 아님",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B051",
+   "category": "single_negative",
+   "text": "저 요새 심근경색이나 협심증은 없어요",
+   "gold": [
+    {
+     "evidence_id": "E_105",
+     "status": "NEGATIVE",
+     "span": "심근경색이나 협심증은 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B053",
+   "category": "single_negative",
+   "text": "지금 코에 물혹 같은 건 없어요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_120",
+     "status": "NEGATIVE",
+     "span": "코에 물혹 같은 건 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B054",
+   "category": "single_negative",
+   "text": "COPD는 없어요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_123",
+     "status": "NEGATIVE",
+     "span": "COPD는 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B055",
+   "category": "single_negative",
+   "text": "그게 일상생활 못 할 정도로 피곤하진 않아요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_88",
+     "status": "NEGATIVE",
+     "span": "일상생활 못 할 정도로 피곤하진 않아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B056",
+   "category": "single_negative",
+   "text": "그게 코나 목 뒤가 가려운 건 없어요",
+   "gold": [
+    {
+     "evidence_id": "E_169",
+     "status": "NEGATIVE",
+     "span": "코나 목 뒤가 가려운 건 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B057",
+   "category": "single_negative",
+   "text": "아 진짜 숨소리 쌕쌕거리거나 거칠어지는 건 없어요 넘 힘드네요",
+   "gold": [
+    {
+     "evidence_id": "E_112",
+     "status": "NEGATIVE",
+     "span": "숨소리 쌕쌕거리거나 거칠어지는 건 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B058",
+   "category": "single_negative",
+   "text": "아 진짜 움직여도 통증은 똑같아요 어떡하죠",
+   "gold": [
+    {
+     "evidence_id": "E_216",
+     "status": "NEGATIVE",
+     "span": "움직여도 통증은 똑같아요"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "통증은 똑같아요"
+    }
+   ],
+   "note": "[검수] R4: 통증 존재 명시(E_216 수식어와 동시 E_53)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B059",
+   "category": "single_negative",
+   "text": "며칠째 움직이거나 쉬어도 증상 변화는 없어요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_218",
+     "status": "NEGATIVE",
+     "span": "움직이거나 쉬어도 증상 변화는 없어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B060",
+   "category": "single_negative",
+   "text": "땀이 딱히 많이 나진 않아요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_50",
+     "status": "NEGATIVE",
+     "span": "땀이 딱히 많이 나진 않아요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B061",
+   "category": "mixed_pos_neg",
+   "text": "있잖아요 기침이 나요. 그런데 열은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침이 나요"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열은 없어요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B062",
+   "category": "mixed_pos_neg",
+   "text": "있잖아요 열이 있어요. 기침은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열이 있어요"
+    },
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "기침은 없어요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B063",
+   "category": "mixed_pos_neg",
+   "text": "아 진짜 맑은 콧물이 나와요. 콧물 색깔이 진하거나 그런 건 아니에요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "맑은 콧물이 나와요"
+    },
+    {
+     "evidence_id": "E_182",
+     "status": "NEGATIVE",
+     "span": "콧물 색깔이 진하거나 그런 건 아니에요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B064",
+   "category": "mixed_pos_neg",
+   "text": "며칠째 숨이 좀 차요. 근데 심장 빠르거나 불규칙하게 뛰는 느낌은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨이 좀 차요"
+    },
+    {
+     "evidence_id": "E_155",
+     "status": "NEGATIVE",
+     "span": "심장 빠르거나 불규칙하게 뛰는 느낌은 없어요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B065",
+   "category": "mixed_pos_neg",
+   "text": "며칠째 몸에 통증이 있어요. 근데 부은 데는 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "몸에 통증이 있어요"
+    },
+    {
+     "evidence_id": "E_151",
+     "status": "NEGATIVE",
+     "span": "부은 데는 없어요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B066",
+   "category": "mixed_pos_neg",
+   "text": "저 요새 자고 일어나도 개운하질 않아요. 근데 일상생활 못 할 정도로 피곤하진 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_89",
+     "status": "POSITIVE",
+     "span": "자고 일어나도 개운하질 않아요"
+    },
+    {
+     "evidence_id": "E_88",
+     "status": "NEGATIVE",
+     "span": "일상생활 못 할 정도로 피곤하진 않아요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B068",
+   "category": "mixed_pos_neg",
+   "text": "혈압약 먹고 있어요. 근데 심근경색이나 협심증은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_104",
+     "status": "POSITIVE",
+     "span": "혈압약 먹고 있어요"
+    },
+    {
+     "evidence_id": "E_105",
+     "status": "NEGATIVE",
+     "span": "심근경색이나 협심증은 없어요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B069",
+   "category": "mixed_pos_neg",
+   "text": "그게 예전에 기관지확장제 써본 적 있어요. 근데 COPD는 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_124",
+     "status": "POSITIVE",
+     "span": "예전에 기관지확장제 써본 적 있어요"
+    },
+    {
+     "evidence_id": "E_123",
+     "status": "NEGATIVE",
+     "span": "COPD는 없어요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B070",
+   "category": "mixed_pos_neg",
+   "text": "지금 피부에 발적이 있어요. 메스껍거나 토할 것 같은 느낌은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_129",
+     "status": "POSITIVE",
+     "span": "피부에 발적이 있어요"
+    },
+    {
+     "evidence_id": "E_148",
+     "status": "NEGATIVE",
+     "span": "메스껍거나 토할 것 같은 느낌은 없어요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B071",
+   "category": "mixed_pos_neg",
+   "text": "저 요새 겨드랑이 림프절이 만지면 아파요. 가래에 피 섞인 적은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_9",
+     "status": "POSITIVE",
+     "span": "겨드랑이 림프절이 만지면 아파요"
+    },
+    {
+     "evidence_id": "E_45",
+     "status": "NEGATIVE",
+     "span": "가래에 피 섞인 적은 없어요"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "겨드랑이 림프절이 만지면 아파요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐 | [검수] R4: 명시적 통증, E_9와 동시 E_53",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B072",
+   "category": "mixed_pos_neg",
+   "text": "그게 목소리가 쉬었어요. 숨 내쉴 때 쌕쌕거리는 건 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목소리가 쉬었어요"
+    },
+    {
+     "evidence_id": "E_214",
+     "status": "NEGATIVE",
+     "span": "숨 내쉴 때 쌕쌕거리는 건 없어요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B073",
+   "category": "mixed_pos_neg",
+   "text": "아 진짜 움직이면 통증이 심해져요. 근데 숨을 깊이 들이쉬어도 안 아파요.",
+   "gold": [
+    {
+     "evidence_id": "E_216",
+     "status": "POSITIVE",
+     "span": "움직이면 통증이 심해져요"
+    },
+    {
+     "evidence_id": "E_220",
+     "status": "NEGATIVE",
+     "span": "숨을 깊이 들이쉬어도 안 아파요"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "움직이면 통증이 심해져요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐 | [검수] R4: 명시적 통증, E_216과 동시 E_53 (A204/A213/B214와 일관)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B074",
+   "category": "mixed_pos_neg",
+   "text": "그게 코 막히거나 콧물 나는 건 없어요. 근데 코 속이 가려워요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "NEGATIVE",
+     "span": "코 막히거나 콧물 나는 건 없어요"
+    },
+    {
+     "evidence_id": "E_169",
+     "status": "POSITIVE",
+     "span": "코 속이 가려워요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B075",
+   "category": "mixed_pos_neg",
+   "text": "평소보다 가래가 훨씬 많이 나와요. 근데 콧물 색깔이 진하거나 그런 건 아니에요.",
+   "gold": [
+    {
+     "evidence_id": "E_77",
+     "status": "POSITIVE",
+     "span": "평소보다 가래가 훨씬 많이 나와요"
+    },
+    {
+     "evidence_id": "E_182",
+     "status": "NEGATIVE",
+     "span": "콧물 색깔이 진하거나 그런 건 아니에요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B076",
+   "category": "mixed_pos_neg",
+   "text": "오늘 심장이 두근거려요. 근데 메스껍거나 토할 것 같은 느낌은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_155",
+     "status": "POSITIVE",
+     "span": "심장이 두근거려요"
+    },
+    {
+     "evidence_id": "E_148",
+     "status": "NEGATIVE",
+     "span": "메스껍거나 토할 것 같은 느낌은 없어요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B077",
+   "category": "mixed_pos_neg",
+   "text": "요즘 열은 없어요. 요새 전에 없던 피로감이 생겼어요.",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열은 없어요"
+    },
+    {
+     "evidence_id": "E_175",
+     "status": "POSITIVE",
+     "span": "요새 전에 없던 피로감이 생겼어요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B078",
+   "category": "mixed_pos_neg",
+   "text": "저 요새 코에 물혹 같은 건 없어요. 그런데 코가 막혀요.",
+   "gold": [
+    {
+     "evidence_id": "E_120",
+     "status": "NEGATIVE",
+     "span": "코에 물혹 같은 건 없어요"
+    },
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "코가 막혀요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B079",
+   "category": "mixed_pos_neg",
+   "text": "오늘 당뇨병은 없어요. 그런데 또래보다 체중이 확실히 많이 나가요.",
+   "gold": [
+    {
+     "evidence_id": "E_69",
+     "status": "NEGATIVE",
+     "span": "당뇨병은 없어요"
+    },
+    {
+     "evidence_id": "E_70",
+     "status": "POSITIVE",
+     "span": "또래보다 체중이 확실히 많이 나가요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B080",
+   "category": "mixed_pos_neg",
+   "text": "그게 저 원래 알레르기가 잘 생기는 편이에요. 그리고 피부엔 이상 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_226",
+     "status": "POSITIVE",
+     "span": "저 원래 알레르기가 잘 생기는 편이에요"
+    },
+    {
+     "evidence_id": "E_129",
+     "status": "NEGATIVE",
+     "span": "피부엔 이상 없어요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B081",
+   "category": "mixed_pos_neg",
+   "text": "지금 일상생활 못 할 정도로 피곤하진 않아요. 자고 일어나도 개운하질 않아요.",
+   "gold": [
+    {
+     "evidence_id": "E_88",
+     "status": "NEGATIVE",
+     "span": "일상생활 못 할 정도로 피곤하진 않아요"
+    },
+    {
+     "evidence_id": "E_89",
+     "status": "POSITIVE",
+     "span": "자고 일어나도 개운하질 않아요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B082",
+   "category": "mixed_pos_neg",
+   "text": "예방접종이 좀 밀렸어요. 최근에 감기 앓았어요.",
+   "gold": [
+    {
+     "evidence_id": "E_209",
+     "status": "NEGATIVE",
+     "span": "예방접종이 좀 밀렸어요"
+    },
+    {
+     "evidence_id": "E_116",
+     "status": "POSITIVE",
+     "span": "최근에 감기 앓았어요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B083",
+   "category": "mixed_pos_neg",
+   "text": "있잖아요 기침하고 나면 숨소리가 거칠어져요. 근데 숨 내쉴 때 쌕쌕거리는 건 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_112",
+     "status": "POSITIVE",
+     "span": "기침하고 나면 숨소리가 거칠어져요"
+    },
+    {
+     "evidence_id": "E_214",
+     "status": "NEGATIVE",
+     "span": "숨 내쉴 때 쌕쌕거리는 건 없어요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B084",
+   "category": "mixed_pos_neg",
+   "text": "아 진짜 몸이 부어있어요. 그런데 움직여도 통증은 똑같아요.",
+   "gold": [
+    {
+     "evidence_id": "E_151",
+     "status": "POSITIVE",
+     "span": "몸이 부어있어요"
+    },
+    {
+     "evidence_id": "E_216",
+     "status": "NEGATIVE",
+     "span": "움직여도 통증은 똑같아요"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "통증은 똑같아요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐 | [검수] R4: 통증 존재 명시(E_216 수식어와 동시 E_53)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B085",
+   "category": "mixed_pos_neg",
+   "text": "그게 술 의존 같은 건 없어요. 그리고 담배 피워요.",
+   "gold": [
+    {
+     "evidence_id": "E_79",
+     "status": "POSITIVE",
+     "span": "담배 피워요"
+    }
+   ],
+   "note": "R9: 절 단위로 각각 라벨링, 한쪽 부정이 다른 절로 안 퍼짐 | [검수] R2: 알코올 의존만 부정, 과음 여부 미언급 → 질문 전체 부정 아님",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B086",
+   "category": "or_and",
+   "text": "기침도 그렇고 열도 그렇고, 기침은 없어요 열은 없어요",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "기침은 없어요"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열은 없어요"
+    }
+   ],
+   "note": "AND형 이중부정: 서로 다른 두 evidence를 각각 부정",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B087",
+   "category": "or_and",
+   "text": "통증도 그렇고 부기도 그렇고, 통증은 전혀 없어요 부은 데는 없어요",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "NEGATIVE",
+     "span": "통증은 전혀 없어요"
+    },
+    {
+     "evidence_id": "E_151",
+     "status": "NEGATIVE",
+     "span": "부은 데는 없어요"
+    }
+   ],
+   "note": "AND형 이중부정: 서로 다른 두 evidence를 각각 부정",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B088",
+   "category": "or_and",
+   "text": "담배도 그렇고 과음도 그렇고, 담배 끊었어요 술은 과하게 안 마셔요",
+   "gold": [
+    {
+     "evidence_id": "E_79",
+     "status": "NEGATIVE",
+     "span": "담배 끊었어요"
+    },
+    {
+     "evidence_id": "E_78",
+     "status": "NEGATIVE",
+     "span": "술은 과하게 안 마셔요"
+    }
+   ],
+   "note": "AND형 이중부정: 서로 다른 두 evidence를 각각 부정",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B089",
+   "category": "or_and",
+   "text": "기침을 계속 해요, 맑은 콧물이 나와요. 근데 열은 안 나요",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침을 계속 해요"
+    },
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "맑은 콧물이 나와요"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열은 안 나요"
+    }
+   ],
+   "note": "A랑 B는 있는데 C는 없다: 세 evidence 각각 언급단위로 라벨링",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B090",
+   "category": "or_and",
+   "text": "가래가 누렇게 많이 나와요, 기침을 계속 해요. 근데 콧물 색깔이 진하거나 그런 건 아니에요",
+   "gold": [
+    {
+     "evidence_id": "E_77",
+     "status": "POSITIVE",
+     "span": "가래가 누렇게 많이 나와요"
+    },
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침을 계속 해요"
+    },
+    {
+     "evidence_id": "E_182",
+     "status": "NEGATIVE",
+     "span": "콧물 색깔이 진하거나 그런 건 아니에요"
+    }
+   ],
+   "note": "A랑 B는 있는데 C는 없다: 세 evidence 각각 언급단위로 라벨링",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B091",
+   "category": "or_and",
+   "text": "몸에 통증이 있어요, 다리가 부었어요. 근데 열은 안 나요",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "몸에 통증이 있어요"
+    },
+    {
+     "evidence_id": "E_151",
+     "status": "POSITIVE",
+     "span": "다리가 부었어요"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열은 안 나요"
+    }
+   ],
+   "note": "A랑 B는 있는데 C는 없다: 세 evidence 각각 언급단위로 라벨링",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B092",
+   "category": "or_and",
+   "text": "있잖아요 코가 막혀요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "코가 막혀요"
+    }
+   ],
+   "note": "R2: OR형 질문의 한쪽 표현만 언급돼도 전체 evidence POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B093",
+   "category": "or_and",
+   "text": "아 진짜 심장이 두근거려요...",
+   "gold": [
+    {
+     "evidence_id": "E_155",
+     "status": "POSITIVE",
+     "span": "심장이 두근거려요"
+    }
+   ],
+   "note": "R2: OR형 질문의 한쪽 표현만 언급돼도 전체 evidence POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B094",
+   "category": "or_and",
+   "text": "있잖아요 혈압약 먹고 있어요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_104",
+     "status": "POSITIVE",
+     "span": "혈압약 먹고 있어요"
+    }
+   ],
+   "note": "R2: OR형 질문의 한쪽 표현만 언급돼도 전체 evidence POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B095",
+   "category": "or_and",
+   "text": "저 요새 천식이 있어요",
+   "gold": [
+    {
+     "evidence_id": "E_124",
+     "status": "POSITIVE",
+     "span": "천식이 있어요"
+    }
+   ],
+   "note": "R2: OR형 질문의 한쪽 표현만 언급돼도 전체 evidence POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B096",
+   "category": "or_and",
+   "text": "저 요새 목소리가 쉬었어요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목소리가 쉬었어요"
+    }
+   ],
+   "note": "R2: OR형 질문의 한쪽 표현만 언급돼도 전체 evidence POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B097",
+   "category": "or_and",
+   "text": "있잖아요 온몸이 쑤셔요",
+   "gold": [
+    {
+     "evidence_id": "E_175",
+     "status": "POSITIVE",
+     "span": "온몸이 쑤셔요"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "온몸이 쑤셔요"
+    }
+   ],
+   "note": "R2: OR형 질문의 한쪽 표현만 언급돼도 전체 evidence POSITIVE | [검수] R4: '쑤시다'=명시 통증, E_175와 동시 E_53 (A208과 일관)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B098",
+   "category": "or_and",
+   "text": "요즘 하루종일 누워 지내요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_88",
+     "status": "POSITIVE",
+     "span": "하루종일 누워 지내요"
+    }
+   ],
+   "note": "R2: OR형 질문의 한쪽 표현만 언급돼도 전체 evidence POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B099",
+   "category": "or_and",
+   "text": "아 진짜 목 뒤쪽이 가려워요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_169",
+     "status": "POSITIVE",
+     "span": "목 뒤쪽이 가려워요"
+    }
+   ],
+   "note": "R2: OR형 질문의 한쪽 표현만 언급돼도 전체 evidence POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B100",
+   "category": "or_and",
+   "text": "요즘 코 막히거나 콧물 나는 건 없어요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "NEGATIVE",
+     "span": "코 막히거나 콧물 나는 건 없어요"
+    }
+   ],
+   "note": "R2: OR형 질문 전체를 부정하는 문장이라 NEGATIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B102",
+   "category": "or_and",
+   "text": "오늘 고혈압도 없고 혈압약도 안 먹어요 어떡하죠",
+   "gold": [
+    {
+     "evidence_id": "E_104",
+     "status": "NEGATIVE",
+     "span": "고혈압도 없고 혈압약도 안 먹어요"
+    }
+   ],
+   "note": "R2: OR형 질문 전체를 부정하는 문장이라 NEGATIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B103",
+   "category": "or_and",
+   "text": "있잖아요 천식이나 기관지확장제 쓴 적 없어요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_124",
+     "status": "NEGATIVE",
+     "span": "천식이나 기관지확장제 쓴 적 없어요"
+    }
+   ],
+   "note": "R2: OR형 질문 전체를 부정하는 문장이라 NEGATIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B105",
+   "category": "or_and",
+   "text": "저 요새 메스껍거나 토할 것 같은 느낌은 없어요 넘 힘드네요",
+   "gold": [
+    {
+     "evidence_id": "E_148",
+     "status": "NEGATIVE",
+     "span": "메스껍거나 토할 것 같은 느낌은 없어요"
+    }
+   ],
+   "note": "R2: OR형 질문 전체를 부정하는 문장이라 NEGATIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B106",
+   "category": "or_and",
+   "text": "숨이 차진 않는데 숨쉬기는 좀 힘들어요",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨이 차진 않는데 숨쉬기는 좀 힘들어요"
+    }
+   ],
+   "note": "R2: OR형 evidence는 한쪽만 긍정돼도 전체 POSITIVE(다른쪽 부정은 무시)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B107",
+   "category": "or_and",
+   "text": "목소리가 작아지진 않았는데 좀 쉬었어요",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목소리가 작아지진 않았는데 좀 쉬었어요"
+    }
+   ],
+   "note": "R2: OR형 evidence는 한쪽만 긍정돼도 전체 POSITIVE(다른쪽 부정은 무시)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B108",
+   "category": "or_and",
+   "text": "무거운 거 들 땐 괜찮은데 기침하면 아파요",
+   "gold": [
+    {
+     "evidence_id": "E_221",
+     "status": "POSITIVE",
+     "span": "무거운 거 들 땐 괜찮은데 기침하면 아파요"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "기침하면 아파요"
+    }
+   ],
+   "note": "R2: OR형 evidence는 한쪽만 긍정돼도 전체 POSITIVE(다른쪽 부정은 무시) | [검수] R4: 명시적 통증, E_221과 동시 E_53 (A205와 일관)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B109",
+   "category": "or_and",
+   "text": "요즘 천식이 있어요 개아파요",
+   "gold": [
+    {
+     "evidence_id": "E_124",
+     "status": "POSITIVE",
+     "span": "천식이 있어요"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "개아파요"
+    }
+   ],
+   "note": "R2 OR형 한쪽 언급 POSITIVE | [검수] R4: '개아파요'는 명시적 통증 진술 → E_53 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B110",
+   "category": "or_and",
+   "text": "목소리가 쉬었어요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목소리가 쉬었어요"
+    }
+   ],
+   "note": "R2 OR형 한쪽 언급 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B111",
+   "category": "idiom",
+   "text": "지금 장난 아니게 아파요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "아파요"
+    }
+   ],
+   "note": "idiom '장난 아니게'=강조부사, 문자 그대로 부정 아님",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B112",
+   "category": "idiom",
+   "text": "있잖아요 기침 때문에 진짜 죽겠어요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침"
+    }
+   ],
+   "note": "idiom '죽겠어요'=고통 강조, 실제 사망 의미 아님",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B113",
+   "category": "idiom",
+   "text": "숨이 차서 미치겠어요",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨이 차"
+    }
+   ],
+   "note": "idiom '미치겠어요'=강조",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B114",
+   "category": "idiom",
+   "text": "열이 나서 진짜 죽겠어요...",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열이 나"
+    }
+   ],
+   "note": "idiom '죽겠어요'=강조",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B115",
+   "category": "idiom",
+   "text": "지금 가래가 말도 못하게 많이 나와요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_77",
+     "status": "POSITIVE",
+     "span": "가래가 말도 못하게 많이 나와요"
+    }
+   ],
+   "note": "idiom '말도 못하게'=강조, R3 조건(양 많음) 충족",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B116",
+   "category": "idiom",
+   "text": "오늘 아닌 게 아니라 진짜 통증이 있어요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "통증이 있어요"
+    }
+   ],
+   "note": "idiom '아닌 게 아니라'=긍정 강조, '아니'포함이지만 부정 아님",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B117",
+   "category": "idiom",
+   "text": "있잖아요 다리가 팅팅 부어서 죽겠어요...",
+   "gold": [
+    {
+     "evidence_id": "E_151",
+     "status": "POSITIVE",
+     "span": "다리가 팅팅 부어서"
+    }
+   ],
+   "note": "idiom '죽겠어요'=강조",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B118",
+   "category": "idiom",
+   "text": "지금 콧물이 장난 아니게 나와요",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "콧물이"
+    }
+   ],
+   "note": "idiom, OR형 한쪽(맑은콧물) 언급으로 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B119",
+   "category": "idiom",
+   "text": "지금 심장이 미친듯이 두근거려요...",
+   "gold": [
+    {
+     "evidence_id": "E_155",
+     "status": "POSITIVE",
+     "span": "심장이"
+    }
+   ],
+   "note": "idiom '미친듯이'=강조부사",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B120",
+   "category": "idiom",
+   "text": "몸이 안 좋아서 아주 죽겠어요...",
+   "gold": [],
+   "note": "막연한 '몸이 안 좋다'는 idiom 강조가 있어도 R7 vague로 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B121",
+   "category": "idiom",
+   "text": "저 요새 장난 아니게 피곤해요, 계속 이래요",
+   "gold": [
+    {
+     "evidence_id": "E_89",
+     "status": "POSITIVE",
+     "span": "피곤해요"
+    }
+   ],
+   "note": "idiom 강조 + 지속",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B122",
+   "category": "idiom",
+   "text": "오늘 아닌 게 아니라 열도 있어요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열도 있어요"
+    }
+   ],
+   "note": "idiom '아닌 게 아니라'=긍정 강조",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B123",
+   "category": "idiom",
+   "text": "있잖아요 목이 쉬어서 말도 못하게 답답해요 넘 힘드네요",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목이 쉬어서"
+    }
+   ],
+   "note": "idiom '말도 못하게'=강조",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B124",
+   "category": "idiom",
+   "text": "오늘 기침 때문에 밤새 미치겠어요, 안 멎어요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "안 멎어요"
+    }
+   ],
+   "note": "idiom+R5 지속: 안 멎어요 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B125",
+   "category": "idiom",
+   "text": "지금 배가 아파서 죽는 줄 알았어요, 지금도 아파요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "지금도 아파요"
+    }
+   ],
+   "note": "idiom '죽는 줄 알았어요'는 과거강조라 라벨 제외, 현재 '지금도 아파요'만 라벨링",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B126",
+   "category": "mot",
+   "text": "요즘 숨찬 건 못 느꼈어요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "NEGATIVE",
+     "span": "숨찬 건 못 느꼈어요"
+    }
+   ],
+   "note": "'못 느꼈어요'=경험하지 않음, NEGATIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B127",
+   "category": "mot",
+   "text": "오늘 숨을 못 쉬겠어요",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨을 못 쉬겠어요"
+    }
+   ],
+   "note": "'못 쉬겠다'=뚜렷한 호흡곤란, POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B128",
+   "category": "mot",
+   "text": "잠을 통 못 자요 암튼 그래요",
+   "gold": [],
+   "note": "'잠을 못 자다'는 E_89(자도 안개운함)와 의미가 달라 매칭 evidence 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B129",
+   "category": "mot",
+   "text": "있잖아요 아파서 진짜 못 참겠어요...",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "아파서 진짜 못 참겠어요"
+    }
+   ],
+   "note": "통증 명시+강조, E_53 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B130",
+   "category": "mot",
+   "text": "저 요새 냄새를 못 맡겠어요",
+   "gold": [],
+   "note": "후각 관련 evidence 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B131",
+   "category": "mot",
+   "text": "오늘 입맛이 없어서 밥을 잘 못 먹겠어요 넘 힘드네요",
+   "gold": [],
+   "note": "식욕 관련 evidence 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B132",
+   "category": "mot",
+   "text": "며칠째 숨을 못 쉬어서 너무 힘들어요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨을 못 쉬어서"
+    }
+   ],
+   "note": "호흡곤란 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B133",
+   "category": "mot",
+   "text": "저 요새 가래를 못 뱉어내겠어요 넘 힘드네요",
+   "gold": [],
+   "note": "R3: 색/양 조건 언급 없어 E_77 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B134",
+   "category": "mot",
+   "text": "오늘 코가 막혀서 숨을 못 쉬겠어요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "코가 막혀서"
+    },
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨을 못 쉬겠어요"
+    }
+   ],
+   "note": "두 evidence 각각 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B135",
+   "category": "mot",
+   "text": "요즘 너무 피곤해서 아무 일도 못 하겠어요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_88",
+     "status": "POSITIVE",
+     "span": "너무 피곤해서 아무 일도 못 하겠어요"
+    }
+   ],
+   "note": "일상생활 불가 수준 피로, POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B136",
+   "category": "mot",
+   "text": "지금 목이 쉬어서 말을 잘 못 하겠어요",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목이 쉬어서"
+    }
+   ],
+   "note": "목소리 변화 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B137",
+   "category": "mot",
+   "text": "온몸이 쑤셔서 꼼짝도 못 하겠어요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_175",
+     "status": "POSITIVE",
+     "span": "온몸이 쑤셔서"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "온몸이 쑤셔서"
+    }
+   ],
+   "note": "전신근육통 POSITIVE | [검수] R4: '쑤시다'=명시 통증, E_175와 동시 E_53 (A208과 일관)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B138",
+   "category": "mot",
+   "text": "그게 숨쉬기 힘든 건 못 느꼈는데 가슴은 아파요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "NEGATIVE",
+     "span": "숨쉬기 힘든 건 못 느꼈는데"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "가슴은 아파요"
+    }
+   ],
+   "note": "R9: 절 단위 라벨링",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B139",
+   "category": "mot",
+   "text": "오늘 열이 안 떨어져서 움직이지도 못하겠어요 어떡하죠",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열이 안 떨어져서"
+    }
+   ],
+   "note": "R5 지속 POSITIVE, 움직임 불가는 매칭 evidence 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B140",
+   "category": "mot",
+   "text": "지금 어지러워서 잘 못 걷겠어요 레알",
+   "gold": [],
+   "note": "어지러움/보행 관련 evidence 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B141",
+   "category": "an",
+   "text": "요즘 기침이 안 나요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "기침이 안 나요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B142",
+   "category": "an",
+   "text": "있잖아요 열이 안 나요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "열이 안 나요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B143",
+   "category": "an",
+   "text": "요즘 담배는 안 펴요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_79",
+     "status": "NEGATIVE",
+     "span": "담배는 안 펴요"
+    }
+   ],
+   "note": "R6: 흡연은 현재상태 기준",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B144",
+   "category": "an",
+   "text": "있잖아요 술은 안 마셔요",
+   "gold": [
+    {
+     "evidence_id": "E_78",
+     "status": "NEGATIVE",
+     "span": "술은 안 마셔요"
+    }
+   ],
+   "note": "R6: 음주는 현재상태 기준",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B145",
+   "category": "an",
+   "text": "지금 딱히 안 아파요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "NEGATIVE",
+     "span": "안 아파요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B146",
+   "category": "an",
+   "text": "오늘 다리가 안 부었어요",
+   "gold": [
+    {
+     "evidence_id": "E_151",
+     "status": "NEGATIVE",
+     "span": "안 부었어요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B147",
+   "category": "an",
+   "text": "저 요새 움직여도 안 아파요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_216",
+     "status": "NEGATIVE",
+     "span": "움직여도 안 아파요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B149",
+   "category": "an",
+   "text": "기침이 안 멎어요, 계속 이래요",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "안 멎어요"
+    }
+   ],
+   "note": "R5 지속표현은 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B150",
+   "category": "an",
+   "text": "요즘 콧물이 안 멈춰요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "콧물이 안 멈춰요"
+    }
+   ],
+   "note": "R5 지속표현은 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B151",
+   "category": "an",
+   "text": "열이 안 떨어져요, 며칠째 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열이 안 떨어져요"
+    }
+   ],
+   "note": "R5 지속표현은 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B152",
+   "category": "an",
+   "text": "딱히 안 그런 건 아닌데 미열이 좀 있는 것 같아요",
+   "gold": [],
+   "note": "이중부정+hedge('것 같아요')라 R7 hedge로 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B153",
+   "category": "an",
+   "text": "안 아픈 건 아닌데 그냥 참을만해요",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "안 아픈 건 아닌데"
+    }
+   ],
+   "note": "이중부정 해석 모호+애매한 진술이라 라벨 없음 | [검수] R8: 의미 명확한 이중부정=통증 있음 (A143 동일 문장과 일관)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B154",
+   "category": "an",
+   "text": "숨찬 게 안 그런 것도 아니고 그냥 살짝 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨찬 게 안 그런 것도 아니고"
+    }
+   ],
+   "note": "모호한 이중부정, 명확한 의미판단 불가로 라벨 없음 | [검수] R8: '안 그런 것도 아니고'=숨참 있음(정도 경미), A153과 일관",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B155",
+   "category": "an",
+   "text": "고혈압은 안 그런데 혈압약은 먹어요",
+   "gold": [
+    {
+     "evidence_id": "E_104",
+     "status": "POSITIVE",
+     "span": "혈압약은 먹어요"
+    }
+   ],
+   "note": "R2 OR형: 한쪽(혈압약) 긍정이면 전체 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B156",
+   "category": "ani",
+   "text": "저 당뇨병 아니에요 암튼 그래요",
+   "gold": [
+    {
+     "evidence_id": "E_69",
+     "status": "NEGATIVE",
+     "span": "당뇨병 아니에요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B157",
+   "category": "ani",
+   "text": "천식은 아니고 그냥 가끔 숨차는 거예요",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨차는 거예요"
+    }
+   ],
+   "note": "질병명 부정+증상 긍정 각각 라벨링 | [검수] R2: 천식만 부정, 기관지확장제 미언급 → 라벨 없음 (A106과 일관)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B158",
+   "category": "ani",
+   "text": "아 진짜 고혈압은 아니에요 어떡하죠",
+   "gold": [],
+   "note": "[검수] R2: 고혈압만 부정, 혈압약 미언급 → 질문 전체 부정 아님",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B159",
+   "category": "ani",
+   "text": "이게 감기는 아닌 것 같아요",
+   "gold": [],
+   "note": "병명+hedge, R7로 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B160",
+   "category": "ani",
+   "text": "며칠째 열이 없는 건 아니에요 개아파요",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열이 없는 건 아니에요"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "개아파요"
+    }
+   ],
+   "note": "R8 이중부정: 의미상 열 있음 POSITIVE | [검수] R4: '개아파요'는 명시적 통증 진술 → E_53 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B161",
+   "category": "ani",
+   "text": "기침이 나는 게 아니라 그냥 목이 간질거려요",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "기침이 나는 게 아니라"
+    },
+    {
+     "evidence_id": "E_169",
+     "status": "POSITIVE",
+     "span": "목이 간질거려요"
+    }
+   ],
+   "note": "부정 범위는 언급 단위(R9)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B162",
+   "category": "ani",
+   "text": "제가 아픈 게 아니라 동생이 아픈 거예요",
+   "gold": [],
+   "note": "R7 타인 증상, 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B163",
+   "category": "ani",
+   "text": "당뇨병이 아닌 것 같아요, 검사는 안 해봤어요",
+   "gold": [],
+   "note": "hedge, 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B164",
+   "category": "ani",
+   "text": "숨찬 건 아니고 그냥 가슴이 좀 답답해요",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "NEGATIVE",
+     "span": "숨찬 건 아니고"
+    }
+   ],
+   "note": "답답함은 통증표현 아니라 별도 매칭 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B165",
+   "category": "ani",
+   "text": "저는 원래 알레르기 잘 생기는 체질 아니에요",
+   "gold": [
+    {
+     "evidence_id": "E_226",
+     "status": "NEGATIVE",
+     "span": "알레르기 잘 생기는 체질 아니에요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B166",
+   "category": "ani",
+   "text": "예방접종 다 한 거 아니에요, 몇 개 빠졌어요",
+   "gold": [
+    {
+     "evidence_id": "E_209",
+     "status": "NEGATIVE",
+     "span": "예방접종 다 한 거 아니에요"
+    }
+   ],
+   "note": "R3 조건부: 전체 완료 아님 NEGATIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B167",
+   "category": "ani",
+   "text": "코에 폴립 있는 거 아니에요, 확인해봤는데 없대요",
+   "gold": [
+    {
+     "evidence_id": "E_120",
+     "status": "NEGATIVE",
+     "span": "코에 폴립 있는 거 아니에요"
+    }
+   ],
+   "note": "",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B168",
+   "category": "ani",
+   "text": "있잖아요 이거 폐렴 아니죠? 어떡하죠",
+   "gold": [],
+   "note": "R7 질문형, 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B169",
+   "category": "ani",
+   "text": "COPD는 아닌데 숨은 좀 차요",
+   "gold": [
+    {
+     "evidence_id": "E_123",
+     "status": "NEGATIVE",
+     "span": "COPD는 아닌데"
+    },
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨은 좀 차요"
+    }
+   ],
+   "note": "절 단위 라벨링",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B170",
+   "category": "ani",
+   "text": "담배 피는 거 아니에요, 끊은 지 오래됐어요",
+   "gold": [
+    {
+     "evidence_id": "E_79",
+     "status": "NEGATIVE",
+     "span": "담배 피는 거 아니에요"
+    }
+   ],
+   "note": "R6 흡연 현재상태 기준 NEGATIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B171",
+   "category": "tense_contrast",
+   "text": "어제는 기침을 많이 했어요",
+   "gold": [],
+   "note": "과거로만 서술, R6 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B172",
+   "category": "tense_contrast",
+   "text": "지난주엔 열이 좀 있었어요",
+   "gold": [],
+   "note": "과거로만 서술, R6 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B173",
+   "category": "tense_contrast",
+   "text": "그제는 숨이 좀 찼었어요",
+   "gold": [],
+   "note": "과거로만 서술, R6 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B174",
+   "category": "tense_contrast",
+   "text": "며칠 전엔 콧물이 났었어요",
+   "gold": [],
+   "note": "과거로만 서술, R6 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B175",
+   "category": "tense_contrast",
+   "text": "저번엔 심장이 두근거렸었어요",
+   "gold": [],
+   "note": "과거로만 서술, R6 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B176",
+   "category": "tense_contrast",
+   "text": "지난번엔 가래가 누렇게 나왔었어요",
+   "gold": [],
+   "note": "과거로만 서술, R6 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B177",
+   "category": "tense_contrast",
+   "text": "저번 주엔 몸이 부었었어요",
+   "gold": [],
+   "note": "과거로만 서술, R6 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B178",
+   "category": "tense_contrast",
+   "text": "예전엔 열이 있었는데 지금은 멀쩡해요",
+   "gold": [],
+   "note": "과거 부분 제외 + 현재 '멀쩡해요'는 호전/모호 진술이라 R7로 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B179",
+   "category": "tense_contrast",
+   "text": "전에는 기침이 심했는데 요샌 괜찮아요",
+   "gold": [],
+   "note": "과거 제외 + 현재 호전 진술 R7 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B180",
+   "category": "tense_contrast",
+   "text": "예전엔 몸이 부었었는데 요즘은 나아졌어요",
+   "gold": [],
+   "note": "과거 제외 + 호전 진술 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B181",
+   "category": "tense_contrast",
+   "text": "어제까진 열 있었는데 오늘은 없어요",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "NEGATIVE",
+     "span": "오늘은 없어요"
+    }
+   ],
+   "note": "과거절 제외, 현재절만 NEGATIVE 라벨링(R9)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B182",
+   "category": "tense_contrast",
+   "text": "전에는 기침 났었는데 지금은 기침 안 해요",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "NEGATIVE",
+     "span": "지금은 기침 안 해요"
+    }
+   ],
+   "note": "과거절 제외, 현재절 NEGATIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B183",
+   "category": "tense_contrast",
+   "text": "예전엔 콧물 났었는데 지금은 콧물 안 나와요",
+   "gold": [],
+   "note": "과거절 제외, 현재절 NEGATIVE | [검수] R2: 콧물만 부정, 코막힘 미언급 → 라벨 없음 (A087/A148과 일관)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B184",
+   "category": "tense_contrast",
+   "text": "저번엔 심장 두근거렸는데 지금은 두근거리는 거 없어요",
+   "gold": [
+    {
+     "evidence_id": "E_155",
+     "status": "NEGATIVE",
+     "span": "지금은 두근거리는 거 없어요"
+    }
+   ],
+   "note": "과거절 제외, 현재절 NEGATIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B185",
+   "category": "tense_contrast",
+   "text": "어렸을 때부터 당뇨병 있었어요",
+   "gold": [
+    {
+     "evidence_id": "E_69",
+     "status": "POSITIVE",
+     "span": "당뇨병 있었어요"
+    }
+   ],
+   "note": "R6: 이력을 묻는 evidence라 과거서술도 질문 시간범위 따름",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B186",
+   "category": "tense_contrast",
+   "text": "어릴 때 천식 진단받은 적 있어요",
+   "gold": [
+    {
+     "evidence_id": "E_124",
+     "status": "POSITIVE",
+     "span": "천식 진단받은 적 있어요"
+    }
+   ],
+   "note": "R6: 이력 질문, 과거서술 유효",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B187",
+   "category": "tense_contrast",
+   "text": "예전에 심근경색 있었어요",
+   "gold": [
+    {
+     "evidence_id": "E_105",
+     "status": "POSITIVE",
+     "span": "심근경색 있었어요"
+    }
+   ],
+   "note": "R6: 이력 질문, 과거서술 유효",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B189",
+   "category": "tense_contrast",
+   "text": "어렸을 때부터 알레르기 잘 생겼어요",
+   "gold": [
+    {
+     "evidence_id": "E_226",
+     "status": "POSITIVE",
+     "span": "알레르기 잘 생겼어요"
+    }
+   ],
+   "note": "R6: 이력 질문, 과거서술 유효",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B190",
+   "category": "tense_contrast",
+   "text": "예전엔 담배 폈었는데 지금은 안 펴요",
+   "gold": [
+    {
+     "evidence_id": "E_79",
+     "status": "NEGATIVE",
+     "span": "지금은 안 펴요"
+    }
+   ],
+   "note": "R6: 흡연은 현재상태 기준, 과거절 제외",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B191",
+   "category": "persistence",
+   "text": "저 요새 기침이 3일째 안 멎어요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "안 멎어요"
+    }
+   ],
+   "note": "R5 지속표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B192",
+   "category": "persistence",
+   "text": "지금 열이 안 떨어져요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "안 떨어져요"
+    }
+   ],
+   "note": "R5 지속표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B193",
+   "category": "persistence",
+   "text": "아 진짜 콧물이 계속 안 멈춰요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "안 멈춰요"
+    }
+   ],
+   "note": "R5 지속표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B194",
+   "category": "persistence",
+   "text": "있잖아요 다리 부기가 안 빠져요 레알",
+   "gold": [
+    {
+     "evidence_id": "E_151",
+     "status": "POSITIVE",
+     "span": "안 빠져요"
+    }
+   ],
+   "note": "R5 지속표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B195",
+   "category": "persistence",
+   "text": "지금 얼굴 부은 게 안 가라앉아요 ㅠㅠ",
+   "gold": [
+    {
+     "evidence_id": "E_151",
+     "status": "POSITIVE",
+     "span": "안 가라앉아요"
+    }
+   ],
+   "note": "R5 지속표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B196",
+   "category": "persistence",
+   "text": "저 요새 목소리 쉰 게 며칠째 안 돌아와요...",
+   "gold": [
+    {
+     "evidence_id": "E_212",
+     "status": "POSITIVE",
+     "span": "목소리 쉰 게 며칠째 안 돌아와요"
+    }
+   ],
+   "note": "R5 지속표현의 확장(안 돌아와요)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B197",
+   "category": "persistence",
+   "text": "며칠째 가래가 안 떨어져요 ㅠㅠ",
+   "gold": [],
+   "note": "R3: 색/양 조건 없어 지속표현이어도 E_77 라벨 없음",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B198",
+   "category": "persistence",
+   "text": "요즘 기침이 일주일 넘게 안 멎고 계속돼요 걱정되네요",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "안 멎고"
+    }
+   ],
+   "note": "R5 지속표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B199",
+   "category": "persistence",
+   "text": "숨찬 게 안 가라앉아요, 계속 이래요",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨찬 게 안 가라앉아요"
+    }
+   ],
+   "note": "R5 지속표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B200",
+   "category": "persistence",
+   "text": "열이 며칠째 안 내려가요",
+   "gold": [
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "안 내려가요"
+    }
+   ],
+   "note": "R5 지속표현의 확장(안 내려가요)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B202",
+   "category": "persistence",
+   "text": "있잖아요 몸 여기저기 부은 게 안 빠지네요",
+   "gold": [
+    {
+     "evidence_id": "E_151",
+     "status": "POSITIVE",
+     "span": "부은 게 안 빠지네요"
+    }
+   ],
+   "note": "R5 지속표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B203",
+   "category": "multi_symptom",
+   "text": "그게 기침이 나요, 몸에 열이 나요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침이 나요"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "몸에 열이 나요"
+    }
+   ],
+   "note": "2개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B204",
+   "category": "multi_symptom",
+   "text": "며칠째 맑은 콧물이 나와요, 콧물이 초록색이에요.",
+   "gold": [
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "맑은 콧물이 나와요"
+    },
+    {
+     "evidence_id": "E_182",
+     "status": "POSITIVE",
+     "span": "콧물이 초록색이에요"
+    }
+   ],
+   "note": "2개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B205",
+   "category": "multi_symptom",
+   "text": "요즘 숨쉬기가 뚜렷하게 힘들어요, 심장이 빠르게 뛰어요.",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨쉬기가 뚜렷하게 힘들어요"
+    },
+    {
+     "evidence_id": "E_155",
+     "status": "POSITIVE",
+     "span": "심장이 빠르게 뛰어요"
+    }
+   ],
+   "note": "2개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B206",
+   "category": "multi_symptom",
+   "text": "지금 몸에 통증이 있어요, 다리가 부었어요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "몸에 통증이 있어요"
+    },
+    {
+     "evidence_id": "E_151",
+     "status": "POSITIVE",
+     "span": "다리가 부었어요"
+    }
+   ],
+   "note": "2개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B207",
+   "category": "multi_symptom",
+   "text": "며칠째 계속 피곤해요, 하루종일 누워 지내요.",
+   "gold": [
+    {
+     "evidence_id": "E_89",
+     "status": "POSITIVE",
+     "span": "계속 피곤해요"
+    },
+    {
+     "evidence_id": "E_88",
+     "status": "POSITIVE",
+     "span": "하루종일 누워 지내요"
+    }
+   ],
+   "note": "2개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B208",
+   "category": "multi_symptom",
+   "text": "아 진짜 혈압약 먹고 있어요, 요새도 담배 피고 있어요.",
+   "gold": [
+    {
+     "evidence_id": "E_104",
+     "status": "POSITIVE",
+     "span": "혈압약 먹고 있어요"
+    },
+    {
+     "evidence_id": "E_79",
+     "status": "POSITIVE",
+     "span": "요새도 담배 피고 있어요"
+    }
+   ],
+   "note": "2개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B210",
+   "category": "multi_symptom",
+   "text": "저 요새 피부에 이상한 병변이 생겼어요, 메스껍거나 토할 것 같은 느낌은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_129",
+     "status": "POSITIVE",
+     "span": "피부에 이상한 병변이 생겼어요"
+    },
+    {
+     "evidence_id": "E_148",
+     "status": "NEGATIVE",
+     "span": "메스껍거나 토할 것 같은 느낌은 없어요"
+    }
+   ],
+   "note": "2개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B211",
+   "category": "multi_symptom",
+   "text": "며칠째 겨드랑이 림프절이 만지면 아파요, 기침할 때 피 나온 적은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_9",
+     "status": "POSITIVE",
+     "span": "겨드랑이 림프절이 만지면 아파요"
+    },
+    {
+     "evidence_id": "E_45",
+     "status": "NEGATIVE",
+     "span": "기침할 때 피 나온 적은 없어요"
+    },
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "겨드랑이 림프절이 만지면 아파요"
+    }
+   ],
+   "note": "2개 evidence 조합 | [검수] R4: 명시적 통증, E_9와 동시 E_53",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B213",
+   "category": "multi_symptom",
+   "text": "요즘 기침을 계속 해요, 몸에 열이 나요, 코가 막혀요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침을 계속 해요"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "몸에 열이 나요"
+    },
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "코가 막혀요"
+    }
+   ],
+   "note": "3개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B214",
+   "category": "multi_symptom",
+   "text": "요즘 여기저기 좀 아파요, 움직이면 통증이 심해져요, 숨을 깊이 들이쉬어도 안 아파요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "여기저기 좀 아파요"
+    },
+    {
+     "evidence_id": "E_216",
+     "status": "POSITIVE",
+     "span": "움직이면 통증이 심해져요"
+    },
+    {
+     "evidence_id": "E_220",
+     "status": "NEGATIVE",
+     "span": "숨을 깊이 들이쉬어도 안 아파요"
+    }
+   ],
+   "note": "3개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B216",
+   "category": "multi_symptom",
+   "text": "심장이 불규칙하게 뛰는 느낌이에요, 속이 메스꺼워요, 부은 데는 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_155",
+     "status": "POSITIVE",
+     "span": "심장이 불규칙하게 뛰는 느낌이에요"
+    },
+    {
+     "evidence_id": "E_148",
+     "status": "POSITIVE",
+     "span": "속이 메스꺼워요"
+    },
+    {
+     "evidence_id": "E_151",
+     "status": "NEGATIVE",
+     "span": "부은 데는 없어요"
+    }
+   ],
+   "note": "3개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B217",
+   "category": "multi_symptom",
+   "text": "아 진짜 요새 술을 너무 많이 마셔요, 요새도 담배 피고 있어요, 혈압약은 안 먹어요.",
+   "gold": [
+    {
+     "evidence_id": "E_78",
+     "status": "POSITIVE",
+     "span": "요새 술을 너무 많이 마셔요"
+    },
+    {
+     "evidence_id": "E_79",
+     "status": "POSITIVE",
+     "span": "요새도 담배 피고 있어요"
+    }
+   ],
+   "note": "3개 evidence 조합 | [검수] R2: 혈압약만 부정, 고혈압 여부 미언급 → 질문 전체 부정 아님",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B219",
+   "category": "multi_symptom",
+   "text": "그게 몸에 통증이 있어요, 앞으로 숙이면 확실히 덜 아파요, 숨을 깊게 들이쉬면 통증이 심해져요, 움직여도 통증은 똑같아요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "몸에 통증이 있어요"
+    },
+    {
+     "evidence_id": "E_33",
+     "status": "POSITIVE",
+     "span": "앞으로 숙이면 확실히 덜 아파요"
+    },
+    {
+     "evidence_id": "E_220",
+     "status": "POSITIVE",
+     "span": "숨을 깊게 들이쉬면 통증이 심해져요"
+    },
+    {
+     "evidence_id": "E_216",
+     "status": "NEGATIVE",
+     "span": "움직여도 통증은 똑같아요"
+    }
+   ],
+   "note": "4개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B220",
+   "category": "multi_symptom",
+   "text": "숨이 좀 차요, 숨 들이쉴 때 쌕쌕거려요, 숨 내쉴 때 쌕쌕 소리가 나요, 심장 빠르거나 불규칙하게 뛰는 느낌은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_66",
+     "status": "POSITIVE",
+     "span": "숨이 좀 차요"
+    },
+    {
+     "evidence_id": "E_112",
+     "status": "POSITIVE",
+     "span": "숨 들이쉴 때 쌕쌕거려요"
+    },
+    {
+     "evidence_id": "E_214",
+     "status": "POSITIVE",
+     "span": "숨 내쉴 때 쌕쌕 소리가 나요"
+    },
+    {
+     "evidence_id": "E_155",
+     "status": "NEGATIVE",
+     "span": "심장 빠르거나 불규칙하게 뛰는 느낌은 없어요"
+    }
+   ],
+   "note": "4개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B221",
+   "category": "multi_symptom",
+   "text": "지금 피부에 이상한 병변이 생겼어요, 목 옆에 멍울이 부어있어요, 열이 있어요, 메스껍거나 토할 것 같은 느낌은 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_129",
+     "status": "POSITIVE",
+     "span": "피부에 이상한 병변이 생겼어요"
+    },
+    {
+     "evidence_id": "E_9",
+     "status": "POSITIVE",
+     "span": "목 옆에 멍울이 부어있어요"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열이 있어요"
+    },
+    {
+     "evidence_id": "E_148",
+     "status": "NEGATIVE",
+     "span": "메스껍거나 토할 것 같은 느낌은 없어요"
+    }
+   ],
+   "note": "4개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B222",
+   "category": "multi_symptom",
+   "text": "저 요새 저 당뇨병 있어요, 고혈압이 있어요, 담배는 안 펴요, 술은 과하게 안 마셔요.",
+   "gold": [
+    {
+     "evidence_id": "E_69",
+     "status": "POSITIVE",
+     "span": "저 당뇨병 있어요"
+    },
+    {
+     "evidence_id": "E_104",
+     "status": "POSITIVE",
+     "span": "고혈압이 있어요"
+    },
+    {
+     "evidence_id": "E_79",
+     "status": "NEGATIVE",
+     "span": "담배는 안 펴요"
+    },
+    {
+     "evidence_id": "E_78",
+     "status": "NEGATIVE",
+     "span": "술은 과하게 안 마셔요"
+    }
+   ],
+   "note": "4개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B223",
+   "category": "multi_symptom",
+   "text": "요즘 기침이 나요, 가래가 누렇게 많이 나와요, 열이 있어요, 맑은 콧물이 나와요, 부은 데는 없어요.",
+   "gold": [
+    {
+     "evidence_id": "E_201",
+     "status": "POSITIVE",
+     "span": "기침이 나요"
+    },
+    {
+     "evidence_id": "E_77",
+     "status": "POSITIVE",
+     "span": "가래가 누렇게 많이 나와요"
+    },
+    {
+     "evidence_id": "E_91",
+     "status": "POSITIVE",
+     "span": "열이 있어요"
+    },
+    {
+     "evidence_id": "E_181",
+     "status": "POSITIVE",
+     "span": "맑은 콧물이 나와요"
+    },
+    {
+     "evidence_id": "E_151",
+     "status": "NEGATIVE",
+     "span": "부은 데는 없어요"
+    }
+   ],
+   "note": "5개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B224",
+   "category": "multi_symptom",
+   "text": "지금 아픈 데가 있어요, 움직이면 통증이 심해져요, 숨을 깊게 들이쉬면 통증이 심해져요, 앞으로 숙여도 통증이 그대로예요, 배변할 때 힘주면 심해져요.",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "아픈 데가 있어요"
+    },
+    {
+     "evidence_id": "E_216",
+     "status": "POSITIVE",
+     "span": "움직이면 통증이 심해져요"
+    },
+    {
+     "evidence_id": "E_220",
+     "status": "POSITIVE",
+     "span": "숨을 깊게 들이쉬면 통증이 심해져요"
+    },
+    {
+     "evidence_id": "E_33",
+     "status": "NEGATIVE",
+     "span": "앞으로 숙여도 통증이 그대로예요"
+    },
+    {
+     "evidence_id": "E_221",
+     "status": "POSITIVE",
+     "span": "배변할 때 힘주면 심해져요"
+    }
+   ],
+   "note": "5개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B226",
+   "category": "multi_symptom",
+   "text": "심장이 두근거려요, 토할 것 같아요, 몸이 부어있어요, 피부엔 이상 없어요, 멍울 같은 건 안 만져져요.",
+   "gold": [
+    {
+     "evidence_id": "E_155",
+     "status": "POSITIVE",
+     "span": "심장이 두근거려요"
+    },
+    {
+     "evidence_id": "E_148",
+     "status": "POSITIVE",
+     "span": "토할 것 같아요"
+    },
+    {
+     "evidence_id": "E_151",
+     "status": "POSITIVE",
+     "span": "몸이 부어있어요"
+    },
+    {
+     "evidence_id": "E_129",
+     "status": "NEGATIVE",
+     "span": "피부엔 이상 없어요"
+    },
+    {
+     "evidence_id": "E_9",
+     "status": "NEGATIVE",
+     "span": "멍울 같은 건 안 만져져요"
+    }
+   ],
+   "note": "5개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B227",
+   "category": "multi_symptom",
+   "text": "저 요새 예전에 기관지확장제 써본 적 있어요, COPD는 없어요, 2주 전에 감기 걸렸었어요, 당뇨병은 없어요, 저 원래 알레르기가 잘 생기는 편이에요.",
+   "gold": [
+    {
+     "evidence_id": "E_124",
+     "status": "POSITIVE",
+     "span": "예전에 기관지확장제 써본 적 있어요"
+    },
+    {
+     "evidence_id": "E_123",
+     "status": "NEGATIVE",
+     "span": "COPD는 없어요"
+    },
+    {
+     "evidence_id": "E_116",
+     "status": "POSITIVE",
+     "span": "2주 전에 감기 걸렸었어요"
+    },
+    {
+     "evidence_id": "E_69",
+     "status": "NEGATIVE",
+     "span": "당뇨병은 없어요"
+    },
+    {
+     "evidence_id": "E_226",
+     "status": "POSITIVE",
+     "span": "저 원래 알레르기가 잘 생기는 편이에요"
+    }
+   ],
+   "note": "5개 evidence 조합",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B228",
+   "category": "zero_control",
+   "text": "아 진짜 몸이 좀 안 좋아요",
+   "gold": [],
+   "note": "R7 막연한 진술",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B229",
+   "category": "zero_control",
+   "text": "요즘 그냥 컨디션이 별로예요 레알",
+   "gold": [],
+   "note": "R7 막연한 진술(예시 그대로)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B230",
+   "category": "zero_control",
+   "text": "저 요새 숨쉬기 힘든가요? 개아파요",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "개아파요"
+    }
+   ],
+   "note": "R7 질문형 | [검수] R4: '개아파요'는 명시적 통증 진술 → E_53 POSITIVE (질문절은 라벨 없음 유지)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B231",
+   "category": "zero_control",
+   "text": "며칠째 엄마가 열이 좀 있으시대요 레알",
+   "gold": [],
+   "note": "R7 타인 증상",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B232",
+   "category": "zero_control",
+   "text": "며칠째 이거 감기인가 봐요 걱정되네요",
+   "gold": [],
+   "note": "R7 병명+hedge",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B233",
+   "category": "zero_control",
+   "text": "있잖아요 독감이래요 넘 힘드네요",
+   "gold": [],
+   "note": "R7 병명만",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B234",
+   "category": "zero_control",
+   "text": "요즘 폐렴 아니겠죠? 개아파요",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "개아파요"
+    }
+   ],
+   "note": "R7 질문+병명 | [검수] R4: '개아파요'는 명시적 통증 진술 → E_53 POSITIVE (질문·병명절은 라벨 없음 유지)",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B235",
+   "category": "zero_control",
+   "text": "며칠째 친구가 기침을 심하게 해요 어떡하죠",
+   "gold": [],
+   "note": "R7 타인 증상",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B236",
+   "category": "zero_control",
+   "text": "요즘 혹시 이거 천식일 수도 있나요? ㅠㅠ",
+   "gold": [],
+   "note": "R7 질문+hedge",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B237",
+   "category": "zero_control",
+   "text": "몸살 기운이 있는 것 같기도 하고... 넘 힘드네요",
+   "gold": [],
+   "note": "R7 hedge",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B238",
+   "category": "zero_control",
+   "text": "그냥 좀 찌뿌둥해요 어떡하죠",
+   "gold": [],
+   "note": "R7 막연한 진술",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B239",
+   "category": "zero_control",
+   "text": "지금 속이 좀 그래요 ㅠㅠ",
+   "gold": [],
+   "note": "R7 막연한 진술",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B240",
+   "category": "zero_control",
+   "text": "있잖아요 언니가 열나서 걱정이에요 어떡하죠",
+   "gold": [],
+   "note": "R7 타인 증상",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B241",
+   "category": "zero_control",
+   "text": "아 진짜 아빠가 기침을 계속 하셔서요 암튼 그래요",
+   "gold": [],
+   "note": "R7 타인 증상",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B242",
+   "category": "zero_control",
+   "text": "그냥 몸 상태가 이상해요 어떡하죠",
+   "gold": [],
+   "note": "R7 막연한 진술",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B243",
+   "category": "unsupported_symptom_like",
+   "text": "그게 어지러워서 자꾸 휘청거려요 개아파요",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "개아파요"
+    }
+   ],
+   "note": "41개 evidence에 없는 실제 증상 표현 | [검수] R4: '개아파요'는 명시적 통증 진술 → E_53 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B244",
+   "category": "unsupported_symptom_like",
+   "text": "요즘 귀에서 이명이 계속 들려요 레알",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B245",
+   "category": "unsupported_symptom_like",
+   "text": "오늘 시야가 흐릿하게 보여요 ㅠㅠ",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B246",
+   "category": "unsupported_symptom_like",
+   "text": "설사를 계속 해요...",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B247",
+   "category": "unsupported_symptom_like",
+   "text": "며칠째 며칠째 변비가 심해요 걱정되네요",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B248",
+   "category": "unsupported_symptom_like",
+   "text": "그게 화장실을 너무 자주 가요, 소변이 잦아요",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B249",
+   "category": "unsupported_symptom_like",
+   "text": "목이 자꾸 말라요, 갈증이 심해요 레알",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B250",
+   "category": "unsupported_symptom_like",
+   "text": "있잖아요 입맛이 하나도 없어요",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B251",
+   "category": "unsupported_symptom_like",
+   "text": "오늘 요새 살이 갑자기 빠졌어요 걱정되네요",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B252",
+   "category": "unsupported_symptom_like",
+   "text": "지금 손발이 저려요 레알",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B253",
+   "category": "unsupported_symptom_like",
+   "text": "오늘 피부가 그냥 가려워요, 뭐 난 건 없는데 ㅠㅠ",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B254",
+   "category": "unsupported_symptom_like",
+   "text": "눈이 계속 충혈돼요 암튼 그래요",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B255",
+   "category": "unsupported_symptom_like",
+   "text": "그게 목에 뭐가 걸린 느낌이 계속 있어요 ㅠㅠ",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B256",
+   "category": "unsupported_symptom_like",
+   "text": "요즘 잠이 안 와서 밤새 뒤척여요 개아파요",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "개아파요"
+    }
+   ],
+   "note": "41개 evidence에 없는 실제 증상 표현 | [검수] R4: '개아파요'는 명시적 통증 진술 → E_53 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B257",
+   "category": "unsupported_symptom_like",
+   "text": "지금 입 안에 구내염이 자꾸 생겨요 개아파요",
+   "gold": [
+    {
+     "evidence_id": "E_53",
+     "status": "POSITIVE",
+     "span": "개아파요"
+    }
+   ],
+   "note": "41개 evidence에 없는 실제 증상 표현 | [검수] R4: '개아파요'는 명시적 통증 진술 → E_53 POSITIVE",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B258",
+   "category": "unsupported_symptom_like",
+   "text": "오늘 손이 자꾸 떨려요",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B259",
+   "category": "unsupported_symptom_like",
+   "text": "오늘 딸꾹질이 안 멈춰요",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  },
+  {
+   "id": "B260",
+   "category": "unsupported_symptom_like",
+   "text": "요즘 눈꺼풀이 자꾸 떨려요 ㅠㅠ",
+   "gold": [],
+   "note": "41개 evidence에 없는 실제 증상 표현",
+   "source_writer": "B_sonnet"
+  }
+ ]
+}

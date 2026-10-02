@@ -1,0 +1,3554 @@
+{
+ "schema": "medmap.terminology_ko/1",
+ "version": "1.1.2",
+ "note": "한국어 표시 용어 단일 정본(presentation only). key = 내부 ID(모델 질환 class·E_*·V_*) 그대로. status ok 만 label_ko/text_ko, review_needed 는 draft_ko 만(화면 미사용). 런타임 번역·LLM 없음. question_labels_ko.json·initial_evidence_ko.json 의 용어 필드와 medmap-web/src/generated/terminology_ko.json 은 scripts/export_web_terminology.py 가 여기서 생성한다(직접 편집 금지). umls_kor_crosscheck 는 로컬 UMLS KCD5/MDRKOR 대조 결과 boolean 만(문자열 비저장, scripts/crosscheck_umls_kor.py).",
+ "answer_labels": {
+  "unknown_choice_label": "잘 모르겠어요",
+  "yes_label": "예",
+  "no_label": "아니요"
+ },
+ "diseases": {
+  "Acute COPD exacerbation / infection": {
+   "label_ko": "만성 폐쇄성 폐질환(COPD) 급성 악화 또는 감염",
+   "status": "ok",
+   "source": "standard_term",
+   "note": "2026-09-27 원문 직역으로 확정(이전 review_needed: 복합 class(악화 또는 감염을 한 class로 묶음) — 한국어 표시 범위를 사용자가 정해야 함)",
+   "umls_kor_crosscheck": false
+  },
+  "Acute dystonic reactions": {
+   "label_ko": "급성 근육긴장이상 반응",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": null
+  },
+  "Acute laryngitis": {
+   "label_ko": "급성 후두염",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Acute otitis media": {
+   "label_ko": "급성 중이염",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Acute pulmonary edema": {
+   "label_ko": "급성 폐부종",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Acute rhinosinusitis": {
+   "label_ko": "급성 비부비동염",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Allergic sinusitis": {
+   "label_ko": "알레르기성 부비동염",
+   "status": "ok",
+   "source": "standard_term",
+   "note": "2026-09-27 원문 직역으로 확정(이전 review_needed: DDXPlus 명칭(sinusitis)과 한국 임상 용어(알레르기 비염/부비동염) 범위가 달라 한 용어로 정할 수 없음)",
+   "umls_kor_crosscheck": false
+  },
+  "Anaphylaxis": {
+   "label_ko": "아나필락시스",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Anemia": {
+   "label_ko": "빈혈",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Atrial fibrillation": {
+   "label_ko": "심방세동",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Boerhaave": {
+   "label_ko": "특발성 식도 파열(보어하브 증후군)",
+   "status": "ok",
+   "source": "standard_term",
+   "note": "2026-09-27 원문 직역으로 확정(이전 review_needed: 고유명 표기 변이(부르하버/보어하브/부르하베) — 표준 표기 결정 필요)",
+   "umls_kor_crosscheck": false
+  },
+  "Bronchiectasis": {
+   "label_ko": "기관지확장증",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Bronchiolitis": {
+   "label_ko": "세기관지염",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": false
+  },
+  "Bronchitis": {
+   "label_ko": "기관지염",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Bronchospasm / acute asthma exacerbation": {
+   "label_ko": "기관지 연축 또는 천식 급성 악화",
+   "status": "ok",
+   "source": "standard_term",
+   "note": "2026-09-27 원문 직역으로 확정(이전 review_needed: 복합 class(기관지 연축 또는 천식 급성 악화) — 표시 범위 결정 필요)",
+   "umls_kor_crosscheck": false
+  },
+  "Chagas": {
+   "label_ko": "샤가스병",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Chronic rhinosinusitis": {
+   "label_ko": "만성 비부비동염",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": false
+  },
+  "Cluster headache": {
+   "label_ko": "군발 두통",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": false
+  },
+  "Croup": {
+   "label_ko": "크루프",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": false
+  },
+  "Ebola": {
+   "label_ko": "에볼라바이러스병",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Epiglottitis": {
+   "label_ko": "후두개염",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "GERD": {
+   "label_ko": "위식도 역류질환",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true,
+   "note": "약어 풀어 씀"
+  },
+  "Guillain-Barré syndrome": {
+   "label_ko": "길랭-바레 증후군",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "HIV (initial infection)": {
+   "label_ko": "HIV 초기 감염",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": false
+  },
+  "Influenza": {
+   "label_ko": "인플루엔자",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Inguinal hernia": {
+   "label_ko": "서혜부 탈장",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Larygospasm": {
+   "label_ko": "후두 연축",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true,
+   "note": "모델 class 원문 오탈자(Laryngospasm). key 는 원문 유지"
+  },
+  "Localized edema": {
+   "label_ko": "국소 부종",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Myasthenia gravis": {
+   "label_ko": "중증 근무력증",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": false
+  },
+  "Myocarditis": {
+   "label_ko": "심근염",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "PSVT": {
+   "label_ko": "발작성 심실상성 빈맥",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": false,
+   "note": "약어 풀어 씀"
+  },
+  "Pancreatic neoplasm": {
+   "label_ko": "췌장 종양",
+   "status": "ok",
+   "source": "standard_term",
+   "note": "2026-09-27 원문 직역으로 확정(이전 review_needed: neoplasm 의 양성/악성 범위 불명 — '췌장암'으로 쓰면 의미 확대, '신생물'은 환자에게 생소)",
+   "umls_kor_crosscheck": false
+  },
+  "Panic attack": {
+   "label_ko": "공황 발작",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Pericarditis": {
+   "label_ko": "심낭염",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": false
+  },
+  "Pneumonia": {
+   "label_ko": "폐렴",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Possible NSTEMI / STEMI": {
+   "label_ko": "급성 심근경색 의심(ST분절 상승 또는 비상승)",
+   "status": "ok",
+   "source": "standard_term",
+   "note": "2026-09-27 원문 직역으로 확정(이전 review_needed: 불확실 표현(Possible) + 복합 class — 표시 문구 결정 필요)",
+   "umls_kor_crosscheck": false
+  },
+  "Pulmonary embolism": {
+   "label_ko": "폐색전증",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Pulmonary neoplasm": {
+   "label_ko": "폐 종양",
+   "status": "ok",
+   "source": "standard_term",
+   "note": "2026-09-27 원문 직역으로 확정(이전 review_needed: neoplasm 의 양성/악성 범위 불명 — '폐암'으로 쓰면 의미 확대)",
+   "umls_kor_crosscheck": false
+  },
+  "SLE": {
+   "label_ko": "전신 홍반성 루푸스",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true,
+   "note": "약어 풀어 씀"
+  },
+  "Sarcoidosis": {
+   "label_ko": "사르코이드증",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Scombroid food poisoning": {
+   "label_ko": "스콤브로이드 식중독",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": false
+  },
+  "Spontaneous pneumothorax": {
+   "label_ko": "자연 기흉",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Spontaneous rib fracture": {
+   "label_ko": "자발성 갈비뼈 골절",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": false
+  },
+  "Stable angina": {
+   "label_ko": "안정형 협심증",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Tuberculosis": {
+   "label_ko": "결핵",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "URTI": {
+   "label_ko": "상기도 감염",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true,
+   "note": "약어 풀어 씀(upper respiratory tract infection)"
+  },
+  "Unstable angina": {
+   "label_ko": "불안정형 협심증",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": false
+  },
+  "Viral pharyngitis": {
+   "label_ko": "바이러스 인두염",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  },
+  "Whooping cough": {
+   "label_ko": "백일해",
+   "status": "ok",
+   "source": "standard_term",
+   "umls_kor_crosscheck": true
+  }
+ },
+ "evidence_short": {
+  "E_0": {
+   "label_ko": "최근 바이러스 감염",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_1": {
+   "label_ko": "귀 감염 항생제 복용",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_2": {
+   "label_ko": "HIV 감염",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_3": {
+   "label_ko": "심낭염 과거력",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_4": {
+   "label_ko": "크루프 병력(본인·가족)",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_5": {
+   "label_ko": "폐에 물이 찬 적 있음",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_6": {
+   "label_ko": "만성 췌장염",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_7": {
+   "label_ko": "부실한 식사",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_8": {
+   "label_ko": "투석 중",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_9": {
+   "label_ko": "림프절(멍울) 부음·통증",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed",
+   "note": "2026-09-27 사용자 human gate 승인(C 인수 후 번역 리뷰 반영)"
+  },
+  "E_10": {
+   "label_ko": "소염진통제 복용",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_11": {
+   "label_ko": "9개월 넘는 모유 수유",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_12": {
+   "label_ko": "심한 음식 알레르기",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_13": {
+   "label_ko": "2주 사이 악화·적은 활동에도 증상 발생",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_14": {
+   "label_ko": "가만히 있어도 가슴 통증",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_15": {
+   "label_ko": "최근 7일 내 항정신병약 복용",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_16": {
+   "label_ko": "불안감",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_17": {
+   "label_ko": "아시아계 혈통",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_18": {
+   "label_ko": "낭포성 섬유증",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_19": {
+   "label_ko": "갑상선 기능 항진증",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_20": {
+   "label_ko": "류마티스 관절염",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_21": {
+   "label_ko": "자연 기흉 과거력",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_22": {
+   "label_ko": "심장 판막 질환",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_23": {
+   "label_ko": "자는 동안 숨이 멈춤",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_24": {
+   "label_ko": "빈혈 진단 과거력",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_25": {
+   "label_ko": "가족의 군발 두통",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_26": {
+   "label_ko": "가족의 빈혈",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_27": {
+   "label_ko": "성매개 감염 과거력",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_28": {
+   "label_ko": "가족의 중증 근무력증",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_29": {
+   "label_ko": "가까운 가족의 정신 질환",
+   "status": "ok",
+   "source": "question_en_derived",
+   "note": "2026-09-27 독립 번역 리뷰 SHOULD_FIX 반영"
+  },
+  "E_30": {
+   "label_ko": "배가 부풀어 오름",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_31": {
+   "label_ko": "중증 만성 폐쇄성 폐질환",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_32": {
+   "label_ko": "식욕 감소",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_33": {
+   "label_ko": "몸을 앞으로 숙이면 나아지는 통증",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_34": {
+   "label_ko": "현재 앓고 있는 암",
+   "status": "ok",
+   "source": "question_en_derived",
+   "note": "2026-09-27 독립 번역 리뷰 SHOULD_FIX 반영"
+  },
+  "E_35": {
+   "label_ko": "커피·차 규칙적 섭취",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_37": {
+   "label_ko": "전이암",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_38": {
+   "label_ko": "턱 통증·힘 빠짐",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_39": {
+   "label_ko": "헷갈리거나 정신이 혼란스러움",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_40": {
+   "label_ko": "백일해 환자 접촉",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_41": {
+   "label_ko": "비슷한 증상자 접촉(2주 내)",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_42": {
+   "label_ko": "알레르기 물질에 닿거나 먹음",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_43": {
+   "label_ko": "경련하며 의식을 잃음·멍해짐",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_44": {
+   "label_ko": "스테로이드제 복용",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_45": {
+   "label_ko": "기침할 때 피가 나옴",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_46": {
+   "label_ko": "지난 1년 천식 발작 2회 이상",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_47": {
+   "label_ko": "크론병·궤양성 대장염",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_48": {
+   "label_ko": "4명 이상과 함께 거주",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_49": {
+   "label_ko": "어린이집 출입·근무",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_50": {
+   "label_ko": "땀이 많이 남",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_51": {
+   "label_ko": "설사 또는 배변 횟수 증가",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed",
+   "note": "2026-09-27 사용자 human gate 승인(C 인수 후 번역 리뷰 반영)"
+  },
+  "E_52": {
+   "label_ko": "물체가 둘로 보임",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_53": {
+   "label_ko": "통증",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_54": {
+   "label_ko": "통증 양상",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_55": {
+   "label_ko": "통증 부위",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_56": {
+   "label_ko": "통증 강도",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_57": {
+   "label_ko": "통증이 퍼지는 부위",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_58": {
+   "label_ko": "통증 위치의 분명함",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_59": {
+   "label_ko": "통증이 생긴 속도",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_60": {
+   "label_ko": "에너지 음료 규칙적 섭취",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_61": {
+   "label_ko": "정맥 주사 약물 사용",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_62": {
+   "label_ko": "각성제 규칙적 복용",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_63": {
+   "label_ko": "말하기 어려움·발음이 어눌함",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_64": {
+   "label_ko": "조금만 움직여도 숨이 참",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_65": {
+   "label_ko": "삼키기 어려움·삼킬 때 걸리는 느낌",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed",
+   "note": "2026-09-27 사용자 human gate 승인(C 인수 후 번역 리뷰 반영)"
+  },
+  "E_66": {
+   "label_ko": "숨이 참",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_67": {
+   "label_ko": "자다가 숨이 막혀 깸",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_69": {
+   "label_ko": "당뇨병",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_70": {
+   "label_ko": "과체중",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_71": {
+   "label_ko": "고콜레스테롤 또는 치료약 복용",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_72": {
+   "label_ko": "지난 1년 만성 폐쇄성 폐질환 악화",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_73": {
+   "label_ko": "에볼라 감염자 접촉(1개월 내)",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_74": {
+   "label_ko": "눈 전체가 충혈됨",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_75": {
+   "label_ko": "숨이 막히는 느낌",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_76": {
+   "label_ko": "가벼운 어지러움",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_77": {
+   "label_ko": "색이 있거나 양이 많아진 가래",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed",
+   "note": "2026-09-27 사용자 human gate 승인(C 인수 후 번역 리뷰 반영)"
+  },
+  "E_78": {
+   "label_ko": "과음·알코올 의존",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_79": {
+   "label_ko": "흡연",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_80": {
+   "label_ko": "우울증 진단 과거력",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_81": {
+   "label_ko": "만성 불안",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_82": {
+   "label_ko": "어지럽고 쓰러질 것 같음",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_83": {
+   "label_ko": "얼굴·눈 근육 힘 빠짐",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_84": {
+   "label_ko": "양팔·양다리 힘 빠짐",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_86": {
+   "label_ko": "가족의 알레르기·꽃가루병·습진",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_87": {
+   "label_ko": "가족의 천식",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_88": {
+   "label_ko": "일상생활이 힘들 만큼 피곤함",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_89": {
+   "label_ko": "계속 피곤함·잠을 자도 개운하지 않음",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_90": {
+   "label_ko": "피로·스트레스로 심해지는 근력 저하",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_91": {
+   "label_ko": "열",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_92": {
+   "label_ko": "볼이 갑자기 빨개짐",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_93": {
+   "label_ko": "발 저림·감각 저하",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_94": {
+   "label_ko": "오한(춥고 떨림)",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_95": {
+   "label_ko": "파킨슨병",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_96": {
+   "label_ko": "최근 체중 증가",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_97": {
+   "label_ko": "목 아픔",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_98": {
+   "label_ko": "열공 탈장",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_99": {
+   "label_ko": "편두통 병력(본인·가족)",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_100": {
+   "label_ko": "호르몬제 복용",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_101": {
+   "label_ko": "지난 1년 천식으로 입원",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_102": {
+   "label_ko": "고혈압 때문에 진료",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_103": {
+   "label_ko": "냄새를 못 맡음",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_104": {
+   "label_ko": "고혈압 또는 혈압약 복용",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_105": {
+   "label_ko": "심근경색 과거력 또는 협심증",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_106": {
+   "label_ko": "심부전",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_107": {
+   "label_ko": "뇌졸중 과거력",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_108": {
+   "label_ko": "혈액 순환 문제",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_109": {
+   "label_ko": "심부정맥 혈전증 과거력",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_110": {
+   "label_ko": "3일 넘게 거동 못함(4주 내)",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_111": {
+   "label_ko": "죽을 것 같은 두려움",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_112": {
+   "label_ko": "들숨 때 쌕쌕거림 또는 기침 뒤 거친 숨소리",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed",
+   "note": "2026-09-27 사용자 human gate 승인(C 인수 후 번역 리뷰 반영)"
+  },
+  "E_113": {
+   "label_ko": "만성 신부전",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_114": {
+   "label_ko": "짜증·기분 변화가 심함",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_115": {
+   "label_ko": "여러 상대와 무방비 성관계(6개월 내)",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_116": {
+   "label_ko": "2주 내 감기",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_118": {
+   "label_ko": "폐렴 과거력",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_119": {
+   "label_ko": "만성 부비동염 진단",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_120": {
+   "label_ko": "코 물혹(폴립)",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_121": {
+   "label_ko": "비중격 만곡",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_123": {
+   "label_ko": "만성 폐쇄성 폐질환",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_124": {
+   "label_ko": "천식 또는 기관지확장제 사용 과거력",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_125": {
+   "label_ko": "위식도 역류 진단 과거력",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_126": {
+   "label_ko": "간경변",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_127": {
+   "label_ko": "눈물이 많이 남",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_128": {
+   "label_ko": "잠깐 숨이 막혀 말도 못 함",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_129": {
+   "label_ko": "피부 이상(발진·붉어짐)",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_130": {
+   "label_ko": "발진 색깔",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_131": {
+   "label_ko": "병변 껍질 벗겨짐",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_132": {
+   "label_ko": "발진 부기 정도",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_133": {
+   "label_ko": "발진 부위",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_134": {
+   "label_ko": "발진 통증 강도",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_135": {
+   "label_ko": "병변 크기 1cm 초과",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_136": {
+   "label_ko": "가려움 정도",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_137": {
+   "label_ko": "림프절 제거 수술 과거력",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_138": {
+   "label_ko": "섬유근육통",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_139": {
+   "label_ko": "심장 기형(선천성 등)",
+   "status": "ok",
+   "source": "question_en_derived",
+   "note": "2026-09-27 독립 번역 리뷰 SHOULD_FIX 반영"
+  },
+  "E_140": {
+   "label_ko": "검은 변",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_141": {
+   "label_ko": "12세 전 초경",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_142": {
+   "label_ko": "어머니의 천식",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_143": {
+   "label_ko": "주 4회 이상 규칙적 운동",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_144": {
+   "label_ko": "온몸 근육통",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_145": {
+   "label_ko": "월경량이 많거나 기간이 김",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_146": {
+   "label_ko": "먹는 항응고제(아픽사반 등) 복용",
+   "status": "ok",
+   "source": "question_en_derived",
+   "note": "2026-09-27 독립 번역 리뷰 SHOULD_FIX 반영"
+  },
+  "E_147": {
+   "label_ko": "최근 병원 주사 치료(구역·흥분·중독 등)",
+   "status": "ok",
+   "source": "question_en_derived",
+   "note": "2026-09-27 원문 직역으로 확정(이전 review_needed: 복합 조건(구역·초조·중독·공격행동 치료 + 정맥/근육 주사) — 축약 시 의미 손실 여부 검토 필요)"
+  },
+  "E_148": {
+   "label_ko": "메스꺼움·구역질",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_149": {
+   "label_ko": "칼슘 통로 차단제 복용",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_150": {
+   "label_ko": "대변·방귀 배출 가능 여부",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_151": {
+   "label_ko": "몸이 부음",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_152": {
+   "label_ko": "부종 부위",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_153": {
+   "label_ko": "골다공증 치료 중",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_154": {
+   "label_ko": "피부가 창백함",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_155": {
+   "label_ko": "가슴 두근거림",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_156": {
+   "label_ko": "한쪽 얼굴 마비·힘 빠짐",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_157": {
+   "label_ko": "양팔·양다리·입 주변 저림",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_158": {
+   "label_ko": "내분비·호르몬 질환 진단",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_159": {
+   "label_ko": "의식을 잃음",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_160": {
+   "label_ko": "조산 또는 출생 시 합병증",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_161": {
+   "label_ko": "입맛이 없음·금방 배부름",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_162": {
+   "label_ko": "뜻하지 않은 체중 감소",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_163": {
+   "label_ko": "질 분비물",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_164": {
+   "label_ko": "심장이 매우 불규칙하게 뜀",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_165": {
+   "label_ko": "가족의 기흉",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_166": {
+   "label_ko": "기침한 뒤 토함",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_167": {
+   "label_ko": "임신(가능성 포함)",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_168": {
+   "label_ko": "혀를 입 안에 두기 어려움",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_169": {
+   "label_ko": "코나 목 안쪽 가려움",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_170": {
+   "label_ko": "눈이 심하게 가려움",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_171": {
+   "label_ko": "내 몸이나 주변이 낯설게 느껴짐",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_172": {
+   "label_ko": "눈꺼풀이 잘 안 올라감",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_173": {
+   "label_ko": "속쓰림(타는 느낌이 목으로 올라옴)",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_174": {
+   "label_ko": "뜻하지 않은 체중 감소·식욕 저하",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_175": {
+   "label_ko": "새로 생긴 피로·몸살 기운",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_176": {
+   "label_ko": "팔다리·얼굴 마비나 힘 빠짐",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_177": {
+   "label_ko": "몸 어딘가의 저림·감각 저하",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_178": {
+   "label_ko": "이상한 출혈이나 멍",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_179": {
+   "label_ko": "변에 붉은 피·핏덩어리",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_180": {
+   "label_ko": "눈동자를 원하는 방향으로 못 움직임",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_181": {
+   "label_ko": "코막힘·맑은 콧물",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_182": {
+   "label_ko": "누런·초록 콧물",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_183": {
+   "label_ko": "농촌 거주",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_184": {
+   "label_ko": "혈관 확장제 복용",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_185": {
+   "label_ko": "머리 외상 과거력",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_186": {
+   "label_ko": "폐쇄성 수면 무호흡 진단",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_187": {
+   "label_ko": "붉은살 생선·스위스 치즈 섭취",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_188": {
+   "label_ko": "색이 옅은 변과 진한 소변",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_189": {
+   "label_ko": "HIV 양성 상대와 성관계(12개월 내)",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_190": {
+   "label_ko": "침이 많이 나옴",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_191": {
+   "label_ko": "과거 흡연",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_192": {
+   "label_ko": "목 근육 경련으로 고개를 못 돌림",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_193": {
+   "label_ko": "근육 경련(얼굴·목 등)",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_194": {
+   "label_ko": "숨 들이쉴 때 높은 소리",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_195": {
+   "label_ko": "교외 거주",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_196": {
+   "label_ko": "1개월 내 수술",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_197": {
+   "label_ko": "단백질이 빠지는 신장 질환",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_198": {
+   "label_ko": "농업 종사",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_199": {
+   "label_ko": "건설업 종사",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_200": {
+   "label_ko": "광업 종사",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_201": {
+   "label_ko": "기침",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_202": {
+   "label_ko": "숨 들이쉴 때 소리가 나는 발작적 기침",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_203": {
+   "label_ko": "심한 기침 발작",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_204": {
+   "label_ko": "4주 내 해외여행",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_205": {
+   "label_ko": "입이 안 벌어지거나 벌릴 때 턱 통증",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_206": {
+   "label_ko": "입안이 헐거나 아픈 궤양",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_207": {
+   "label_ko": "대도시 거주",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_208": {
+   "label_ko": "저체중(BMI 18.5 미만)",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_209": {
+   "label_ko": "예방접종 완료",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_210": {
+   "label_ko": "피를 토함",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_211": {
+   "label_ko": "여러 번 토함",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_212": {
+   "label_ko": "목소리 변화(쉰 목소리)",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_213": {
+   "label_ko": "최근 코막힘약·각성 성분 복용",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_214": {
+   "label_ko": "숨 내쉴 때 쌕쌕거림",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_215": {
+   "label_ko": "먹고 나면 심해지는 증상",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_216": {
+   "label_ko": "움직이면 심해지는 통증",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_217": {
+   "label_ko": "누우면 심해지고 앉으면 나아지는 증상",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_218": {
+   "label_ko": "움직이면 심해지고 쉬면 나아지는 증상",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_219": {
+   "label_ko": "밤에 심해지는 증상",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_220": {
+   "label_ko": "숨을 깊이 쉬면 심해지는 통증",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_221": {
+   "label_ko": "기침·힘줄 때 심해지는 증상",
+   "status": "ok",
+   "source": "initial_evidence_ko_user_reviewed"
+  },
+  "E_222": {
+   "label_ko": "매일 간접흡연",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_223": {
+   "label_ko": "가족의 췌장암",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_224": {
+   "label_ko": "가족의 폐암",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_225": {
+   "label_ko": "50세 전 심혈관 질환 가족력",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "E_226": {
+   "label_ko": "알레르기 체질",
+   "status": "ok",
+   "source": "question_labels_ko_derived"
+  },
+  "E_227": {
+   "label_ko": "면역 저하",
+   "status": "ok",
+   "source": "question_en_derived"
+  }
+ },
+ "evidence_questions": {
+  "E_0": {
+   "text_ko": "최근에 바이러스 감염을 앓은 적이 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_1": {
+   "text_ko": "귀 감염 때문에 먹는 항생제로 현재 치료 중이거나 최근에 치료받았나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_2": {
+   "text_ko": "사람면역결핍바이러스(HIV)에 감염되어 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_3": {
+   "text_ko": "심낭염(심장을 싸는 막의 염증)을 앓은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_4": {
+   "text_ko": "본인이나 가족 중에 크루프(쉰 목소리와 컹컹거리는 기침이 나는 후두 감염)를 앓은 사람이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_5": {
+   "text_ko": "폐에 물이 찬 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_6": {
+   "text_ko": "만성 췌장염이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_7": {
+   "text_ko": "식사가 부실한 편인가요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_8": {
+   "text_ko": "현재 투석을 받고 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_9": {
+   "text_ko": "림프절(목·겨드랑이·사타구니의 멍울)이 붓거나 아픈가요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_10": {
+   "text_ko": "소염진통제(NSAID)를 현재 복용 중이거나 최근에 복용했나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_11": {
+   "text_ko": "자녀 중 한 명에게라도 9개월 넘게 모유 수유를 한 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_12": {
+   "text_ko": "진단받았거나 알고 있는 심한 음식 알레르기가 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_13": {
+   "text_ko": "최근 2주 동안 증상이 나빠졌고, 점점 더 적은 활동으로도 증상이 나타나나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_14": {
+   "text_ko": "가만히 쉬고 있을 때에도 가슴 통증이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_15": {
+   "text_ko": "최근 7일 안에 항정신병 약을 새로 시작했거나 복용한 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_16": {
+   "text_ko": "불안한 느낌이 드나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_17": {
+   "text_ko": "아시아계 혈통인가요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_18": {
+   "text_ko": "낭포성 섬유증이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_19": {
+   "text_ko": "갑상선 기능 항진증을 진단받은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_20": {
+   "text_ko": "류마티스 관절염이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_21": {
+   "text_ko": "외상 없이 저절로 생긴 기흉(자연 기흉)을 앓은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_22": {
+   "text_ko": "심장 판막 중 하나에 문제가 있다고 알고 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_23": {
+   "text_ko": "자는 동안 잠시 숨이 멈추는 일이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_24": {
+   "text_ko": "빈혈을 진단받은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_25": {
+   "text_ko": "가족 중에 군발 두통을 진단받은 사람이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_26": {
+   "text_ko": "가족 중에 빈혈을 진단받은 사람이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_27": {
+   "text_ko": "성매개 감염을 앓은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_28": {
+   "text_ko": "가족 중에 중증 근무력증을 진단받은 사람이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_29": {
+   "text_ko": "가까운 가족(부모·형제자매·자녀 등) 중에 정신 질환이 있는 사람이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27",
+   "note": "2026-09-27 독립 번역 리뷰 SHOULD_FIX 반영"
+  },
+  "E_30": {
+   "text_ko": "배가 더부룩하거나 속에서 밀어내는 듯 부풀어 오른 느낌이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_31": {
+   "text_ko": "중증 만성 폐쇄성 폐질환(COPD)이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_32": {
+   "text_ko": "식욕이 줄었나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_33": {
+   "text_ko": "앞으로 몸을 숙이면 통증이 나아지나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_34": {
+   "text_ko": "현재 앓고 있는(치료 중이거나 진행 중인) 암이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_35": {
+   "text_ko": "커피나 차를 규칙적으로 마시나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_37": {
+   "text_ko": "다른 장기로 전이된 암이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_38": {
+   "text_ko": "턱에 통증이 있거나 턱에 힘이 빠지나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_39": {
+   "text_ko": "최근에 정신이 혼란스럽거나 방향 감각을 잃은 느낌이 있었나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_40": {
+   "text_ko": "백일해에 걸린 사람과 접촉한 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_41": {
+   "text_ko": "최근 2주 안에 비슷한 증상이 있는 사람과 접촉한 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_42": {
+   "text_ko": "알레르기가 있는 물질에 닿았거나 그런 음식을 먹었나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_43": {
+   "text_ko": "온몸이 심하게 계속 굳거나 떨리면서 의식을 잃었거나, 잠깐 멍하게 반응이 없어진 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_44": {
+   "text_ko": "스테로이드제(코르티코스테로이드)를 복용하나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_45": {
+   "text_ko": "기침할 때 피가 섞여 나온 적이 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_46": {
+   "text_ko": "지난 1년 동안 천식 발작이 2번 이상 있었나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_47": {
+   "text_ko": "크론병이나 궤양성 대장염이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_48": {
+   "text_ko": "4명 이상과 함께 살고 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_49": {
+   "text_ko": "어린이집에 다니거나 어린이집에서 일하나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_50": {
+   "text_ko": "평소보다 땀이 뚜렷하게 많이 나나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_51": {
+   "text_ko": "설사를 했거나 변을 보는 횟수가 늘었나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_52": {
+   "text_ko": "하나의 물체가 겹치거나 나란히 두 개로 보이나요(복시)?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_53": {
+   "text_ko": "이번에 진료를 받으려는 이유와 관련해서 어딘가 통증이 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_54": {
+   "text_ko": "통증이 어떤 느낌인가요? (해당하는 것을 모두 고르세요)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_55": {
+   "text_ko": "어느 부위에 통증이 있나요? (해당하는 곳을 모두 고르세요)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_56": {
+   "text_ko": "통증이 얼마나 심한가요? (0~10)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_57": {
+   "text_ko": "통증이 다른 부위로 퍼지나요? (해당하는 곳을 모두 고르세요)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_58": {
+   "text_ko": "통증 부위가 얼마나 분명한가요? (0~10)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_59": {
+   "text_ko": "통증이 얼마나 빠르게 생겼나요? (0~10)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_60": {
+   "text_ko": "에너지 음료를 규칙적으로 마시나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_61": {
+   "text_ko": "현재 정맥 주사로 약물(마약류 등)을 사용하고 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_62": {
+   "text_ko": "각성제를 규칙적으로 복용하나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_63": {
+   "text_ko": "말을 하거나 발음을 또렷하게 하기가 어렵나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_64": {
+   "text_ko": "조금만 몸을 움직여도 숨이 차나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_65": {
+   "text_ko": "삼키기 어렵거나, 삼킬 때 불편하거나 걸리는 느낌이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_66": {
+   "text_ko": "숨이 차거나 숨쉬기가 뚜렷하게 힘든가요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_67": {
+   "text_ko": "밤에 숨이 막히거나 숨이 차서 잠에서 깨는 일이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_69": {
+   "text_ko": "당뇨병이 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_70": {
+   "text_ko": "같은 키의 사람들과 비교해 체중이 뚜렷하게 많이 나가나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_71": {
+   "text_ko": "콜레스테롤이 높거나 콜레스테롤을 낮추는 약을 복용하나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_72": {
+   "text_ko": "지난 1년 동안 만성 폐쇄성 폐질환(COPD)이 한 번 이상 악화된 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_73": {
+   "text_ko": "지난 1개월 안에 에볼라 바이러스에 감염된 사람과 접촉한 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_74": {
+   "text_ko": "한쪽 또는 양쪽 눈 전체가 넓게 충혈된 것을 알아차렸나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_75": {
+   "text_ko": "숨이 막히거나 질식할 것 같은 느낌이 있나요(또는 있었나요)?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_76": {
+   "text_ko": "약간 어지럽거나 머리가 핑 도는 느낌이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_77": {
+   "text_ko": "평소보다 색이 있거나 양이 많은 가래가 나오는 기침을 하나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_78": {
+   "text_ko": "술을 지나치게 많이 마시거나 알코올 의존이 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_79": {
+   "text_ko": "담배를 피우나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_80": {
+   "text_ko": "우울증을 진단받은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_81": {
+   "text_ko": "만성적인 불안에 시달리나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_82": {
+   "text_ko": "머리가 핑 돌고 어지럽거나, 곧 기절할 것 같은 느낌이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_83": {
+   "text_ko": "얼굴 근육이나 눈 근육(또는 둘 다)에 힘이 빠진 것을 느꼈나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_84": {
+   "text_ko": "양팔이나 양다리(또는 모두)에 힘이 빠지나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_86": {
+   "text_ko": "가까운 가족 중에 알레르기(종류 무관), 꽃가루 알레르기(건초열) 또는 습진이 있는 사람이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_87": {
+   "text_ko": "가족 중에 천식이 있는 사람이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_88": {
+   "text_ko": "너무 피곤해서 평소 하던 일을 못 하거나 하루 종일 누워 지내나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_89": {
+   "text_ko": "계속 피로하거나 잠을 자도 개운하지 않나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_90": {
+   "text_ko": "피곤하거나 스트레스를 받으면(또는 둘 다) 근력 저하 증상이 심해지나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_91": {
+   "text_ko": "열이 있나요? (느낌으로든 체온계로 잰 것이든)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_92": {
+   "text_ko": "볼이 갑자기 붉어졌나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_93": {
+   "text_ko": "발이 저리거나, 감각이 없거나, 따끔거리나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_94": {
+   "text_ko": "오한이 들거나 몸이 떨렸나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_95": {
+   "text_ko": "파킨슨병이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_96": {
+   "text_ko": "최근에 체중이 늘었나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_97": {
+   "text_ko": "목이 아픈가요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_98": {
+   "text_ko": "열공 탈장(위의 일부가 횡격막 위로 올라온 상태)이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_99": {
+   "text_ko": "편두통을 앓은 적이 있거나, 가족 중에 편두통이 있는 사람이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_100": {
+   "text_ko": "현재 호르몬제를 복용하고 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_101": {
+   "text_ko": "지난 1년 동안 천식 발작으로 입원한 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_102": {
+   "text_ko": "혈압이 높아서 진료를 받으러 왔나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_103": {
+   "text_ko": "냄새를 맡지 못하게 되었나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_104": {
+   "text_ko": "고혈압이 있거나 혈압약을 먹고 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_105": {
+   "text_ko": "심근경색(심장마비)을 앓은 적이 있거나 협심증(가슴 통증)이 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_106": {
+   "text_ko": "심부전이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_107": {
+   "text_ko": "뇌졸중을 앓은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_108": {
+   "text_ko": "혈액 순환이 잘 안 되는 문제가 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_109": {
+   "text_ko": "심부정맥 혈전증(다리 등 깊은 정맥에 생긴 혈전)을 앓은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_110": {
+   "text_ko": "최근 4주 안에 3일 넘게 연속으로 움직이거나 일어나지 못한 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_111": {
+   "text_ko": "죽을 것 같은 느낌이 있나요, 또는 곧 죽을 것 같아 두려웠나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_112": {
+   "text_ko": "숨을 들이쉴 때 쌕쌕거리거나, 기침 후에 숨소리가 거칠어지나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_113": {
+   "text_ko": "만성 신부전이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_114": {
+   "text_ko": "최근에 더 쉽게 짜증이 나거나 기분이 매우 불안정했나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_115": {
+   "text_ko": "최근 6개월 안에 두 명 이상의 상대와 콘돔 등 보호 없이 성관계를 한 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_116": {
+   "text_ko": "최근 2주 안에 감기를 앓았나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_118": {
+   "text_ko": "폐렴을 앓은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_119": {
+   "text_ko": "만성 부비동염을 진단받은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_120": {
+   "text_ko": "코 안에 물혹(폴립)이 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_121": {
+   "text_ko": "코 가운데 벽이 휘어 있나요(비중격 만곡증)?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_123": {
+   "text_ko": "만성 폐쇄성 폐질환(COPD)이 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_124": {
+   "text_ko": "천식이 있거나 과거에 기관지확장제를 사용한 적이 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_125": {
+   "text_ko": "위식도 역류 질환을 진단받은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_126": {
+   "text_ko": "간경변이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_127": {
+   "text_ko": "눈물이 지나치게 많이 나는 것 같나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_128": {
+   "text_ko": "아주 짧은 시간 동안 숨을 쉬지도 말을 하지도 못하면서 질식할 것 같은 느낌을 받은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_129": {
+   "text_ko": "이번 진료와 관련해서 피부에 병변, 발적(붉어짐) 또는 이상이 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_130": {
+   "text_ko": "발진의 색깔은 어떤가요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_131": {
+   "text_ko": "병변의 껍질이 벗겨지나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_132": {
+   "text_ko": "발진이 부어올라 있나요? (0~10)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_133": {
+   "text_ko": "해당 부위가 어디인가요? (해당하는 곳을 모두 고르세요)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_135": {
+   "text_ko": "병변의 크기가 1cm보다 큰가요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_136": {
+   "text_ko": "가려움이 얼마나 심한가요? (0~10)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_137": {
+   "text_ko": "림프절을 떼어내는 수술을 받은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_138": {
+   "text_ko": "섬유근육통이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_139": {
+   "text_ko": "진단받았거나 알고 있는 심장 기형(선천성 심장 질환 등 심장 구조의 이상)이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27",
+   "note": "2026-09-27 독립 번역 리뷰 SHOULD_FIX 반영"
+  },
+  "E_140": {
+   "text_ko": "최근에 석탄처럼 검은 변을 본 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_141": {
+   "text_ko": "12세 이전에 첫 월경을 했나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_142": {
+   "text_ko": "어머니가 천식을 앓고 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_143": {
+   "text_ko": "일주일에 4번 이상 규칙적으로 운동하나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_144": {
+   "text_ko": "온몸 여기저기에 근육통이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_145": {
+   "text_ko": "월경량이 매우 많거나 월경 기간이 매우 긴가요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_146": {
+   "text_ko": "NOAC 계열의 먹는 항응고제(아픽사반·리바록사반·다비가트란·에독사반 등)를 복용하고 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27",
+   "note": "2026-09-27 독립 번역 리뷰 SHOULD_FIX 반영"
+  },
+  "E_147": {
+   "text_ko": "최근에 구역, 흥분, 중독 또는 공격적인 행동 때문에 병원에서 치료를 받으면서 정맥 주사나 근육 주사로 약을 맞은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_148": {
+   "text_ko": "메스껍거나 토할 것 같은가요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_149": {
+   "text_ko": "칼슘 통로 차단제(약)를 복용하나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_150": {
+   "text_ko": "증상이 심해진 뒤로 대변이나 방귀가 나오나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_151": {
+   "text_ko": "몸의 한 곳 이상이 부어 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_153": {
+   "text_ko": "골다공증 치료를 받고 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_154": {
+   "text_ko": "피부가 평소보다 훨씬 창백한가요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_155": {
+   "text_ko": "심장이 빠르게 뛰거나 불규칙하게 뛰는 느낌, 또는 두근거림이 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_156": {
+   "text_ko": "한쪽 얼굴에 힘이 빠지거나 마비가 온 적이 있나요? (지금도 남아 있거나 완전히 나아진 경우 모두 포함)",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_157": {
+   "text_ko": "최근에 양팔과 양다리, 그리고 입 주위가 저리거나, 감각이 없거나, 따끔거린 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_158": {
+   "text_ko": "내분비 질환이나 호르몬 이상을 진단받았나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_159": {
+   "text_ko": "의식을 잃었나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_160": {
+   "text_ko": "예정일보다 일찍 태어났거나 태어날 때 합병증이 있었나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_161": {
+   "text_ko": "최근에 식욕이 떨어졌거나 평소보다 빨리 배가 부르나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_162": {
+   "text_ko": "최근 3개월 동안 의도하지 않았는데 체중이 줄었나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_163": {
+   "text_ko": "질 분비물이 있었나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_164": {
+   "text_ko": "심장이 매우 불규칙하게, 또는 박자가 흐트러진 채로 뛰는 느낌이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_165": {
+   "text_ko": "가족 중에 기흉을 앓은 사람이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_166": {
+   "text_ko": "기침을 한 뒤 토했나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_167": {
+   "text_ko": "임신 중이거나 임신했을 가능성이 있다고 생각하나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_168": {
+   "text_ko": "혀를 입 안에 두고 있기가 어렵나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_169": {
+   "text_ko": "코 속이나 목 뒤쪽이 가렵나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_170": {
+   "text_ko": "한쪽 또는 양쪽 눈이 심하게 가려운가요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_171": {
+   "text_ko": "내 몸이나 주변으로부터 떨어져 나온 것처럼 느껴지나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_172": {
+   "text_ko": "한쪽 또는 양쪽 눈꺼풀을 뜨거나 들어 올리기가 어렵나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_173": {
+   "text_ko": "명치에서 시작해 목 쪽으로 올라오는 타는 듯한 느낌이 있나요? 입에서 쓴맛이 함께 날 수도 있습니다.",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_174": {
+   "text_ko": "의도하지 않았는데 체중이 줄었거나 식욕이 떨어졌나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_175": {
+   "text_ko": "이번 진료와 관련해 새로 생긴 피로감, 막연한 불편감, 온몸이 쑤시는 근육통, 또는 전반적인 컨디션 변화가 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_176": {
+   "text_ko": "팔다리 중 하나 이상이나 얼굴에 힘이 빠지거나 마비가 온 적이 있나요, 또는 지금 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_177": {
+   "text_ko": "몸 어딘가가 저리거나, 감각이 떨어지거나, 따끔거리는 증상이 지금 있거나 전에 있었나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_178": {
+   "text_ko": "오늘 진료받는 문제와 관련해 평소와 다른 출혈이나 멍을 발견했나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_179": {
+   "text_ko": "변에 선홍색 피나 핏덩어리가 섞여 나온 것을 봤나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_180": {
+   "text_ko": "눈동자를 원하는 방향으로 움직이지 못하나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_181": {
+   "text_ko": "코가 막히거나 맑은 콧물이 나오나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_182": {
+   "text_ko": "초록색이나 누런색 콧물이 나오나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_183": {
+   "text_ko": "농촌 지역에 살고 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_184": {
+   "text_ko": "혈관을 넓혀 주는 약(혈관 확장제)을 복용하나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_185": {
+   "text_ko": "머리를 다친 적(두부 외상)이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_186": {
+   "text_ko": "폐쇄성 수면 무호흡증을 진단받은 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_187": {
+   "text_ko": "반응이 나타나기 전에 참치 같은 붉은 살 생선이나 스위스 치즈를 먹었나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_188": {
+   "text_ko": "변 색이 옅고 소변 색이 진한가요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_189": {
+   "text_ko": "지난 12개월 안에 HIV 양성인 상대와 성관계를 한 적이 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_190": {
+   "text_ko": "평소보다 침이 많이 나오는 것을 느꼈나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_191": {
+   "text_ko": "과거에 담배를 피우다 끊었나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_192": {
+   "text_ko": "목 근육의 경련이나 뻐근함 때문에 고개를 한쪽으로 돌리기 어렵나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_193": {
+   "text_ko": "얼굴, 목 또는 몸의 다른 부위에 불편한 근육 경련이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_194": {
+   "text_ko": "숨을 들이쉴 때 쇳소리처럼 높은 소리가 나나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1",
+   "note": "2026-09-27 사용자 human gate 승인: \"그렁거림\"(가래 소리)은 stridor 와 달라 제거"
+  },
+  "E_195": {
+   "text_ko": "교외(도시 근교)에 살고 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_196": {
+   "text_ko": "최근 1개월 안에 수술을 받았나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_197": {
+   "text_ko": "단백질이 소변으로 빠져나가는 신장 질환이 있다고 알고 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_198": {
+   "text_ko": "농업에 종사하나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_199": {
+   "text_ko": "건설업에 종사하나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_200": {
+   "text_ko": "광업(광산) 분야에서 일하나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_201": {
+   "text_ko": "기침이 있나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_202": {
+   "text_ko": "숨을 들이쉴 때 '흡' 하는 소리가 나는 발작적인 기침(백일해 같은 기침)을 하나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_203": {
+   "text_ko": "심한 기침 발작이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_204": {
+   "text_ko": "최근 4주 안에 해외여행을 다녀왔나요? (다녀왔다면 지역을 골라 주세요)",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27",
+   "note": "2026-09-27 독립 번역 리뷰 SHOULD_FIX 반영"
+  },
+  "E_205": {
+   "text_ko": "갑자기 입을 벌리기 어렵거나 전혀 벌리지 못하거나, 입을 벌릴 때 턱이 아픈가요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_206": {
+   "text_ko": "입안에 아픈 궤양이나 헌 곳이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_207": {
+   "text_ko": "대도시에 살고 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_208": {
+   "text_ko": "체질량지수(BMI)가 18.5 미만이거나 저체중인가요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_209": {
+   "text_ko": "예방접종을 빠짐없이 받았나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_210": {
+   "text_ko": "최근에 피를 토하거나 커피 찌꺼기 같은 것을 토한 적이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_211": {
+   "text_ko": "여러 번 토했거나 여러 번 헛구역질을 했나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_212": {
+   "text_ko": "목소리가 더 낮아지거나 작아지거나 쉰 소리(목소리가 잠긴 상태)로 변한 것을 느꼈나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_213": {
+   "text_ko": "최근에 코막힘 약(비충혈 제거제)이나 각성 효과가 있을 수 있는 다른 물질을 복용했나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_214": {
+   "text_ko": "숨을 내쉴 때 쌕쌕거리는 소리가 나는 것을 느꼈나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_215": {
+   "text_ko": "먹고 나면 심해지는 증상이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_216": {
+   "text_ko": "움직이면 통증이 심해지나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_217": {
+   "text_ko": "누우면 증상이 심해지고 앉으면 나아지나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_218": {
+   "text_ko": "몸을 움직이면 증상이 심해지고 쉬면 나아지나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_219": {
+   "text_ko": "증상이 밤에 더 뚜렷해지나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_220": {
+   "text_ko": "숨을 깊게 들이쉬면 통증이 심해지나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_221": {
+   "text_ko": "기침하거나 무거운 것을 들거나 배변하려고 힘을 줄 때 증상이나 통증이 심해지나요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_222": {
+   "text_ko": "매일 간접흡연에 노출되나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_223": {
+   "text_ko": "가족 중에 췌장암을 진단받은 사람이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_224": {
+   "text_ko": "가족 중에 폐암을 앓은 사람이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_225": {
+   "text_ko": "가까운 가족 중에 50세 이전에 심혈관 질환을 앓은 사람이 있나요?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  },
+  "E_226": {
+   "text_ko": "일반적인 사람들보다 알레르기가 잘 생기는 편인가요?",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "E_227": {
+   "text_ko": "면역력이 억제된 상태인가요(면역 저하)?",
+   "status": "ok",
+   "source": "question_en_translated_2026-09-27"
+  }
+ },
+ "values": {
+  "V_11": {
+   "label_ko": "해당 없음",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_71": {
+   "label_ko": "가슴이 미어지는 듯한",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_112": {
+   "label_ko": "떨쳐지지 않고 계속 신경 쓰이는",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_154": {
+   "label_ko": "지루하게 계속되는",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_161": {
+   "label_ko": "살짝만 닿아도 아픈",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_179": {
+   "label_ko": "칼로 베는 듯한",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_180": {
+   "label_ko": "잡아당기는 듯한",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_181": {
+   "label_ko": "타는 듯한",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_182": {
+   "label_ko": "쥐가 나는 듯한",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_183": {
+   "label_ko": "묵직한",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_184": {
+   "label_ko": "맥박처럼 욱신거리는",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_191": {
+   "label_ko": "격렬한",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_192": {
+   "label_ko": "날카로운",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_193": {
+   "label_ko": "속이 메스꺼워지는",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_196": {
+   "label_ko": "무서울 정도의",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_198": {
+   "label_ko": "기진맥진하게 만드는",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_123": {
+   "label_ko": "없음",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_14": {
+   "label_ko": "엉덩뼈 날개(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_15": {
+   "label_ko": "엉덩뼈 날개(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_16": {
+   "label_ko": "사타구니(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_17": {
+   "label_ko": "사타구니(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_19": {
+   "label_ko": "겨드랑이(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_18": {
+   "label_ko": "겨드랑이(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_20": {
+   "label_ko": "편도(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_21": {
+   "label_ko": "편도(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_22": {
+   "label_ko": "항문",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_26": {
+   "label_ko": "뒷목",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_25": {
+   "label_ko": "뒤통수",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_30": {
+   "label_ko": "위팔 앞쪽(이두근)(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_31": {
+   "label_ko": "위팔 앞쪽(이두근)(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_32": {
+   "label_ko": "입",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_33": {
+   "label_ko": "목젖뼈(갑상연골)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_34": {
+   "label_ko": "발목(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_35": {
+   "label_ko": "발목(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_36": {
+   "label_ko": "음핵",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_37": {
+   "label_ko": "꼬리뼈",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_38": {
+   "label_ko": "목뼈",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_39": {
+   "label_ko": "등뼈",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_40": {
+   "label_ko": "허리뼈",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_41": {
+   "label_ko": "입꼬리(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_42": {
+   "label_ko": "입꼬리(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_49": {
+   "label_ko": "엉덩뼈 능선(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_50": {
+   "label_ko": "엉덩뼈 능선(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_51": {
+   "label_ko": "허벅지(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_52": {
+   "label_ko": "허벅지(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_57": {
+   "label_ko": "아랫니(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_58": {
+   "label_ko": "아랫니(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_59": {
+   "label_ko": "윗니(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_60": {
+   "label_ko": "윗니(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_67": {
+   "label_ko": "검지손가락(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_68": {
+   "label_ko": "검지손가락(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_69": {
+   "label_ko": "중지손가락(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_70": {
+   "label_ko": "중지손가락(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_63": {
+   "label_ko": "약지손가락(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_64": {
+   "label_ko": "약지손가락(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_65": {
+   "label_ko": "새끼손가락(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_66": {
+   "label_ko": "새끼손가락(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_62": {
+   "label_ko": "정수리",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_194": {
+   "label_ko": "어깨(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_195": {
+   "label_ko": "어깨(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_197": {
+   "label_ko": "명치",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_27": {
+   "label_ko": "아래팔(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_28": {
+   "label_ko": "아래팔(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_76": {
+   "label_ko": "손등(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_77": {
+   "label_ko": "손등(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_72": {
+   "label_ko": "발등(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_73": {
+   "label_ko": "발등(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_74": {
+   "label_ko": "손목 바깥쪽(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_75": {
+   "label_ko": "손목 바깥쪽(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_149": {
+   "label_ko": "발바닥(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_150": {
+   "label_ko": "발바닥(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_80": {
+   "label_ko": "손목 안쪽(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_81": {
+   "label_ko": "손목 안쪽(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_43": {
+   "label_ko": "발 바깥쪽(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_44": {
+   "label_ko": "발 바깥쪽(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_82": {
+   "label_ko": "엉덩이(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_83": {
+   "label_ko": "엉덩이(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_84": {
+   "label_ko": "옆구리(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_85": {
+   "label_ko": "옆구리(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_78": {
+   "label_ko": "아래팔 안쪽(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_79": {
+   "label_ko": "아래팔 안쪽(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_87": {
+   "label_ko": "아랫배 옆쪽(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_88": {
+   "label_ko": "아랫배 옆쪽(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_89": {
+   "label_ko": "이마",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_92": {
+   "label_ko": "무릎(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_93": {
+   "label_ko": "무릎(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_90": {
+   "label_ko": "아래 잇몸",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_47": {
+   "label_ko": "무릎 뒤 오금(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_48": {
+   "label_ko": "무릎 뒤 오금(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_91": {
+   "label_ko": "위 잇몸",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_94": {
+   "label_ko": "귀두",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_95": {
+   "label_ko": "대음순(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_96": {
+   "label_ko": "대음순(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_97": {
+   "label_ko": "엄지발가락(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_98": {
+   "label_ko": "엄지발가락(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_99": {
+   "label_ko": "고관절(엉덩관절)(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_100": {
+   "label_ko": "고관절(엉덩관절)(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_102": {
+   "label_ko": "처녀막",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_103": {
+   "label_ko": "갈비뼈 아래(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_104": {
+   "label_ko": "갈비뼈 아래(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_105": {
+   "label_ko": "허벅지 뒤쪽(햄스트링)(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_106": {
+   "label_ko": "허벅지 뒤쪽(햄스트링)(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_108": {
+   "label_ko": "뺨(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_109": {
+   "label_ko": "뺨(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_110": {
+   "label_ko": "볼 안쪽(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_111": {
+   "label_ko": "볼 안쪽(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_53": {
+   "label_ko": "목 옆(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_54": {
+   "label_ko": "목 옆(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_55": {
+   "label_ko": "가슴 옆(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_56": {
+   "label_ko": "가슴 옆(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_116": {
+   "label_ko": "아랫입술(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_117": {
+   "label_ko": "윗입술(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_113": {
+   "label_ko": "콩팥 부위(옆구리 뒤)(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_114": {
+   "label_ko": "콩팥 부위(옆구리 뒤)(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_115": {
+   "label_ko": "목젖",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_121": {
+   "label_ko": "턱",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_118": {
+   "label_ko": "턱끝",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_29": {
+   "label_ko": "아래쪽 가슴",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_119": {
+   "label_ko": "종아리(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_120": {
+   "label_ko": "종아리(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_122": {
+   "label_ko": "코",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_124": {
+   "label_ko": "뒤통수 아래",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_125": {
+   "label_ko": "눈(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_126": {
+   "label_ko": "눈(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_127": {
+   "label_ko": "어깨뼈(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_128": {
+   "label_ko": "어깨뼈(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_129": {
+   "label_ko": "귀(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_130": {
+   "label_ko": "귀(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_131": {
+   "label_ko": "첫째 발가락(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_132": {
+   "label_ko": "첫째 발가락(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_133": {
+   "label_ko": "둘째 발가락(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_134": {
+   "label_ko": "둘째 발가락(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_135": {
+   "label_ko": "셋째 발가락(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_136": {
+   "label_ko": "셋째 발가락(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_144": {
+   "label_ko": "넷째 발가락(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_145": {
+   "label_ko": "넷째 발가락(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_45": {
+   "label_ko": "팔꿈치(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_46": {
+   "label_ko": "팔꿈치(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_137": {
+   "label_ko": "입천장",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_170": {
+   "label_ko": "등쪽 가슴(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_171": {
+   "label_ko": "등쪽 가슴(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_139": {
+   "label_ko": "질벽",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_140": {
+   "label_ko": "질벽(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_141": {
+   "label_ko": "질벽(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_142": {
+   "label_ko": "손바닥(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_143": {
+   "label_ko": "손바닥(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_155": {
+   "label_ko": "음경",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_187": {
+   "label_ko": "배",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_146": {
+   "label_ko": "소음순(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_147": {
+   "label_ko": "소음순(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_148": {
+   "label_ko": "인두(목구멍)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_23": {
+   "label_ko": "발목 뒤(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_24": {
+   "label_ko": "발목 뒤(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_151": {
+   "label_ko": "엄지손가락(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_152": {
+   "label_ko": "엄지손가락(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_158": {
+   "label_ko": "음낭",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_159": {
+   "label_ko": "유방(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_160": {
+   "label_ko": "유방(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_162": {
+   "label_ko": "혀 아래",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_163": {
+   "label_ko": "턱 아래",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_101": {
+   "label_ko": "위쪽 가슴",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_61": {
+   "label_ko": "혀 위",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_153": {
+   "label_ko": "치골",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_164": {
+   "label_ko": "발뒤꿈치(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_165": {
+   "label_ko": "발뒤꿈치(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_166": {
+   "label_ko": "관자놀이(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_167": {
+   "label_ko": "관자놀이(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_168": {
+   "label_ko": "고환(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_169": {
+   "label_ko": "고환(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_172": {
+   "label_ko": "정강이(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_173": {
+   "label_ko": "정강이(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_175": {
+   "label_ko": "어깨 위 근육(승모근)(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_176": {
+   "label_ko": "어깨 위 근육(승모근)(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_174": {
+   "label_ko": "기관(숨관)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_177": {
+   "label_ko": "위팔 뒤쪽(삼두근)(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_178": {
+   "label_ko": "위팔 뒤쪽(삼두근)(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_185": {
+   "label_ko": "요도",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_186": {
+   "label_ko": "질",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_188": {
+   "label_ko": "입술 붉은 부분(오른쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_189": {
+   "label_ko": "입술 붉은 부분(왼쪽)",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_190": {
+   "label_ko": "질 어귀",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_86": {
+   "label_ko": "검거나 짙은 색",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_107": {
+   "label_ko": "노란색",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_138": {
+   "label_ko": "창백한 색",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_156": {
+   "label_ko": "분홍색",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_157": {
+   "label_ko": "붉은색",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_10": {
+   "label_ko": "아니요",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_12": {
+   "label_ko": "예",
+   "status": "ok",
+   "source": "question_labels_ko_v1"
+  },
+  "V_0": {
+   "label_ko": "북아프리카",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "V_1": {
+   "label_ko": "서아프리카",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "V_2": {
+   "label_ko": "남아프리카",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "V_3": {
+   "label_ko": "중앙아메리카",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "V_4": {
+   "label_ko": "북아메리카",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "V_5": {
+   "label_ko": "남아메리카",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "V_6": {
+   "label_ko": "아시아",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "V_7": {
+   "label_ko": "동남아시아",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "V_8": {
+   "label_ko": "카리브해",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "V_9": {
+   "label_ko": "유럽",
+   "status": "ok",
+   "source": "question_en_derived"
+  },
+  "V_13": {
+   "label_ko": "오세아니아",
+   "status": "ok",
+   "source": "question_en_derived"
+  }
+ }
+}

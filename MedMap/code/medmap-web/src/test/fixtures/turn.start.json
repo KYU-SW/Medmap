@@ -1,0 +1,201 @@
+{
+ "schema_version": "medmap-turn-v1",
+ "diagnoses": [
+  {
+   "name": "Anemia",
+   "probability": 0.23933228850364685
+  },
+  {
+   "name": "URTI",
+   "probability": 0.17142263054847717
+  },
+  {
+   "name": "Chronic rhinosinusitis",
+   "probability": 0.08021262288093567
+  }
+ ],
+ "diagnoses_before": null,
+ "next_question": {
+  "question_id": "E_54",
+  "question_text": "Characterize your pain:",
+  "answer_type": "MULTI_CHOICE",
+  "answer_type_raw": "MULTI",
+  "possible_values": [
+   "V_11",
+   "V_71",
+   "V_112",
+   "V_154",
+   "V_161",
+   "V_179",
+   "V_180",
+   "V_181",
+   "V_182",
+   "V_183",
+   "V_184",
+   "V_191",
+   "V_192",
+   "V_193",
+   "V_196",
+   "V_198"
+  ],
+  "information_gain": 1.6559701313777224,
+  "explanation": null,
+  "question_ko": "통증이 어떤 느낌인가요? (해당하는 것을 모두 고르세요)",
+  "question_original": "Characterize your pain:",
+  "choices": [
+   {
+    "value": "V_11",
+    "label": "해당 없음",
+    "original_label": "NA",
+    "is_fallback": false
+   },
+   {
+    "value": "V_71",
+    "label": "가슴이 미어지는 듯한",
+    "original_label": "heartbreaking",
+    "is_fallback": false
+   },
+   {
+    "value": "V_112",
+    "label": "떨쳐지지 않고 계속 신경 쓰이는",
+    "original_label": "haunting",
+    "is_fallback": false
+   },
+   {
+    "value": "V_154",
+    "label": "지루하게 계속되는",
+    "original_label": "tedious",
+    "is_fallback": false
+   },
+   {
+    "value": "V_161",
+    "label": "살짝만 닿아도 아픈",
+    "original_label": "sensitive",
+    "is_fallback": false
+   },
+   {
+    "value": "V_179",
+    "label": "칼로 베는 듯한",
+    "original_label": "a knife stroke",
+    "is_fallback": false
+   },
+   {
+    "value": "V_180",
+    "label": "잡아당기는 듯한",
+    "original_label": "tugging",
+    "is_fallback": false
+   },
+   {
+    "value": "V_181",
+    "label": "타는 듯한",
+    "original_label": "burning",
+    "is_fallback": false
+   },
+   {
+    "value": "V_182",
+    "label": "쥐가 나는 듯한",
+    "original_label": "a cramp",
+    "is_fallback": false
+   },
+   {
+    "value": "V_183",
+    "label": "묵직한",
+    "original_label": "heavy",
+    "is_fallback": false
+   },
+   {
+    "value": "V_184",
+    "label": "맥박처럼 욱신거리는",
+    "original_label": "a pulse",
+    "is_fallback": false
+   },
+   {
+    "value": "V_191",
+    "label": "격렬한",
+    "original_label": "violent",
+    "is_fallback": false
+   },
+   {
+    "value": "V_192",
+    "label": "날카로운",
+    "original_label": "sharp",
+    "is_fallback": false
+   },
+   {
+    "value": "V_193",
+    "label": "속이 메스꺼워지는",
+    "original_label": "sickening",
+    "is_fallback": false
+   },
+   {
+    "value": "V_196",
+    "label": "무서울 정도의",
+    "original_label": "scary",
+    "is_fallback": false
+   },
+   {
+    "value": "V_198",
+    "label": "기진맥진하게 만드는",
+    "original_label": "exhausting",
+    "is_fallback": false
+   },
+   {
+    "value": null,
+    "label": "잘 모르겠어요",
+    "original_label": null,
+    "is_fallback": false
+   }
+  ],
+  "is_fallback": false
+ },
+ "stop_reason": null,
+ "n_asked": 4,
+ "questions_asked_in_session": 0,
+ "model_context": "k3",
+ "model_context_match": true,
+ "session": {
+  "schema_version": "medmap-session-v1",
+  "patient_state": {
+   "age": 45,
+   "sex": "M",
+   "model_context": "k3",
+   "initial_evidence": "E_53",
+   "answers": [
+    {
+     "question_id": "E_53",
+     "kind": "POSITIVE",
+     "value": null
+    },
+    {
+     "question_id": "E_55",
+     "kind": "VALUE",
+     "value": [
+      "V_89"
+     ]
+    },
+    {
+     "question_id": "E_56",
+     "kind": "VALUE",
+     "value": [
+      "2"
+     ]
+    },
+    {
+     "question_id": "E_204",
+     "kind": "VALUE",
+     "value": [
+      "V_10"
+     ]
+    }
+   ],
+   "asked_question_ids": [
+    "E_53",
+    "E_55",
+    "E_56",
+    "E_204"
+   ],
+   "n_additional_questions": 3
+  }
+ },
+ "max_questions": 3
+}

@@ -1,0 +1,65 @@
+/* 기능 검증용 최소 스타일. 최종 디자인 아님(디자인 작업 PAUSED). */
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: #fff; color: #111;
+  font-family: system-ui, -apple-system, 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  font-size: 16px; line-height: 1.5; word-break: keep-all;
+}
+.app { max-width: 720px; margin: 0 auto; padding: 16px; }
+.app-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px;
+  padding-bottom: 12px; margin-bottom: 16px; border-bottom: 1px solid #ddd; }
+.app-header__brand { font-weight: 700; }
+.app-header__progress, .app-header__dots { display: flex; align-items: center; gap: 6px; }
+.progress-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid #555; }
+.progress-dot[data-filled="true"] { background: #555; }
+.progress-dash { width: 8px; height: 1px; background: #999; }
+.panel, .sheet { margin-bottom: 16px; }
+h1 { font-size: 24px; margin: 0 0 12px; }
+h2 { font-size: 18px; margin: 0 0 12px; }
+.field { display: flex; flex-direction: column; gap: 4px; margin: 0 0 12px; padding: 0; border: 0; }
+input, textarea { font: inherit; width: 100%; min-width: 0; padding: 10px; border: 1px solid #888; border-radius: 4px; }
+.button { font: inherit; min-height: 44px; padding: 8px 14px; border: 1px solid #555; border-radius: 4px;
+  background: #fff; color: #111; cursor: pointer; text-align: left; }
+.button[aria-pressed="true"] { background: #111; color: #fff; }
+.button--primary { background: #1a56db; border-color: #1a56db; color: #fff; text-align: center; }
+.button:disabled { opacity: .5; cursor: not-allowed; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; }
+.stack, .question__choices { display: flex; flex-direction: column; gap: 8px; }
+.list { list-style: none; margin: 0 0 12px; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.hint { margin: 4px 0; color: #555; font-size: 14px; }
+.notice { margin-bottom: 16px; padding: 12px; border: 1px solid #b91c1c; }
+.applied { margin: 0 0 16px; padding: 8px 12px; border-left: 3px solid #1a56db; }
+.candidates__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.candidate__head { display: flex; justify-content: space-between; gap: 8px; }
+.candidate__track { height: 4px; background: #eee; }
+.candidate__bar { height: 4px; background: #555; }
+.candidate__ghost { color: #555; font-size: 14px; }
+.candidate__ghost::before { content: '이전 '; }
+.layout { display: grid; gap: 16px; }
+@media (min-width: 900px) {
+  .app { max-width: 1040px; }
+  .layout { grid-template-columns: 1fr 320px; }
+  .layout--single { grid-template-columns: 1fr; }
+}
+
+/* Doctor Mode (#/doctor) — 구조 화면 수준(최종 디자인은 redesign 단계) */
+.doctor { max-width: 1200px; }
+.doctor-layout { display: grid; gap: 16px; }
+@media (min-width: 960px) { .doctor-layout { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); align-items: start; } }
+.doctor-layout__main, .doctor-layout__side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.doctor-section { padding: 12px; border: 1px solid #ccc; border-radius: 4px; }
+.doctor-section h2 { margin: 0 0 8px; font-size: 18px; }
+.doctor-summary__heading { margin: 8px 0 4px; font-size: 15px; }
+.doctor-candidates__list { margin: 0 0 8px; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+.doctor-patient-said { margin: 0 0 12px; padding: 8px 12px; border-left: 3px solid #1a56db; }
+.doctor-wd__value { font-weight: 700; }
+.doctor-notice { margin-top: 24px; color: #555; font-size: 14px; }
+.doctor input, .doctor textarea { font: inherit; min-width: 0; width: 100%; box-sizing: border-box; }
+.doctor .question__kicker { display: none; }   /* 섹션 제목과 중복 — 기존 QuestionPanel 은 수정하지 않는다 */
+
+/* Streaming STT: 받아쓰기 중인 줄(PARTIAL, 입력칸 밖). 확정 전 부분은 옅게 */
+.stt-partial { margin: 0; padding: 8px 12px; border-left: 3px solid #1a56db; min-height: 1.5em; }
+.stt-unstable { color: #666; }
+
+/* Phase A S1 기기 간 인계 번호: 멀리서도 읽히게 크게, 숫자 폭 고정 */
+.handoff-code__number { margin: 8px 0 4px; font-size: 32px; font-weight: 700; letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }

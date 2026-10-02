@@ -1,0 +1,294 @@
+{
+ "schema": "medmap.intake_negative_policy/1",
+ "default": "ABSTAIN",
+ "note": "NEGATIVE는 negative_allowed=true인 evidence에서만 반환. 그 외에는 부정 표현이 있어도 반환하지 않음(UNASKED). 런타임 추론 없음. 분류 기준: 질문 원문(question_en)이 단일 개념이면 SAFE, OR/AND/조건부/복합이면 UNSAFE. 같은 개념의 동의 표현 두 개(E_66, E_148)는 SAFE.",
+ "evidence": [
+  {
+   "evidence_id": "E_0",
+   "negative_allowed": true,
+   "reason": "single_history_item",
+   "detail": "최근 바이러스 감염 여부 하나",
+   "question_en": "Have you recently had a viral infection?"
+  },
+  {
+   "evidence_id": "E_9",
+   "negative_allowed": false,
+   "reason": "or_question",
+   "detail": "림프절이 붓거나 OR 아픔",
+   "question_en": "Do you have swollen or painful lymph nodes?"
+  },
+  {
+   "evidence_id": "E_33",
+   "negative_allowed": false,
+   "reason": "conditional_modifier",
+   "detail": "통증 전제의 조건(앞으로 숙이면 나아짐)",
+   "question_en": "Do you have pain that improves when you lean forward?"
+  },
+  {
+   "evidence_id": "E_45",
+   "negative_allowed": true,
+   "reason": "single_binary_symptom",
+   "detail": "객혈 하나",
+   "question_en": "Have you been coughing up blood?"
+  },
+  {
+   "evidence_id": "E_50",
+   "negative_allowed": true,
+   "reason": "qualified_single_base_denial",
+   "detail": "'뚜렷하게 증가한 땀' — 땀 자체를 부정하면 전체 부정. '많이는 안'류 부분 부정은 버림",
+   "question_en": "Have you had significantly increased sweating?"
+  },
+  {
+   "evidence_id": "E_53",
+   "negative_allowed": true,
+   "reason": "global_denial_aliases_only",
+   "detail": "'어딘가 통증' — '통증은 없어요/아픈 데 없어요' 같은 전체 부정 alias만 NEGATIVE, 부위별 부정은 POSITIVE 전용",
+   "question_en": "Do you have pain somewhere, related to your reason for consulting?"
+  },
+  {
+   "evidence_id": "E_66",
+   "negative_allowed": true,
+   "reason": "synonymous_paraphrase",
+   "detail": "숨참 = 숨쉬기 힘듦(같은 개념의 두 표현)",
+   "question_en": "Are you experiencing shortness of breath or difficulty breathing in a significant way?"
+  },
+  {
+   "evidence_id": "E_69",
+   "negative_allowed": true,
+   "reason": "single_history_item",
+   "detail": "당뇨",
+   "question_en": "Do you have diabetes?"
+  },
+  {
+   "evidence_id": "E_70",
+   "negative_allowed": true,
+   "reason": "single_binary_symptom",
+   "detail": "뚜렷한 과체중(비만 부정)",
+   "question_en": "Are you significantly overweight compared to people of the same height as you?"
+  },
+  {
+   "evidence_id": "E_77",
+   "negative_allowed": true,
+   "reason": "qualified_single_base_denial",
+   "detail": "'색 있거나 많은 가래' — 가래 자체 부정만 NEGATIVE, 단순 가래 POSITIVE 없음",
+   "question_en": "Do you have a cough that produces colored or more abundant sputum than usual?"
+  },
+  {
+   "evidence_id": "E_78",
+   "negative_allowed": true,
+   "reason": "global_denial_aliases_only",
+   "detail": "과음/알코올 의존 — '술 안 마셔요/끊었어요'처럼 음주 자체를 부정하는 alias만",
+   "question_en": "Do you drink alcohol excessively or do you have an addiction to alcohol?"
+  },
+  {
+   "evidence_id": "E_79",
+   "negative_allowed": true,
+   "reason": "single_binary_symptom",
+   "detail": "현재 흡연",
+   "question_en": "Do you smoke cigarettes?"
+  },
+  {
+   "evidence_id": "E_88",
+   "negative_allowed": false,
+   "reason": "or_question",
+   "detail": "평소 활동 불가 OR 하루 종일 누움",
+   "question_en": "Do you feel so tired that you are unable to do your usual activities or are you stuck in your bed all day long?"
+  },
+  {
+   "evidence_id": "E_89",
+   "negative_allowed": false,
+   "reason": "or_question",
+   "detail": "지속 피로 OR 비회복성 수면",
+   "question_en": "Do you constantly feel fatigued or do you have non-restful sleep?"
+  },
+  {
+   "evidence_id": "E_91",
+   "negative_allowed": true,
+   "reason": "single_binary_symptom",
+   "detail": "발열",
+   "question_en": "Do you have a fever (either felt or measured with a thermometer)?"
+  },
+  {
+   "evidence_id": "E_104",
+   "negative_allowed": false,
+   "reason": "or_question",
+   "detail": "고혈압 OR 혈압약 복용",
+   "question_en": "Do you have high blood pressure or do you take medications to treat high blood pressure?"
+  },
+  {
+   "evidence_id": "E_105",
+   "negative_allowed": false,
+   "reason": "or_question_history",
+   "detail": "심근경색 OR 협심증(과거력)",
+   "question_en": "Have you ever had a heart attack or do you have angina (chest pain)?"
+  },
+  {
+   "evidence_id": "E_112",
+   "negative_allowed": false,
+   "reason": "or_question",
+   "detail": "들숨 쌕쌕 OR 기침 후 거친 숨소리",
+   "question_en": "Do you wheeze while inhaling or is your breathing noisy after coughing spells?"
+  },
+  {
+   "evidence_id": "E_116",
+   "negative_allowed": true,
+   "reason": "single_history_item",
+   "detail": "최근 2주 감기",
+   "question_en": "Have you had a cold in the last 2 weeks?"
+  },
+  {
+   "evidence_id": "E_120",
+   "negative_allowed": true,
+   "reason": "single_history_item",
+   "detail": "코 폴립",
+   "question_en": "Do you have polyps in your nose?"
+  },
+  {
+   "evidence_id": "E_123",
+   "negative_allowed": true,
+   "reason": "single_history_item",
+   "detail": "COPD",
+   "question_en": "Do you have a chronic obstructive pulmonary disease (COPD)?"
+  },
+  {
+   "evidence_id": "E_124",
+   "negative_allowed": false,
+   "reason": "or_question_history",
+   "detail": "천식 OR 기관지확장제 사용 이력",
+   "question_en": "Do you have asthma or have you ever had to use a bronchodilator in the past?"
+  },
+  {
+   "evidence_id": "E_129",
+   "negative_allowed": false,
+   "reason": "or_question",
+   "detail": "피부 병변 OR 발적 OR 문제",
+   "question_en": "Do you have any lesions, redness or problems on your skin that you believe are related to the condition you are consulting for?"
+  },
+  {
+   "evidence_id": "E_148",
+   "negative_allowed": true,
+   "reason": "synonymous_paraphrase",
+   "detail": "메스꺼움 = 토할 것 같음",
+   "question_en": "Are you feeling nauseous or do you feel like vomiting?"
+  },
+  {
+   "evidence_id": "E_151",
+   "negative_allowed": true,
+   "reason": "global_denial_aliases_only",
+   "detail": "'한 곳 이상 부종' — '부종/부은 데 없어요' 전체 부정 alias만, 부위별은 POSITIVE 전용",
+   "question_en": "Do you have swelling in one or more areas of your body?"
+  },
+  {
+   "evidence_id": "E_155",
+   "negative_allowed": false,
+   "reason": "or_question",
+   "detail": "빠름 OR 불규칙 OR 두근거림(서로 다른 하위 유형)",
+   "question_en": "Do you feel your heart is beating fast (racing), irregularly (missing a beat) or do you feel palpitations?"
+  },
+  {
+   "evidence_id": "E_169",
+   "negative_allowed": false,
+   "reason": "or_question",
+   "detail": "코 OR 목 뒤 가려움",
+   "question_en": "Is your nose or the back of your throat itchy?"
+  },
+  {
+   "evidence_id": "E_175",
+   "negative_allowed": false,
+   "reason": "or_question",
+   "detail": "새 피로 OR 막연한 불편 OR 근육통 OR 컨디션 변화",
+   "question_en": "Have you noticed any new fatigue, generalized and vague discomfort, diffuse (widespread) muscle aches or a change in your general well-being related to your consultation today?"
+  },
+  {
+   "evidence_id": "E_181",
+   "negative_allowed": false,
+   "reason": "or_question",
+   "detail": "코막힘 OR 맑은 콧물",
+   "question_en": "Do you have nasal congestion or a clear runny nose?"
+  },
+  {
+   "evidence_id": "E_182",
+   "negative_allowed": true,
+   "reason": "single_binary_symptom",
+   "detail": "초록/누런 콧물",
+   "question_en": "Do you have greenish or yellowish nasal discharge?"
+  },
+  {
+   "evidence_id": "E_189",
+   "negative_allowed": true,
+   "reason": "single_history_item",
+   "detail": "HIV 양성 상대와 성관계",
+   "question_en": "Have you had sexual intercourse with an HIV-positive partner in the past 12 months?"
+  },
+  {
+   "evidence_id": "E_194",
+   "negative_allowed": true,
+   "reason": "single_binary_symptom",
+   "detail": "들숨 시 높은 소리",
+   "question_en": "Have you noticed a high pitched sound when breathing in?"
+  },
+  {
+   "evidence_id": "E_201",
+   "negative_allowed": true,
+   "reason": "single_binary_symptom",
+   "detail": "기침",
+   "question_en": "Do you have a cough?"
+  },
+  {
+   "evidence_id": "E_209",
+   "negative_allowed": true,
+   "reason": "single_binary_symptom",
+   "detail": "예방접종 완료 여부(안 맞았다 = 전체 부정)",
+   "question_en": "Are your vaccinations up to date?"
+  },
+  {
+   "evidence_id": "E_212",
+   "negative_allowed": false,
+   "reason": "or_question",
+   "detail": "목소리 낮아짐 OR 작아짐 OR 쉼",
+   "question_en": "Have you noticed that the tone of your voice has become deeper, softer or hoarse?"
+  },
+  {
+   "evidence_id": "E_214",
+   "negative_allowed": true,
+   "reason": "single_binary_symptom",
+   "detail": "날숨 시 쌕쌕",
+   "question_en": "Have you noticed a wheezing sound when you exhale?"
+  },
+  {
+   "evidence_id": "E_216",
+   "negative_allowed": false,
+   "reason": "conditional_modifier",
+   "detail": "통증 전제의 조건(움직이면 심해짐)",
+   "question_en": "Do you have pain that is increased with movement?"
+  },
+  {
+   "evidence_id": "E_218",
+   "negative_allowed": false,
+   "reason": "and_compound",
+   "detail": "활동 시 악화 AND 휴식 시 완화",
+   "question_en": "Do you have symptoms that are increased with physical exertion but alleviated with rest?"
+  },
+  {
+   "evidence_id": "E_220",
+   "negative_allowed": false,
+   "reason": "conditional_modifier",
+   "detail": "통증 전제의 조건(깊은 숨)",
+   "question_en": "Do you have pain that is increased when you breathe in deeply?"
+  },
+  {
+   "evidence_id": "E_221",
+   "negative_allowed": false,
+   "reason": "or_question",
+   "detail": "기침 OR 힘주기 OR 무거운 것 들기 시 악화",
+   "question_en": "Are the symptoms or pain increased with coughing, with an effort like lifting a weight or from forcing a bowel movement?"
+  },
+  {
+   "evidence_id": "E_226",
+   "negative_allowed": true,
+   "reason": "single_binary_symptom",
+   "detail": "알레르기 체질",
+   "question_en": "Are you more likely to develop common allergies than the general population?"
+  }
+ ]
+}
