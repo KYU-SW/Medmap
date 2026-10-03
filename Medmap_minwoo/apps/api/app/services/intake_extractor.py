@@ -283,7 +283,7 @@ RULES = (
     ),
     SymptomRule(
         "저림",
-        re.compile(r"저려|저리|저림|저린|쥐(?:가)?\s*(?:나|났)|감각(?:이)?\s*(?:없|둔하|둔해|무뎌)"),
+        re.compile(r"저려|저리|저림|저린|저릿|쥐(?:가)?\s*(?:나|났)|감각(?:이)?\s*(?:없|둔하|둔해|무뎌)"),
         re.compile(rf"저림{PARTICLE}\s*{ABSENT_ENDING}|저리지\s*않|안\s*저려|안\s*저리"),
     ),
     SymptomRule(
@@ -538,6 +538,17 @@ RULES = (
         re.compile(rf"생리통{PARTICLE}\s*{ABSENT_ENDING}"),
         "아랫배",
     ),
+    SymptomRule(
+        "청력 저하",
+        re.compile(r"청력|난청|(?:귀|소리|말)(?:가|이|도)?\s*(?:잘\s*)?안\s*들려|(?:귀|소리|말)(?:가|이|도)?\s*잘\s*안\s*들리"),
+        re.compile(rf"(?:청력\s*저하|난청){PARTICLE}\s*{ABSENT_ENDING}|(?:귀|소리)(?:는|도)?\s*잘\s*들려"),
+        "귀",
+    ),
+    SymptomRule(
+        "입마름",
+        re.compile(r"입마름|구갈|갈증|(?:입|입안|목)(?:이|가|도)?\s*(?:자주\s*|계속\s*|바짝\s*|너무\s*)*(?:말라|마르|마른|건조)"),
+        re.compile(rf"(?:입마름|갈증){PARTICLE}\s*{ABSENT_ENDING}"),
+    ),
 )
 FREQUENCY_SYMPTOMS = {"구토", "설사"}
 SIDE_PATTERN = re.compile(r"(오른쪽|왼쪽|양쪽|우측|좌측|오른|왼)(?:\s*편)?")
@@ -669,7 +680,8 @@ MEDICAL_SIGNAL_PATTERN = re.compile(
     r"두드러기|변비|피곤|쑤시|쑤셔|울렁|몸살|현기증|침침|이명|수술|진단|"
     r"감기|배탈|체했|체한|소화|입맛|식욕|잠을|잠이|쓰려|쓰리|더부룩|벌렁|땀|경련|"
     r"뻐근|결려|결리|무거|시려|시리|따가|따갑|가빠|가쁘|떨려|떨리|떨림|화끈|어둡|흐릿|흐려|토할|피가|피를|멍|"
-    r"침침|간지|소변|오줌|기절|쓰러|정신을|의식|힘이|어눌|발음|쉬었|목소리|체중|몸무게|살이\s*빠|발작|헐었|헐어"
+    r"침침|간지|소변|오줌|기절|쓰러|정신을|의식|힘이|어눌|발음|쉬었|목소리|체중|몸무게|살이\s*빠|발작|헐었|헐어|"
+    r"불편|혹이|혹\s*같|덩어리|부르트|부르텄|들려|말라|마르|갈증"
 )
 CLAUSE_SPLIT_PATTERN = re.compile(r"[.!?。]|(?:\s+)(?:그리고|추가로|하지만|그러나|또한)(?:\s+)")
 UNCERTAIN_PATTERN = re.compile(
@@ -719,6 +731,13 @@ BARE_PREDICATE_PATTERN = re.compile(
     rf"{LEADING_ADVERB_PATTERN.pattern}{INTENSITY_PHRASE}(?:안\s*)?"
     r"(?:아프|아파|아픈|아팠|쑤시|쑤셔|결려|결리|저려|저리|부었|부어|붓|답답|따끔|쓰려|쓰리|"
     r"가려|가렵|뻐근|욱신|지끈|화끈|막혀|막히|당기|당겨|시려|시리|따가|따갑|조이|조여|찌르|찌릿|콕콕)"
+)
+# Body parts that start a clause, glued to the next word without a space ("손가락" is not "손가 락").
+GLUED_BODY = r"(?:머리|가슴|배|목|허리|등|어깨|무릎|다리|팔|손|발|눈|귀|코|속|몸|혀|입안|피부)(?:이|가)(?!락)"
+GLUED_SUBJECT_PATTERN = re.compile(rf"((?:부터|째|전)(?={GLUED_BODY})|{GLUED_BODY}(?=[가-힣]))")
+# "답답하고아파요": a connective ending glued to a bare predicate.
+GLUED_CONNECTIVE_PATTERN = re.compile(
+    r"((?<=[가-힣])(?:고|며|면서|지만))(?=" + BARE_PREDICATE_PATTERN.pattern.removeprefix(LEADING_ADVERB_PATTERN.pattern) + ")"
 )
 SUBCLAUSE_SPLIT_PATTERN = re.compile(
     r"[.!?。,]|\s+(?:그리고|추가로|하지만|그러나|또한|근데|그런데|그래서)\s+|"
@@ -1116,8 +1135,14 @@ def _first_symptom_match(pattern: re.Pattern[str], text: str) -> re.Match[str] |
     return None
 
 
+def _space_glued_words(text: str) -> str:
+    """STT and quick typing drop spaces: "가슴이답답하고아파요" → "가슴이 답답하고 아파요"."""
+    text = GLUED_SUBJECT_PATTERN.sub(r"\1 ", text)
+    return GLUED_CONNECTIVE_PATTERN.sub(r"\1 ", text)
+
+
 def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtractionResponse:
-    normalized = " ".join(text.strip().split())
+    normalized = _space_glued_words(" ".join(text.strip().split()))
     matches: list[tuple[SymptomRule, re.Match[str], bool]] = []
     for rule in RULES:
         mention = _first_symptom_match(rule.mention, normalized)

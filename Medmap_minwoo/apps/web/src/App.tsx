@@ -950,6 +950,15 @@ export default function App() {
                 <p>{URGENT_NOTICE}</p>
               </div>
             )}
+            {intake.unrecognized_fragments.length > 0 && (
+              <div className="review-warning" role="alert">
+                <strong>자동으로 정리하지 못한 표현</strong>
+                {intake.unrecognized_fragments.map((fragment, index) => (
+                  <p key={`${fragment}-${index}`}>“{fragment}”</p>
+                ))}
+                <p>원문을 확인하고 필요하면 아래 ‘증상 직접 추가’로 넣어 주세요.</p>
+              </div>
+            )}
             {followUpQuestions(intake.symptoms).filter((question) => !skippedQuestions.has(question.key)).length > 0 && (
               <div className="follow-up">
                 <strong>추가로 알려 주세요</strong>
@@ -1004,13 +1013,28 @@ export default function App() {
             ) : intake.symptoms.map((symptom, index) => (
               <div
                 className={urgentSymptoms([symptom]).length > 0 ? "observation observation--urgent" : "observation"}
-                key={`${symptom.name}-${index}`}
+                key={index}
               >
                 <div className="observation-header">
                   <strong className="observation-name">{symptom.name || "새 증상"}</strong>
                   <span className={`badge badge--${symptom.status}`}>{STATUS_LABEL[symptom.status]}</span>
                   {detailedSite(symptom.body_site) && <span className="badge badge--site">{symptom.body_site}</span>}
+                  {symptom.status === "present" && symptom.trend && (
+                    <span className={`trend trend--${TREND_BADGE[symptom.trend].tone}`}>{TREND_BADGE[symptom.trend].label}</span>
+                  )}
                 </div>
+                {symptom.status === "present" && (
+                  <dl className="facts">
+                    <div><dt>시작</dt><dd>{formatOnset(symptom.onset, symptom.onset_date) || "확인되지 않음"}</dd></div>
+                    <div><dt>정도</dt><dd>{symptom.severity || "확인되지 않음"}</dd></div>
+                    {tracksFrequency(symptom.name) && <div><dt>횟수</dt><dd>{symptom.frequency || "확인되지 않음"}</dd></div>}
+                  </dl>
+                )}
+                <p className="source-text">원문 근거: “{symptom.source_text}”</p>
+                {/* Details stay folded until the patient wants to correct them; a hand-added symptom opens ready to fill. */}
+                <details className="observation-edit" open={symptom.source_text === "사용자가 직접 추가" || undefined}>
+                <summary>고치기</summary>
+                <div className="observation-fields">
                 <label>
                   증상
                   <input
@@ -1086,10 +1110,11 @@ export default function App() {
                     </select>
                   </label>
                 )}
-                <p className="source-text">원문 근거: “{symptom.source_text}”</p>
                 <button className="button--delete" type="button" onClick={() => removeSymptom(index)}>
                   이 증상 삭제
                 </button>
+                </div>
+                </details>
               </div>
             ))}
             <datalist id="supported-symptoms">
@@ -1153,15 +1178,6 @@ export default function App() {
                     </button>
                   </div>
                 ))}
-              </div>
-            )}
-            {intake.unrecognized_fragments.length > 0 && (
-              <div className="review-warning" role="alert">
-                <strong>자동으로 정리하지 못한 표현</strong>
-                {intake.unrecognized_fragments.map((fragment, index) => (
-                  <p key={`${fragment}-${index}`}>“{fragment}”</p>
-                ))}
-                <p>원문을 확인하고 필요한 내용을 직접 추가해 주세요.</p>
               </div>
             )}
             <button type="button" onClick={() => void confirmAndSave()} disabled={savingRecord || confirmed || !currentRecordGroupId}>
