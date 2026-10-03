@@ -6,6 +6,7 @@ export const SUPPORTED_SYMPTOMS = [
   "귀 통증", "눈 통증", "치통", "식은땀",
   "가려움", "시야 이상", "떨림", "이명", "코피", "객혈", "토혈", "혈변", "혈뇨",
   "배뇨통", "빈뇨", "기절", "마비", "말 어눌함", "쉰 목소리", "체중 감소", "경련", "관절 통증",
+  "입안 통증", "재채기", "쌕쌕거림", "배뇨 곤란", "눈 충혈", "생리통",
 ];
 
 // The patient's local calendar date, which the server uses to turn "어제부터" into a date.

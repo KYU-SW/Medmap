@@ -37,7 +37,7 @@ RESOLVED_STATE = (
 )
 NOW_ADVERB = r"(?:(?:이제는?|이젠|지금은|현재는)\s*)?"
 PARTICLE = r"(?:은|는|이|가|도|을|를)?"
-JOINT_PART = r"무릎|어깨|발목|손목|팔꿈치|고관절|골반|손가락\s*관절|관절"
+JOINT_PART = r"무릎|어깨|발목|손목|팔꿈치|고관절|골반|손가락\s*관절|손가락|발가락|턱관절|턱|관절"
 ABSENT_ENDING = rf"{NOW_ADVERB}(?:없|{RESOLVED_STATE})"
 NOT_PAINFUL = r"(?:(?:더\s*이상\s*)?안\s*(?:아프|아파|아픈)|아프지(?:는|도)?\s*않|아프진\s*않)"
 INLINE_ONSET = (
@@ -241,14 +241,14 @@ RULES = (
     ),
     SymptomRule(
         "설사",
-        re.compile(r"설사|(?:대변|변)(?:이|을|도)?\s*(?:묽|물\s*같)|물\s*같은\s*변"),
+        re.compile(r"설사|(?<!소)(?:대변|변)(?:이|을|도)?\s*(?:묽|물\s*같)|물\s*같은\s*변"),
         re.compile(
             rf"설사{PARTICLE}\s*{NOW_ADVERB}(?:없|안\s*(?:했|해|하)|하지\s*않|멈췄|{RESOLVED_STATE})"
         ),
     ),
     SymptomRule(
         "변비",
-        re.compile(r"변비|(?:대변|변)(?:을|이|도)?\s*(?:잘\s*)?(?:못\s*(?:봤|봐|보|본)|안\s*나와|안\s*나오)"),
+        re.compile(r"변비|(?<!소)(?:대변|변)(?:을|이|도)?\s*(?:잘\s*)?(?:못\s*(?:봤|봐|보|본)|안\s*나와|안\s*나오)"),
         re.compile(rf"변비{PARTICLE}\s*{ABSENT_ENDING}"),
     ),
     SymptomRule(
@@ -347,7 +347,7 @@ RULES = (
         "눈 통증",
         re.compile(
             rf"눈\s*통증|눈(?:이|은|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
-            r"(?:아프|아파|아팠|아픈|따가|따갑|시려|시리|쑤셔|충혈)"
+            r"(?:아프|아파|아팠|아픈|따가|따갑|시려|시리|쑤셔)"
         ),
         re.compile(rf"눈(?:은|이|도)?\s*{NOW_ADVERB}{NOT_PAINFUL}|눈\s*통증{PARTICLE}\s*{ABSENT_ENDING}"),
         "눈",
@@ -496,6 +496,47 @@ RULES = (
             rf"관절통{PARTICLE}\s*{ABSENT_ENDING}|(?:{JOINT_PART})(?:은|는|도)?\s*{NOW_ADVERB}{NOT_PAINFUL}"
         ),
         "관절",
+    ),
+    SymptomRule(
+        "입안 통증",
+        re.compile(
+            rf"구내염|입병|(?:입안|입\s*안|혀|입천장)(?:이|가|은|는|도|에)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
+            r"(?:아프|아파|아팠|아픈|따가|따갑|쓰라|헐었|헐어|헌\s|헐|뭐가\s*났)"
+        ),
+        re.compile(
+            rf"(?:구내염|입병){PARTICLE}\s*{ABSENT_ENDING}|(?:입안|혀)(?:은|는|도|이|가)?\s*{NOW_ADVERB}{NOT_PAINFUL}"
+        ),
+        "입안",
+    ),
+    SymptomRule(
+        "재채기",
+        re.compile(r"재채기"),
+        re.compile(rf"재채기{PARTICLE}\s*{ABSENT_ENDING}|재채기(?:는|도)?\s*안\s*(?:해|나)"),
+    ),
+    SymptomRule(
+        "쌕쌕거림",
+        re.compile(r"쌕쌕|색색\s*소리|숨(?:을)?\s*쉴\s*때\s*(?:휘파람|그르렁)\s*소리"),
+        re.compile(rf"쌕쌕(?:거림|거리는\s*소리)?{PARTICLE}\s*{ABSENT_ENDING}"),
+    ),
+    SymptomRule(
+        "배뇨 곤란",
+        re.compile(
+            r"(?:소변|오줌)(?:이|을|도)?\s*(?:잘\s*)?(?:안\s*나와|안\s*나오|안\s*나온|못\s*(?:봤|봐|보|본)|"
+            r"보기(?:가)?\s*(?:힘들|어렵)|찔끔|시원하게\s*안)"
+        ),
+        re.compile(r"(?:소변|오줌)(?:은|도)?\s*(?:잘\s*)?(?:나와|나오고|봐요|보고)"),
+    ),
+    SymptomRule(
+        "눈 충혈",
+        re.compile(rf"충혈|눈(?:이|은|도)?\s*{INTENSITY_PHRASE}(?:빨개|빨갛|벌개|벌겋)"),
+        re.compile(rf"충혈{PARTICLE}\s*{ABSENT_ENDING}"),
+        "눈",
+    ),
+    SymptomRule(
+        "생리통",
+        re.compile(r"생리통|(?:생리|월경)(?:할\s*때|\s*중에?|\s*때문에)?\s*(?:배가\s*)?(?:너무\s*|많이\s*|심하게\s*)?(?:아프|아파|아팠)"),
+        re.compile(rf"생리통{PARTICLE}\s*{ABSENT_ENDING}"),
+        "아랫배",
     ),
 )
 FREQUENCY_SYMPTOMS = {"구토", "설사"}
