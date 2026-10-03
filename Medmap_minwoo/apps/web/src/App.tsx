@@ -608,7 +608,8 @@ export default function App() {
     try {
       await deleteIntakeRecord(id);
       setRecords((current) => current.filter((record) => record.id !== id));
-      setRecordMessage("선택한 테스트 기록을 삭제했습니다.");
+      setRecordMessage("기록을 삭제했습니다.");
+      setBackupMessage("");
     } catch {
       setRecordMessage("기록을 삭제하지 못했습니다.");
     }
@@ -733,6 +734,7 @@ export default function App() {
   }
 
   async function importBackup(file: File) {
+    setRecordMessage("");
     try {
       const backup = parseBackup(await file.text());
       const knownIds = new Set(records.map((record) => record.id));
