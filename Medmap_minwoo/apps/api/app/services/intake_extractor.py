@@ -163,7 +163,7 @@ RULES = (
             rf"인후통|목\s*통증|목감기|목(?:이|은|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
             r"(?:아프|아파|아팠|아픈|따끔|따가|따갑|칼칼|부었|부어|붓)|"
             rf"(?:인후통|목)(?:이|은|도)?\s*{IMPROVEMENT_PHRASE}|"
-            r"침(?:을)?\s*삼키기(?:가)?\s*(?:힘들|어렵|아프)"
+            r"침(?:을)?\s*삼키기(?:가)?\s*(?:힘들|어렵|아프)|침(?:을)?\s*삼킬\s*때(?:마다)?\s*(?:아프|아파|따끔)"
         ),
         re.compile(
             rf"인후통{PARTICLE}\s*{ABSENT_ENDING}|"
@@ -263,7 +263,7 @@ RULES = (
     SymptomRule(
         "피로",
         re.compile(
-            r"피곤|피로|기운(?:이|도)?\s*없|기력(?:이|도)?\s*없|무기력|나른|"
+            r"피곤|피로|기운(?:이|도)?\s*없|(?:몸에|온몸에)\s*힘(?:이)?\s*없|기력(?:이|도)?\s*없|무기력|나른|"
             r"몸(?:이)?\s*(?:천근만근|무거|무겁)|녹초|지쳐|지친다"
         ),
         re.compile(
@@ -290,7 +290,7 @@ RULES = (
         "소화불량",
         re.compile(
             r"소화불량|소화(?:가)?\s*(?:잘\s*)?안\s*(?:돼|되|된|됐)|체했|체한|체기|체해|"
-            r"더부룩"
+            r"더부룩|트림"
         ),
         re.compile(
             rf"(?:소화불량|체기){PARTICLE}\s*{ABSENT_ENDING}|소화(?:는|도)?\s*{NOW_ADVERB}잘\s*(?:돼|되)"
@@ -329,7 +329,7 @@ RULES = (
     SymptomRule(
         "부종",
         re.compile(
-            r"부종|붓기|부기(?=가|는|도|\s|$)|(?:다리|발|발목|얼굴|손|손가락|눈두덩|몸)(?:이|가|도)?\s*(?:퉁퉁\s*|많이\s*)?"
+            r"부종|붓기|부기(?=가|는|도|\s|$)|(?:다리|발|발목|얼굴|손|손가락|눈두덩|눈|입술|몸)(?:이|가|도)?\s*(?:퉁퉁\s*|많이\s*)?"
             r"(?:부었|부어|붓|부은)"
         ),
         re.compile(rf"(?:부종|붓기|부기){PARTICLE}\s*{NOW_ADVERB}(?:없|빠졌|가라앉았|{RESOLVED_STATE})"),
@@ -539,6 +539,45 @@ RULES = (
         "아랫배",
     ),
     SymptomRule(
+        "복부 팽만",
+        re.compile(r"(?:배|아랫배)(?:가|에)?\s*(?:너무\s*|자꾸\s*)?(?:빵빵|땡땡)|가스(?:가)?\s*(?:자꾸\s*|많이\s*)?(?:차|찼|찬)|방귀(?:가|를)?\s*(?:너무\s*)?자주"),
+        re.compile(rf"(?:복부\s*팽만|가스){PARTICLE}\s*{ABSENT_ENDING}"),
+        "복부",
+    ),
+    SymptomRule(
+        "목 이물감",
+        re.compile(r"이물감|목(?:에|이)?\s*(?:뭐가|뭔가|무언가)?\s*걸린\s*(?:것\s*)?같|목(?:이)?\s*막힌\s*(?:것\s*)?같"),
+        re.compile(rf"이물감{PARTICLE}\s*{ABSENT_ENDING}"),
+        "목",
+    ),
+    SymptomRule(
+        "눈 분비물",
+        re.compile(r"눈곱|눈물(?:이)?\s*(?:계속|자꾸|많이)\s*(?:나|흘러|흘)"),
+        re.compile(rf"눈곱{PARTICLE}\s*{ABSENT_ENDING}"),
+        "눈",
+    ),
+    SymptomRule(
+        "목 결림",
+        re.compile(rf"뒷목|목(?:이|덜미가)?\s*{INTENSITY_PHRASE}(?:뻐근|결려|결리|뻣뻣|안\s*돌아가)"),
+        re.compile(rf"(?:뒷목|목)(?:은|도)?\s*{NOW_ADVERB}(?:괜찮|안\s*뻐근)"),
+        "뒷목",
+    ),
+    SymptomRule(
+        "손발 차가움",
+        re.compile(r"수족냉증|(?:손발|손|발)(?:이|가|도)?\s*(?:너무\s*|많이\s*|자주\s*)?(?:차가워|차가운|차요|차서|시려|시리|얼음)"),
+        re.compile(rf"수족냉증{PARTICLE}\s*{ABSENT_ENDING}"),
+    ),
+    SymptomRule(
+        "우울감",
+        re.compile(r"우울(?!증)|의욕(?:이)?\s*없|아무것도\s*하기\s*싫|기분(?:이)?\s*(?:계속\s*)?(?:가라앉|처져|처지|다운)"),
+        re.compile(rf"우울(?:감|증)?{PARTICLE}\s*{ABSENT_ENDING}|우울하지\s*않"),
+    ),
+    SymptomRule(
+        "불안감",
+        re.compile(r"불안(?!정)|초조|조마조마"),
+        re.compile(rf"불안(?:감)?{PARTICLE}\s*{ABSENT_ENDING}|불안하지\s*않"),
+    ),
+    SymptomRule(
         "청력 저하",
         re.compile(r"청력|난청|(?:귀|소리|말)(?:가|이|도)?\s*(?:잘\s*)?안\s*들려|(?:귀|소리|말)(?:가|이|도)?\s*잘\s*안\s*들리"),
         re.compile(rf"(?:청력\s*저하|난청){PARTICLE}\s*{ABSENT_ENDING}|(?:귀|소리)(?:는|도)?\s*잘\s*들려"),
@@ -555,7 +594,7 @@ SIDE_PATTERN = re.compile(r"(오른쪽|왼쪽|양쪽|우측|좌측|오른|왼)(?
 SIDE_NAMES = {"우측": "오른쪽", "오른": "오른쪽", "좌측": "왼쪽", "왼": "왼쪽"}
 # Symptoms without a fixed body site that still happen somewhere: "왼쪽 팔이 저려요".
 PART_SYMPTOMS = {"저림", "부종", "떨림", "마비", "가려움", "발진"}
-PART_WORDS = r"손발|손가락|발가락|손등|발등|손목|발목|손|발|팔다리|팔|다리|얼굴|입술|눈두덩|등|온몸|몸|피부|턱|혀"
+PART_WORDS = r"손발|손가락|발가락|손등|발등|손목|발목|손|발|팔다리|팔|다리|얼굴|입술|눈두덩|눈|등|온몸|몸|피부|턱|혀"
 # Words that name a narrower place than the rule's body site when they start the evidence.
 SITE_WORD_PATTERN = re.compile(
     rf"(?:아랫|윗|뒷|앞)?(?:배|머리)|명치|옆구리|{JOINT_PART}|가슴|허리|귀|눈|목"
@@ -617,7 +656,7 @@ MEDICATION_PATTERN = re.compile(
     r"(?:을|를|도|은|는)?\s*(?:먹|복용)"
 )
 MEDICATION_NAME_PATTERN = re.compile(
-    r"((?:(?:알레르기|감기|비염|혈압|당뇨|진통|해열|소화|위장)\s*약)|"
+    r"((?:(?:알레르기|감기|비염|혈압|당뇨|진통|해열|소화|위장|고지혈증|콜레스테롤|갑상선|천식|수면|우울증)\s*약)|"
     r"(?:[가-힣A-Za-z0-9-]{2,20}(?:약|제)))"
     r"(?=(?:과|와|을|를|도|은|는)?(?:\s|$))"
 )
@@ -672,7 +711,11 @@ MEDICAL_HISTORY_PATTERN = re.compile(
 MEDICAL_HISTORY_ABSENT_PATTERN = re.compile(
     rf"(?<![가-힣])({KNOWN_CONDITION})(?:은|는|이|가|도)?\s*(?:없|아니)"
 )
-SURGERY_PATTERN = re.compile(r"([가-힣]{1,10}?)\s*수술(?:을|도)?\s*(?:받았|받은|했|한\s*적)")
+SURGERY_PATTERN = re.compile(r"([가-힣]{1,10}?)\s*(수술|시술)(?:을|도)?\s*(?:받았|받은|했|한\s*적)")
+# History said without a disease name: "혈압이 높아요", "간이 안 좋아요", "폐렴으로 입원했어요".
+HIGH_READING_PATTERN = re.compile(r"(?<![가-힣])(혈압|혈당|콜레스테롤)(?:이|가|도)?\s*(?:좀\s*|많이\s*|조금\s*)?높(?!지\s*않|진\s*않)")
+WEAK_ORGAN_PATTERN = re.compile(r"(?<![가-힣])(간|신장|콩팥|심장|폐|갑상선)(?:이|가|도)?\s*(?:좀\s*|많이\s*)?안\s*좋")
+ADMISSION_PATTERN = re.compile(r"(?<![가-힣])([가-힣]{2,10}?)(?:으로|로)\s*입원")
 MEDICINE_SUFFIX_PATTERN = re.compile(r"\s*약(?!간|해|하|한|했)|제(?:를|을|도|는|은|\s|$)")
 MEDICAL_SIGNAL_PATTERN = re.compile(
     r"아프|아파|아픈|통증|열|기침|숨|호흡|답답|구토|토했|어지|설사|메스꺼|오한|"
@@ -1234,7 +1277,8 @@ def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtra
     evidence_spans += [
         (match.start(), match.end())
         for pattern in (
-            MEDICAL_HISTORY_PATTERN, MEDICAL_HISTORY_ABSENT_PATTERN, SURGERY_PATTERN, TEMPERATURE_PATTERN
+            MEDICAL_HISTORY_PATTERN, MEDICAL_HISTORY_ABSENT_PATTERN, SURGERY_PATTERN, TEMPERATURE_PATTERN,
+            HIGH_READING_PATTERN, WEAK_ORGAN_PATTERN, ADMISSION_PATTERN,
         )
         for match in pattern.finditer(normalized)
     ]
@@ -1491,5 +1535,12 @@ def _extract_medical_history(text: str) -> tuple[list[str], list[OtherPersonSymp
         if not known and not NOT_A_CONDITION_PATTERN.fullmatch(value):
             add(value, match)
     for match in SURGERY_PATTERN.finditer(text):
-        add(f"{match.group(1)} 수술", match)
+        add(f"{match.group(1)} {match.group(2)}", match)
+    for match in HIGH_READING_PATTERN.finditer(text):
+        add(f"{match.group(1)} 높음", match)
+    for match in WEAK_ORGAN_PATTERN.finditer(text):
+        add(f"{match.group(1)} 질환", match)
+    for match in ADMISSION_PATTERN.finditer(text):
+        if not NOT_A_CONDITION_PATTERN.fullmatch(match.group(1)):
+            add(f"{match.group(1)}(입원)", match)
     return history, others

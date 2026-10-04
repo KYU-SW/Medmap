@@ -177,6 +177,29 @@ summary:focus-visible,
 }
 
 /* ---------- Home ---------- */
+.home-status {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft);
+}
+
+.home-status h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.home-status p {
+  margin: 0;
+  font-size: 15px;
+}
+
+.home-status .home-status__last {
+  margin-top: 10px;
+  color: var(--color-muted-foreground);
+}
+
 .home-menu {
   display: grid;
   gap: 10px;
@@ -587,6 +610,11 @@ textarea::placeholder {
   background: var(--color-accent-soft);
 }
 
+.badge--urgent {
+  color: var(--color-destructive);
+  background: var(--color-destructive-soft);
+}
+
 .badge--uncertain {
   color: var(--color-warning);
   background: var(--color-warning-soft);
@@ -802,6 +830,40 @@ textarea::placeholder {
   margin: 6px 0;
 }
 
+/* Resolved symptoms: one quiet line each, below the current ones. */
+.resolved-title {
+  display: block;
+  margin-top: 18px;
+  color: var(--color-muted-foreground);
+}
+
+.visit-summary-symptoms .resolved-list {
+  padding: 0;
+  list-style: none;
+}
+
+.resolved-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin: 0;
+  padding: 8px 0;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-muted-foreground);
+  font-size: 15px;
+}
+
+.resolved-list__name {
+  color: var(--color-foreground);
+  font-weight: 700;
+}
+
+.resolved-list .resolved-list__urgent {
+  padding-left: 10px;
+  border-left: 3px solid var(--color-destructive);
+}
+
 .summary-notice {
   margin-top: 16px;
   color: var(--color-muted-foreground);
@@ -917,6 +979,13 @@ textarea::placeholder {
 .calendar__day--episode,
 .calendar__day--episode:hover:not(:disabled) {
   background: var(--color-warning-soft);
+}
+
+.calendar__day--today {
+  color: var(--color-primary-strong);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .calendar__day--selected,

@@ -42,7 +42,7 @@ describe("body sites", () => {
     ];
     const episodes = buildSymptomEpisodes(records);
     expect(episodes[0].bodySite).toBe("오른쪽 아랫배");
-    expect(visitSummaryText(buildVisitSummary(records, episodes)!)).toContain("- 복통(오른쪽 아랫배): 현재 있음");
+    expect(visitSummaryText(buildVisitSummary(records, episodes)!)).toContain("- 복통(오른쪽 아랫배): 시작:");
   });
 
   it("does not repeat the default site of a symptom", () => {

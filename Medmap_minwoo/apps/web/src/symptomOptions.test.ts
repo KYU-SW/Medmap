@@ -3,7 +3,7 @@ import { formatOnset, localDateString, parseList, SUPPORTED_SYMPTOMS, tracksFreq
 
 describe("symptomOptions", () => {
   it("lists 50 unique supported symptoms", () => {
-    expect(new Set(SUPPORTED_SYMPTOMS).size).toBe(58);
+    expect(new Set(SUPPORTED_SYMPTOMS).size).toBe(65);
   });
 
   it("tracks frequency only for vomiting and diarrhea", () => {

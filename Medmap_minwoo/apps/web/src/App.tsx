@@ -23,7 +23,7 @@ import {
 import { buildTimeline } from "./timeline";
 import { dayKey, monthGrid } from "./calendar";
 import { buildSymptomEpisodes } from "./symptomEpisodes";
-import { buildVisitSummary, profileText, visitSummaryText } from "./visitSummary";
+import { buildVisitSummary, episodePeriod, profileText, visitSummaryText, wasUrgent } from "./visitSummary";
 import {
   createRecordGroup,
   deleteRecordGroup,
@@ -59,9 +59,6 @@ const TREND_BADGE = {
 const TONE_MARK = { new: "+", worse: "↑", better: "↓", same: "=", unknown: "?" } as const;
 const TONE_LABEL = { new: "새 증상", worse: "악화", better: "호전", same: "비슷함", unknown: "확실하지 않음" } as const;
 
-function shortDate(value: string): string {
-  return new Intl.DateTimeFormat("ko-KR", { month: "long", day: "numeric" }).format(new Date(value));
-}
 // Plain words for the arrow-style changes on screen; the stored wording stays the same.
 const CHANGE_LABEL: Record<string, string> = { "있음 → 없음": "사라짐", "없음 → 있음": "다시 생김" };
 
@@ -663,6 +660,8 @@ export default function App() {
   const shownMonth = calendarMonth ?? (shownDay ? new Date(`${shownDay}T00:00:00`) : new Date());
   const calendarCells = monthGrid(shownMonth.getFullYear(), shownMonth.getMonth(), timeline, symptomEpisodes);
   const shownDayEntries = timeline.filter((entry) => dayKey(entry.createdAt) === shownDay);
+  const todayKey = dayKey(new Date());
+  const activeEpisodes = symptomEpisodes.filter((episode) => episode.status === "active");
   const moveMonth = (offset: number) =>
     setCalendarMonth(new Date(shownMonth.getFullYear(), shownMonth.getMonth() + offset, 1));
   const profile = recordGroups.find((group) => group.id === currentRecordGroupId)?.profile ?? {};
@@ -782,7 +781,7 @@ export default function App() {
         )}
         {view === "home" && (
         <details className="record-group-picker">
-          <summary>현재 기록: {currentGroupName ?? "불러오는 중"}</summary>
+          <summary>기록 묶음: {currentGroupName ?? "불러오는 중"}</summary>
           <label htmlFor="record-group">기록 묶음 바꾸기</label>
           <select
             id="record-group"
@@ -801,6 +800,23 @@ export default function App() {
           </button>
           <p>아픈 기간마다 기록 묶음을 나누면, 요약·타임라인·PDF·QR이 그 묶음 안에서만 만들어집니다.</p>
         </details>
+        )}
+        {view === "home" && latestEntry && (
+          <section className="home-status" aria-label="지금 기록 상태">
+            <h2>진행 중인 증상</h2>
+            {activeEpisodes.length > 0 ? (
+              <ul className="chips">
+                {activeEpisodes.map((episode) => (
+                  <li key={episode.id}>{episode.name} · {episodePeriod(episode)}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>진행 중인 증상이 없습니다.</p>
+            )}
+            <p className="home-status__last">
+              마지막 기록: {new Intl.DateTimeFormat("ko-KR", { month: "long", day: "numeric", weekday: "short" }).format(new Date(latestEntry.createdAt))}
+            </p>
+          </section>
         )}
         {view === "home" && (
           <div className="home-menu">
@@ -1220,15 +1236,15 @@ export default function App() {
                 </div>
               )}
               <div className="visit-summary-symptoms">
-                <strong>증상 변화</strong>
+                <strong>지금 있는 증상</strong>
+                {visitSummary.symptoms.every((symptom) => symptom.status !== "active") && (
+                  <p className="empty-result">지금 있는 증상이 없습니다.</p>
+                )}
                 <ul className="symptom-list">
-                  {visitSummary.symptoms.map((symptom) => (
+                  {visitSummary.symptoms.filter((symptom) => symptom.status === "active").map((symptom) => (
                     <li key={`summary-${symptom.id}`} className="symptom-row">
                       <div className="symptom-row__head">
                         <strong>{symptom.name}</strong>
-                        <span className={`badge badge--${symptom.status === "active" ? "present" : "resolved"}`}>
-                          {symptom.status === "active" ? "현재 있음" : "사라짐"}
-                        </span>
                         {symptom.latestTrend && (
                           <span className={`trend trend--${TREND_BADGE[symptom.latestTrend].tone}`}>
                             {TREND_BADGE[symptom.latestTrend].label}
@@ -1247,6 +1263,24 @@ export default function App() {
                     </li>
                   ))}
                 </ul>
+                {visitSummary.symptoms.some((symptom) => symptom.status === "resolved") && (
+                  <>
+                    <strong className="resolved-title">사라진 증상</strong>
+                    <ul className="resolved-list">
+                      {visitSummary.symptoms.filter((symptom) => symptom.status === "resolved").map((symptom) => (
+                        <li key={`resolved-${symptom.id}`} className={wasUrgent(symptom) ? "resolved-list__urgent" : undefined}>
+                          <span className="resolved-list__name">{symptom.name}</span>
+                          {wasUrgent(symptom) && <span className="badge badge--urgent">위험 증상</span>}
+                          <span>
+                            {episodePeriod(symptom)}
+                            {symptom.peakSeverity && ` · 최고 ${symptom.peakSeverity}`}
+                            {tracksFrequency(symptom.name) && symptom.frequencies.length > 0 && ` · ${symptom.frequencies.join(", ")}`}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
               </div>
               <div className="info-grid">
                 <ChipBlock title="알레르기" kind="allergy" items={visitSummary.allergies} />
@@ -1311,7 +1345,8 @@ export default function App() {
               <button
                 key={cell.key}
                 type="button"
-                className={`calendar__day${cell.inEpisode ? " calendar__day--episode" : ""}${cell.key === shownDay ? " calendar__day--selected" : ""}`}
+                className={`calendar__day${cell.inEpisode ? " calendar__day--episode" : ""}${cell.key === shownDay ? " calendar__day--selected" : ""}${cell.key === todayKey ? " calendar__day--today" : ""}`}
+                aria-current={cell.key === todayKey ? "date" : undefined}
                 onClick={() => setSelectedDay(cell.key)}
                 aria-pressed={cell.key === shownDay}
                 aria-label={`${cell.day}일${cell.tone ? `, 기록 있음 (${TONE_LABEL[cell.tone]})` : ""}`}
@@ -1337,7 +1372,7 @@ export default function App() {
                     {episode.status === "active" ? "진행 중" : "종료됨"}
                   </span>
                   <span>
-                    {shortDate(episode.startedAt)} ~ {episode.endedAt ? shortDate(episode.endedAt) : ""}
+                    {episodePeriod(episode)}
                     {episode.peakSeverity && ` · 최고 ${episode.peakSeverity}`}
                   </span>
                 </li>

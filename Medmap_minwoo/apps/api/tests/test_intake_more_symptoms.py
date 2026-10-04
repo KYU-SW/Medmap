@@ -91,3 +91,61 @@ def test_asks_to_confirm_unlisted_complaints(text: str) -> None:
 
 def test_hoksi_is_not_a_lump() -> None:
     assert extract_intake("혹시 몰라서 말씀드려요 머리가 아파요").unrecognized_fragments == []
+
+
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("배가 빵빵해요", ("복부 팽만", "present", "복부")),
+        ("가스가 차요", ("복부 팽만", "present", "복부")),
+        ("트림이 자주 나와요", ("소화불량", "present", "복부")),
+        ("목에 뭐가 걸린 것 같아요", ("목 이물감", "present", "목")),
+        ("눈곱이 껴요", ("눈 분비물", "present", "눈")),
+        ("눈물이 계속 나요", ("눈 분비물", "present", "눈")),
+        ("뒷목이 당겨요", ("목 결림", "present", "뒷목")),
+        ("목이 뻐근해요", ("목 결림", "present", "뒷목")),
+        ("손발이 차요", ("손발 차가움", "present", None)),
+        ("우울해요", ("우울감", "present", None)),
+        ("불안해요", ("불안감", "present", None)),
+        ("입술이 부었어요", ("부종", "present", "입술")),
+        ("눈이 부었어요", ("부종", "present", "눈")),
+        ("침 삼킬 때 아파요", ("인후통", "present", "목")),
+        ("몸에 힘이 없어요", ("피로", "present", None)),
+    ],
+)
+def test_recognizes_common_everyday_complaints(text: str, expected: tuple[str, str, str | None]) -> None:
+    assert found(text) == [expected]
+
+
+@pytest.mark.parametrize("text", ["불안정해요", "밥을 먹어서 배가 불러요"])
+def test_does_not_read_ordinary_words_as_symptoms(text: str) -> None:
+    assert found(text) == []
+
+
+@pytest.mark.parametrize(
+    ("text", "history"),
+    [
+        ("혈압이 높아요", ["혈압 높음"]),
+        ("혈당이 높다고 했어요", ["혈당 높음"]),
+        ("콜레스테롤이 높아요", ["콜레스테롤 높음"]),
+        ("작년에 폐렴으로 입원했어요", ["폐렴(입원)"]),
+        ("심장 스텐트 시술 받았어요", ["스텐트 시술"]),
+        ("간이 안 좋다고 했어요", ["간 질환"]),
+        ("혈압이 높지 않아요", []),
+        ("병원으로 입원했어요", []),
+    ],
+)
+def test_reads_history_said_without_a_disease_name(text: str, history: list[str]) -> None:
+    result = extract_intake(text)
+    assert result.medical_history == history
+    assert result.unrecognized_fragments == []
+
+
+def test_history_of_depression_is_not_a_current_symptom() -> None:
+    result = extract_intake("우울증 진단 받았어요")
+    assert result.medical_history == ["우울증"]
+    assert result.symptoms == []
+
+
+def test_spaced_cholesterol_medicine_is_a_medication() -> None:
+    assert extract_intake("고지혈증 약 먹어요").medications == ["고지혈증약"]
