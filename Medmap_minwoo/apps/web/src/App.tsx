@@ -22,6 +22,7 @@ import {
 } from "./symptomOptions";
 import { buildTimeline } from "./timeline";
 import { dayKey, monthGrid } from "./calendar";
+import { API_BASE, pcm16Base64, usesPhoneStt, Whisper } from "./phoneStt";
 import { buildSymptomEpisodes } from "./symptomEpisodes";
 import { buildVisitSummary, episodePeriod, profileText, visitSummaryText, wasUrgent } from "./visitSummary";
 import {
@@ -313,6 +314,8 @@ export default function App() {
     audioSourceRef.current = source;
     audioProcessorRef.current = processor;
     silentGainRef.current = silentGain;
+    // On the phone the model is too slow to re-run while speaking; it transcribes once at the end.
+    if (usesPhoneStt) return;
     liveIntervalRef.current = window.setInterval(
       () => void requestLiveTranscript(),
       LIVE_TRANSCRIPTION_INTERVAL_MS,
@@ -351,11 +354,13 @@ export default function App() {
       recorder.ondataavailable = (event) => {
         if (event.data.size > 0) chunksRef.current.push(event.data);
       };
-      recorder.onstop = () => void sendRecording(recorder.mimeType || "audio/webm");
+      recorder.onstop = () => void (usesPhoneStt ? transcribeOnPhone() : sendRecording(recorder.mimeType || "audio/webm"));
       recorder.start();
       await startLiveCapture(stream);
       setStatus("recording");
-      setMessage("듣고 있습니다. 말하는 동안 변환 문장이 표시됩니다.");
+      setMessage(usesPhoneStt
+        ? "듣고 있습니다. 말을 마치고 녹음 종료를 누르면 휴대폰 안에서 글자로 바꿉니다."
+        : "듣고 있습니다. 말하는 동안 변환 문장이 표시됩니다.");
       timeoutRef.current = window.setTimeout(() => stopRecording(), MAX_RECORDING_MS);
     } catch {
       stopMediaTracks();
@@ -415,12 +420,39 @@ export default function App() {
     }
   }
 
+  // The 16 kHz samples captured for live preview go to whisper.cpp on the phone; nothing is uploaded.
+  async function transcribeOnPhone() {
+    chunksRef.current = [];
+    const samples = liveSamplesRef.current;
+    liveSamplesRef.current = [];
+    if (samples.length === 0 || liveSampleRateRef.current !== 16_000) {
+      setStatus("error");
+      setMessage("녹음된 음성이 없습니다. 다시 시도해 주세요.");
+      return;
+    }
+    setMessage("휴대폰 안에서 음성을 글자로 바꾸고 있습니다. 처음에는 모델을 불러오느라 더 걸립니다.");
+    try {
+      const result = await Whisper.transcribe({ pcm16: pcm16Base64(samples) });
+      setTranscript(result.transcript);
+      setIntake(null);
+      setConfirmed(false);
+      setStatus("done");
+      setMessage(
+        `변환 결과를 확인하고 틀린 부분을 직접 수정해 주세요. 휴대폰 변환 시간 ${result.processing_seconds.toFixed(1)}초`
+          + ` (녹음 ${result.audio_seconds.toFixed(1)}초${result.load_seconds > 0.5 ? `, 모델 불러오기 ${result.load_seconds.toFixed(1)}초` : ""}).`,
+      );
+    } catch (error) {
+      setStatus("error");
+      setMessage(error instanceof Error ? error.message : "음성 변환에 실패했습니다.");
+    }
+  }
+
   async function extractMedicalInformation() {
     if (!transcript.trim()) return;
     setExtracting(true);
     setConfirmed(false);
     try {
-      const response = await fetch("/v1/intake/extract", {
+      const response = await fetch(`${API_BASE}/v1/intake/extract`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ transcript, reference_date: localDateString() }),
@@ -461,7 +493,7 @@ export default function App() {
     // Reuse the extractor so "어제부터" gets the same wording and date as a spoken onset.
     let onset: Pick<SymptomObservation, "onset" | "onset_date"> = { onset: value, onset_date: null };
     try {
-      const response = await fetch("/v1/intake/extract", {
+      const response = await fetch(`${API_BASE}/v1/intake/extract`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

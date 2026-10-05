@@ -1,0 +1,8 @@
+{
+  "appId": "kr.medmap.app",
+  "appName": "MedMap",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "http"
+  }
+}

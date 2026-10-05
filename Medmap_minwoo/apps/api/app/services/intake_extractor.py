@@ -515,7 +515,8 @@ RULES = (
     ),
     SymptomRule(
         "쌕쌕거림",
-        re.compile(r"쌕쌕|색색\s*소리|숨(?:을)?\s*쉴\s*때\s*(?:휘파람|그르렁)\s*소리"),
+        # STT spells the same sound several ways ("쎅쎅" from the server model).
+        re.compile(r"쌕쌕|쎅쎅|색색\s*소리|숨(?:을)?\s*쉴\s*때\s*(?:휘파람|그르렁)\s*소리"),
         re.compile(rf"쌕쌕(?:거림|거리는\s*소리)?{PARTICLE}\s*{ABSENT_ENDING}"),
     ),
     SymptomRule(
@@ -608,6 +609,8 @@ ONSET_PATTERN = re.compile(
     r"어젯밤(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제)\s*"
     r"(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
+    r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘|(?:\d+|일|이|삼|사|오|육|칠|팔|구|십)\s*일)"
+    r"\s*전\s*(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제|방금|아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘)"
     r"(?!\s*에|\s*(?:\d+|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*(?:번|회|차례))"
@@ -858,7 +861,7 @@ def _onset_date(onset: str | None, reference: date | None) -> str | None:
         return (reference - timedelta(days=1)).isoformat()
     if re.match(r"(?:그제|그저께)", text):
         return (reference - timedelta(days=2)).isoformat()
-    days_ago = re.fullmatch(r"(\d+)일(전부터|전|째)", text)
+    days_ago = re.fullmatch(r"(\d+)일(전부터|전|째)(?:아침|점심|저녁|밤|새벽)?(?:부터)?", text)
     if days_ago:
         count = int(days_ago.group(1))
         # "3일째" is the third day, so it started two days ago.
@@ -869,6 +872,10 @@ def _onset_date(onset: str | None, reference: date | None) -> str | None:
 def _normalize_onset(value: str | None) -> str | None:
     if value is None:
         return None
+    # "이틀 전 저녁부터" → "2일 전 저녁부터": normalize the day count, keep the time of day.
+    with_time = re.fullmatch(r"(.+?전)\s*(아침|점심|저녁|밤|새벽)(부터)?", value)
+    if with_time:
+        return f"{_normalize_onset(with_time.group(1))} {with_time.group(2)}{with_time.group(3) or ''}"
     native_days = {
         "하루": "1일", "이틀": "2일", "사흘": "3일", "나흘": "4일",
         "닷새": "5일", "엿새": "6일", "이레": "7일", "여드레": "8일",
@@ -1178,6 +1185,21 @@ def _first_symptom_match(pattern: re.Pattern[str], text: str) -> re.Match[str] |
     return None
 
 
+SINO_DIGITS = {"일": 1, "이": 2, "삼": 3, "사": 4, "오": 5, "육": 6, "칠": 7, "팔": 8, "구": 9}
+# Body temperature said in words, as the phone STT model writes it: "삼십팔 도", "삼십팔 점 오 도".
+SPOKEN_TEMPERATURE_PATTERN = re.compile(
+    r"(?<![가-힣])(삼|사)십(일|이|삼|사|오|육|칠|팔|구)?(?:\s*점\s*(일|이|삼|사|오|육|칠|팔|구))?\s*도"
+)
+
+
+def _spoken_temperature_to_digits(text: str) -> str:
+    def digits(match: re.Match[str]) -> str:
+        value = SINO_DIGITS[match.group(1)] * 10 + SINO_DIGITS.get(match.group(2) or "", 0)
+        return f"{value}.{SINO_DIGITS[match.group(3)]}도" if match.group(3) else f"{value}도"
+
+    return SPOKEN_TEMPERATURE_PATTERN.sub(digits, text)
+
+
 def _space_glued_words(text: str) -> str:
     """STT and quick typing drop spaces: "가슴이답답하고아파요" → "가슴이 답답하고 아파요"."""
     text = GLUED_SUBJECT_PATTERN.sub(r"\1 ", text)
@@ -1185,7 +1207,7 @@ def _space_glued_words(text: str) -> str:
 
 
 def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtractionResponse:
-    normalized = _space_glued_words(" ".join(text.strip().split()))
+    normalized = _spoken_temperature_to_digits(_space_glued_words(" ".join(text.strip().split())))
     matches: list[tuple[SymptomRule, re.Match[str], bool]] = []
     for rule in RULES:
         mention = _first_symptom_match(rule.mention, normalized)

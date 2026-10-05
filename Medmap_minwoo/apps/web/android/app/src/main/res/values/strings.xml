@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">MedMap</string>
+    <string name="title_activity_main">MedMap</string>
+    <string name="package_name">kr.medmap.app</string>
+    <string name="custom_url_scheme">kr.medmap.app</string>
+</resources>

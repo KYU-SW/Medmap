@@ -17,6 +17,7 @@ def found(text: str) -> list[tuple[str, str, str | None]]:
         ("재채기가 나요", ("재채기", "present", None)),
         ("재채기는 없어요", ("재채기", "absent", None)),
         ("숨쉴 때 쌕쌕 소리가 나요", ("쌕쌕거림", "present", None)),
+        ("숨 쉴 때 쎅쎅 소리가 나요", ("쌕쌕거림", "present", None)),
         ("소변이 안 나와요", ("배뇨 곤란", "present", None)),
         ("소변 보기가 힘들어요", ("배뇨 곤란", "present", None)),
         ("눈이 충혈됐어요", ("눈 충혈", "present", "눈")),
@@ -149,3 +150,31 @@ def test_history_of_depression_is_not_a_current_symptom() -> None:
 
 def test_spaced_cholesterol_medicine_is_a_medication() -> None:
     assert extract_intake("고지혈증 약 먹어요").medications == ["고지혈증약"]
+
+
+@pytest.mark.parametrize(
+    ("text", "onset", "onset_date"),
+    [
+        ("2일 전 저녁부터 머리가 아파요", "2일 전 저녁부터", "2026-10-03"),
+        ("이틀 전 저녁부터 머리가 아파요", "2일 전 저녁부터", "2026-10-03"),
+        # The phone STT model writes numbers in words.
+        ("이 일 전 저녁부터 머리가 아파요", "2일 전 저녁부터", "2026-10-03"),
+    ],
+)
+def test_keeps_day_count_with_time_of_day(text: str, onset: str, onset_date: str) -> None:
+    from datetime import date
+
+    symptom = extract_intake(text, date(2026, 10, 5)).symptoms[0]
+    assert (symptom.onset, symptom.onset_date) == (onset, onset_date)
+
+
+@pytest.mark.parametrize(
+    ("text", "severity"),
+    [("열이 삼십팔 도까지 났어요", "38℃"), ("열이 삼십팔 점 오 도예요", "38.5℃"), ("열이 사십 도예요", "40℃")],
+)
+def test_reads_body_temperature_said_in_words(text: str, severity: str) -> None:
+    assert extract_intake(text).symptoms[0].severity == severity
+
+
+def test_cold_weather_is_not_a_fever() -> None:
+    assert extract_intake("오늘 영하 삼 도라 추워요").symptoms == []

@@ -89,3 +89,19 @@ cd apps\api
 .\.venv\Scripts\python.exe -m scripts.transcribe_file <녹음 파일> --device cuda
 .\.venv\Scripts\python.exe -m scripts.transcribe_file <녹음 파일> --device cuda --hotwords medical
 ```
+
+## 폰 안 STT 후보 비교 (2026-10-05)
+
+나중에 서버 없이 휴대폰에서 음성을 변환하기 위해 whisper.cpp와 압축한 turbo 모델(`ggml-large-v3-turbo-q5_0.bin`, 약 550MB)을
+지금 서버 엔진(faster-whisper turbo)과 비교한다. 모델과 프로그램은 `local-cache/whisper-cpp/`(Git 제외), 녹음은 `local-cache/stt-samples/`에 둔다.
+
+```powershell
+cd apps\api
+.\.venv\Scripts\python.exe -m scripts.compare_whisper_cpp
+```
+
+- 실제 녹음 3개: 폰용이 증상을 더 잘 잡았다(서버는 `쿡쿡`→`구구`, `복통`→`폭통`). 폰용은 숫자를 한글로 적어(`삼십팔 도`, `이 일 전`)
+  증상 정리 규칙이 한글 숫자 체온과 `이 일 전 저녁부터`를 읽도록 고쳤다.
+- `--prompt`로 예시 문장을 주면 결과가 크게 나빠져 쓰지 않는다.
+- PC CPU 4스레드에서 8~10초 녹음에 약 9초. 휴대폰 속도는 실제로 재야 한다.
+- 표본이 3개라 정확도를 단정할 수 없다. 녹음을 더 모아 다시 비교한다.
