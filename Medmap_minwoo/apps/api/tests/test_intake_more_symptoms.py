@@ -212,3 +212,10 @@ def test_normal_temperature_is_not_turned_into_a_finding(text: str) -> None:
 )
 def test_keeps_an_unknown_name_taken_by_the_pill(text: str, medications: list[str]) -> None:
     assert extract_intake(text).medications == medications
+
+
+def test_next_sentence_onset_does_not_attach_without_period():
+    result = extract_intake("어제 저녁부터 머리가 아프고 기침이 심해졌어요 오늘 아침에는 체온이 38.5도까지 올랐어요")
+    onsets = {s.name: s.onset for s in result.symptoms}
+    assert onsets["기침"] != "오늘 아침"
+    assert onsets["발열"] == "오늘 아침"

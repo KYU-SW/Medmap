@@ -967,7 +967,9 @@ def _onset_for_symptom(
 ) -> str | None:
     boundary_pattern = re.compile(
         r"[,;.!?。]|(?:추가로|그리고|하지만|그러나|또한)|"
-        r"(?:고|며|면서|는데|지만)(?:\s|$)"
+        r"(?:고|며|면서|는데|지만)(?:\s|$)|"
+        # STT without periods: "기침이 심해졌어요 오늘 아침에는" — the next sentence's onset is not the cough's.
+        r"(?<=[가-힣])요\s"
     )
     overlapping = [
         match for match in ONSET_PATTERN.finditer(text)
