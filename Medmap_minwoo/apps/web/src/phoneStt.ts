@@ -1,4 +1,4 @@
-import { Capacitor, registerPlugin } from "@capacitor/core";
+import { Capacitor, registerPlugin, type PluginListenerHandle } from "@capacitor/core";
 
 type WhisperPlugin = {
   transcribe(options: { pcm16: string; threads?: number }): Promise<{
@@ -15,6 +15,30 @@ type WhisperPlugin = {
 // Inside the Android app speech is transcribed on the phone (WhisperPlugin.java).
 export const usesPhoneStt = Capacitor.isNativePlatform();
 export const Whisper = registerPlugin<WhisperPlugin>("Whisper");
+
+type DeviceSttPlugin = {
+  support(): Promise<{ onDeviceAvailable: boolean; installed?: string[] }>;
+  start(): Promise<void>;
+  push(options: { pcm16: string }): Promise<void>;
+  stop(): Promise<{ transcript: string }>;
+  addListener(event: "caption", listener: (event: { text: string }) => void): Promise<PluginListenerHandle>;
+};
+
+// Android's on-device recognizer (DeviceSttPlugin.java): captions as the patient speaks and a transcript right
+// after "녹음 종료". turbo still checks it in the background (transcriptCheck.ts).
+export const DeviceStt = registerPlugin<DeviceSttPlugin>("DeviceStt");
+
+let deviceReady: Promise<boolean> | null = null;
+
+/** Whether this phone recognizes Korean on the device (Android 13+ with the offline language pack). */
+export function deviceSttReady(): Promise<boolean> {
+  deviceReady ??= usesPhoneStt
+    ? DeviceStt.support()
+      .then((support) => support.onDeviceAvailable && (support.installed ?? []).includes("ko-KR"))
+      .catch(() => false)
+    : Promise.resolve(false);
+  return deviceReady;
+}
 
 // The app has no web server of its own; until the intake rules move to the phone, it reaches the
 // PC API through `adb reverse tcp:8000 tcp:8000` (docs/ANDROID_APP.md).

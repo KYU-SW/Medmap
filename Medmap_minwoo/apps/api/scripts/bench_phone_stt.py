@@ -53,16 +53,8 @@ async def transcribe(socket_url: str, pcm16: str, method: str = "transcribe") ->
                 return json.loads(result["result"]["value"])
 
 
-def main() -> int:
-    parser = ArgumentParser(description="실제 안드로이드 앱에서 폰 안 음성 변환 시간을 잽니다.")
-    parser.add_argument("wavs", type=Path, nargs="+", help="16kHz 모노 WAV 파일")
-    parser.add_argument("--repeat", type=int, default=1)
-    parser.add_argument(
-        "--caption", action="store_true",
-        help="말하는 중 자막을 흉내 낸다: 녹음을 1.5초씩 늘려 가며 작은 모델(preview)로 변환한다",
-    )
-    args = parser.parse_args()
-
+def connect_page() -> str:
+    """Brings the app to the front and returns the debugging socket of its web view."""
     # The app must be in front: in the background Android moves it to the slow cores.
     adb("shell", "am", "start", "-W", "-n", "kr.medmap.app/.MainActivity")
     pid = adb("shell", "pidof", "kr.medmap.app")
@@ -75,7 +67,20 @@ def main() -> int:
             time.sleep(0.5)
     else:
         raise SystemExit("앱 화면에 연결하지 못했습니다. 디버그 빌드인지 확인해 주세요.")
-    socket_url = next(page["webSocketDebuggerUrl"] for page in pages if page.get("type") == "page")
+    return next(page["webSocketDebuggerUrl"] for page in pages if page.get("type") == "page")
+
+
+def main() -> int:
+    parser = ArgumentParser(description="실제 안드로이드 앱에서 폰 안 음성 변환 시간을 잽니다.")
+    parser.add_argument("wavs", type=Path, nargs="+", help="16kHz 모노 WAV 파일")
+    parser.add_argument("--repeat", type=int, default=1)
+    parser.add_argument(
+        "--caption", action="store_true",
+        help="말하는 중 자막을 흉내 낸다: 녹음을 1.5초씩 늘려 가며 작은 모델(preview)로 변환한다",
+    )
+    args = parser.parse_args()
+
+    socket_url = connect_page()
 
     for _ in range(args.repeat):
         for wav in args.wavs:

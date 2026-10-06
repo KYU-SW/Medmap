@@ -22,7 +22,9 @@ import {
 } from "./symptomOptions";
 import { buildTimeline } from "./timeline";
 import { dayKey, monthGrid } from "./calendar";
-import { API_BASE, pcm16Base64, usesPhoneStt, Whisper } from "./phoneStt";
+import { API_BASE, DeviceStt, deviceSttReady, pcm16Base64, usesPhoneStt, Whisper } from "./phoneStt";
+import { factDifferences } from "./transcriptCheck";
+import type { PluginListenerHandle } from "@capacitor/core";
 import { hasSpeech, joinChunks, tidyCaption, trimSilence } from "./speechAudio";
 import { buildSymptomEpisodes } from "./symptomEpisodes";
 import { buildVisitSummary, episodePeriod, profileText, visitSummaryText, wasUrgent } from "./visitSummary";
@@ -218,6 +220,11 @@ export default function App() {
   const liveRequestRunningRef = useRef(false);
   // On the phone: the running caption request (small model), awaited before the final transcription.
   const phoneCaptionRef = useRef<Promise<void> | null>(null);
+  // On the phone with an on-device Korean recognizer: its caption listener while a recording is live, and the
+  // turbo check of the transcript it produced (compared when the patient asks to organize the symptoms).
+  const deviceSessionRef = useRef<PluginListenerHandle | null>(null);
+  const turboCheckRef = useRef<{ deviceText: string; turbo: Promise<string | null>; done: boolean } | null>(null);
+  const [verification, setVerification] = useState<{ deviceText: string; turboText: string; differences: string[] } | null>(null);
   const transcriptRef = useRef<HTMLTextAreaElement | null>(null);
   const savingRecordRef = useRef(false);
 
@@ -308,7 +315,10 @@ export default function App() {
     liveSamplesRef.current = [];
     liveSampleRateRef.current = context.sampleRate;
     processor.onaudioprocess = (event) => {
-      liveSamplesRef.current.push(new Float32Array(event.inputBuffer.getChannelData(0)));
+      const chunk = new Float32Array(event.inputBuffer.getChannelData(0));
+      liveSamplesRef.current.push(chunk);
+      // The on-device recognizer hears the same audio that turbo will check.
+      if (deviceSessionRef.current) void DeviceStt.push({ pcm16: pcm16Base64([chunk]) });
     };
     source.connect(processor);
     processor.connect(silentGain);
@@ -317,7 +327,9 @@ export default function App() {
     audioSourceRef.current = source;
     audioProcessorRef.current = processor;
     silentGainRef.current = silentGain;
-    // On the phone the caption comes from a small quick model; turbo transcribes once at the end.
+    // The on-device recognizer captions by itself. Otherwise on the phone a small quick model captions and
+    // turbo transcribes once at the end; in the browser the server re-transcribes as the patient speaks.
+    if (deviceSessionRef.current) return;
     liveIntervalRef.current = window.setInterval(
       () => void (usesPhoneStt ? requestPhoneCaption() : requestLiveTranscript()),
       LIVE_TRANSCRIPTION_INTERVAL_MS,
@@ -357,12 +369,27 @@ export default function App() {
         if (event.data.size > 0) chunksRef.current.push(event.data);
       };
       recorder.onstop = () => void (usesPhoneStt ? transcribeOnPhone() : sendRecording(recorder.mimeType || "audio/webm"));
+      turboCheckRef.current = null;
+      setVerification(null);
+      if (usesPhoneStt && await deviceSttReady()) {
+        try {
+          await DeviceStt.start();
+          deviceSessionRef.current = await DeviceStt.addListener("caption", (event) => {
+            // Captions are only shown while recording; they are never saved as the record.
+            if (deviceSessionRef.current) setTranscript(event.text);
+          });
+        } catch {
+          deviceSessionRef.current = null; // fall back to the small model and turbo
+        }
+      }
       recorder.start();
       await startLiveCapture(stream);
       setStatus("recording");
-      setMessage(usesPhoneStt
-        ? "듣고 있습니다. 미리보기 자막은 대략적이고, 녹음 종료를 누르면 정확하게 다시 바꿉니다."
-        : "듣고 있습니다. 말하는 동안 변환 문장이 표시됩니다.");
+      setMessage(deviceSessionRef.current
+        ? "듣고 있습니다. 말하는 대로 글자가 나옵니다."
+        : usesPhoneStt
+          ? "듣고 있습니다. 미리보기 자막은 대략적이고, 녹음 종료를 누르면 정확하게 다시 바꿉니다."
+          : "듣고 있습니다. 말하는 동안 변환 문장이 표시됩니다.");
       timeoutRef.current = window.setTimeout(() => stopRecording(), MAX_RECORDING_MS);
     } catch {
       stopMediaTracks();
@@ -382,6 +409,8 @@ export default function App() {
   }
 
   function startTextEntry() {
+    turboCheckRef.current = null; // typed text is the patient's own; nothing to check against
+    setVerification(null);
     setStatus("idle");
     setIntake(null);
     setConfirmed(false);
@@ -446,12 +475,42 @@ export default function App() {
     chunksRef.current = [];
     const recording = joinChunks(liveSamplesRef.current);
     liveSamplesRef.current = [];
+    const session = deviceSessionRef.current;
+    deviceSessionRef.current = null;
+    void session?.remove();
     if (liveSampleRateRef.current !== 16_000 || !hasSpeech(recording)) {
+      if (session) void DeviceStt.stop().catch(() => undefined);
       setStatus("error");
       setMessage("녹음된 말소리가 없습니다. 다시 시도해 주세요.");
       return;
     }
     const stoppedAt = performance.now();
+    if (session) {
+      try {
+        const { transcript: deviceText } = await DeviceStt.stop();
+        if (deviceText) {
+          setTranscript(deviceText);
+          setIntake(null);
+          setConfirmed(false);
+          setStatus("done");
+          setMessage(
+            `변환 결과를 확인하고 틀린 부분을 직접 수정해 주세요. 녹음 종료 후 ${((performance.now() - stoppedAt) / 1000).toFixed(1)}초.`
+              + " 정밀 인식으로 한 번 더 확인하고 있습니다.",
+          );
+          // turbo checks the same audio while the patient reads; the result is compared in extractMedicalInformation.
+          turboCheckRef.current = {
+            deviceText,
+            done: false,
+            turbo: Whisper.transcribe({ pcm16: pcm16Base64([trimSilence(recording)]) })
+              .then((result) => result.transcript)
+              .catch(() => null),
+          };
+          return;
+        }
+      } catch {
+        // The on-device recognizer failed: turbo below transcribes the recording as before.
+      }
+    }
     setMessage("말씀하신 내용을 정확하게 다시 확인하고 있습니다. 잠시만 기다려 주세요.");
     try {
       await phoneCaptionRef.current;
@@ -470,24 +529,52 @@ export default function App() {
     }
   }
 
-  async function extractMedicalInformation() {
-    if (!transcript.trim()) return;
+  async function fetchIntake(text: string): Promise<IntakeResult> {
+    const response = await fetch(`${API_BASE}/v1/intake/extract`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ transcript: text, reference_date: localDateString() }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.detail || "의료정보를 정리하지 못했습니다.");
+    return {
+      ...data,
+      medical_history: data.medical_history ?? [],
+      others_symptoms: data.others_symptoms ?? [],
+      profile: data.profile ?? {},
+    };
+  }
+
+  // Asks the patient only when turbo and the on-device recognizer disagree on the medical facts. A transcript the
+  // patient has edited is theirs and is not checked or replaced.
+  async function differsFromTurbo(text: string): Promise<boolean> {
+    const check = turboCheckRef.current;
+    if (!check || check.done || text !== check.deviceText) return false;
+    setMessage("정밀 인식으로 한 번 더 확인하고 있습니다.");
+    const turboText = await check.turbo;
+    check.done = true;
+    if (!turboText || turboText === check.deviceText) return false;
+    const [quick, careful] = await Promise.all([fetchIntake(check.deviceText), fetchIntake(turboText)]);
+    const differences = factDifferences(quick, careful);
+    if (differences.length === 0) return false;
+    setVerification({ deviceText: check.deviceText, turboText, differences });
+    setMessage("두 인식 결과에서 증상이나 약 정보가 다릅니다. 아래에서 실제로 말한 쪽을 골라 주세요.");
+    return true;
+  }
+
+  function chooseTranscript(text: string) {
+    setVerification(null);
+    setTranscript(text);
+    void extractMedicalInformation(text);
+  }
+
+  async function extractMedicalInformation(text = transcript) {
+    if (!text.trim()) return;
     setExtracting(true);
     setConfirmed(false);
     try {
-      const response = await fetch(`${API_BASE}/v1/intake/extract`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ transcript, reference_date: localDateString() }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.detail || "의료정보를 정리하지 못했습니다.");
-      const result: IntakeResult = {
-        ...data,
-        medical_history: data.medical_history ?? [],
-        others_symptoms: data.others_symptoms ?? [],
-        profile: data.profile ?? {},
-      };
+      if (await differsFromTurbo(text)) return;
+      const result = await fetchIntake(text);
       setIntake(result);
       setSkippedQuestions(new Set());
       setAnswerDrafts({});
@@ -997,9 +1084,25 @@ export default function App() {
           disabled={status === "transcribing"}
         />
 
+        {verification && (
+          <div className="review-warning" role="alert">
+            <strong>두 인식 결과가 다릅니다</strong>
+            <ul>
+              {verification.differences.map((difference) => <li key={difference}>{difference}</li>)}
+            </ul>
+            <p>앞은 빠른 인식, 뒤는 정밀 인식 결과입니다. 실제로 말한 문장을 골라 주세요. 고른 뒤에도 직접 고칠 수 있습니다.</p>
+            <button className="button--secondary" type="button" onClick={() => chooseTranscript(verification.deviceText)}>
+              빠른 인식: “{verification.deviceText}”
+            </button>
+            <button className="button--secondary" type="button" onClick={() => chooseTranscript(verification.turboText)}>
+              정밀 인식: “{verification.turboText}”
+            </button>
+          </div>
+        )}
+
         <button
           type="button"
-          onClick={extractMedicalInformation}
+          onClick={() => void extractMedicalInformation()}
           disabled={!transcript.trim() || extracting || busy}
         >
           {extracting ? "정리 중…" : "다음: 증상 정리하기"}

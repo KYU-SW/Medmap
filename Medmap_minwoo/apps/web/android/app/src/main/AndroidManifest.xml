@@ -36,6 +36,13 @@
         </provider>
     </application>
 
+    <!-- Lets DeviceSttPlugin find the on-device speech recognition service on Android 11+. -->
+    <queries>
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
+        </intent>
+    </queries>
+
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
