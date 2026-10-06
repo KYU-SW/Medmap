@@ -5,7 +5,7 @@ $medmapRoot = Split-Path -Parent $PSScriptRoot
 $webDirectory = Join-Path $medmapRoot 'apps\web'
 $androidDirectory = Join-Path $webDirectory 'android'
 $adb = Join-Path $env:LOCALAPPDATA 'Android\Sdk\platform-tools\adb.exe'
-$model = Join-Path $medmapRoot 'local-cache\whisper-cpp\models\ggml-large-v3-turbo-q5_0.bin'
+$model = Join-Path $medmapRoot 'local-cache\whisper-cpp\models\ggml-large-v3-turbo-q8_0.bin'
 $phoneModelDirectory = '/sdcard/Android/data/kr.medmap.app/files'
 $env:JAVA_HOME = 'C:\Program Files\Android\Android Studio\jbr'
 
@@ -32,8 +32,11 @@ try {
 
 Invoke-Checked $adb @('install', '-r', (Join-Path $androidDirectory 'app\build\outputs\apk\debug\app-debug.apk'))
 
-# The model (about 550MB) is copied once; skip it when the phone already has the same size.
+# The model (about 870MB) is copied once; skip it when the phone already has the same size.
+# stat fails while the file is missing; in Windows PowerShell that stderr would stop the script under 'Stop'.
+$ErrorActionPreference = 'Continue'
 $phoneSize = (& $adb shell stat -c %s "$phoneModelDirectory/$(Split-Path -Leaf $model)" 2>$null)
+$ErrorActionPreference = 'Stop'
 if ("$phoneSize".Trim() -ne "$((Get-Item -LiteralPath $model).Length)") {
     Invoke-Checked $adb @('shell', 'mkdir', '-p', $phoneModelDirectory)
     Invoke-Checked $adb @('push', $model, "$phoneModelDirectory/")

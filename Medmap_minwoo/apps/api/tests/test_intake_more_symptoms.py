@@ -176,5 +176,10 @@ def test_reads_body_temperature_said_in_words(text: str, severity: str) -> None:
     assert extract_intake(text).symptoms[0].severity == severity
 
 
+def test_misheard_kukkuk_still_reads_as_pain() -> None:
+    # Both STT engines once wrote "쿡쿡" as "구구".
+    assert [item.name for item in extract_intake("오른쪽 아랫배가 구구 쑤셔요").symptoms] == ["복통"]
+
+
 def test_cold_weather_is_not_a_fever() -> None:
     assert extract_intake("오늘 영하 삼 도라 추워요").symptoms == []

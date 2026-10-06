@@ -22,7 +22,9 @@ android {
         externalNativeBuild {
             cmake {
                 // A debug build of whisper.cpp is many times slower; always optimize the native code.
-                arguments '-DCMAKE_BUILD_TYPE=Release'
+                // dotprod/fp16 (ARMv8.2, most phones since 2019) speed up the quantized model a lot;
+                // phones without them would crash, so revisit this before wider distribution.
+                arguments '-DCMAKE_BUILD_TYPE=Release', '-DGGML_CPU_ARM_ARCH=armv8.2-a+dotprod+fp16'
             }
         }
     }

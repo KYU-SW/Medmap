@@ -21,7 +21,12 @@ import java.util.concurrent.Executors;
 @CapacitorPlugin(name = "Whisper")
 public class WhisperPlugin extends Plugin {
     // Copied onto the phone with adb (docs/ANDROID_APP.md); too large to ship inside the APK.
-    static final String MODEL_FILE = "ggml-large-v3-turbo-q5_0.bin";
+    // The first file present is used. q8_0 is the default: on a Galaxy Note20 it ran as fast as q4_0 (about 6 s
+    // per utterance, both use the ARM repacked kernels) without q4_0's misheard word; q5_0 has no repacked kernel
+    // and took 17-19 s (docs/ANDROID_APP.md). The others stay listed for speed tests.
+    static final String[] MODEL_FILES = {
+        "ggml-large-v3-turbo-q8_0.bin", "ggml-large-v3-turbo-q4_0.bin", "ggml-large-v3-turbo-q5_0.bin",
+    };
 
     static {
         System.loadLibrary("medmap_whisper");
@@ -36,7 +41,12 @@ public class WhisperPlugin extends Plugin {
     private long context = 0;
 
     private File modelFile() {
-        return new File(getContext().getExternalFilesDir(null), MODEL_FILE);
+        File directory = getContext().getExternalFilesDir(null);
+        for (String name : MODEL_FILES) {
+            File file = new File(directory, name);
+            if (file.isFile()) return file;
+        }
+        return new File(directory, MODEL_FILES[MODEL_FILES.length - 1]);
     }
 
     @PluginMethod
@@ -85,6 +95,7 @@ public class WhisperPlugin extends Plugin {
                 result.put("transcript", new String(text, StandardCharsets.UTF_8).trim());
                 result.put("load_seconds", (started - loadStarted) / 1000.0);
                 result.put("processing_seconds", (SystemClock.elapsedRealtime() - started) / 1000.0);
+                result.put("model", model.getName());
                 result.put("audio_seconds", samples.length / 16000.0);
                 call.resolve(result);
             } catch (RuntimeException error) {
