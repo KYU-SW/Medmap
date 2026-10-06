@@ -219,3 +219,52 @@ def test_next_sentence_onset_does_not_attach_without_period():
     onsets = {s.name: s.onset for s in result.symptoms}
     assert onsets["기침"] != "오늘 아침"
     assert onsets["발열"] == "오늘 아침"
+
+
+@pytest.mark.parametrize(
+    ("text", "name"),
+    [
+        # Spellings the phone engines gave in the 2026-10-06 hard-audio tests.
+        ("어제부터 폭통이 너무 심해요", "복통"),
+        ("콧물과 콧막힘 때 생겼어요", "코막힘"),
+        ("코 막힘이 있어요", "코막힘"),
+        ("콧물과 코마킹도 생겼어요", "코막힘"),
+        ("체온이 38.5度까지 올랐어요", "발열"),
+    ],
+)
+def test_reads_stt_spellings_of_symptoms(text: str, name: str) -> None:
+    assert name in [item.name for item in extract_intake(text).symptoms if item.status == "present"]
+
+
+def test_comma_inside_onset_keeps_the_day() -> None:
+    assert extract_intake("2일 전, 저녁부터 머리가 너무 아파요.").symptoms[0].onset == "2일 전 저녁부터"
+
+
+@pytest.mark.parametrize(
+    ("text", "medications"),
+    [
+        ("타이륜을 먹었어요", ["타이륜"]),
+        ("타이레노 먹었어요", ["타이레놀"]),
+        ("타이레놀 500mg을 하루 두 번 먹었어요", ["타이레놀 500mg 하루 2회"]),
+        ("타이밍 맞춰 약을 먹었어요", []),
+    ],
+)
+def test_keeps_tylenol_soundalikes_without_a_dose(text: str, medications: list[str]) -> None:
+    assert extract_intake(text).medications == medications
+
+
+@pytest.mark.parametrize(
+    ("text", "medications", "allergies"),
+    [
+        # Phone recordings, 2026-10-07: one syllable off a known name reads as that name.
+        ("타이레놀 500mg을 먹었고 페니슐린 알레르기가 있어요", ["타이레놀 500mg"], ["페니실린"]),
+        ("헤니실린 알레르기가 있어요", [], ["페니실린"]),
+        ("타이레농을 2정 복용했어요", ["타이레놀 2정"], []),
+        # Short or further-off names stay as heard.
+        ("타이레는 500mg을 한번에 먹었고", ["타이레 500mg"], []),
+        ("타이륜을 먹었어요", ["타이륜"], []),
+    ],
+)
+def test_reads_names_one_syllable_off_as_the_known_name(text: str, medications: list[str], allergies: list[str]) -> None:
+    result = extract_intake(text)
+    assert (result.medications, result.allergies) == (medications, allergies)

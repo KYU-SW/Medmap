@@ -1258,3 +1258,34 @@ textarea::placeholder {
   margin: -4px 0 12px;
   accent-color: var(--color-primary);
 }
+
+.verification__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.verification__row strong {
+  flex: 1 1 100%;
+}
+
+.verification details {
+  margin-top: 8px;
+}
+
+/* Small, so it reads as a quiet check rather than another step. */
+.turbo-text summary,
+.verification-done {
+  font-size: 0.85rem;
+  color: var(--color-muted-foreground);
+  cursor: pointer;
+}
+
+.verification-done {
+  margin: 8px 0;
+}
+
+.turbo-text p {
+  font-size: 0.9rem;
+}

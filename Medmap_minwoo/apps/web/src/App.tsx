@@ -23,7 +23,7 @@ import {
 import { buildTimeline } from "./timeline";
 import { dayKey, monthGrid } from "./calendar";
 import { API_BASE, DeviceStt, deviceSttReady, pcm16Base64, usesPhoneStt, Whisper } from "./phoneStt";
-import { factDifferences } from "./transcriptCheck";
+import { describeChanges, factChanges, spokenNumbersToDigits, type FactChange } from "./transcriptCheck";
 import type { PluginListenerHandle } from "@capacitor/core";
 import { hasSpeech, joinChunks, tidyCaption, trimSilence } from "./speechAudio";
 import { buildSymptomEpisodes } from "./symptomEpisodes";
@@ -224,7 +224,10 @@ export default function App() {
   // turbo check of the transcript it produced (compared when the patient asks to organize the symptoms).
   const deviceSessionRef = useRef<PluginListenerHandle | null>(null);
   const turboCheckRef = useRef<{ deviceText: string; turbo: Promise<string | null>; done: boolean } | null>(null);
-  const [verification, setVerification] = useState<{ deviceText: string; turboText: string; differences: string[] } | null>(null);
+  const [verification, setVerification] = useState<{ quickText: string; turboText: string; changes: FactChange<SymptomObservation>[] } | null>(null);
+  const verificationRef = useRef<HTMLDivElement | null>(null);
+  // The review screen opens on the on-device transcript; saving waits until turbo has checked it.
+  const [turboChecking, setTurboChecking] = useState(false);
   const transcriptRef = useRef<HTMLTextAreaElement | null>(null);
   const savingRecordRef = useRef(false);
 
@@ -371,6 +374,7 @@ export default function App() {
       recorder.onstop = () => void (usesPhoneStt ? transcribeOnPhone() : sendRecording(recorder.mimeType || "audio/webm"));
       turboCheckRef.current = null;
       setVerification(null);
+      setTurboChecking(false);
       if (usesPhoneStt && await deviceSttReady()) {
         try {
           await DeviceStt.start();
@@ -411,6 +415,7 @@ export default function App() {
   function startTextEntry() {
     turboCheckRef.current = null; // typed text is the patient's own; nothing to check against
     setVerification(null);
+    setTurboChecking(false);
     setStatus("idle");
     setIntake(null);
     setConfirmed(false);
@@ -502,7 +507,7 @@ export default function App() {
             deviceText,
             done: false,
             turbo: Whisper.transcribe({ pcm16: pcm16Base64([trimSilence(recording)]) })
-              .then((result) => result.transcript)
+              .then((result) => spokenNumbersToDigits(result.transcript))
               .catch(() => null),
           };
           return;
@@ -515,7 +520,7 @@ export default function App() {
     try {
       await phoneCaptionRef.current;
       const result = await Whisper.transcribe({ pcm16: pcm16Base64([trimSilence(recording)]) });
-      setTranscript(result.transcript);
+      setTranscript(spokenNumbersToDigits(result.transcript));
       setIntake(null);
       setConfirmed(false);
       setStatus("done");
@@ -545,27 +550,68 @@ export default function App() {
     };
   }
 
-  // Asks the patient only when turbo and the on-device recognizer disagree on the medical facts. A transcript the
-  // patient has edited is theirs and is not checked or replaced.
-  async function differsFromTurbo(text: string): Promise<boolean> {
+  // Runs in the background after the review screen opens on the on-device transcript. When turbo hears the medical
+  // facts differently, each difference is offered above the save button to apply or ignore, so the patient's own
+  // edits on the review screen stay. A transcript the patient has edited is theirs and is not checked.
+  async function checkAgainstTurbo(text: string) {
     const check = turboCheckRef.current;
-    if (!check || check.done || text !== check.deviceText) return false;
-    setMessage("정밀 인식으로 한 번 더 확인하고 있습니다.");
-    const turboText = await check.turbo;
+    if (!check || check.done) return;
+    if (text !== check.deviceText) {
+      turboCheckRef.current = null;
+      return;
+    }
     check.done = true;
-    if (!turboText || turboText === check.deviceText) return false;
-    const [quick, careful] = await Promise.all([fetchIntake(check.deviceText), fetchIntake(turboText)]);
-    const differences = factDifferences(quick, careful);
-    if (differences.length === 0) return false;
-    setVerification({ deviceText: check.deviceText, turboText, differences });
-    setMessage("두 인식 결과에서 증상이나 약 정보가 다릅니다. 아래에서 실제로 말한 쪽을 골라 주세요.");
-    return true;
+    setTurboChecking(true);
+    try {
+      const turboText = await check.turbo;
+      if (!turboText) return;
+      const changes = turboText === check.deviceText
+        ? []
+        : factChanges(...await Promise.all([fetchIntake(check.deviceText), fetchIntake(turboText)]));
+      // A new recording or typed text started while turbo ran: this result no longer applies.
+      if (turboCheckRef.current !== check) return;
+      // Kept even without changes, so the patient can read what turbo heard.
+      setVerification({ quickText: check.deviceText, turboText, changes });
+    } catch {
+      // The check is a second opinion; without the API the on-device transcript stands.
+    } finally {
+      if (turboCheckRef.current === check) setTurboChecking(false);
+    }
   }
 
-  function chooseTranscript(text: string) {
-    setVerification(null);
-    setTranscript(text);
-    void extractMedicalInformation(text);
+  // "모두 반영" adds or changes only what turbo heard differently, so details the patient set stay.
+  function resolveVerification(apply: boolean) {
+    const changes = apply ? verification?.changes ?? [] : [];
+    setVerification((current) => current && { ...current, changes: [] });
+    if (changes.length === 0) return;
+    setIntake((current) => {
+      if (!current) return current;
+      let symptoms = current.symptoms;
+      for (const change of changes) {
+        if (change.kind !== "symptom") continue;
+        const turboSymptom = change.symptom;
+        const index = symptoms.findIndex((symptom) => symptom.name === change.name);
+        symptoms = !turboSymptom
+          ? symptoms.filter((_, itemIndex) => itemIndex !== index)
+          : index < 0
+            ? [...symptoms, turboSymptom]
+            : symptoms.map((symptom, itemIndex) => itemIndex === index
+              ? { ...symptom, status: turboSymptom.status, onset: turboSymptom.onset, onset_date: turboSymptom.onset_date }
+              : symptom);
+      }
+      return { ...current, symptoms };
+    });
+    setListDrafts((current) => {
+      const next = { ...current };
+      for (const change of changes) {
+        if (change.kind === "symptom") continue;
+        const items = parseList(next[change.kind]);
+        next[change.kind] = [...new Set(change.add ? [...items, change.value] : items.filter((item) => item !== change.value))]
+          .join(", ");
+      }
+      return next;
+    });
+    setConfirmed(false);
   }
 
   async function extractMedicalInformation(text = transcript) {
@@ -573,7 +619,6 @@ export default function App() {
     setExtracting(true);
     setConfirmed(false);
     try {
-      if (await differsFromTurbo(text)) return;
       const result = await fetchIntake(text);
       setIntake(result);
       setSkippedQuestions(new Set());
@@ -584,6 +629,7 @@ export default function App() {
         medical_history: result.medical_history.join(", "),
       });
       go("review");
+      void checkAgainstTurbo(text);
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "의료정보를 정리하지 못했습니다.");
@@ -695,7 +741,11 @@ export default function App() {
   }
 
   async function confirmAndSave() {
-    if (!intake || !transcript.trim() || savingRecordRef.current || confirmed) return;
+    if (!intake || !transcript.trim() || savingRecordRef.current || confirmed || turboChecking) return;
+    if (verification?.changes.length) {
+      verificationRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
     if (!currentRecordGroupId) {
       setRecordMessage("증상 기록 묶음을 불러오는 중입니다. 잠시 후 다시 저장해 주세요.");
       return;
@@ -791,6 +841,32 @@ export default function App() {
   }
 
   const busy = status === "recording" || status === "transcribing";
+  const turboTextLink = verification && (
+    <details className="turbo-text">
+      <summary>정밀 인식 문장 보기</summary>
+      <p>{verification.turboText}</p>
+    </details>
+  );
+  const verificationBox = verification && (verification.changes.length === 0 ? (
+    <div className="verification-done">정밀 인식으로 확인했어요 {turboTextLink}</div>
+  ) : (
+    <div className="review-warning verification" role="status" ref={verificationRef}>
+      <div className="verification__row">
+        <strong>정밀 인식이 {verification.changes.length}가지를 다르게 들었어요</strong>
+        <button type="button" onClick={() => resolveVerification(true)}>모두 반영</button>
+        <button className="button--secondary" type="button" onClick={() => resolveVerification(false)}>무시</button>
+      </div>
+      <details>
+        <summary>무엇이 다른지 보기</summary>
+        <p>처음 들은 말 → 다시 확인한 말</p>
+        <ul>
+          {describeChanges(verification.quickText, verification.turboText, verification.changes)
+            .map((line) => <li key={line}>{line}</li>)}
+        </ul>
+      </details>
+      {turboTextLink}
+    </div>
+  ));
   const visibleRecords = records.filter(
     (record) => (record.recordGroupId || LEGACY_RECORD_GROUP_ID) === currentRecordGroupId,
   );
@@ -1084,22 +1160,6 @@ export default function App() {
           disabled={status === "transcribing"}
         />
 
-        {verification && (
-          <div className="review-warning" role="alert">
-            <strong>두 인식 결과가 다릅니다</strong>
-            <ul>
-              {verification.differences.map((difference) => <li key={difference}>{difference}</li>)}
-            </ul>
-            <p>앞은 빠른 인식, 뒤는 정밀 인식 결과입니다. 실제로 말한 문장을 골라 주세요. 고른 뒤에도 직접 고칠 수 있습니다.</p>
-            <button className="button--secondary" type="button" onClick={() => chooseTranscript(verification.deviceText)}>
-              빠른 인식: “{verification.deviceText}”
-            </button>
-            <button className="button--secondary" type="button" onClick={() => chooseTranscript(verification.turboText)}>
-              정밀 인식: “{verification.turboText}”
-            </button>
-          </div>
-        )}
-
         <button
           type="button"
           onClick={() => void extractMedicalInformation()}
@@ -1355,9 +1415,11 @@ export default function App() {
                 ))}
               </div>
             )}
-            <button type="button" onClick={() => void confirmAndSave()} disabled={savingRecord || confirmed || !currentRecordGroupId}>
-              {savingRecord ? "저장 중…" : "확인하고 기록 저장"}
+            {verificationBox}
+            <button type="button" onClick={() => void confirmAndSave()} disabled={savingRecord || confirmed || !currentRecordGroupId || turboChecking}>
+              {savingRecord ? "저장 중…" : turboChecking ? "정밀 인식 확인 중…" : verification?.changes.length ? "위 정밀 인식 결과를 먼저 확인해 주세요" : "확인하고 기록 저장"}
             </button>
+            {turboChecking && <p className="record-message">말씀하신 내용을 정밀 인식으로 한 번 더 확인하고 있습니다. 그동안 내용을 확인하고 고칠 수 있습니다.</p>}
             {confirmed && <p className="confirmed">확인한 내용을 현재 브라우저에 저장했습니다.</p>}
           </section>
         )}

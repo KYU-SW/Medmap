@@ -76,8 +76,8 @@ RULES = (
             r"고열|미열|발열|"
             # Temperature alone ("체온이 38.5도까지 올랐어요"): a fever from 37.5 up. A normal temperature is not
             # turned into "no fever"; only what the patient said about fever is recorded as absent.
-            r"체온(?:이|은|도|가)?\s*(?:[가-힣]+\s*)?(?:37\.[5-9]|3[89](?:\.\d)?|4[0-2](?:\.\d)?)\s*(?:도|°|℃)|"
-            r"(?<![가-힣])열(?=\s*$|이|은|도|까지|감|나|났|있|오르|올라|\s+(?:나|났|있|오르|올라|조금|좀|많이))"
+            r"체온(?:이|은|도|가|을|를)?\s*(?:[가-힣]+\s*){0,3}(?:37\.[5-9]|3[89](?:\.\d)?|4[0-2](?:\.\d)?)\s*(?:도|度|°|℃)|"
+            r"(?<![가-힣])열(?=\s*$|이|은|도|과|이랑|랑|하고|까지|감|나|났|있|오르|올라|\s+(?:나|났|있|오르|올라|조금|좀|많이))"
             r"(?:이|은|도)?\s*(?:나|났|오르|있)?"
         ),
         re.compile(
@@ -103,6 +103,7 @@ RULES = (
         ),
         re.compile(
             rf"숨(?:은|이)?\s*{NOW_ADVERB}(?:안\s*차|차지\s*않)|"
+            rf"숨\s*(?:쉬는\s*(?:것|건|거|데)|쉬기)(?:은|는|도|가|에)?\s*{NOW_ADVERB}(?:괜찮(?!아졌)|문제\s*없|불편하지\s*않)|"
             rf"(?:호흡곤란|숨찬\s*증상)(?:은|이|도)?\s*{NOW_ADVERB}(?:없|{RESOLVED_STATE})"
         ),
     ),
@@ -127,7 +128,8 @@ RULES = (
             rf"(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}(?:아프|아파|아팠|아픈)|"
             rf"(?:배|복부|속|명치|옆구리)(?:이|가|는|도|야)?\s*(?:{INLINE_ONSET}\s*)?"
             rf"{INTENSITY_PHRASE}(?:아프|아파|아팠|아픈|쑤시|쑤셔|쑤신|뒤틀|꼬여|꼬이)|"
-            r"복통|(?:배|복부|명치|옆구리)\s*통증|배탈|위경련|위통"
+            # "폭통": on-device STT's usual spelling of "복통".
+            r"복통|폭통|(?:배|복부|명치|옆구리)\s*통증|배탈|위경련|위통"
         ),
         re.compile(
             rf"(?:배|복부|속)(?:이|가|는|도)?\s*{NOW_ADVERB}(?:(?:더\s*이상\s*)?안\s*(?:아프|아파|아픈)|아프지\s*않)|"
@@ -145,6 +147,7 @@ RULES = (
         re.compile(
             rf"구토(?:는|가|도)?\s*{NOW_ADVERB}(?:없|{RESOLVED_STATE})|"
             rf"토(?:는|를)?\s*{NOW_ADVERB}(?:안\s*했|하지\s*않)|"
+            r"토한\s*적(?:은|도|이)?\s*없|"
             rf"구토\s*증상(?:은|이|도)?\s*{NOW_ADVERB}{RESOLVED_STATE}"
         ),
     ),
@@ -184,9 +187,10 @@ RULES = (
     ),
     SymptomRule(
         "코막힘",
-        re.compile(r"코막힘|코(?:가|도)?\s*(?:꽉\s*)?막(?:혀|히|혔|힌)"),
+        # "콧막힘", "코마킹", "코마킨드": STT spellings of "코막힘".
+        re.compile(r"코\s*막힘|콧\s*막힘|코마킹|코마킨|코(?:가|도)?\s*(?:꽉\s*)?[막박](?:혀|히|혔|힌)"),
         re.compile(
-            rf"코막힘{PARTICLE}\s*{ABSENT_ENDING}|"
+            rf"코\s*막힘{PARTICLE}\s*{ABSENT_ENDING}|"
             rf"코(?:는|가|도)?\s*{NOW_ADVERB}(?:안\s*막|막히지\s*않)"
         ),
         "코",
@@ -513,7 +517,7 @@ RULES = (
     ),
     SymptomRule(
         "재채기",
-        re.compile(r"재채기"),
+        re.compile(r"재채기|채치기|재치기"),
         re.compile(rf"재채기{PARTICLE}\s*{ABSENT_ENDING}|재채기(?:는|도)?\s*안\s*(?:해|나)"),
     ),
     SymptomRule(
@@ -613,7 +617,7 @@ ONSET_PATTERN = re.compile(
     r"(?:오늘|어제|그제|그저께|엊그제)\s*"
     r"(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘|(?:\d+|일|이|삼|사|오|육|칠|팔|구|십)\s*일)"
-    r"\s*전\s*(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
+    r"\s*전[,\s]*(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제|방금|아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘)"
     r"(?!\s*에|\s*(?:\d+|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*(?:번|회|차례))"
@@ -683,6 +687,11 @@ UNKNOWN_DOSED_MEDICATION_PATTERN = re.compile(
     r"(?<![가-힣A-Za-z])([가-힣A-Za-z]{2,10}?)(?:을|를|은|는|도)?\s*"
     r"(?=\d+(?:\.\d+)?\s*(?:mg|밀리그램|mcg|정|알|캡슐)|(?:한|두|세|네)\s*(?:정|알|캡슐))"
 )
+# STT's many spellings of "타이레놀" with no dose after them ("타이륜을 먹었어요", "타이레노 먹었어요"), kept as said.
+# ponytail: Tylenol only, the one name STT kept garbling in tests; add others when recordings show them.
+TYLENOL_SOUNDALIKE_PATTERN = re.compile(
+    r"(?<![가-힣])타이(?!밍|머|어|핑|트|틀)[가-힣]{1,2}?(?=(?:을|를|은|는|도|으로|로)?(?:\s|$))"
+)
 MEDICATION_VERB_PATTERN = re.compile(
     r"먹|복용|처방|투여|맞았|맞고|흡입|뿌리|뿌려|바르|발라|발랐|붙이|붙여|붙였|마셨|마시|마셔"
 )
@@ -700,7 +709,27 @@ ALLERGY_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20})\s*알레르기(?!\s*약)"
     r"(?:가|는|도)?\s*(?:있|있어|있습니다|예요|입니다|반응)"
 )
-TEMPERATURE_PATTERN = re.compile(r"(?<![\d.])(3[5-9]|4[0-2])(?:\.(\d))?\s*(?:도|℃|°)")
+# Names STT often gets one syllable wrong: "페니슐린", "헤니실린", "타이레농".
+KNOWN_SPELLINGS = [
+    word for word in KNOWN_MEDICATION_PATTERN.pattern.split("|") if re.fullmatch(r"[가-힣]{4,}", word)
+] + ["페니실린", "세팔로스포린", "설파제", "조영제"]
+
+
+def _known_spelling(name: str) -> str:
+    """A medicine or allergy name one syllable off a known name of 4+ syllables reads as that name.
+
+    The review screen shows the result, so the patient can still change it. Names two or more syllables off,
+    and short names ("타이레"), are kept as heard: too many real names sit that close together.
+    """
+    if name in KNOWN_SPELLINGS or len(name) < 4:
+        return name
+    for known in KNOWN_SPELLINGS:
+        if len(known) == len(name) and sum(a != b for a, b in zip(known, name)) == 1:
+            return known
+    return name
+
+
+TEMPERATURE_PATTERN = re.compile(r"(?<![\d.])(3[5-9]|4[0-2])(?:\.(\d))?\s*(?:도|度|℃|°)")
 KNOWN_CONDITION = (
     r"고혈압|저혈압|당뇨병?|고지혈증|이상지질혈증|천식|만성\s*폐쇄성\s*폐질환|결핵|"
     r"갑상선\s*(?:기능\s*(?:저하증|항진증)|질환)|심부전|부정맥|협심증|심근경색|심장병|"
@@ -882,7 +911,7 @@ def _normalize_onset(value: str | None) -> str | None:
     if value is None:
         return None
     # "이틀 전 저녁부터" → "2일 전 저녁부터": normalize the day count, keep the time of day.
-    with_time = re.fullmatch(r"(.+?전)\s*(아침|점심|저녁|밤|새벽)(부터)?", value)
+    with_time = re.fullmatch(r"(.+?전)[,\s]*(아침|점심|저녁|밤|새벽)(부터)?", value)
     if with_time:
         return f"{_normalize_onset(with_time.group(1))} {with_time.group(2)}{with_time.group(3) or ''}"
     native_days = {
@@ -1049,7 +1078,7 @@ def _severity_for_symptom(
         for match in pattern.finditer(text)
     ):
         if match.re is SEVERITY_PATTERN and re.match(
-            r"\s*(?:괜찮아졌|나아졌|호전됐|좋아졌|덜해졌|줄었|완화됐|편해졌)",
+            r"졌|\s*(?:괜찮아졌|나아졌|호전됐|좋아졌|덜해졌|줄었|완화됐|편해졌)",
             text[match.end():],
         ):
             continue
@@ -1064,13 +1093,24 @@ def _severity_for_symptom(
             if match.start() >= end
             else ""
         )
+        # A score often comes in the next sentence ("아팠어요 아픈 정도는 8"), so only a full stop separates.
         if re.search(r"[.!?。]", between):
             continue
         candidates.append(match)
     if not candidates:
         return None
     latest = max(candidates, key=lambda match: match.start())
-    return _severity(latest.group(0))
+    severity = _severity(latest.group(0))
+    if severity and latest.re is PAIN_SCORE_PATTERN:
+        rest = SENTENCE_SPLIT_PATTERN.split(text[latest.end():], maxsplit=1)[0]
+        # "6점 아니 4점": the patient corrected themselves.
+        corrected = re.match(r"\s*(?:이)?\s*아니(?:고|라)?\s*(\d{1,3})\s*(?:점|정도)", rest)
+        if corrected:
+            severity = f"{corrected.group(1)}/{severity.split('/')[1]}"
+        now = re.search(r"(?:지금은|현재는|이제는?)\s*(?:한\s*)?(\d{1,3})\s*(?:점|정도)", rest)
+        if now:
+            severity = f"{severity} → {now.group(1)}/{severity.split('/')[1]}"
+    return severity
 
 
 def _frequency_for_symptom(
@@ -1102,7 +1142,7 @@ def _frequency_for_symptom(
             if match.start() >= end
             else ""
         )
-        if re.search(r"[.!?。]|(?:그리고|하지만|그러나|추가로)", between):
+        if SENTENCE_SPLIT_PATTERN.search(between) or re.search(r"그리고|하지만|그러나|추가로", between):
             continue
         candidates.append((distance, match))
     if not candidates:
@@ -1139,7 +1179,7 @@ def _trend_for_symptom(
             if match.start() >= end
             else ""
         )
-        if re.search(r"[.!?。]|(?:그리고|하지만|그러나|추가로)", between):
+        if SENTENCE_SPLIT_PATTERN.search(between) or re.search(r"그리고|하지만|그러나|추가로", between):
             continue
         candidates.append((distance, match))
     if not candidates:
@@ -1163,7 +1203,7 @@ def _extract_medications(text: str) -> tuple[list[str], list[str]]:
         found: list[tuple[int, str]] = []
         for match in MEDICATION_NAME_PATTERN.finditer(clause):
             found.append((match.start(), re.sub(r"\s+", "", match.group(1))))
-        for pattern in (KNOWN_MEDICATION_PATTERN, DRUG_NAME_PATTERN):
+        for pattern in (KNOWN_MEDICATION_PATTERN, DRUG_NAME_PATTERN, TYLENOL_SOUNDALIKE_PATTERN):
             for match in pattern.finditer(clause):
                 # "페니실린 알레르기" is an allergy, not a medicine being taken.
                 if not re.match(r"\s*알레르기", clause[match.end():]):
@@ -1176,8 +1216,9 @@ def _extract_medications(text: str) -> tuple[list[str], list[str]]:
                 continue
             if not any(start <= match.start() < start + len(name) + 3 for start, name in found):
                 found.append((match.start(), match.group(1)))
-        found.sort()
+        found = sorted(set(found))  # "타이레놀" is both a known name and a sound-alike match
         for index, (position, name) in enumerate(found):
+            name = _known_spelling(name)  # same length, so the dose tail below still lines up
             if name in names or any(name in other or other in name for other in names):
                 continue
             names.append(name)
@@ -1225,6 +1266,28 @@ def _space_glued_words(text: str) -> str:
     return GLUED_CONNECTIVE_PATTERN.sub(r"\1 ", text)
 
 
+# "배가 아프거나 토한 적은 없고", "열이나 기침은 없어요": symptoms listed before one "없다" are all absent.
+LIST_CONNECTOR = r"(?:거나|이나|나|과|와|이랑|랑|하고)"
+NEGATION_LATER_IN_CLAUSE = r"\s+(?:(?![.?!]|요\s|고\s|서\s).){0,25}?(?:없|않)"
+LISTED_BEFORE_NEGATION_PATTERN = re.compile(rf"\s*{LIST_CONNECTOR}{NEGATION_LATER_IN_CLAUSE}")
+# "머리도 아팠지만 지금은 괜찮아졌어요": had it, gone now.
+GONE_NOW_PATTERN = re.compile(
+    r"[가-힣]{0,3}?(?:지만|는데)\s+(?:지금은|이제는?|이젠|현재는)\s*(?:괜찮|다\s*나았|나았|없어졌|안\s*아파)"
+)
+# "페니실린을 먹고 두드러기가 생긴 적이 있어요": a past reaction to a medicine is an allergy, not a symptom now.
+DRUG_REACTION_PATTERN = re.compile(
+    r"(?<![가-힣])([가-힣A-Za-z]{2,12}?)(?:을|를)\s*(?:먹고|먹었더니|먹은\s*(?:뒤|후)에?|맞고|맞았더니|복용하고)\s*"
+    r"[^.?!]{0,20}?(?:두드러기|발진|가려움|가려웠|붓|부었|숨이\s*막|쇼크)[^.?!]{0,15}?(?:적이|적도)\s*있"
+)
+
+
+def _is_negated_in_list(text: str, evidence: re.Match[str]) -> bool:
+    after = text[evidence.end():]
+    if re.search(rf"{LIST_CONNECTOR}$", evidence.group(0)):  # "열이나" already took the connector
+        return bool(re.match(NEGATION_LATER_IN_CLAUSE, after))
+    return bool(LISTED_BEFORE_NEGATION_PATTERN.match(after) or GONE_NOW_PATTERN.match(after))
+
+
 def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtractionResponse:
     normalized = _spoken_temperature_to_digits(_space_glued_words(" ".join(text.strip().split())))
     matches: list[tuple[SymptomRule, re.Match[str], bool]] = []
@@ -1236,8 +1299,24 @@ def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtra
             matches.append((rule, evidence, absent is not None))
     carried_matches, carried_spans = _carried_subject_matches(normalized, matches)
     matches += carried_matches
+    reactions = list(DRUG_REACTION_PATTERN.finditer(normalized))
+    matches = [
+        (rule, evidence, is_absent or _is_negated_in_list(normalized, evidence))
+        for rule, evidence, is_absent in matches
+        if not any(reaction.start() <= evidence.start() < reaction.end() for reaction in reactions)
+    ]
 
     positions = sorted((evidence.start(), evidence.end()) for _, evidence, _ in matches)
+    # Every later mention too ("배가 아픈 정도는 7점"): a score or count said there belongs to that symptom.
+    mentions = {
+        rule.name: [(evidence.start(), evidence.end())] + [
+            match.span() for match in rule.mention.finditer(normalized)
+            if match.start() != evidence.start() and not MEDICINE_SUFFIX_PATTERN.match(normalized, match.end())
+        ]
+        for rule, evidence, _ in matches
+    }
+    mention_positions = sorted({span for spans in mentions.values() for span in spans})
+    counted_positions = sorted({span for name in FREQUENCY_SYMPTOMS for span in mentions.get(name, [])})
     symptoms: list[SymptomObservation] = []
     symptom_positions: list[tuple[int, SymptomObservation]] = []
     onset_spans: list[tuple[int, int, str | None]] = []
@@ -1258,23 +1337,21 @@ def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtra
                 None,
             )
         onset_spans.append((evidence.start(), evidence.end(), onset))
-        severity = _severity_for_symptom(
-            normalized, evidence.start(), evidence.end(), positions
-        )
+        severity = next(filter(None, (
+            _severity_for_symptom(normalized, start, end, mention_positions) for start, end in mentions[rule.name]
+        )), None)
         if rule.name == "발열":
             temperature = _nearest_value(
                 TEMPERATURE_PATTERN, normalized, evidence.start(), evidence.end()
             )
             if temperature:
-                severity = re.sub(r"\s*(?:도|℃|°)$", "℃", temperature)
-        frequency = (
-            _frequency_for_symptom(normalized, evidence.start(), evidence.end(), positions)
-            if rule.name in FREQUENCY_SYMPTOMS
-            else None
-        )
-        trend = _trend_for_symptom(
-            normalized, evidence.start(), evidence.end(), positions
-        )
+                severity = re.sub(r"\s*(?:도|度|℃|°)$", "℃", temperature)
+        frequency = next(filter(None, (
+            _frequency_for_symptom(normalized, start, end, counted_positions) for start, end in mentions[rule.name]
+        )), None) if rule.name in FREQUENCY_SYMPTOMS else None
+        trend = next(filter(None, (
+            _trend_for_symptom(normalized, start, end, mention_positions) for start, end in mentions[rule.name]
+        )), None)
         is_uncertain = _is_uncertain(normalized, evidence.start(), positions)
         if is_uncertain:
             is_absent = False
@@ -1291,6 +1368,16 @@ def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtra
                 source_text=evidence.group(0),
             ))
         )
+    ordered = sorted(symptom_positions, key=lambda pair: pair[0])
+    for index in range(1, len(ordered)):
+        (before_start, before), (start, item) = ordered[index - 1], ordered[index]
+        joined = normalized[before_start + len(before.source_text):start]
+        if (item.onset is None and item.status == "present" and before.onset and before.status == "present"
+                and re.fullmatch(r"(?:(?!요\s)[가-힣 ]){0,8}?고\s+(?:[가-힣]+(?:이|가|은|는|도)\s+)?", joined)):
+            ordered[index] = (start, item.model_copy(update={
+                "onset": before.onset, "onset_date": before.onset_date,
+            }))
+    symptom_positions = ordered
     others_symptoms: list[OtherPersonSymptom] = []
     symptoms = []
     for start, item in sorted(symptom_positions, key=lambda pair: pair[0]):
@@ -1303,7 +1390,11 @@ def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtra
             )
 
     medications, medication_names = _extract_medications(normalized)
-    allergies = list(dict.fromkeys(ALLERGY_PATTERN.findall(normalized)))
+    reaction_names = [_known_spelling(reaction.group(1)) for reaction in reactions]
+    allergies = list(dict.fromkeys(
+        [_known_spelling(name) for name in ALLERGY_PATTERN.findall(normalized)] + reaction_names
+    ))
+    medications = [line for line in medications if line.split()[0] not in reaction_names]
     medical_history, others_history = _extract_medical_history(normalized)
     others_symptoms += others_history
     evidence_spans = [(evidence.start(), evidence.end()) for _, evidence, _ in matches]
