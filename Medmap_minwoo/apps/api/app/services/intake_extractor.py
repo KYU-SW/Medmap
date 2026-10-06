@@ -74,6 +74,9 @@ RULES = (
         "발열",
         re.compile(
             r"고열|미열|발열|"
+            # Temperature alone ("체온이 38.5도까지 올랐어요"): a fever from 37.5 up. A normal temperature is not
+            # turned into "no fever"; only what the patient said about fever is recorded as absent.
+            r"체온(?:이|은|도|가)?\s*(?:[가-힣]+\s*)?(?:37\.[5-9]|3[89](?:\.\d)?|4[0-2](?:\.\d)?)\s*(?:도|°|℃)|"
             r"(?<![가-힣])열(?=\s*$|이|은|도|까지|감|나|났|있|오르|올라|\s+(?:나|났|있|오르|올라|조금|좀|많이))"
             r"(?:이|은|도)?\s*(?:나|났|오르|있)?"
         ),
@@ -674,6 +677,12 @@ KNOWN_MEDICATION_PATTERN = re.compile(
 DRUG_NAME_PATTERN = re.compile(
     r"(?<![가-힣])[가-힣]{2,10}(?:마이신|실린|프로펜|스타틴|사르탄|프라졸|디핀|세핀|파린|플록사신)"
 )
+# A name we do not know, followed by a pill dose: "테렌을 500mg을 먹었고" (STT's "타이레놀"). Kept as said, not
+# replaced by a similar-sounding medicine, so the patient can correct it on the review screen.
+UNKNOWN_DOSED_MEDICATION_PATTERN = re.compile(
+    r"(?<![가-힣A-Za-z])([가-힣A-Za-z]{2,10}?)(?:을|를|은|는|도)?\s*"
+    r"(?=\d+(?:\.\d+)?\s*(?:mg|밀리그램|mcg|정|알|캡슐)|(?:한|두|세|네)\s*(?:정|알|캡슐))"
+)
 MEDICATION_VERB_PATTERN = re.compile(
     r"먹|복용|처방|투여|맞았|맞고|흡입|뿌리|뿌려|바르|발라|발랐|붙이|붙여|붙였|마셨|마시|마셔"
 )
@@ -691,7 +700,7 @@ ALLERGY_PATTERN = re.compile(
     r"([가-힣A-Za-z0-9-]{2,20})\s*알레르기(?!\s*약)"
     r"(?:가|는|도)?\s*(?:있|있어|있습니다|예요|입니다|반응)"
 )
-TEMPERATURE_PATTERN = re.compile(r"(?<![\d.])(3[5-9]|4[0-2])(?:\.(\d))?\s*(?:도|℃)")
+TEMPERATURE_PATTERN = re.compile(r"(?<![\d.])(3[5-9]|4[0-2])(?:\.(\d))?\s*(?:도|℃|°)")
 KNOWN_CONDITION = (
     r"고혈압|저혈압|당뇨병?|고지혈증|이상지질혈증|천식|만성\s*폐쇄성\s*폐질환|결핵|"
     r"갑상선\s*(?:기능\s*(?:저하증|항진증)|질환)|심부전|부정맥|협심증|심근경색|심장병|"
@@ -1157,6 +1166,14 @@ def _extract_medications(text: str) -> tuple[list[str], list[str]]:
                 # "페니실린 알레르기" is an allergy, not a medicine being taken.
                 if not re.match(r"\s*알레르기", clause[match.end():]):
                     found.append((match.start(), match.group(0)))
+        for match in UNKNOWN_DOSED_MEDICATION_PATTERN.finditer(clause):
+            # "어제 두 알", "아파서 두 알": a time, an adverb or a verb before the dose is not a medicine's name.
+            if (NON_SUBJECT_WORD_PATTERN.fullmatch(match.group(1))
+                    or re.fullmatch(r"매일|하루|한번|다시|그냥|이거|그거|저거", match.group(1))
+                    or re.search(r"(?:서|고|며|면|니까|는데|지만)$", match.group(1))):
+                continue
+            if not any(start <= match.start() < start + len(name) + 3 for start, name in found):
+                found.append((match.start(), match.group(1)))
         found.sort()
         for index, (position, name) in enumerate(found):
             if name in names or any(name in other or other in name for other in names):
@@ -1247,7 +1264,7 @@ def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtra
                 TEMPERATURE_PATTERN, normalized, evidence.start(), evidence.end()
             )
             if temperature:
-                severity = re.sub(r"\s*(?:도|℃)$", "℃", temperature)
+                severity = re.sub(r"\s*(?:도|℃|°)$", "℃", temperature)
         frequency = (
             _frequency_for_symptom(normalized, evidence.start(), evidence.end(), positions)
             if rule.name in FREQUENCY_SYMPTOMS

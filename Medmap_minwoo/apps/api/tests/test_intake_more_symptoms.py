@@ -183,3 +183,32 @@ def test_misheard_kukkuk_still_reads_as_pain() -> None:
 
 def test_cold_weather_is_not_a_fever() -> None:
     assert extract_intake("오늘 영하 삼 도라 추워요").symptoms == []
+
+
+@pytest.mark.parametrize(
+    ("text", "severity"),
+    [("오늘 아침에는 체온이 38.5도까지 올랐고 콧물도 생겼어요", "38.5℃"), ("체온이 38도예요", "38℃"), ("체온이 38.5°까지 올랐어요", "38.5℃")],
+)
+def test_reads_fever_from_body_temperature_alone(text: str, severity: str) -> None:
+    fever = next(item for item in extract_intake(text).symptoms if item.name == "발열")
+    assert (fever.status, fever.severity) == ("present", severity)
+
+
+@pytest.mark.parametrize("text", ["체온은 36.5도로 정상이에요", "체온이 37.2도예요"])
+def test_normal_temperature_is_not_turned_into_a_finding(text: str) -> None:
+    assert extract_intake(text).symptoms == []
+
+
+@pytest.mark.parametrize(
+    ("text", "medications"),
+    [
+        # STT misheard "타이레놀"; the name is kept as said for the patient to correct, not swapped for a lookalike.
+        ("테렌을 500mg을 한 번에 먹었고", ["테렌 500mg"]),
+        ("타이륜을 두정 복용했어요", ["타이륜 두정"]),
+        ("어제 두 알 먹었어요", []),
+        ("너무 아파서 두 알 먹었어요", []),
+        ("물을 500ml 마셨어요", []),
+    ],
+)
+def test_keeps_an_unknown_name_taken_by_the_pill(text: str, medications: list[str]) -> None:
+    assert extract_intake(text).medications == medications
