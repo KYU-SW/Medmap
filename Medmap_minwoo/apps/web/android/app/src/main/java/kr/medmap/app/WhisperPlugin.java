@@ -34,11 +34,15 @@ public class WhisperPlugin extends Plugin {
 
     private static native long nativeInit(String modelPath);
 
-    private static native byte[] nativeTranscribe(long context, float[] samples, int threads);
+    private static native byte[] nativeTranscribe(long context, float[] samples, int threads, boolean preview);
+
+    // A small model for the caption shown while the patient speaks; the transcript itself always comes from turbo.
+    static final String PREVIEW_MODEL_FILE = "ggml-base-q8_0.bin";
 
     // One model in memory, used by one transcription at a time.
     private final ExecutorService worker = Executors.newSingleThreadExecutor();
     private long context = 0;
+    private long previewContext = 0;
 
     private File modelFile() {
         File directory = getContext().getExternalFilesDir(null);
@@ -60,6 +64,16 @@ public class WhisperPlugin extends Plugin {
     /** Takes 16 kHz mono 16-bit PCM as base64 ("pcm16") and returns the transcript. */
     @PluginMethod
     public void transcribe(PluginCall call) {
+        run(call, false);
+    }
+
+    /** A quick, rough caption of the recording so far, from the small model. */
+    @PluginMethod
+    public void preview(PluginCall call) {
+        run(call, true);
+    }
+
+    private void run(PluginCall call, boolean preview) {
         String pcm16 = call.getString("pcm16");
         int threads = call.getInt("threads", 4);
         if (pcm16 == null || pcm16.isEmpty()) {
@@ -68,14 +82,18 @@ public class WhisperPlugin extends Plugin {
         }
         worker.execute(() -> {
             try {
-                File model = modelFile();
+                File model = preview
+                        ? new File(getContext().getExternalFilesDir(null), PREVIEW_MODEL_FILE)
+                        : modelFile();
                 if (!model.isFile()) {
                     call.reject("휴대폰에 음성 인식 모델이 없습니다: " + model.getAbsolutePath());
                     return;
                 }
                 long loadStarted = SystemClock.elapsedRealtime();
-                if (context == 0) context = nativeInit(model.getAbsolutePath());
-                if (context == 0) {
+                if (preview && previewContext == 0) previewContext = nativeInit(model.getAbsolutePath());
+                if (!preview && context == 0) context = nativeInit(model.getAbsolutePath());
+                long handle = preview ? previewContext : context;
+                if (handle == 0) {
                     call.reject("음성 인식 모델을 불러오지 못했습니다.");
                     return;
                 }
@@ -86,7 +104,7 @@ public class WhisperPlugin extends Plugin {
                 float[] samples = new float[pcm.remaining()];
                 for (int i = 0; i < samples.length; i++) samples[i] = pcm.get(i) / 32768f;
 
-                byte[] text = nativeTranscribe(context, samples, threads);
+                byte[] text = nativeTranscribe(handle, samples, threads, preview);
                 if (text == null) {
                     call.reject("음성을 글자로 바꾸지 못했습니다.");
                     return;

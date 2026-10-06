@@ -7,6 +7,8 @@ type WhisperPlugin = {
     processing_seconds: number;
     audio_seconds: number;
   }>;
+  // Rough caption from a small model while the patient is still speaking.
+  preview(options: { pcm16: string }): Promise<{ transcript: string; processing_seconds: number }>;
   status(): Promise<{ modelReady: boolean; modelPath: string }>;
 };
 

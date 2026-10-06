@@ -6,6 +6,7 @@ $webDirectory = Join-Path $medmapRoot 'apps\web'
 $androidDirectory = Join-Path $webDirectory 'android'
 $adb = Join-Path $env:LOCALAPPDATA 'Android\Sdk\platform-tools\adb.exe'
 $model = Join-Path $medmapRoot 'local-cache\whisper-cpp\models\ggml-large-v3-turbo-q8_0.bin'
+$captionModel = Join-Path $medmapRoot 'local-cache\whisper-cpp\models\ggml-base-q8_0.bin'
 $phoneModelDirectory = '/sdcard/Android/data/kr.medmap.app/files'
 $env:JAVA_HOME = 'C:\Program Files\Android\Android Studio\jbr'
 
@@ -17,7 +18,9 @@ function Invoke-Checked {
 
 $devices = & $adb devices | Select-String -Pattern "\tdevice$"
 if (-not $devices) { throw 'USB로 연결된 휴대폰이 없습니다. USB 디버깅을 켜고 연결 허용을 눌러 주세요.' }
-if (-not (Test-Path -LiteralPath $model)) { throw "모델 파일이 없습니다: $model" }
+foreach ($file in @($model, $captionModel)) {
+    if (-not (Test-Path -LiteralPath $file)) { throw "모델 파일이 없습니다: $file" }
+}
 
 Push-Location $webDirectory
 try {
@@ -32,14 +35,17 @@ try {
 
 Invoke-Checked $adb @('install', '-r', (Join-Path $androidDirectory 'app\build\outputs\apk\debug\app-debug.apk'))
 
-# The model (about 870MB) is copied once; skip it when the phone already has the same size.
-# stat fails while the file is missing; in Windows PowerShell that stderr would stop the script under 'Stop'.
-$ErrorActionPreference = 'Continue'
-$phoneSize = (& $adb shell stat -c %s "$phoneModelDirectory/$(Split-Path -Leaf $model)" 2>$null)
-$ErrorActionPreference = 'Stop'
-if ("$phoneSize".Trim() -ne "$((Get-Item -LiteralPath $model).Length)") {
-    Invoke-Checked $adb @('shell', 'mkdir', '-p', $phoneModelDirectory)
-    Invoke-Checked $adb @('push', $model, "$phoneModelDirectory/")
+# The models are copied once; a file the phone already has at the same size is skipped.
+# turbo (about 870MB) writes the transcript; base (about 80MB) shows the rough caption while recording.
+foreach ($file in @($model, $captionModel)) {
+    # stat fails while the file is missing; in Windows PowerShell that stderr would stop the script under 'Stop'.
+    $ErrorActionPreference = 'Continue'
+    $phoneSize = (& $adb shell stat -c %s "$phoneModelDirectory/$(Split-Path -Leaf $file)" 2>$null)
+    $ErrorActionPreference = 'Stop'
+    if ("$phoneSize".Trim() -ne "$((Get-Item -LiteralPath $file).Length)") {
+        Invoke-Checked $adb @('shell', 'mkdir', '-p', $phoneModelDirectory)
+        Invoke-Checked $adb @('push', $file, "$phoneModelDirectory/")
+    }
 }
 
 Invoke-Checked $adb @('reverse', 'tcp:8000', 'tcp:8000')

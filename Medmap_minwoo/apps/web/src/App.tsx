@@ -23,6 +23,7 @@ import {
 import { buildTimeline } from "./timeline";
 import { dayKey, monthGrid } from "./calendar";
 import { API_BASE, pcm16Base64, usesPhoneStt, Whisper } from "./phoneStt";
+import { hasSpeech, joinChunks, tidyCaption, trimSilence } from "./speechAudio";
 import { buildSymptomEpisodes } from "./symptomEpisodes";
 import { buildVisitSummary, episodePeriod, profileText, visitSummaryText, wasUrgent } from "./visitSummary";
 import {
@@ -215,6 +216,8 @@ export default function App() {
   const liveIntervalRef = useRef<number | null>(null);
   const liveRequestRef = useRef<AbortController | null>(null);
   const liveRequestRunningRef = useRef(false);
+  // On the phone: the running caption request (small model), awaited before the final transcription.
+  const phoneCaptionRef = useRef<Promise<void> | null>(null);
   const transcriptRef = useRef<HTMLTextAreaElement | null>(null);
   const savingRecordRef = useRef(false);
 
@@ -314,10 +317,9 @@ export default function App() {
     audioSourceRef.current = source;
     audioProcessorRef.current = processor;
     silentGainRef.current = silentGain;
-    // On the phone the model is too slow to re-run while speaking; it transcribes once at the end.
-    if (usesPhoneStt) return;
+    // On the phone the caption comes from a small quick model; turbo transcribes once at the end.
     liveIntervalRef.current = window.setInterval(
-      () => void requestLiveTranscript(),
+      () => void (usesPhoneStt ? requestPhoneCaption() : requestLiveTranscript()),
       LIVE_TRANSCRIPTION_INTERVAL_MS,
     );
   }
@@ -359,7 +361,7 @@ export default function App() {
       await startLiveCapture(stream);
       setStatus("recording");
       setMessage(usesPhoneStt
-        ? "듣고 있습니다. 말을 마치고 녹음 종료를 누르면 휴대폰 안에서 글자로 바꿉니다."
+        ? "듣고 있습니다. 미리보기 자막은 대략적이고, 녹음 종료를 누르면 정확하게 다시 바꿉니다."
         : "듣고 있습니다. 말하는 동안 변환 문장이 표시됩니다.");
       timeoutRef.current = window.setTimeout(() => stopRecording(), MAX_RECORDING_MS);
     } catch {
@@ -421,24 +423,45 @@ export default function App() {
   }
 
   // The 16 kHz samples captured for live preview go to whisper.cpp on the phone; nothing is uploaded.
+  function requestPhoneCaption() {
+    if (phoneCaptionRef.current || liveSampleRateRef.current !== 16_000) return;
+    const samples = joinChunks(liveSamplesRef.current);
+    if (!hasSpeech(samples)) return;
+    phoneCaptionRef.current = Whisper.preview({ pcm16: pcm16Base64([samples]) })
+      .then((result) => {
+        // A caption that finishes after "녹음 종료" must not overwrite the final transcript.
+        if (liveIntervalRef.current !== null && result.transcript) setTranscript(tidyCaption(result.transcript));
+      })
+      .catch(() => {
+        // No caption model on this phone: keep recording without captions.
+        if (liveIntervalRef.current !== null) window.clearInterval(liveIntervalRef.current);
+        liveIntervalRef.current = null;
+      })
+      .finally(() => {
+        phoneCaptionRef.current = null;
+      });
+  }
+
   async function transcribeOnPhone() {
     chunksRef.current = [];
-    const samples = liveSamplesRef.current;
+    const recording = joinChunks(liveSamplesRef.current);
     liveSamplesRef.current = [];
-    if (samples.length === 0 || liveSampleRateRef.current !== 16_000) {
+    if (liveSampleRateRef.current !== 16_000 || !hasSpeech(recording)) {
       setStatus("error");
-      setMessage("녹음된 음성이 없습니다. 다시 시도해 주세요.");
+      setMessage("녹음된 말소리가 없습니다. 다시 시도해 주세요.");
       return;
     }
+    const stoppedAt = performance.now();
     setMessage("휴대폰 안에서 음성을 글자로 바꾸고 있습니다. 처음에는 모델을 불러오느라 더 걸립니다.");
     try {
-      const result = await Whisper.transcribe({ pcm16: pcm16Base64(samples) });
+      await phoneCaptionRef.current;
+      const result = await Whisper.transcribe({ pcm16: pcm16Base64([trimSilence(recording)]) });
       setTranscript(result.transcript);
       setIntake(null);
       setConfirmed(false);
       setStatus("done");
       setMessage(
-        `변환 결과를 확인하고 틀린 부분을 직접 수정해 주세요. 휴대폰 변환 시간 ${result.processing_seconds.toFixed(1)}초`
+        `변환 결과를 확인하고 틀린 부분을 직접 수정해 주세요. 녹음 종료 후 ${((performance.now() - stoppedAt) / 1000).toFixed(1)}초`
           + ` (녹음 ${result.audio_seconds.toFixed(1)}초${result.load_seconds > 0.5 ? `, 모델 불러오기 ${result.load_seconds.toFixed(1)}초` : ""}).`,
       );
     } catch (error) {
