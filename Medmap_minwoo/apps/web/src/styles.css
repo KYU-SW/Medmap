@@ -1249,3 +1249,12 @@ textarea::placeholder {
     display: none !important;
   }
 }
+
+/* Indeterminate bar while the phone transcribes after "녹음 종료". */
+.stt-progress {
+  display: block;
+  width: 100%;
+  height: 8px;
+  margin: -4px 0 12px;
+  accent-color: var(--color-primary);
+}

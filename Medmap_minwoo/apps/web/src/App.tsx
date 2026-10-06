@@ -452,7 +452,7 @@ export default function App() {
       return;
     }
     const stoppedAt = performance.now();
-    setMessage("휴대폰 안에서 음성을 글자로 바꾸고 있습니다. 처음에는 모델을 불러오느라 더 걸립니다.");
+    setMessage("말씀하신 내용을 정확하게 다시 확인하고 있습니다. 잠시만 기다려 주세요.");
     try {
       await phoneCaptionRef.current;
       const result = await Whisper.transcribe({ pcm16: pcm16Base64([trimSilence(recording)]) });
@@ -958,6 +958,7 @@ export default function App() {
         <>
         <h2 className="step-title">1. 증상을 말하거나 적어 주세요</h2>
         <p className={`status status--${status}`}>{message}</p>
+        {status === "transcribing" && <progress className="stt-progress" aria-label="음성 변환 중" />}
 
         <div className="controls">
           {status === "recording" ? (
