@@ -41,7 +41,7 @@ JOINT_PART = r"무릎|어깨|발목|손목|팔꿈치|고관절|골반|손가락\
 ABSENT_ENDING = rf"{NOW_ADVERB}(?:없|{RESOLVED_STATE})"
 NOT_PAINFUL = r"(?:(?:더\s*이상\s*)?안\s*(?:아프|아파|아픈)|아프지(?:는|도)?\s*않|아프진\s*않)"
 INLINE_ONSET = (
-    r"(?<![가-힣A-Za-z0-9])(?:어젯밤(?:부터)?|"
+    r"(?<![가-힣A-Za-z0-9])(?:어젯밤(?:부터)?|처음(?:엔|에는|에)|"
     r"(?:오늘|어제|그제|그저께|엊그제)\s*"
     r"(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:오늘|어제|그제|그저께|엊그제)(?:부터)?|"
@@ -167,7 +167,7 @@ RULES = (
         "인후통",
         re.compile(
             rf"인후통|목\s*통증|목감기|목(?:이|은|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
-            r"(?:아프|아파|아팠|아픈|따끔|따가|따갑|칼칼|부었|부어|붓)|"
+            r"(?:아프|아파|아팠|아픈|따끔|따끈|따가|따갑|칼칼|부었|부어|붓)|"
             rf"(?:인후통|목)(?:이|은|도)?\s*{IMPROVEMENT_PHRASE}|"
             r"침(?:을)?\s*삼키기(?:가)?\s*(?:힘들|어렵|아프)|침(?:을)?\s*삼킬\s*때(?:마다)?\s*(?:아프|아파|따끔)"
         ),
@@ -250,7 +250,8 @@ RULES = (
         "설사",
         re.compile(r"설사|(?<!소)(?:대변|변)(?:이|을|도)?\s*(?:묽|물\s*같)|물\s*같은\s*변"),
         re.compile(
-            rf"설사{PARTICLE}\s*{NOW_ADVERB}(?:없|안\s*(?:했|해|하)|하지\s*않|멈췄|{RESOLVED_STATE})"
+            rf"설사{PARTICLE}\s*{NOW_ADVERB}(?:없|안\s*(?:했|해|하)|하지\s*않|멈췄|{RESOLVED_STATE})|"
+            r"설사(?:를\s*)?한\s*적(?:은|도|이)?\s*없"
         ),
     ),
     SymptomRule(
@@ -517,7 +518,7 @@ RULES = (
     ),
     SymptomRule(
         "재채기",
-        re.compile(r"재채기|채치기|재치기"),
+        re.compile(r"재채기|채치기|재치기|채채기"),
         re.compile(rf"재채기{PARTICLE}\s*{ABSENT_ENDING}|재채기(?:는|도)?\s*안\s*(?:해|나)"),
     ),
     SymptomRule(
@@ -712,7 +713,7 @@ ALLERGY_PATTERN = re.compile(
 # Names STT often gets one syllable wrong: "페니슐린", "헤니실린", "타이레농".
 KNOWN_SPELLINGS = [
     word for word in KNOWN_MEDICATION_PATTERN.pattern.split("|") if re.fullmatch(r"[가-힣]{4,}", word)
-] + ["페니실린", "세팔로스포린", "설파제", "조영제"]
+] + ["페니실린", "세팔로스포린", "설파제", "조영제", "꽃가루", "집먼지진드기", "고양이털"]
 
 
 def _known_spelling(name: str) -> str:
@@ -721,7 +722,7 @@ def _known_spelling(name: str) -> str:
     The review screen shows the result, so the patient can still change it. Names two or more syllables off,
     and short names ("타이레"), are kept as heard: too many real names sit that close together.
     """
-    if name in KNOWN_SPELLINGS or len(name) < 4:
+    if name in KNOWN_SPELLINGS or len(name) < (3 if name.endswith("가루") else 4):
         return name
     for known in KNOWN_SPELLINGS:
         if len(known) == len(name) and sum(a != b for a, b in zip(known, name)) == 1:
@@ -749,6 +750,10 @@ MEDICAL_HISTORY_PATTERN = re.compile(
     rf"(?<![가-힣])({KNOWN_CONDITION})(?:이|가|은|는|도|을|를)?\s*"
     r"(?:있|진단|앓|걸렸|걸린|치료|투병|병력)"
 )
+LISTED_HISTORY_PATTERN = re.compile(
+    rf"(?<![가-힣])({KNOWN_CONDITION})(?:이랑|랑|하고|과|와|,)\s*"
+    rf"(?=(?:{KNOWN_CONDITION})(?:이|가|은|는|도)?\s*(?:있|진단|앓))"
+)
 MEDICAL_HISTORY_ABSENT_PATTERN = re.compile(
     rf"(?<![가-힣])({KNOWN_CONDITION})(?:은|는|이|가|도)?\s*(?:없|아니)"
 )
@@ -767,7 +772,7 @@ MEDICAL_SIGNAL_PATTERN = re.compile(
     r"침침|간지|소변|오줌|기절|쓰러|정신을|의식|힘이|어눌|발음|쉬었|목소리|체중|몸무게|살이\s*빠|발작|헐었|헐어|"
     r"불편|혹이|혹\s*같|덩어리|부르트|부르텄|들려|말라|마르|갈증"
 )
-CLAUSE_SPLIT_PATTERN = re.compile(r"[.!?。]|(?:\s+)(?:그리고|추가로|하지만|그러나|또한)(?:\s+)")
+CLAUSE_SPLIT_PATTERN = re.compile(r"[.!?。](?!\d)|(?:\s+)(?:그리고|추가로|하지만|그러나|또한)(?:\s+)")
 UNCERTAIN_PATTERN = re.compile(
     r"모르겠|잘\s*모르|확실(?:하지|치|하진)\s*않|헷갈|긴가민가|애매|같기도|"
     r"있는지\s*없는지|인지\s*아닌지|기억(?:이)?\s*(?:잘\s*)?안\s*나"
@@ -803,7 +808,8 @@ PERSON_OR_SELF_PATTERN = re.compile(
     rf"(?<![가-힣])(?:(?P<person>{OTHER_PERSON})(?:들)?(?:이|가|도|는|은|께서|께서도)|"
     r"(?:저는|제가|저도|나는|내가|나도|본인은|저희\s*애가\s*아니라\s*제가))(?=\s)"
 )
-SENTENCE_SPLIT_PATTERN = re.compile(r"[.!?。]|(?<=[가-힣]요)\s+")
+# A decimal point ("37.8도") does not end a sentence.
+SENTENCE_SPLIT_PATTERN = re.compile(r"[.!?。](?!\d)|(?<=[가-힣]요)\s+")
 CAUSE_DOUBT_PATTERN = re.compile(r"때문|그런지|탓|원인|이유|인지는|해서인지")
 CLAUSE_SUBJECT_PATTERN = re.compile(r"[가-힣]+(?:이|가|은|는|도)(?=\s)")
 NON_SUBJECT_WORD_PATTERN = re.compile(
@@ -1093,8 +1099,10 @@ def _severity_for_symptom(
             if match.start() >= end
             else ""
         )
-        # A score often comes in the next sentence ("아팠어요 아픈 정도는 8"), so only a full stop separates.
-        if re.search(r"[.!?。]", between):
+        # A score often comes in the next sentence ("아팠어요 아픈 정도는 8"), so only a full stop separates,
+        # unless the score names what it rates ("아파요. 아픈 정도는 7점": turbo adds the full stop).
+        refers_back = match.start() >= end and re.match(r"(?:고통|통증|아픈|아픔|강도)", match.group(0))
+        if re.search(r"[.!?。]", between) and not refers_back:
             continue
         candidates.append(match)
     if not candidates:
@@ -1104,7 +1112,7 @@ def _severity_for_symptom(
     if severity and latest.re is PAIN_SCORE_PATTERN:
         rest = SENTENCE_SPLIT_PATTERN.split(text[latest.end():], maxsplit=1)[0]
         # "6점 아니 4점": the patient corrected themselves.
-        corrected = re.match(r"\s*(?:이)?\s*아니(?:고|라)?\s*(\d{1,3})\s*(?:점|정도)", rest)
+        corrected = re.match(r"\s*,?\s*(?:이)?\s*아니(?:고|라)?\s*,?\s*(\d{1,3})\s*(?:점|정도)", rest)
         if corrected:
             severity = f"{corrected.group(1)}/{severity.split('/')[1]}"
         now = re.search(r"(?:지금은|현재는|이제는?)\s*(?:한\s*)?(\d{1,3})\s*(?:점|정도)", rest)
@@ -1196,7 +1204,7 @@ def _extract_medications(text: str) -> tuple[list[str], list[str]]:
     """Return medication lines for the record ("타이레놀 500mg 하루 2회") and the bare names."""
     names: list[str] = []
     lines: list[str] = []
-    clause_boundaries = re.compile(r"[.!?。]|(?:\s+)(?:그리고|하지만|그러나|또한)(?:\s+)|(?<=[가-힣]요)\s+")
+    clause_boundaries = re.compile(r"[.!?。](?!\d)|(?:\s+)(?:그리고|하지만|그러나|또한)(?:\s+)|(?<=[가-힣]요)\s+")
     for clause in clause_boundaries.split(text):
         if not MEDICATION_VERB_PATTERN.search(clause):
             continue
@@ -1225,7 +1233,10 @@ def _extract_medications(text: str) -> tuple[list[str], list[str]]:
             # Dose and timing said right after the name, before the next medicine, belong to it.
             next_position = found[index + 1][0] if index + 1 < len(found) else len(clause)
             tail = clause[position + len(name):min(next_position, position + len(name) + 30)]
-            doses = [re.sub(r"(?<=\d)\s+", "", dose.group(0)) for dose in [DOSE_PATTERN.search(tail)] if dose]
+            doses = [
+                re.sub(r"밀리그램|밀리", "mg", re.sub(r"(?<=\d)\s+", "", dose.group(0)))
+                for dose in [DOSE_PATTERN.search(tail)] if dose
+            ]
             timings = [
                 _normalize_frequency(timing.group(0)) if re.search(r"번|회|차례", timing.group(0))
                 else re.sub(r"\s*(?:에|으로|로)$", "", re.sub(r"\s+", " ", timing.group(0)))
@@ -1346,6 +1357,11 @@ def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtra
             )
             if temperature:
                 severity = re.sub(r"\s*(?:도|度|℃|°)$", "℃", temperature)
+                # "39도까지 올라서 ... 지금은 37.8도 정도로 내렸어요": the temperature now as well.
+                rest = SENTENCE_SPLIT_PATTERN.split(normalized[evidence.end():], maxsplit=1)[0]
+                now = re.search(r"(?:지금은|현재는|이제는?)\s*(?:한\s*)?(3[5-9](?:\.\d)?|4[0-2](?:\.\d)?)\s*(?:도|度|℃|°)", rest)
+                if now and f"{now.group(1)}℃" != severity:
+                    severity = f"{severity} → {now.group(1)}℃"
         frequency = next(filter(None, (
             _frequency_for_symptom(normalized, start, end, counted_positions) for start, end in mentions[rule.name]
         )), None) if rule.name in FREQUENCY_SYMPTOMS else None
@@ -1657,7 +1673,7 @@ def _extract_medical_history(text: str) -> tuple[list[str], list[OtherPersonSymp
         elif all(item.person != person or item.symptom != condition for item in others):
             others.append(OtherPersonSymptom(person=person, symptom=condition, source_text=match.group(0).strip()))
 
-    for match in MEDICAL_HISTORY_PATTERN.finditer(text):
+    for match in [*LISTED_HISTORY_PATTERN.finditer(text), *MEDICAL_HISTORY_PATTERN.finditer(text)]:
         condition = re.sub(r"\s+", " ", match.group(1))
         if condition not in denied:
             add(condition, match)
