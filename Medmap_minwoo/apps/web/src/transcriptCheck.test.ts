@@ -111,3 +111,30 @@ describe("factChanges when turbo drops part of a long recording", () => {
     )).toEqual([]);
   });
 });
+
+describe("factChanges for how bad, how often and which way", () => {
+  const pain = (severity: string | null, trend: string | null) =>
+    ({ name: "복통", status: "present", onset: null, source_text: "배는 처음엔 많이 아팠", severity, trend });
+
+  it("offers turbo's severity and trend, and keeps ours where turbo heard none", () => {
+    // Recording 17 (2026-10-07): on-device "조금 나와줬어요" against turbo "많이 아팠는데 지금은 좀 나아졌어요".
+    const changes = factChanges(
+      { symptoms: [pain("경미함", null)], medications: [], allergies: [] },
+      { symptoms: [pain("심함", "improving")], medications: [], allergies: [] },
+    );
+    expect(changes.map((change) => change.label)).toEqual(["복통 정도: 경미함 → 심함, 추세: 없음 → 좋아지는 중"]);
+    expect(factChanges(
+      { symptoms: [pain("심함", null)], medications: [], allergies: [] },
+      { symptoms: [pain(null, null)], medications: [], allergies: [] },
+    )).toEqual([]);
+  });
+
+  it("describes a change said away from the symptom's words by the change itself", () => {
+    const text = "배는 처음엔 많이 아팠는데 지금은 좀 나아졌어요";
+    const changes = factChanges(
+      { symptoms: [pain("경미함", null)], medications: [], allergies: [] },
+      { symptoms: [pain("심함", "improving")], medications: [], allergies: [] },
+    );
+    expect(describeChanges(text, text, changes)).toEqual(["복통 정도: 경미함 → 심함, 추세: 없음 → 좋아지는 중"]);
+  });
+});

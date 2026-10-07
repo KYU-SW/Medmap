@@ -25,6 +25,13 @@ describe("urgentSymptoms", () => {
       symptom("호흡곤란", { severity: null }),
     ])).toEqual(["복통", "두통"]);
   });
+
+  it("judges a then → now score by the score now", () => {
+    expect(urgentSymptoms([
+      symptom("복통", { severity: "4/10점 → 8/10점" }),
+      symptom("두통", { severity: "8/10점 → 3/10점" }),
+    ])).toEqual(["복통"]);
+  });
 });
 
 describe("uncertain symptoms", () => {

@@ -24,7 +24,8 @@ function severityValue(severity: string | null): number | null {
   if (severity === "경미함") return 0.25;
   if (severity === "중간") return 0.5;
   if (severity === "심함") return 0.75;
-  const score = severity.match(/^(\d+)\/(\d+)점$/);
+  // "7/10점 → 4/10점" (then → now): the latest score counts.
+  const score = severity.split("→").pop()!.trim().match(/^(\d+)\/(\d+)점$/);
   if (!score) return null;
   const maximum = Number(score[2]);
   return maximum > 0 ? Number(score[1]) / maximum : null;

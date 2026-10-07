@@ -44,6 +44,34 @@ def facts(text: str) -> dict[str, set]:
     }
 
 
+def merged(device: str, turbo: str) -> dict[str, set]:
+    """What the review screen holds after "모두 반영": the on-device facts with what turbo heard differently.
+
+    Mirrors factChanges and resolveVerification (apps/web): symptoms turbo heard are added or take turbo's
+    presence, onset and any severity, count or trend turbo heard; nothing only the on-device text heard is
+    dropped; a medicine or allergy is removed only when turbo heard another name in its place.
+    """
+    quick, careful = extract_intake(device), extract_intake(turbo)
+    symptoms = {s.name: s for s in quick.symptoms}
+    for after in careful.symptoms:
+        before = symptoms.get(after.name)
+        if before is None:
+            symptoms[after.name] = after
+        else:
+            details = {key: getattr(after, key) for key in ("severity", "frequency", "trend") if getattr(after, key)}
+            symptoms[after.name] = before.model_copy(update={"status": after.status, "onset": after.onset, **details})
+    lists = {}
+    for key in ("medications", "allergies"):
+        mine, theirs = getattr(quick, key), getattr(careful, key)
+        added = [item for item in theirs if item not in mine]
+        lists[key] = set(added + ([item for item in mine if item in theirs] if added else mine))
+    return {
+        "symptoms": {(s.name, s.status, s.onset, s.severity, s.frequency, s.trend) for s in symptoms.values()},
+        **lists,
+        "history": set(quick.medical_history),
+    }
+
+
 def differences(answer: dict[str, set], got: dict[str, set]) -> list[str]:
     lines = []
     for key in answer:
@@ -63,13 +91,14 @@ def main() -> int:
     rows = [json.loads(line) for line in args.results.read_text(encoding="utf-8").splitlines() if line.strip()]
     for row, turbo in zip(rows, digits([row["turbo"] for row in rows])):
         row["turbo"] = turbo
-    counts = {"device": 0, "turbo": 0}
+    counts = {"device": 0, "turbo": 0, "merged": 0}
     for row in rows:
         number, script = max(scripts.items(), key=lambda item: SequenceMatcher(None, item[1], row["turbo"]).ratio())
         answer = facts(script)
         print(f"### {row['recording']} = 문구 {number} ({row['audio_seconds']:.0f}s, turbo {row['turbo_seconds']:.1f}s)")
         for engine in counts:
-            problems = differences(answer, facts(row[engine]))
+            got = merged(row["device"], row["turbo"]) if engine == "merged" else facts(row[engine])
+            problems = differences(answer, got)
             counts[engine] += len(problems)
             print(f"  {engine}: {'OK' if not problems else ' | '.join(problems)}")
     print("틀린 항목 수:", counts)

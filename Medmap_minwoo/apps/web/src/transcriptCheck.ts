@@ -2,7 +2,15 @@
 // Two transcripts often differ in harmless ways (spacing, "38.5°" or "38.5도"), so they are compared by what
 // the intake rules take from them: only a difference in these facts is worth asking the patient about.
 
-type Symptom = { name: string; status: string; onset: string | null; source_text?: string };
+type Symptom = {
+  name: string;
+  status: string;
+  onset: string | null;
+  source_text?: string;
+  severity?: string | null;
+  frequency?: string | null;
+  trend?: string | null;
+};
 type Facts<S extends Symptom> = { symptoms: S[]; medications: string[]; allergies: string[] };
 
 /** One fact turbo heard differently; the patient applies or ignores each one, so their own edits stay. */
@@ -16,6 +24,17 @@ function symptomLine(symptom: Symptom): string {
   return `${STATUS[symptom.status] ?? symptom.status}${symptom.onset ? `, ${symptom.onset}` : ""}`;
 }
 
+const DETAILS = [["severity", "정도"], ["frequency", "횟수"], ["trend", "추세"]] as const;
+const TREND: Record<string, string> = { improving: "좋아지는 중", worsening: "나빠지는 중", unchanged: "그대로" };
+
+/** How bad, how often and which way turbo heard differently ("정도: 경미함 → 심함"); turbo's silence keeps ours. */
+function detailChanges(before: Symptom, after: Symptom): string[] {
+  const shown = (key: string, value: string | null | undefined) => (key === "trend" && value ? TREND[value] ?? value : value) ?? "없음";
+  return DETAILS
+    .filter(([key]) => after[key] && after[key] !== before[key])
+    .map(([key, title]) => `${title}: ${shown(key, before[key])} → ${shown(key, after[key])}`);
+}
+
 /** What turbo (careful) would change in the on-device (quick) facts, in words for the patient. */
 export function factChanges<S extends Symptom>(quick: Facts<S>, careful: Facts<S>): FactChange<S>[] {
   const changes: FactChange<S>[] = [];
@@ -26,10 +45,12 @@ export function factChanges<S extends Symptom>(quick: Facts<S>, careful: Facts<S
     const after = b.get(name);
     // turbo sometimes drops a stretch of a long recording (2026-10-07: "꽃가루 알레르기 ... 혈압약" lost), so
     // something only the on-device text has is kept, never offered for removal.
-    if (!after || (before && symptomLine(before) === symptomLine(after))) continue;
+    if (!after || (before && symptomLine(before) === symptomLine(after) && !detailChanges(before, after).length)) continue;
     const label = !before
       ? `${name} 추가: ${symptomLine(after)}`
-      : before.status === after.status
+      : symptomLine(before) === symptomLine(after)
+        ? `${name} ${detailChanges(before, after).join(", ")}`
+        : before.status === after.status
           ? `${name} 시작: ${before.onset ?? "없음"} → ${after.onset ?? "없음"}`
           : `${name}: ${symptomLine(before)} → ${symptomLine(after)}`;
     changes.push({ kind: "symptom", name, label, symptom: after ?? null, previous: before ?? null });
@@ -100,10 +121,14 @@ export function describeChanges<S extends Symptom>(quickText: string, turboText:
     if (change.kind === "symptom") {
       const { symptom, previous, name } = change;
       if (symptom) {
-        const onsetOnly = previous && previous.status === symptom.status;
+        const detailsOnly = previous && symptomLine(previous) === symptomLine(symptom);
+        const onsetOnly = previous && !detailsOnly && previous.status === symptom.status;
         words = differingWords(turboText, quickText, (onsetOnly ? symptom.onset : symptom.source_text) ?? name);
         words = words && [words[1], words[0]];
-        note = !previous ? `${name} ${symptomLine(symptom)}` : onsetOnly ? `${name} 시작` : `${name} ${STATUS[symptom.status] ?? symptom.status}`;
+        note = !previous ? `${name} ${symptomLine(symptom)}` : detailsOnly ? change.label
+          : onsetOnly ? `${name} 시작` : `${name} ${STATUS[symptom.status] ?? symptom.status}`;
+        // The words around the symptom read the same; how bad it is was said elsewhere ("많이 아팠는데").
+        if (detailsOnly && words && words[0] === words[1]) words = null;
       } else {
         words = differingWords(quickText, turboText, previous?.source_text ?? name);
         note = `${name} 빼기`;
@@ -111,6 +136,10 @@ export function describeChanges<S extends Symptom>(quickText: string, turboText:
     } else {
       words = change.add ? differingWords(turboText, quickText, change.value) : differingWords(quickText, turboText, change.value);
       words = words && change.add ? [words[1], words[0]] : words;
+    }
+    if (!words && note === change.label) {
+      lines.set(note, []);
+      continue;
     }
     const [before, after] = words ?? ["", change.kind === "symptom" ? "" : change.value];
     const line = `${before ? `"${before}"` : "(못 들음)"} → ${after ? `"${after}"` : "(없음)"}`;

@@ -110,7 +110,9 @@ public class WhisperPlugin extends Plugin {
                     return;
                 }
                 JSObject result = new JSObject();
-                result.put("transcript", new String(text, StandardCharsets.UTF_8).trim());
+                // A broken character ("테레�", "타이래�을") hides the word from the intake rules; without it the
+                // rest of the word still reads as a medicine name the patient can correct.
+                result.put("transcript", new String(text, StandardCharsets.UTF_8).replace("�", "").trim());
                 result.put("load_seconds", (started - loadStarted) / 1000.0);
                 result.put("processing_seconds", (SystemClock.elapsedRealtime() - started) / 1000.0);
                 result.put("model", model.getName());

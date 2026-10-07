@@ -89,7 +89,8 @@ const URGENT_WHEN_SEVERE = new Set(["호흡곤란", "두통", "복통"]);
 function isSevere(severity: string | null | undefined): boolean {
   if (!severity) return false;
   if (severity === "심함") return true;
-  const score = severity.match(/^(\d+)\/(\d+)점$/);
+  // "4/10점 → 8/10점" (then → now): the latest score counts.
+  const score = severity.split("→").pop()!.trim().match(/^(\d+)\/(\d+)점$/);
   return Boolean(score && Number(score[2]) > 0 && Number(score[1]) / Number(score[2]) >= 0.7);
 }
 

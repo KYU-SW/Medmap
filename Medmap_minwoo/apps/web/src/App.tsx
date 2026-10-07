@@ -596,7 +596,15 @@ export default function App() {
           : index < 0
             ? [...symptoms, turboSymptom]
             : symptoms.map((symptom, itemIndex) => itemIndex === index
-              ? { ...symptom, status: turboSymptom.status, onset: turboSymptom.onset, onset_date: turboSymptom.onset_date }
+              ? {
+                ...symptom,
+                status: turboSymptom.status,
+                onset: turboSymptom.onset,
+                onset_date: turboSymptom.onset_date,
+                severity: turboSymptom.severity ?? symptom.severity,
+                frequency: turboSymptom.frequency ?? symptom.frequency,
+                trend: turboSymptom.trend ?? symptom.trend,
+              }
               : symptom);
       }
       return { ...current, symptoms };
