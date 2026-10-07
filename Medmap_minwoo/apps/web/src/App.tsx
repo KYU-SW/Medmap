@@ -22,7 +22,7 @@ import {
   severeSymptoms,
   urgentSymptoms,
 } from "./symptomOptions";
-import { buildTimeline } from "./timeline";
+import { buildSymptomHistories, buildTimeline, type SymptomHistoryPoint } from "./timeline";
 import { dayKey, monthGrid } from "./calendar";
 import { API_BASE, DeviceStt, deviceSttReady, pcm16Base64, usesPhoneStt, Whisper } from "./phoneStt";
 import { describeChanges, factChanges, spokenNumbersToDigits, type FactChange } from "./transcriptCheck";
@@ -43,8 +43,8 @@ import {
   type RecordGroup,
 } from "./recordGroups";
 
-type View = "home" | "record" | "review" | "summary" | "history" | "profile";
-const VIEWS: View[] = ["home", "record", "review", "summary", "history", "profile"];
+type View = "home" | "record" | "review" | "summary" | "history" | "trends" | "profile";
+const VIEWS: View[] = ["home", "record", "review", "summary", "history", "trends", "profile"];
 
 // One task per screen; the hash keeps the phone back button working.
 function readView(): View {
@@ -64,6 +64,21 @@ const TREND_BADGE = {
 } as const;
 const TONE_MARK = { new: "+", worse: "↑", better: "↓", same: "=", unknown: "?" } as const;
 const TONE_LABEL = { new: "새 증상", worse: "악화", better: "호전", same: "비슷함", unknown: "확실하지 않음" } as const;
+
+const pointDate = new Intl.DateTimeFormat("ko-KR", { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" });
+const shortDate = new Intl.DateTimeFormat("ko-KR", { month: "long", day: "numeric" });
+
+// Still there at its latest known record (not "없음" since then).
+function isOngoing(history: { points: SymptomHistoryPoint[] }): boolean {
+  const known = history.points.filter((point) => point.status !== "uncertain");
+  return known[known.length - 1]?.status === "present";
+}
+
+// One record of a symptom in words: "5회 · 심함", "없음".
+function pointValue(point: SymptomHistoryPoint): string {
+  if (point.status !== "present") return STATUS_LABEL[point.status];
+  return [point.frequency, point.severity].filter(Boolean).join(" · ") || "있음";
+}
 
 // Plain words for the arrow-style changes on screen; the stored wording stays the same.
 const CHANGE_LABEL: Record<string, string> = { "있음 → 없음": "사라짐", "없음 → 있음": "다시 생김" };
@@ -207,6 +222,7 @@ export default function App() {
   const [summaryQrCode, setSummaryQrCode] = useState("");
   const [calendarMonth, setCalendarMonth] = useState<Date | null>(null);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
+  const [selectedHistory, setSelectedHistory] = useState<string | null>(null);
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -895,6 +911,16 @@ export default function App() {
   const profile = recordGroups.find((group) => group.id === currentRecordGroupId)?.profile ?? {};
   const visitSummary = buildVisitSummary(visibleRecords, symptomEpisodes, profile);
   const step = view === "record" ? 1 : view === "review" ? 2 : view === "summary" ? 3 : 0;
+  const symptomHistories = buildSymptomHistories(timeline);
+  const shownHistory = symptomHistories.find((history) => history.name === selectedHistory) ?? symptomHistories[0];
+  const shownKnown = shownHistory?.points.filter((point) => point.status !== "uncertain") ?? [];
+  // Two pages, not tabs: each has its own address, so the phone's back button returns to the other.
+  const historySwitch = (
+    <nav className="view-switch" aria-label="지난 기록 보는 방식">
+      <a href="#/history" aria-current={view === "history" ? "page" : undefined}>날짜별</a>
+      <a href="#/trends" aria-current={view === "trends" ? "page" : undefined}>증상별</a>
+    </nav>
+  );
 
   function startNewEntry() {
     setTranscript("");
@@ -1565,9 +1591,84 @@ export default function App() {
         </div>
         </>
         )}
+        {view === "trends" && (
+        <>
+        <h2 className="step-title">지난 기록</h2>
+        {historySwitch}
+        {!shownHistory ? (
+          <p className="empty-result">아직 저장된 기록이 없습니다.</p>
+        ) : (
+          <>
+            {/* One line however many symptoms pile up; the phone's own list opens on tap. */}
+            <div className="symptom-picker">
+              <label htmlFor="symptom-history">볼 증상</label>
+              <select
+                id="symptom-history"
+                value={shownHistory.name}
+                onChange={(event) => setSelectedHistory(event.target.value)}
+              >
+                {([["지금 있는 증상", true], ["사라진 증상", false]] as const).map(([label, ongoing]) => {
+                  const histories = symptomHistories.filter((history) => isOngoing(history) === ongoing);
+                  return histories.length > 0 && (
+                    <optgroup key={label} label={label}>
+                      {histories.map((history) => (
+                        <option key={history.name} value={history.name}>{history.name}</option>
+                      ))}
+                    </optgroup>
+                  );
+                })}
+              </select>
+            </div>
+            <section className="symptom-history" aria-label={`${shownHistory.name} 기록 변화`}>
+              <div className="symptom-history__head">
+                <h3>{shownHistory.name}</h3>
+                {shownHistory.overall && (
+                  <span className={`trend trend--${shownHistory.overall.tone}`}>
+                    {TONE_MARK[shownHistory.overall.tone]} {shownHistory.overall.label}
+                  </span>
+                )}
+              </div>
+              {shownHistory.overall ? (
+                <div className="then-now">
+                  <div>
+                    <span>처음 · {shortDate.format(new Date(shownKnown[0].createdAt))}</span>
+                    <strong>{pointValue(shownKnown[0])}</strong>
+                  </div>
+                  <span className="then-now__arrow" aria-hidden="true">→</span>
+                  <div>
+                    <span>최근 · {shortDate.format(new Date(shownKnown[shownKnown.length - 1].createdAt))}</span>
+                    <strong>{pointValue(shownKnown[shownKnown.length - 1])}</strong>
+                  </div>
+                </div>
+              ) : (
+                <p className="empty-result">기록이 한 번뿐이라 아직 비교할 수 없어요. 다음에 또 기록하면 여기서 변화를 볼 수 있어요.</p>
+              )}
+              <ol className="history-points" aria-label="기록한 순서">
+                {shownHistory.points.map((point, index) => (
+                  <li key={`${point.createdAt}-${index}`}>
+                    <time dateTime={point.createdAt}>{pointDate.format(new Date(point.createdAt))}</time>
+                    <span className={`trend trend--${point.tone}`}>
+                      {TONE_MARK[point.tone]} {CHANGE_LABEL[point.change] ?? point.change}
+                    </span>
+                    <strong className="history-points__value">{pointValue(point)}</strong>
+                    {point.level !== null && (
+                      <span className="history-points__bar" aria-hidden="true">
+                        <i style={{ width: `${Math.max(4, Math.round(point.level * 100))}%` }} />
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </section>
+          </>
+        )}
+        </>
+        )}
+
         {view === "history" && (
         <>
         <h2 className="step-title">지난 기록</h2>
+        {historySwitch}
         <section className="calendar" aria-label="증상 기록 달력">
           <div className="calendar__head">
             <button className="button--secondary" type="button" onClick={() => moveMonth(-1)} aria-label="이전 달">‹</button>

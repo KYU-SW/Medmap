@@ -76,3 +76,62 @@ export function buildTimeline(records: StoredIntakeRecord[]): TimelineEntry[] {
       }),
     }));
 }
+
+export type SymptomHistoryPoint = TimelineSymptom & {
+  createdAt: string;
+  /** 0–1 for the bar: the count against the most counted record, or how bad it was; null when unknown. */
+  level: number | null;
+};
+
+export type SymptomHistory = {
+  name: string;
+  points: SymptomHistoryPoint[]; // oldest first
+  /** First recorded state against the latest one, in words: "줄었어요", "사라졌어요", ... */
+  overall: { tone: ChangeTone; label: string } | null;
+};
+
+function count(frequency: string | null | undefined): number | null {
+  const match = frequency?.match(/(\d+)\s*회/);
+  return match ? Number(match[1]) : null;
+}
+
+function overall(points: SymptomHistoryPoint[]): SymptomHistory["overall"] {
+  const known = points.filter((point) => point.status !== "uncertain");
+  if (known.length < 2) return null;
+  const first = known[0];
+  const last = known[known.length - 1];
+  if (first.status === "present" && last.status === "absent") return { tone: "better", label: "사라졌어요" };
+  if (first.status === "absent" && last.status === "present") return { tone: "worse", label: "다시 생겼어요" };
+  if (last.status === "absent") return { tone: "same", label: "계속 없어요" };
+  if (first.level === null || last.level === null) return { tone: "same", label: "계속 있어요" };
+  if (last.level > first.level + 0.05) return { tone: "worse", label: "늘었어요" };
+  if (last.level < first.level - 0.05) return { tone: "better", label: "줄었어요" };
+  return { tone: "same", label: "비슷해요" };
+}
+
+/** Each symptom the patient has had, its records side by side ("구토 5회 → 2회"), most recent first. */
+export function buildSymptomHistories(entries: TimelineEntry[]): SymptomHistory[] {
+  const byName = new Map<string, Array<TimelineSymptom & { createdAt: string }>>();
+  for (const entry of entries) {
+    for (const symptom of entry.symptoms) {
+      byName.set(symptom.name, [...(byName.get(symptom.name) ?? []), { ...symptom, createdAt: entry.createdAt }]);
+    }
+  }
+  return [...byName].map(([name, records]) => {
+    const most = Math.max(0, ...records.map((record) => count(record.frequency) ?? 0));
+    const points = records
+      .sort((left, right) => left.createdAt.localeCompare(right.createdAt))
+      .map((record) => {
+        const counted = count(record.frequency);
+        const level = record.status === "absent" ? 0
+          : counted !== null && most > 0 ? counted / most
+            : severityValue(record.severity);
+        return { ...record, level };
+      });
+    return { name, points, overall: overall(points) };
+  })
+    // "가슴 통증은 없어요" every time is not a symptom to follow.
+    .filter((history) => history.points.some((point) => point.status === "present"))
+    .sort((left, right) =>
+    right.points[right.points.length - 1].createdAt.localeCompare(left.points[left.points.length - 1].createdAt));
+}
