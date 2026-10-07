@@ -707,7 +707,8 @@ MEDICATION_TIMING_PATTERN = re.compile(
     r"(?:\s*(?:에|마다|으로|로))?|(?:필요할|아플)\s*때"
 )
 ALLERGY_PATTERN = re.compile(
-    r"([가-힣A-Za-z0-9-]{2,20})\s*알레르기(?!\s*약)"
+    # "페니실린, 알레르기가 있어요": STT can put a comma between the name and the word.
+    r"([가-힣A-Za-z0-9-]{2,20})\s*,?\s*알레르기(?!\s*약)"
     r"(?:가|는|도)?\s*(?:있|있어|있습니다|예요|입니다|반응)"
 )
 # Names STT often gets one syllable wrong: "페니슐린", "헤니실린", "타이레농".
@@ -1214,7 +1215,7 @@ def _extract_medications(text: str) -> tuple[list[str], list[str]]:
         for pattern in (KNOWN_MEDICATION_PATTERN, DRUG_NAME_PATTERN, TYLENOL_SOUNDALIKE_PATTERN):
             for match in pattern.finditer(clause):
                 # "페니실린 알레르기" is an allergy, not a medicine being taken.
-                if not re.match(r"\s*알레르기", clause[match.end():]):
+                if not re.match(r"\s*,?\s*알레르기", clause[match.end():]):
                     found.append((match.start(), match.group(0)))
         for match in UNKNOWN_DOSED_MEDICATION_PATTERN.finditer(clause):
             # "어제 두 알", "아파서 두 알": a time, an adverb or a verb before the dose is not a medicine's name.

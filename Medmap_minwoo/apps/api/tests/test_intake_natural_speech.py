@@ -136,3 +136,9 @@ def test_recording_spellings(text: str, expected: dict) -> None:
     got = {"medications": result.medications, "allergies": result.allergies,
            "symptoms": [item.name for item in result.symptoms]}
     assert all(got[key] == value for key, value in expected.items())
+
+
+def test_comma_between_name_and_allergy() -> None:
+    # turbo with a comma-separated word list as its prompt wrote "페니실린, 알레르기" (2026-10-07).
+    result = extract_intake("테레놀 500mg을 한 번에 먹었고, 페니실린, 알레르기가 있어요.")
+    assert (result.medications, result.allergies) == (["테레놀 500mg"], ["페니실린"])
