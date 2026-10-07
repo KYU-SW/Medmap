@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { createBackup, parseBackup } from "./backup";
 import { buildSymptomEpisodes } from "./symptomEpisodes";
-import { urgentSymptoms } from "./symptomOptions";
+import { severeNotice, severeSymptoms, urgentSymptoms } from "./symptomOptions";
 import { record, symptom } from "./testRecords";
 import { buildTimeline } from "./timeline";
 import { buildVisitSummary, visitSummaryText } from "./visitSummary";
@@ -17,8 +17,14 @@ describe("urgentSymptoms", () => {
     ])).toEqual(["흉통", "마비"]);
   });
 
-  it("flags common symptoms only when they are severe", () => {
-    expect(urgentSymptoms([
+  it("never flags a common symptom as urgent, however severe", () => {
+    expect(urgentSymptoms([symptom("복통", { severity: "심함" }), symptom("두통", { severity: "9/10점" })])).toEqual([]);
+  });
+});
+
+describe("severeSymptoms", () => {
+  it("notes common symptoms only when they are severe", () => {
+    expect(severeSymptoms([
       symptom("호흡곤란", { severity: "경미함" }),
       symptom("복통", { severity: "8/10점" }),
       symptom("두통", { severity: "심함" }),
@@ -27,10 +33,16 @@ describe("urgentSymptoms", () => {
   });
 
   it("judges a then → now score by the score now", () => {
-    expect(urgentSymptoms([
+    expect(severeSymptoms([
       symptom("복통", { severity: "4/10점 → 8/10점" }),
       symptom("두통", { severity: "8/10점 → 3/10점" }),
     ])).toEqual(["복통"]);
+  });
+
+  it("asks to tell the doctor first, without 119", () => {
+    expect(severeNotice(["복통"])).toBe("복통이 심하다고 하셨어요. 진료 때 의사에게 먼저 알려 주세요. 갑자기 더 심해지면 빨리 진료를 받으세요.");
+    expect(severeNotice(["두통", "호흡곤란"])).toMatch(/^두통, 호흡곤란이 /);
+    expect(severeNotice(["복통"])).not.toContain("119");
   });
 });
 

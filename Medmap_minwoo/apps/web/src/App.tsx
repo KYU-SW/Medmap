@@ -18,6 +18,8 @@ import {
   tracksFrequency,
   type FollowUpQuestion,
   URGENT_NOTICE,
+  severeNotice,
+  severeSymptoms,
   urgentSymptoms,
 } from "./symptomOptions";
 import { buildTimeline } from "./timeline";
@@ -1193,6 +1195,9 @@ export default function App() {
                 <p>{URGENT_NOTICE}</p>
               </div>
             )}
+            {severeSymptoms(intake.symptoms).length > 0 && (
+              <p className="severe-notice" role="status">{severeNotice(severeSymptoms(intake.symptoms))}</p>
+            )}
             {intake.unrecognized_fragments.length > 0 && (
               <div className="review-warning" role="alert">
                 <strong>자동으로 정리하지 못한 표현</strong>
@@ -1463,6 +1468,9 @@ export default function App() {
                   <strong>{visitSummary.urgentSymptoms.join(", ")}</strong>
                   <p>{URGENT_NOTICE}</p>
                 </div>
+              )}
+              {visitSummary.severeSymptoms.length > 0 && (
+                <p className="severe-notice" role="status">{severeNotice(visitSummary.severeSymptoms)}</p>
               )}
               <div className="visit-summary-symptoms">
                 <strong>지금 있는 증상</strong>

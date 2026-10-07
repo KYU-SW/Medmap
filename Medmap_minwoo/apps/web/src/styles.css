@@ -1289,3 +1289,13 @@ textarea::placeholder {
 .turbo-text p {
   font-size: 0.9rem;
 }
+
+/* Severe common symptoms: worth telling the doctor first, not an emergency, so no red. */
+.severe-notice {
+  margin: 16px 0;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-info);
+  background: var(--color-info-soft);
+}

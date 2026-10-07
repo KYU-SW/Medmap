@@ -1,7 +1,7 @@
 import type { PatientProfile } from "./recordGroups";
 import type { StoredIntakeRecord } from "./recordStorage";
 import type { SymptomEpisode } from "./symptomEpisodes";
-import { formatOnset, tracksFrequency, urgentSymptoms } from "./symptomOptions";
+import { formatOnset, severeSymptoms, tracksFrequency, urgentSymptoms } from "./symptomOptions";
 
 export type VisitSummary = {
   firstRecordedAt: string;
@@ -13,6 +13,7 @@ export type VisitSummary = {
   uncertainSymptoms: string[];
   othersSymptoms: string[];
   urgentSymptoms: string[];
+  severeSymptoms: string[];
   profile: string | null;
 };
 
@@ -54,6 +55,9 @@ export function buildVisitSummary(
 ): VisitSummary | null {
   if (records.length === 0) return null;
   const ordered = [...records].sort((left, right) => left.createdAt.localeCompare(right.createdAt));
+  const active = episodes
+    .filter((episode) => episode.status === "active")
+    .map((episode) => ({ name: episode.name, status: "present", severity: episode.peakSeverity }));
   return {
     firstRecordedAt: ordered[0].createdAt,
     lastRecordedAt: ordered[ordered.length - 1].createdAt,
@@ -71,9 +75,8 @@ export function buildVisitSummary(
     othersSymptoms: [...new Set(ordered.flatMap((record) => (record.intake.others_symptoms ?? [])
       .map((item) => `${item.person} ${item.symptom}`)))],
     profile: profileText(profile),
-    urgentSymptoms: urgentSymptoms(episodes
-      .filter((episode) => episode.status === "active")
-      .map((episode) => ({ name: episode.name, status: "present", severity: episode.peakSeverity }))),
+    urgentSymptoms: urgentSymptoms(active),
+    severeSymptoms: severeSymptoms(active),
   };
 }
 
@@ -106,6 +109,9 @@ export function visitSummaryText(summary: VisitSummary): string {
     `기록 기간: ${dateFormatter.format(new Date(summary.firstRecordedAt))} ~ ${dateFormatter.format(new Date(summary.lastRecordedAt))}`,
     ...(summary.urgentSymptoms.length > 0
       ? [`빨리 진료가 필요할 수 있는 증상: ${summary.urgentSymptoms.join(", ")}`]
+      : []),
+    ...(summary.severeSymptoms.length > 0
+      ? [`심하다고 한 증상: ${summary.severeSymptoms.join(", ")}`]
       : []),
     "지금 있는 증상",
     ...(activeLines.length > 0 ? activeLines : ["- 확인된 증상 없음"]),

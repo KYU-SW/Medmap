@@ -81,10 +81,11 @@ export function followUpQuestions(
   });
 }
 
-// Symptoms that should send the patient to care quickly, whatever the cause.
+// Symptoms that should send the patient to care quickly, whatever the cause: the red notice with 119.
 const URGENT_SYMPTOMS = new Set(["흉통", "객혈", "토혈", "혈변", "기절", "마비", "말 어눌함", "경련"]);
-// Common symptoms that are urgent only when the patient says they are severe.
-const URGENT_WHEN_SEVERE = new Set(["호흡곤란", "두통", "복통"]);
+// Common symptoms worth telling the doctor first when severe. Not an emergency by themselves, so they get a
+// calm note instead of the red one: a severe stomach ache read as "call 119" (user feedback, 2026-10-07).
+const NOTABLE_WHEN_SEVERE = new Set(["호흡곤란", "두통", "복통"]);
 
 function isSevere(severity: string | null | undefined): boolean {
   if (!severity) return false;
@@ -94,22 +95,32 @@ function isSevere(severity: string | null | undefined): boolean {
   return Boolean(score && Number(score[2]) > 0 && Number(score[1]) / Number(score[2]) >= 0.7);
 }
 
-export function urgentSymptoms(
-  symptoms: Array<{ name: string; status: string; severity?: string | null }>,
-): string[] {
-  return [...new Set(
-    symptoms
-      .filter((symptom) => symptom.status === "present")
-      .filter((symptom) =>
-        URGENT_SYMPTOMS.has(symptom.name)
-        || (URGENT_WHEN_SEVERE.has(symptom.name) && isSevere(symptom.severity)))
-      .map((symptom) => symptom.name),
-  )];
+type Observed = { name: string; status: string; severity?: string | null };
+
+export function urgentSymptoms(symptoms: Observed[]): string[] {
+  return [...new Set(symptoms
+    .filter((symptom) => symptom.status === "present" && URGENT_SYMPTOMS.has(symptom.name))
+    .map((symptom) => symptom.name))];
+}
+
+/** Severe common symptoms ("복통" at 심함 or 7/10 and up): to mention first at the visit, not an emergency. */
+export function severeSymptoms(symptoms: Observed[]): string[] {
+  return [...new Set(symptoms
+    .filter((symptom) => symptom.status === "present" && NOTABLE_WHEN_SEVERE.has(symptom.name) && isSevere(symptom.severity))
+    .map((symptom) => symptom.name))];
 }
 
 export const URGENT_NOTICE =
   "빨리 진료가 필요할 수 있는 증상입니다. 갑자기 생겼거나 심해지고 있다면 바로 119에 연락하거나 "
   + "응급실을 찾으세요. 이 안내는 진단이 아닙니다.";
+
+export function severeNotice(names: string[]): string {
+  const last = names[names.length - 1] ?? "";
+  const code = last.charCodeAt(last.length - 1) - 0xac00;
+  const particle = code >= 0 && code < 11172 && code % 28 === 0 ? "가" : "이";
+  return `${names.join(", ")}${particle} 심하다고 하셨어요. 진료 때 의사에게 먼저 알려 주세요. `
+    + "갑자기 더 심해지면 빨리 진료를 받으세요.";
+}
 
 export function tracksFrequency(name: string): boolean {
   return FREQUENCY_SYMPTOMS.has(name);

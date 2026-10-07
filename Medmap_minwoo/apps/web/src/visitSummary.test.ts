@@ -42,8 +42,8 @@ describe("visitSummaryText", () => {
     expect(lines).toContain("- 구토: 시작: 확인되지 않음 / 가장 심한 정도: 확인되지 않음 / 횟수: 하루 2번 / 기록 1회");
     // Resolved symptoms come after the current ones, as one short line with their period.
     expect(lines.indexOf("사라진 증상")).toBeGreaterThan(lines.indexOf("지금 있는 증상"));
-    // A severe headache counts as urgent even after it went away.
-    expect(lines).toContain("- 두통 (위험 증상): 10월 1일 ~ 10월 2일 / 가장 심한 정도: 심함");
+    // A severe headache is worth mentioning but not a danger sign, so it is not labelled "위험 증상".
+    expect(lines).toContain("- 두통: 10월 1일 ~ 10월 2일 / 가장 심한 정도: 심함");
     expect(lines).toContain("기록 기간 중 복용약: 타이레놀, 소화제");
     expect(lines).toContain("기록된 알레르기: 페니실린");
     expect(lines).toContain("과거력: 고혈압");
