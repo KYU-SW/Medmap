@@ -1,211 +1,200 @@
-# MedMap
+# 🩺 MedMap
 
-MedMap은 환자가 제공한 증상과 시간에 따른 변화를 연결하고, 현재 진단과 중요한 정보 사이의 불일치를 다시 확인하도록 돕는 진단 안전망 프로젝트다.
+> **환자의 증상과 그 변화를 기록해, 지금의 진단이 환자 상태를 충분히 설명하는지 다시 확인하게 돕는 진단 안전망 (Diagnostic Safety Net)**
 
-새 애플리케이션 구조는 [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md), STT 1차 기능 범위는 [docs/STT_SPEC.md](docs/STT_SPEC.md)를 참고한다.
-현재 애플리케이션 재구축은 `feature/stt-rebuild` 브랜치에서 시작한다.
+의료IT공학과 캡스톤 디자인 프로젝트입니다. MedMap은 병을 대신 맞히는 AI가 아닙니다.
+**진단과 환자 정보 사이에 중요한 불일치가 있을 때, 다시 확인할 시점을 알려 주는 도구**를 목표로 합니다.
 
-## STT 실행
+---
 
-처음 한 번 서버 환경을 준비한다.
+## 📌 목차
+
+- [프로젝트 배경](#-프로젝트-배경)
+- [목표](#-목표)
+- [현재 할 수 있는 것](#-현재-할-수-있는-것)
+- [구성](#-구성)
+- [실행 방법](#-실행-방법)
+- [개인정보 원칙](#-개인정보-원칙)
+- [개발 기록](#-개발-기록)
+- [참고 문서](#-참고-문서)
+
+---
+
+## 💡 프로젝트 배경
+
+- 진료 시간은 짧고, 환자는 증상이 **언제 시작됐고 어떻게 변했는지**를 진료실에서 정확히 떠올리기 어렵습니다.
+- 증상이 여러 날에 걸쳐 바뀌면 그 흐름이 기록으로 남지 않아, 처음 내린 진단이 그대로 이어지기 쉽습니다.
+- 오진의 상당수는 의사가 몰라서가 아니라 **중요한 정보가 빠지거나 연결되지 않아서** 생깁니다.
+
+👉 그래서 MedMap은 **환자가 집에서 증상을 말로 기록**하고, 그 기록을 **진료 전 요약**으로 정리해
+의사에게 보여 주는 것부터 시작합니다.
+
+---
+
+## 🎯 목표
+
+```
+환자 증상 기록 → 임상정보 구조화 → 증상 타임라인 → 질환 후보 탐색
+→ 현재 진단과의 불일치 탐지 → 대안 질환 · 추가로 확인할 정보 제안 → 의사의 최종 판단
+```
+
+| 단계 | 내용 | 상태 |
+|---|---|---|
+| 🏠 **진료 전** | 음성·텍스트로 증상 기록, 구조화, 환자 확인·수정, 타임라인, 진료 전 요약 | ✅ 개발 중 (주력) |
+| 👩‍⚕️ **진료 중** | 의사의 잠정 진단과 환자 정보의 불일치 경고, 대안 질환 1~3개, 다음에 확인할 정보 제안 | ⏸️ 보류 (팀원과 방식 합의 후) |
+| 📋 **진료 후** | 경과 기록과 진단 재확인 | ⏸️ 보류 |
+| 🔬 **연구** | DDXPlus 합성 환자 데이터로 부분 관찰 상황의 불일치 탐지 실험 설계 | 🧪 설계 완료, 구현 전 |
+
+> ⚠️ MedMap은 진단을 내리지 않습니다. 최종 판단은 항상 의사가 합니다.
+
+---
+
+## ✨ 현재 할 수 있는 것
+
+### 🎙️ 증상 말하기
+- 음성으로 말하면 **faster-whisper**(서버 GPU/CPU)가 글자로 바꿉니다. 텍스트로 직접 적을 수도 있습니다.
+- 말하는 동안 변환 결과가 실시간으로 보입니다.
+
+### 🧩 정리된 내용 확인
+- 말에서 **증상 65종**, 있음·없음·확실하지 않음, 부위(`오른쪽 아랫배`), 시작 시점(`어제부터 (10월 2일)`),
+  정도(`7/10점`, `심함`), 횟수, 호전·악화를 찾습니다.
+- 복용약·알레르기·과거력, 기본 정보(나이·성별·임신·흡연·음주)도 함께 찾습니다.
+- 빠진 내용은 **추가 질문**(어디가 아픈지, 얼마나 심한지)으로 채웁니다.
+- 🚨 객혈·마비·말 어눌함 같은 **위험 증상**은 빨간 경고로 알립니다.
+- `남편이 기침해요`처럼 **다른 사람의 증상**은 환자 증상과 따로 기록합니다.
+- 잘못 정리된 내용은 환자가 직접 고친 뒤 저장합니다.
+
+### 📅 지난 기록
+- **달력**에서 기록한 날과 그날의 변화(악화·새 증상·호전)를 색 점으로 봅니다.
+- 같은 증상이 이어진 기간을 묶어 보여 주고, 날짜를 누르면 그날 기록만 봅니다.
+- 아픈 기간마다 **기록 묶음**을 나눌 수 있고, 백업 파일로 내보내고 가져올 수 있습니다.
+
+### 📄 진료 전 요약
+- 증상별 카드, 변화 배지(`↑ 악화`, `↓ 호전`), 복용약·알레르기·과거력 칩으로 한눈에 정리합니다.
+- **복사 · PDF 저장 · QR 코드**로 의사에게 보여 줄 수 있습니다.
+
+---
+
+## 🏗️ 구성
+
+```
+MedMap/
+├── apps/
+│   ├── api/        # 🐍 FastAPI — 음성 변환(/v1/stt), 증상 정리(/v1/intake/extract)
+│   └── web/        # ⚛️ React + Vite — 환자 화면, 기록은 브라우저 IndexedDB에 저장
+├── docs/           # 📚 기능 명세, 개인정보 원칙, 휴대폰 시험 방법
+├── scripts/        # 🛠️ 설치·실행·휴대폰 HTTPS·팀 저장소 올리기 PowerShell 스크립트
+└── 01~03_*.py      # 🔬 DDXPlus 데이터 다운로드·구조 확인·통계 감사 (연구 트랙)
+```
+
+| 분야 | 사용 기술 |
+|---|---|
+| 음성 인식 | faster-whisper 1.2.1 (NVIDIA GPU 자동 사용, 없으면 CPU) |
+| 서버 | Python, FastAPI, pytest |
+| 화면 | React 19, TypeScript, Vite 8, Vitest |
+| 증상 정리 | 한국어 규칙 기반 추출 (구어·합성어·주어 생략 처리) |
+
+---
+
+## 🚀 실행 방법
+
+Windows PowerShell 기준입니다.
 
 ```powershell
+# 1. 처음 한 번: 서버 환경 준비
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup_api.ps1
-```
 
-이후 서버와 웹 화면을 각각 실행한다.
-
-```powershell
+# 2. 서버 실행 (http://127.0.0.1:8000)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_api.ps1
-cd .\apps\web
-pnpm dev
-```
 
-원격 데스크톱에서 집 컴퓨터의 브라우저로 시험할 때는 인증서가 필요 없는 데스크톱
-스크립트를 사용한다.
-
-```powershell
+# 3. 화면 실행 (http://127.0.0.1:5173)
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_web_desktop.ps1
 ```
 
-브라우저에서 `http://127.0.0.1:5173`을 열고 녹음한다. 모델·패키지·가상환경은
-저장소 안의 Git 제외 폴더(`local-cache/`, `apps/api/.venv`, `apps/web/node_modules`)에 모인다.
-Windows에서 프로젝트 전용 NVIDIA 라이브러리가 설치되어 있으면 `run_api.ps1`이 GPU를
-자동으로 사용하고, 없으면 CPU로 실행한다.
+- 📱 휴대폰으로 시험하기: [docs/MOBILE_TEST.md](docs/MOBILE_TEST.md), [docs/TEMPORARY_REMOTE_TEST.md](docs/TEMPORARY_REMOTE_TEST.md)
+- 🧪 테스트: `apps/api`에서 `.venv\Scripts\python.exe -m pytest`, `apps/web`에서 `corepack pnpm test`
+- 모델·패키지·가상환경은 Git에서 제외한 `local-cache/`, `apps/api/.venv`, `apps/web/node_modules`에 모입니다.
 
-## DDXPlus 첫 분석
+---
 
-현재 범위는 데이터 확보·구조 확인·통계·부분 관찰 설계다.
+## 🔒 개인정보 원칙
 
-## 실행 준비
+- 🎙️ 음성은 글자로 바꾸는 동안만 쓰고, 저장하지 않습니다.
+- 💾 환자가 확인한 기록은 **이 브라우저 안(IndexedDB)에만** 저장하고 서버에 보관하지 않습니다.
+- 🗑️ 기록은 화면에서 언제든 삭제할 수 있고, 백업 파일도 서버로 보내지 않습니다.
+- 🚫 시험용 음성·문장에 실제 환자 정보를 넣지 않습니다.
 
-일반 Python 환경에서는 Python 3.11 이상을 준비하고 이 폴더에서 다음을 실행한다.
+자세한 내용: [docs/PRIVACY.md](docs/PRIVACY.md)
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -X utf8 01_download.py
-.\.venv\Scripts\python.exe -X utf8 02_inspect.py
-.\.venv\Scripts\python.exe -X utf8 03_audit.py
-```
+---
 
-현재 PC에는 `python` 명령이 PATH에 없어, 이번 검증에는 Codex에 포함된 Python과 pandas 3.0.1을 사용했다.
-이 PC에서 설치 없이 다시 실행하려면 다음과 같이 실행한다.
+## 🗓️ 개발 기록
 
-```powershell
-$medmapPython = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
-& $medmapPython -X utf8 .\02_inspect.py   # MedMap 폴더에서 실행
-```
+### 2026-09-28 · 🔬 연구 시작
+- DDXPlus(합성 환자 데이터) 다운로드·구조 확인·통계 감사, 부분 관찰 실험 설계
 
-마지막 파일명을 01_download.py 또는 03_audit.py로 바꿔 각 단계를 실행할 수 있다. 앱 번들 경로는 다른 PC에서는 다를 수 있다.
+### 2026-09-29 · 🎙️ 음성 인식 첫 버전
+- FastAPI + React로 앱 구조를 새로 만들고, faster-whisper로 한국어 음성 변환 구현
+- PC·아이폰에서 음성 변환 성공, 프로젝트 전용 GPU 가속과 모델 예열로 처리 속도 개선
+- 환자가 확인하는 **증상 정보 추출** 첫 버전
 
-## 1단계 — 공식 파일 확보
+### 2026-09-30 · 🧩 증상 추출 다듬기
+- 약 이름 띄어쓰기, 말로 한 시간 표현, 반복되는 강조어(`너무 너무`), 숫자 통증 점수 처리
+- 녹음 중 실시간 변환 표시, 텍스트 입력 모드
+- 확인한 기록을 **브라우저에 저장**, **증상 변화 타임라인** 추가
+- 원격·휴대폰 시험용 HTTP 모드와 임시 터널
 
-**무엇을 하는지:** 영문 v2의 파일 5개를 다운로드하고 크기와 MD5를 확인한다.
+### 2026-10-01 · 📄 진료 전 요약
+- 같은 증상을 **발생 기간**으로 묶기, **진료 전 요약** 화면, **PDF·QR 공유**
+- 아픈 기간별 **기록 묶음**, 구토 횟수 기록, 호전·악화·사라짐 표현 처리
+- 증상 21종 확장, 과거력 추가, 확인 화면에서 직접 수정, **백업 내보내기·가져오기**
 
-**왜 필요한지:** 같은 이름의 파일도 배포 버전이 바뀔 수 있다. 재현을 위해 버전·파일 ID·해시가 필요하다.
+### 2026-10-02 · 🚨 인식 범위 확장과 안전
+- 합성어·구어(`머리통증`, `목감기`), 주어 생략 이어받기, 증상 50종으로 확장
+- **위험 증상 경고**, 확실하지 않은 증상, **다른 사람의 증상** 구분
+- 시작 날짜 계산(`어제부터` → 10월 2일), 부위(`오른쪽 아랫배`), 정도 표현, 약 용량·복용 시점
+- 음성 인식 의료 단어 힌트, 말에서 **기본 정보**(나이·성별·흡연 등) 찾기
+- 팀 통합 저장소(KYU-SW/Medmap)로 올리는 스크립트
 
-**코드:** 01_download.py. 이미 일치하는 파일이 있으면 다시 받지 않는다. 총 다운로드는 약 179 MB다.
+### 2026-10-03 · 🎨 화면 개편
+- 빠진 내용을 묻는 **추가 질문**
+- 화면을 **홈 · 증상 말하기 · 확인 · 요약 · 지난 기록 · 기본 정보**로 나누고 의료 서비스용 디자인으로 개편
+- 증상별 카드와 변화 배지, 요약 화면의 칩·타일 버튼
+- 📅 지난 기록을 **달력**으로 보기
+- 기본 정보 찾기와 백업 기능을 브라우저에서 확인, 삭제 문구 수정
+- 증상 6종 추가(입안 통증, 재채기, 쌕쌕거림, 배뇨 곤란, 눈 충혈, 생리통) → **56종**,
+  `소변이 안 나와요`가 변비로 읽히던 오류 수정
+- 띄어쓰기 없는 문장(`가슴이답답하고아파요`) 읽기, 청력 저하·입마름 추가(**58종**), 놓치던 표현은 확인 요청으로 표시
+- 확인 화면 정리: 증상 카드는 요약만 보이고 `고치기`로 펼침, 정리하지 못한 표현 경고를 위로
 
-|파일|역할|직접 다운로드|
-|---|---|---|
-|release_evidences.json|소견 ID, 질문, 자료형, 기본값, 값의 의미|https://ndownloader.figshare.com/files/40278013|
-|release_conditions.json|질환명, ICD-10, 증상·과거력 연결 목록|https://ndownloader.figshare.com/files/62561569|
-|release_train_patients.zip|학습 환자 CSV|https://ndownloader.figshare.com/files/40278019|
-|release_validate_patients.zip|검증 환자 CSV|https://ndownloader.figshare.com/files/40278022|
-|release_test_patients.zip|최종 평가 환자 CSV|https://ndownloader.figshare.com/files/40278016|
+### 2026-10-04 · 🗣️ 생활 표현과 홈 화면
+- 증상 7종 추가(복부 팽만, 목 이물감, 눈 분비물, 목 결림, 손발 차가움, 우울감, 불안감) → **65종**
+- 병 이름 없이 말한 과거력(`혈압이 높아요`, `간이 안 좋아요`, `폐렴으로 입원했어요`, `스텐트 시술`) 기록
+- 🏠 홈에 진행 중인 증상과 마지막 기록 날짜, 📅 달력에 오늘 표시, 증상 기간을 `10월 1일부터`처럼 읽기 쉽게
+- 📄 진료 전 요약을 **지금 있는 증상**과 **사라진 증상**(한 줄, 위험 증상은 빨간 표시)으로 나눔
 
-**예상 결과:** `All five files verified.` 및 data 폴더의 파일 5개. 이번 실행에서 확인 완료.
+### 2026-10-05 · 📱 폰 안 음성 인식 준비
+- 폰용 whisper.cpp(압축 turbo)와 서버 엔진을 실제 녹음으로 비교 → 증상 인식은 폰용이 더 좋았음
+- 한글 숫자 체온(`삼십팔 도`)과 `2일 전 저녁부터` 같은 시작 시점 읽기
+- 🤖 **안드로이드 앱 시험판**: 녹음을 폰 안에서 글자로 바꾸는 앱 빌드(Capacitor + whisper.cpp)
 
-**다음 단계:** evidences → conditions → train의 첫 3행 순서로 연다. ZIP을 풀지 않아도 pandas가 읽는다.
+### 2026-10-06 · ⚡ 폰 음성 인식 속도 개선
+- 실제 폰(갤럭시 노트20)에서 측정: 처음 녹음 4초에 **38~62초** → 계산 범위 줄이기 + 모델 형식 변경(q8_0)으로 **약 6초**
+- 원인 분석(encoder가 대부분, 압축 형식에 따라 폰 CPU 고속 경로 사용 여부가 갈림)과 정확도 비교로 q8_0을 기본으로
+- 빠른 코어 고정, 녹음 중 **실시간 자막**(작은 모델로 미리보기, 최종은 turbo), 앞뒤 조용한 부분 자르기- PC에서 USB로 폰 앱의 변환을 직접 부르는 **자동 측정 도구**
+- ⚡ **하이브리드 음성 인식**: 안드로이드 기기 내장 한국어 인식(오프라인)으로 말하는 대로 자막, 녹음 종료 후 **약 0.1초** 만에 문장 표시.  turbo가 뒤에서 같은 음성을 다시 확인해 증상·약·알레르기가 다르면 사용자에게 고르게 함 (한국어 스트리밍 Zipformer는 비교 후 제외)
 
-실제 ZIP 안의 파일명은 각각 `release_train_patients`, `release_validate_patients`, `release_test_patients`이며 `.csv` 확장자가 없다. 내용은 CSV이므로 확장자만으로 파일 형식을 판단하지 않는다.
+---
 
-배포 출처: https://figshare.com/articles/dataset/DDXPlus_Dataset_English_/22687585/2
+## 📚 참고 문서
 
-DOI: https://doi.org/10.6084/m9.figshare.22687585.v2
+| 문서 | 내용 |
+|---|---|
+| [docs/INTAKE_EXTRACTION.md](docs/INTAKE_EXTRACTION.md) | 증상 추출 규칙과 지원 범위 |
+| [docs/STT_SPEC.md](docs/STT_SPEC.md) | 음성 인식 기능 범위 |
+| [docs/PRIVACY.md](docs/PRIVACY.md) | 개인정보 원칙 |
+| [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) | 앱 폴더 구조 |
+| [README.team.md](README.team.md) | DDXPlus 분석 단계별 설명 (팀 저장소 README) |
+| [04_partial_observation_design.md](04_partial_observation_design.md) · [RESULTS.md](RESULTS.md) | 부분 관찰 실험 설계와 데이터 감사 결과 |
 
-공식 설명: https://github.com/mila-iqia/ddxplus
-
-API: https://api.figshare.com/v2/articles/22687585/versions/2
-
-2026-09-28 확인한 라이선스는 CC BY 4.0이다. 이번 다운로드에는 로그인·신청·결제가 필요하지 않았다.
-논문과 데이터셋을 인용하고 가공 여부를 표시한다. 라이선스 원문: https://creativecommons.org/licenses/by/4.0/
-실제 응답 메타데이터는 source_manifest.json에 저장했다.
-
-## 2단계 — 실제 샘플 열기
-
-**무엇을 하는지:** train 첫 3행을 읽고 EVIDENCES와 감별진단 문자열을 리스트로 변환한다.
-
-**왜 필요한지:** 문자열을 리스트로 착각하면 증상 대신 문자 하나씩 처리할 수 있다.
-
-**코드:** 02_inspect.py. 핵심 부분은 다음과 같다.
-
-```python
-df = pd.read_csv(DATA / 'release_train_patients.zip', nrows=3)
-print(df.shape)
-print(df.columns.tolist())
-tokens = ast.literal_eval(df.loc[0, 'EVIDENCES'])
-```
-
-`ast.literal_eval`을 사용한다. 임의 코드를 실행할 수 있는 `eval`은 쓰지 않는다.
-
-**예상 결과:** 샘플 shape는 (3, 6). 이는 전체 train 크기가 아니다.
-
-|컬럼|해석|첫 실험에서의 용도|
-|---|---|---|
-|AGE|나이|모델 배경정보|
-|DIFFERENTIAL_DIAGNOSIS|합성 데이터의 감별진단 목록과 가중치|평가용으로 격리|
-|SEX|성별 코드|모델 배경정보|
-|PATHOLOGY|주질환 정답|train의 학습 목표, 평가 정답|
-|EVIDENCES|소견 토큰 목록|관찰된 부분만 모델 입력|
-|INITIAL_EVIDENCE|최초 제시 소견|초기 관찰 출발점|
-
-직접 확인한 train 첫 3행:
-
-|0부터 시작하는 행 번호|나이|성별|정답|최초 소견|원본 소견 토큰 수|
-|---|---:|---|---|---|---:|
-|0|18|M|URTI|E_91|19|
-|1|21|M|HIV (initial infection)|E_50|31|
-|2|19|F|Pneumonia|E_77|34|
-
-samples.json에는 이 세 환자의 소견을 영문 질문과 값으로 해독한 결과를 저장했다.
-표의 진단은 정답 라벨이며 모델이 생성한 working diagnosis가 아니다.
-
-**다음 단계:** 소견의 자료형을 이해한 뒤 전체 통계를 읽는다.
-
-## 3단계 — 소견과 질환 관계 해석
-
-**무엇을 하는지:** `_@_`를 기준으로 ID와 값을 분리하고 JSON 정의에 연결한다.
-
-**왜 필요한지:** 토큰 개수와 소견 개수가 다르다. 여러 통증 부위는 하나의 소견 ID에 속할 수 있다.
-
-**코드:** 02_inspect.py의 `token.partition('_@_')`와 `value_meaning` 조회.
-
-```python
-code, separator, value = token.partition('_@_')
-definition = evidences[code]
-meaning = definition['value_meaning'].get(value, {}).get('en', value)
-```
-
-**예상 결과:** E_91은 발열 관련 이진 소견. E_55는 복수 선택형 통증 위치이며 E_55_@_V_89는 forehead 값이다.
-숫자형 범주값도 있으므로 모든 값이 V_로 시작한다고 가정하지 않는다.
-223개 정의는 B 208개, C 10개, M 5개다. 증상 110개, 과거력 등 antecedent 113개다.
-
-conditions의 symptoms/antecedents는 질환과 연결된 ID 목록이며 실제 확인한 연결 값은 빈 객체다.
-여기에는 P(소견|질환) 수치가 제공되지 않으므로 희귀도·우도비를 직접 읽을 수 없다.
-목록에 없다는 것만으로 그 질환에서 소견이 불가능하다고 단정하지 않는다.
-
-CSV 빈칸과 미관찰 상태는 다르다. 이 파일에는 소견마다 '질문했는지'를 표시하는 컬럼이 없다.
-MedMap에서 관찰 마스크를 추가해야 한다. 기본값이 NA인 항목도 있기 때문에 미기재를 일괄적인 임상적 음성으로 바꾸면 안 된다.
-
-**다음 단계:** 전체 split 통계 및 중복 검사.
-
-## 4단계 — 전체 통계와 누수 후보 확인
-
-**무엇을 하는지:** 20,000행씩 읽어 shape, 라벨 분포, 결측, 소견 수, 감별진단 수, 코드 유효성, 중복을 계산한다.
-
-**왜 필요한지:** 샘플 몇 개만으로 전체 자료의 일관성이나 split 독립성을 판단할 수 없다.
-
-**코드:** 03_audit.py. 전체 실행에는 몇 분 걸릴 수 있다. 청크 단위 입력이지만 중복 해시와 길이 목록은 메모리에 유지한다.
-
-```python
-for chunk in pd.read_csv(path, chunksize=20000):
-    print(chunk.shape)
-    print(chunk['PATHOLOGY'].value_counts())
-```
-
-이 짧은 예제는 청크별 출력이다. 제공한 스크립트는 Counter로 전체 라벨 분포를 합산한다.
-
-**예상 결과:** audit.json. 실제 실행 결과 요약은 RESULTS.md에 정리한다.
-
-중복 기준은 두 종류다. full은 여섯 컬럼을 포함하되 소견·감별 목록의 순서를 정규화한 값이고,
-features는 AGE+SEX+전체 소견이다. split 내 중복은 첫 행을 제외한 행 수, split 간 중복은 공통 고유 패턴 수다.
-후자는 공유 환자 수가 아니다. 환자 식별자가 없으므로 같은 실제 인물인지 판단할 수 없다.
-완전 일치 검사는 유사 환자·공통 생성 지식·숨은 생성기 의존성까지 배제하지 못한다.
-test를 열어본 것은 구조·무결성 감사에 한정한다. 모델·임계값 선택은 validation에서 수행한다.
-
-**다음 단계:** 04_partial_observation_design.md에 따라 관찰 상태와 시뮬레이터를 구현한다.
-
-## 5단계 — 부분 관찰 설계
-
-**무엇을 하는지:** 초기 소견을 포함한 3/5개 관찰과 이후 최대 1/3개의 순차 추가정보를 정의한다.
-
-**왜 필요한지:** 전체 소견·정답을 탐지기나 질문 선택기에 노출하면 연구 질문을 제대로 평가할 수 없다.
-
-**코드:** 이번 단계는 설계만 완료했다. 후속 구현의 인터페이스는 아래처럼 분리한다.
-
-```python
-# 아직 구현하지 않은 인터페이스 예시
-observation = observe(patient_id, selected_evidence_ids)
-working_diagnosis = baseline.predict(observation)
-alert = detector.check(observation, working_diagnosis)
-next_id = nbinfo.select(observation, working_diagnosis, alternatives)
-```
-
-**예상 결과:** 모델에는 공개된 정보만 전달되고, 정답과 미관찰 응답은 평가기·시뮬레이터에만 남는다.
-
-**다음 단계:** 중복 처리 정책을 고정한 뒤 관찰 인코더를 구현한다. 상세 통제조건과 회복률 분모는 설계 문서를 따른다.
-
-아직 기본 진단 모델, 외부 독립 의료지식 탐지, NBInfo 실험 결과는 없다.
-이번 자료는 합성 데이터 분석이며 실제 환자 성능 또는 임상적 오진 감소를 입증하지 않는다.
+> 🧪 DDXPlus 분석은 합성 데이터 결과이며, 실제 환자 성능이나 오진 감소를 입증하지 않습니다.

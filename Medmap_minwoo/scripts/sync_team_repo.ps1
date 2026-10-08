@@ -8,11 +8,11 @@ $teamRemote = 'https://github.com/KYU-SW/Medmap.git'
 $teamPrefix = 'Medmap_minwoo'
 $teamClone = Join-Path $medmapRoot 'local-cache\team-repo'
 # Personal-repository only: AI agent rules, handoff notes and local admin docs.
-# README.md is the personal repository's front page; README.team.md becomes the team copy's README.md.
+# The team copy gets the same README.md as the personal repository (user request, 2026-10-09).
 $personalOnly = @(
     'AGENTS.md', 'CLAUDE.md', 'HANDOFF.md', 'PROJECT_BRIEF.txt',
     'TEAM_PROGRESS_REVIEW_2026-09-29.md', 'FILE_MANAGEMENT.md',
-    'LOCAL_STORAGE_PLAN.md', 'SETUP_GIT_AUTH.ps1', 'README.md'
+    'LOCAL_STORAGE_PLAN.md', 'SETUP_GIT_AUTH.ps1'
 )
 
 function Invoke-MedMapGit {
@@ -67,10 +67,6 @@ if (Test-Path -LiteralPath $target) {
 New-Item -ItemType Directory -Force -Path $target | Out-Null
 & tar -xf $archive -C $target
 if ($LASTEXITCODE -ne 0) { throw "tar failed (exit $LASTEXITCODE)." }
-$teamReadme = Join-Path $target 'README.team.md'
-if (Test-Path -LiteralPath $teamReadme) {
-    Move-Item -Force -LiteralPath $teamReadme -Destination (Join-Path $target 'README.md')
-}
 Remove-Item -LiteralPath $archive
 Invoke-MedMapGit -C $teamClone add -A $teamPrefix
 
