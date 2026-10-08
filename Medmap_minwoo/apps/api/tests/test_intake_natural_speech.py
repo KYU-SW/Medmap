@@ -142,3 +142,33 @@ def test_comma_between_name_and_allergy() -> None:
     # turbo with a comma-separated word list as its prompt wrote "페니실린, 알레르기" (2026-10-07).
     result = extract_intake("테레놀 500mg을 한 번에 먹었고, 페니실린, 알레르기가 있어요.")
     assert (result.medications, result.allergies) == (["테레놀 500mg"], ["페니실린"])
+
+
+# Phrases from docs/RECORDING_BACKLOG.md section 2, checked as text before recording them (2026-10-09).
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("열은 났었는데 지금은 내렸어요", {"발열": ("absent", None, None)}),
+        ("어제까지 설사했는데 오늘은 안 했어요", {"설사": ("absent", None, None)}),
+        ("배가 아파요. 처음엔 7점이었는데 지금은 4점이에요", {"복통": ("present", "7/10점 → 4/10점", None)}),
+        ("배가 아파요 처음엔 7점이었는데 지금은 4점이에요", {"복통": ("present", "7/10점 → 4/10점", None)}),
+        ("배가 아파요. 참기 힘들 정도예요", {"복통": ("present", "심함", None)}),
+        ("처음엔 하루 다섯 번 토했는데 오늘은 두 번 했어요", {"구토": ("present", None, "하루 5회 → 2회")}),
+        ("하루에 서너 번 설사해요", {"설사": ("present", None, "하루 3~4회")}),
+        ("한두 번 토했어요", {"구토": ("present", None, "1~2회")}),
+        ("허리 아래쪽이 아파요", {"요통": ("present", None, None)}),
+    ],
+)
+def test_backlog_phrases(text: str, expected: dict) -> None:
+    assert facts(text) == expected
+
+
+def test_onset_after_a_meal_and_until_yesterday() -> None:
+    assert extract_intake("아까 점심 먹고 나서부터 배가 아파요").symptoms[0].onset == "아까 점심 먹고 나서부터"
+    assert extract_intake("어제까지 설사했는데 오늘은 안 했어요").symptoms[0].onset is None
+
+
+def test_corrected_dose_and_age_in_words() -> None:
+    assert extract_intake("타이레놀 한 알, 아니 두 알 먹었어요").medications == ["타이레놀 두 알"]
+    assert extract_intake("저는 서른다섯 살 여자예요").profile.age == 35
+    assert extract_intake("스무 살이에요").profile.age == 20

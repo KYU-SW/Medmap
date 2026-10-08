@@ -91,7 +91,8 @@ export type SymptomHistory = {
 };
 
 function count(frequency: string | null | undefined): number | null {
-  const match = frequency?.match(/(\d+)\s*회/);
+  // "하루 5회 → 2회" (then → now) counts the latest; "3~4회" counts the upper end.
+  const match = frequency?.split("→").pop()?.match(/(\d+)\s*회/);
   return match ? Number(match[1]) : null;
 }
 

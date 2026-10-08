@@ -94,6 +94,14 @@ describe("buildSymptomHistories", () => {
     expect(byName["기침"].overall).toBeNull(); // one record: nothing to compare
   });
 
+  it("reads a then → now count by the count now", () => {
+    const [diarrhoea] = buildSymptomHistories(buildTimeline([
+      record("a", "2026-10-01T09:00:00.000Z", [symptom("설사", { frequency: "하루 5회 → 2회" })]),
+      record("b", "2026-10-02T09:00:00.000Z", [symptom("설사", { frequency: "하루 4회" })]),
+    ]));
+    expect(diarrhoea.points.map((point) => point.level)).toEqual([0.5, 1]);
+  });
+
   it("leaves out a symptom the patient never had", () => {
     expect(byName["흉통"]).toBeUndefined();
   });

@@ -221,7 +221,7 @@ RULES = (
     SymptomRule(
         "요통",
         re.compile(
-            rf"요통|허리\s*통증|허리(?:가|는|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
+            rf"요통|허리\s*통증|허리(?:\s*(?:아래|위|밑)\s*쪽?(?:이|은|도)?)?(?:가|는|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
             r"(?:아프|아파|아팠|아픈|쑤시|쑤셔|결리|결려|뻐근|당기|당겨|삐끗)"
         ),
         re.compile(
@@ -611,6 +611,7 @@ SITE_WORD_PATTERN = re.compile(
 
 ONSET_PATTERN = re.compile(
     r"(?<![가-힣A-Za-z0-9])(?:"
+    r"(?:아까\s*)?(?:아침|점심|저녁)(?:\s*밥)?(?:을|를)?\s*먹고\s*(?:나서|난\s*(?:뒤|후))?\s*부터|아까부터|"
     r"\d{1,2}\s*월\s*\d{1,2}\s*일(?:\s*(?:쯤|경))?(?:\s*부터)?|"
     r"(?:지난\s*주|저번\s*주|이번\s*주)\s*[월화수목금토일]요일(?:부터|쯤)?|"
     r"[월화수목금토일]요일(?:부터|쯤)?|"
@@ -619,7 +620,8 @@ ONSET_PATTERN = re.compile(
     r"(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
     r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘|(?:\d+|일|이|삼|사|오|육|칠|팔|구|십)\s*일)"
     r"\s*전[,\s]*(?:아침|점심|저녁|밤|새벽)(?:부터)?|"
-    r"(?:오늘|어제|그제|그저께|엊그제|방금|아침|점심|저녁|밤|새벽)(?:부터)?|"
+    # "어제까지 설사했는데" says when it ended, not when it started.
+    r"(?:오늘|어제|그제|그저께|엊그제|방금|아침|점심|저녁|밤|새벽)(?!\s*까지)(?:부터)?|"
     r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘)"
     r"(?!\s*에|\s*(?:\d+|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*(?:번|회|차례))"
     r"(?:\s*(?:전부터|전|동안|째))?|"
@@ -652,8 +654,13 @@ PAIN_SCORE_PATTERN = re.compile(
 )
 FREQUENCY_PATTERN = re.compile(
     r"(?:(?:하루(?:에)?|오늘|어제)\s*)?"
-    r"(?:\d+|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*"
+    r"(?:\d+|한두|두세|서너|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*"
     r"(?:번|회|차례)"
+)
+# "처음엔 하루 다섯 번 했는데 오늘은 두 번": the count now, said after the first one.
+FREQUENCY_NOW_PATTERN = re.compile(
+    r"(?:지금은|현재는|이제는?|오늘은)\s*(?:하루(?:에)?\s*)?"
+    r"((?:\d+|한두|두세|서너|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*(?:번|회|차례))"
 )
 TREND_PATTERN = re.compile(
     r"(?P<improving>(?:(?:조금|좀|많이|전보다|점점)\s*)?"
@@ -779,8 +786,21 @@ UNCERTAIN_PATTERN = re.compile(
     r"있는지\s*없는지|인지\s*아닌지|기억(?:이)?\s*(?:잘\s*)?안\s*나"
 )
 AGE_PATTERN = re.compile(
-    r"(?<![\d.])(\d{1,3})\s*(?:살|세)(?!\s*때)(?:이에요|예요|입니다|이고|인데|이요|요)?|나이(?:는|가)?\s*(\d{1,3})"
+    r"(?<![\d.])(\d{1,3})\s*(?:살|세)(?!\s*때)(?:이에요|예요|입니다|이고|인데|이요|요)?|나이(?:는|가)?\s*(\d{1,3})|"
+    # "서른다섯 살": turbo writes ages in words.
+    r"(?<![가-힣])((?:열|스물|스무|서른|마흔|쉰|예순|일흔|여든|아흔)"
+    r"(?:하나|한|둘|두|셋|세|넷|네|다섯|여섯|일곱|여덟|아홉)?)\s*살(?!\s*때)"
 )
+NATIVE_TENS = {"열": 10, "스물": 20, "스무": 20, "서른": 30, "마흔": 40, "쉰": 50, "예순": 60, "일흔": 70, "여든": 80, "아흔": 90}
+NATIVE_ONES = {"하나": 1, "한": 1, "둘": 2, "두": 2, "셋": 3, "세": 3, "넷": 4, "네": 4, "다섯": 5,
+               "여섯": 6, "일곱": 7, "여덟": 8, "아홉": 9}
+
+
+def _age_value(word: str) -> int:
+    if word.isdigit():
+        return int(word)
+    tens = next(tens for tens in NATIVE_TENS if word.startswith(tens))
+    return NATIVE_TENS[tens] + NATIVE_ONES.get(word[len(tens):], 0)
 SEX_PATTERN = re.compile(
     r"(?<![가-힣])(?:(?P<female>여자|여성)|남자|남성)(?=이에요|예요|입니다|이고|인데|이요|고\s|요)"
 )
@@ -971,13 +991,14 @@ def _normalize_frequency(value: str) -> str:
         "한": "1", "두": "2", "세": "3", "네": "4", "다섯": "5",
         "여섯": "6", "일곱": "7", "여덟": "8", "아홉": "9", "열": "10",
     }
+    ranges = {"한두": "1~2", "두세": "2~3", "서너": "3~4"}
     match = re.search(
-        r"(\d+|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*(?:번|회|차례)",
+        r"(\d+|한두|두세|서너|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*(?:번|회|차례)",
         value,
     )
     if not match:
         return value
-    count = number_words.get(match.group(1), match.group(1))
+    count = ranges.get(match.group(1)) or number_words.get(match.group(1), match.group(1))
     period = "하루 " if re.search(r"하루(?:에)?", value) else ""
     return f"{period}{count}회"
 
@@ -1102,13 +1123,25 @@ def _severity_for_symptom(
         )
         # A score often comes in the next sentence ("아팠어요 아픈 정도는 8"), so only a full stop separates,
         # unless the score names what it rates ("아파요. 아픈 정도는 7점": turbo adds the full stop).
-        refers_back = match.start() >= end and re.match(r"(?:고통|통증|아픈|아픔|강도)", match.group(0))
+        # Also a sentence that opens with how bad it is: "배가 아파요. 참기 힘들 정도예요", "... 처음엔 7점이었는데".
+        opens_next = (
+            len(re.findall(r"[.!?。]", between)) == 1
+            and re.fullmatch(r"\s*(?:처음(?:엔|에는)?|아까는?)?\s*", re.split(r"[.!?。]", between)[-1])
+            and not re.fullmatch(r"아주|매우|너무|많이|조금|약간", match.group(0))
+        )
+        refers_back = match.start() >= end and (
+            re.match(r"(?:고통|통증|아픈|아픔|강도)", match.group(0)) or opens_next
+        )
         if re.search(r"[.!?。]", between) and not refers_back:
             continue
         candidates.append(match)
     if not candidates:
         return None
     latest = max(candidates, key=lambda match: match.start())
+    earlier_scores = [match for match in candidates if match.re is PAIN_SCORE_PATTERN and match.start() < latest.start()]
+    # "처음엔 7점이었는데 지금은 4점": read from the first score so it becomes "7/10점 → 4/10점".
+    if earlier_scores and re.search(r"(?:지금은|현재는|이제는?)\s*(?:한\s*)?$", text[:latest.start()]):
+        latest = earlier_scores[-1]
     severity = _severity(latest.group(0))
     if severity and latest.re is PAIN_SCORE_PATTERN:
         rest = SENTENCE_SPLIT_PATTERN.split(text[latest.end():], maxsplit=1)[0]
@@ -1156,7 +1189,16 @@ def _frequency_for_symptom(
         candidates.append((distance, match))
     if not candidates:
         return None
-    return _normalize_frequency(min(candidates, key=lambda item: item[0])[1].group(0))
+    chosen = min(candidates, key=lambda item: item[0])[1]
+    earlier = [match for _, match in candidates if match.start() < chosen.start()]
+    if earlier and FREQUENCY_NOW_PATTERN.search(text[max(0, chosen.start() - 12):chosen.end()]):
+        chosen = max(earlier, key=lambda match: match.start())
+    frequency = _normalize_frequency(chosen.group(0))
+    rest = SENTENCE_SPLIT_PATTERN.split(text[chosen.end():], maxsplit=1)[0]
+    now = FREQUENCY_NOW_PATTERN.search(rest)
+    if now:
+        frequency = f"{frequency} → {_normalize_frequency(now.group(1))}"
+    return frequency
 
 
 def _trend_for_symptom(
@@ -1220,7 +1262,7 @@ def _extract_medications(text: str) -> tuple[list[str], list[str]]:
         for match in UNKNOWN_DOSED_MEDICATION_PATTERN.finditer(clause):
             # "어제 두 알", "아파서 두 알": a time, an adverb or a verb before the dose is not a medicine's name.
             if (NON_SUBJECT_WORD_PATTERN.fullmatch(match.group(1))
-                    or re.fullmatch(r"매일|하루|한번|다시|그냥|이거|그거|저거", match.group(1))
+                    or re.fullmatch(r"매일|하루|한번|다시|그냥|이거|그거|저거|아니", match.group(1))
                     or re.search(r"(?:서|고|며|면|니까|는데|지만)$", match.group(1))):
                 continue
             if not any(start <= match.start() < start + len(name) + 3 for start, name in found):
@@ -1234,9 +1276,14 @@ def _extract_medications(text: str) -> tuple[list[str], list[str]]:
             # Dose and timing said right after the name, before the next medicine, belong to it.
             next_position = found[index + 1][0] if index + 1 < len(found) else len(clause)
             tail = clause[position + len(name):min(next_position, position + len(name) + 30)]
+            dose = DOSE_PATTERN.search(tail)
+            # "한 알, 아니 두 알": the patient corrected the dose.
+            corrected = dose and re.match(r"\s*,?\s*아니(?:고|라)?\s*,?\s*", tail[dose.end():])
+            if corrected:
+                dose = DOSE_PATTERN.match(tail, dose.end() + corrected.end()) or dose
             doses = [
                 re.sub(r"밀리그램|밀리", "mg", re.sub(r"(?<=\d)\s+", "", dose.group(0)))
-                for dose in [DOSE_PATTERN.search(tail)] if dose
+                for dose in [dose] if dose
             ]
             timings = [
                 _normalize_frequency(timing.group(0)) if re.search(r"번|회|차례", timing.group(0))
@@ -1284,7 +1331,9 @@ NEGATION_LATER_IN_CLAUSE = r"\s+(?:(?![.?!]|요\s|고\s|서\s).){0,25}?(?:없|�
 LISTED_BEFORE_NEGATION_PATTERN = re.compile(rf"\s*{LIST_CONNECTOR}{NEGATION_LATER_IN_CLAUSE}")
 # "머리도 아팠지만 지금은 괜찮아졌어요": had it, gone now.
 GONE_NOW_PATTERN = re.compile(
-    r"[가-힣]{0,3}?(?:지만|는데)\s+(?:지금은|이제는?|이젠|현재는)\s*(?:괜찮|다\s*나았|나았|없어졌|안\s*아파)"
+    # "열은 났었는데 지금은 내렸어요", "어제까지 설사했는데 오늘은 안 했어요"
+    r"[가-힣]{0,3}?(?:지만|는데)\s+(?:지금은|이제는?|이젠|현재는|오늘은)\s*"
+    r"(?:괜찮|다\s*나았|나았|없어졌|안\s*아파|(?:열이\s*)?(?:다\s*)?내렸|떨어졌|멈췄|그쳤|안\s*했|안\s*해)"
 )
 # "페니실린을 먹고 두드러기가 생긴 적이 있어요": a past reaction to a medicine is an allergy, not a symptom now.
 DRUG_REACTION_PATTERN = re.compile(
@@ -1641,7 +1690,7 @@ def _extract_profile(text: str) -> PatientProfileHints:
         )
 
     age_match = own(AGE_PATTERN)
-    age = next((int(value) for value in age_match.groups() if value), None) if age_match else None
+    age = next((_age_value(value) for value in age_match.groups() if value), None) if age_match else None
     sex_match = own(SEX_PATTERN)
     sex = None if sex_match is None else "female" if sex_match.group("female") else "male"
 
