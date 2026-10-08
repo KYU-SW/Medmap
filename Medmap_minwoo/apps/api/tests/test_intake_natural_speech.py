@@ -226,3 +226,39 @@ def test_on_device_spelling_of_메스꺼워요() -> None:
 )
 def test_plain_음슴체_endings(text: str, expected: dict) -> None:
     assert facts(text) == expected
+
+
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("소변에 피가 섞여 나와", {"혈뇨": "present"}),  # 소변, not 변
+        ("눈이 아프고 흐릿하게 보여요", {"눈 통증": "present", "시야 이상": "present"}),
+        ("입이 자주 마름", {"입마름": "present"}),
+    ],
+)
+def test_phrases_checked_before_the_third_recordings(text: str, expected: dict) -> None:
+    assert {item.name: item.status for item in extract_intake(text).symptoms} == expected
+
+
+def test_not_pregnant_said_with_중() -> None:
+    assert extract_intake("임신 중은 아니에요").profile.pregnancy == "no"
+
+
+# Third recordings of 2026-10-09 (scripts 37~47), as the phone heard them.
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("배가 빵빵하고 속이 매스꺼워 가래는 없어", {"복부 팽만": "present", "메스꺼움": "present", "가래": "absent"}),
+        ("눈이 아프고 허릿하게 보여요", {"눈 통증": "present", "시야 이상": "present"}),
+        ("목에 뭐가 걸린 거 같고 목이 아파요", {"목 이물감": "present", "인후통": "present"}),
+    ],
+)
+def test_third_recordings(text: str, expected: dict) -> None:
+    assert {item.name: item.status for item in extract_intake(text).symptoms} == expected
+
+
+def test_contrast_medium_allergy_and_metformin_heard_wrong() -> None:
+    result = extract_intake("갑상선 약을 먹고 있고 조영제 알레르기가 있어요")
+    assert (result.medications, result.allergies) == (["갑상선약"], ["조영제"])
+    for heard in ("매트프로민을 하루 두 번 먹고 있어요", "매트 프로면 하루 두 번 먹고 있어요"):
+        assert extract_intake(heard).medications == ["메트포르민 하루 2회"]

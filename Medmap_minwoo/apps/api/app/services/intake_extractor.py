@@ -389,7 +389,7 @@ RULES = (
         "시야 이상",
         re.compile(
             r"시야|복시|(?:눈|눈앞|앞)(?:이|가)?\s*(?:자꾸\s*|좀\s*)?(?:침침|흐릿|흐려|뿌옇|뿌얘|캄캄|깜깜|번쩍)|"
-            r"(?:잘\s*)?안\s*보여|겹쳐\s*보|두\s*개로\s*보"
+            r"(?:잘\s*)?안\s*보여|겹쳐\s*보|두\s*개로\s*보|(?:[흐허]릿하게|흐리게|뿌옇게)\s*보"
         ),
         re.compile(
             rf"(?:시야\s*이상|복시){PARTICLE}\s*{ABSENT_ENDING}|(?:눈|시력)(?:은|도)?\s*{NOW_ADVERB}(?:괜찮|잘\s*보)"
@@ -432,7 +432,7 @@ RULES = (
     SymptomRule(
         "혈변",
         re.compile(
-            r"혈변|(?:대변|변)(?:에|에서)\s*피|피(?:가)?\s*섞인\s*(?:대변|변)|"
+            r"혈변|(?:대변|(?<!소)변)(?:에|에서)\s*피|피(?:가)?\s*섞인\s*(?:대변|(?<!소)변)|"
             r"(?:검은|까만|짜장\s*같은)\s*(?:대변|변)|(?:대변|변)(?:이)?\s*(?:검게|까맣게)"
         ),
         re.compile(rf"혈변{PARTICLE}\s*{ABSENT_ENDING}"),
@@ -555,7 +555,7 @@ RULES = (
     ),
     SymptomRule(
         "목 이물감",
-        re.compile(r"이물감|목(?:에|이)?\s*(?:뭐가|뭔가|무언가)?\s*걸린\s*(?:것\s*)?같|목(?:이)?\s*막힌\s*(?:것\s*)?같"),
+        re.compile(r"이물감|목(?:에|이)?\s*(?:뭐가|뭔가|무언가)?\s*걸린\s*(?:것|거)?\s*같|목(?:이)?\s*막힌\s*(?:것\s*)?같"),
         re.compile(rf"이물감{PARTICLE}\s*{ABSENT_ENDING}"),
         "목",
     ),
@@ -807,7 +807,7 @@ SEX_PATTERN = re.compile(
 # Checked in order: negations first so "담배는 안 피워요" is not read as smoking.
 PREGNANCY_PATTERNS = (
     ("unknown", re.compile(r"임신(?:인지|했는지|한\s*건지)\s*(?:잘\s*)?모르|임신\s*여부(?:는)?\s*(?:잘\s*)?모르")),
-    ("no", re.compile(r"임신(?:은|이|도)?\s*(?:아니|안\s*했|하지\s*않|아닙니다)|임신\s*가능성(?:은|이)?\s*없")),
+    ("no", re.compile(r"임신(?:\s*중)?(?:은|이|도)?\s*(?:아니|안\s*했|하지\s*않|아닙니다)|임신\s*가능성(?:은|이)?\s*없")),
     ("yes", re.compile(r"임신\s*(?:중|\d+\s*주|했|한\s*(?:것|거)\s*같|일\s*수도|가능성(?:이)?\s*있)")),
 )
 SMOKING_PATTERNS = (
@@ -1255,7 +1255,8 @@ def _extract_medications(text: str) -> tuple[list[str], list[str]]:
             continue
         found: list[tuple[int, str]] = []
         for match in MEDICATION_NAME_PATTERN.finditer(clause):
-            found.append((match.start(), re.sub(r"\s+", "", match.group(1))))
+            if not re.match(r"\s*,?\s*알레르기", clause[match.end():]):  # "조영제 알레르기" is an allergy
+                found.append((match.start(), re.sub(r"\s+", "", match.group(1))))
         for pattern in (KNOWN_MEDICATION_PATTERN, DRUG_NAME_PATTERN, TYLENOL_SOUNDALIKE_PATTERN):
             for match in pattern.finditer(clause):
                 # "페니실린 알레르기" is an allergy, not a medicine being taken.
@@ -1324,10 +1325,10 @@ def _spoken_temperature_to_digits(text: str) -> str:
 # Notes written or said in 음슴체 ("머리가 많이 아픔, 오한도 있음, 약 먹었음") read as the polite endings the rules know.
 # Whole words only, except 함/됨/ㅆ음 endings: "콧막힘" is the symptom's name, "기침함" is "기침해요".
 PLAIN_ENDING_PATTERN = re.compile(
-    r"((?<![가-힣])(?:아픔|없음|괜찮음|남|막힘|쑤심|결림)|함|됨|[가-힣]음)(?=[\s.,!?]|$)"
+    r"((?<![가-힣])(?:아픔|없음|괜찮음|남|막힘|쑤심|결림|마름)|함|됨|[가-힣]음)(?=[\s.,!?]|$)"
 )
 PLAIN_ENDINGS = {"아픔": "아파요", "없음": "없어요", "괜찮음": "괜찮아요", "함": "해요", "남": "나요", "막힘": "막혀요",
-                 "쑤심": "쑤셔요", "결림": "결려요", "됨": "돼요"}
+                 "쑤심": "쑤셔요", "결림": "결려요", "마름": "말라요", "됨": "돼요"}
 
 
 def _polite_endings(text: str) -> str:
@@ -1342,6 +1343,17 @@ def _polite_endings(text: str) -> str:
         return word
 
     return PLAIN_ENDING_PATTERN.sub(polite, text)
+
+
+# Medicine names both STT engines kept hearing wrong in the same way, too far off for _known_spelling.
+# ponytail: one name so far (2026-10-09, three recordings); add others only when recordings repeat them.
+SOUNDALIKE_NAMES = ((re.compile(r"매트\s*프(?:로|롬)\s*(?:민|인|면)"), "메트포르민"),)
+
+
+def _known_soundalikes(text: str) -> str:
+    for pattern, name in SOUNDALIKE_NAMES:
+        text = pattern.sub(name, text)
+    return text
 
 
 def _space_glued_words(text: str) -> str:
@@ -1368,7 +1380,7 @@ DRUG_REACTION_PATTERN = re.compile(
 
 
 # "피곤하고 입맛이 없어요": 하고 after a 하다 word ends a verb, it does not list a noun like "열하고 오한은".
-HADA_ROOT_PATTERN = re.compile(r"(?:피곤|답답|더부룩|뻐근|따끔|얼얼|묵직|나른|무기력|어질어질|울렁|메슥|으슬으슬|오싹)$")
+HADA_ROOT_PATTERN = re.compile(r"(?:피곤|답답|더부룩|빵빵|팽팽|뻐근|따끔|얼얼|묵직|나른|무기력|어질어질|울렁|메슥|으슬으슬|오싹)$")
 
 
 def _is_negated_in_list(text: str, evidence: re.Match[str]) -> bool:
@@ -1382,7 +1394,7 @@ def _is_negated_in_list(text: str, evidence: re.Match[str]) -> bool:
 
 
 def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtractionResponse:
-    normalized = _spoken_temperature_to_digits(_space_glued_words(_polite_endings(" ".join(text.strip().split()))))
+    normalized = _spoken_temperature_to_digits(_space_glued_words(_polite_endings(_known_soundalikes(" ".join(text.strip().split())))))
     matches: list[tuple[SymptomRule, re.Match[str], bool]] = []
     for rule in RULES:
         mention = _first_symptom_match(rule.mention, normalized)

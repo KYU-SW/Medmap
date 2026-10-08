@@ -64,6 +64,13 @@ describe("spokenNumbersToDigits", () => {
 });
 
 describe("factChanges onset wording", () => {
+  it("replaces a past condition turbo heard as another name", () => {
+    // on-device "위험 진단을 받았어요", turbo "위염 진단을 받았어요" (2026-10-09).
+    const quick = { ...facts([]), medical_history: ["위험"] };
+    const careful = { ...facts([]), medical_history: ["위염"] };
+    expect(factChanges(quick, careful).map((change) => change.label)).toEqual(["과거력 추가: 위염", "과거력 빼기: 위험"]);
+  });
+
   it("names only the onset when presence is the same", () => {
     expect(factChanges(
       facts([["기침", "present", "저녁부터"]]),

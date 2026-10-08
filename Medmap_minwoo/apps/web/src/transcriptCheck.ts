@@ -11,12 +11,12 @@ type Symptom = {
   frequency?: string | null;
   trend?: string | null;
 };
-type Facts<S extends Symptom> = { symptoms: S[]; medications: string[]; allergies: string[] };
+type Facts<S extends Symptom> = { symptoms: S[]; medications: string[]; allergies: string[]; medical_history?: string[] };
 
 /** One fact turbo heard differently; the patient applies or ignores each one, so their own edits stay. */
 export type FactChange<S extends Symptom> =
   | { kind: "symptom"; name: string; label: string; symptom: S | null; previous: S | null } // null: not heard
-  | { kind: "medications" | "allergies"; value: string; add: boolean; label: string };
+  | { kind: "medications" | "allergies" | "medical_history"; value: string; add: boolean; label: string };
 
 const STATUS = { present: "있음", absent: "없음", uncertain: "확실하지 않음" } as Record<string, string>;
 
@@ -55,13 +55,16 @@ export function factChanges<S extends Symptom>(quick: Facts<S>, careful: Facts<S
           : `${name}: ${symptomLine(before)} → ${symptomLine(after)}`;
     changes.push({ kind: "symptom", name, label, symptom: after ?? null, previous: before ?? null });
   }
-  for (const [kind, title] of [["medications", "복용약"], ["allergies", "알레르기"]] as const) {
-    for (const value of careful[kind].filter((item) => !quick[kind].includes(item))) {
+  // 과거력 too: on-device heard "위험 진단", turbo "위염 진단" (2026-10-09).
+  for (const [kind, title] of [["medications", "복용약"], ["allergies", "알레르기"], ["medical_history", "과거력"]] as const) {
+    const mine = quick[kind] ?? [];
+    const theirs = careful[kind] ?? [];
+    for (const value of theirs.filter((item) => !mine.includes(item))) {
       changes.push({ kind, value, add: true, label: `${title} 추가: ${value}` });
     }
     // Only a name turbo heard as another name is replaced ("스타일에 500mg" → "타이레놀 500mg").
-    if (!careful[kind].some((item) => !quick[kind].includes(item))) continue;
-    for (const value of quick[kind].filter((item) => !careful[kind].includes(item))) {
+    if (!theirs.some((item) => !mine.includes(item))) continue;
+    for (const value of mine.filter((item) => !theirs.includes(item))) {
       changes.push({ kind, value, add: false, label: `${title} 빼기: ${value}` });
     }
   }

@@ -49,7 +49,7 @@ def merged(device: str, turbo: str) -> dict[str, set]:
 
     Mirrors factChanges and resolveVerification (apps/web): symptoms turbo heard are added or take turbo's
     presence, onset and any severity, count or trend turbo heard; nothing only the on-device text heard is
-    dropped; a medicine or allergy is removed only when turbo heard another name in its place.
+    dropped; a medicine, allergy or past condition is removed only when turbo heard another name in its place.
     """
     quick, careful = extract_intake(device), extract_intake(turbo)
     symptoms = {s.name: s for s in quick.symptoms}
@@ -61,14 +61,13 @@ def merged(device: str, turbo: str) -> dict[str, set]:
             details = {key: getattr(after, key) for key in ("severity", "frequency", "trend") if getattr(after, key)}
             symptoms[after.name] = before.model_copy(update={"status": after.status, "onset": after.onset, **details})
     lists = {}
-    for key in ("medications", "allergies"):
-        mine, theirs = getattr(quick, key), getattr(careful, key)
+    for key, field in (("medications", "medications"), ("allergies", "allergies"), ("history", "medical_history")):
+        mine, theirs = getattr(quick, field), getattr(careful, field)
         added = [item for item in theirs if item not in mine]
         lists[key] = set(added + ([item for item in mine if item in theirs] if added else mine))
     return {
         "symptoms": {(s.name, s.status, s.onset, s.severity, s.frequency, s.trend) for s in symptoms.values()},
         **lists,
-        "history": set(quick.medical_history),
     }
 
 
