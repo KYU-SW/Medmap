@@ -172,3 +172,57 @@ def test_corrected_dose_and_age_in_words() -> None:
     assert extract_intake("타이레놀 한 알, 아니 두 알 먹었어요").medications == ["타이레놀 두 알"]
     assert extract_intake("저는 서른다섯 살 여자예요").profile.age == 35
     assert extract_intake("스무 살이에요").profile.age == 20
+
+
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("2주 전부터 피곤하고 입맛이 없어요", {"피로": "present", "식욕부진": "present"}),  # 하고 ends a verb here
+        ("일주일 전부터 귀에서 삐 소리가 나고 잘 안 들려요", {"이명": "present", "청력 저하": "present"}),
+        ("열은 어제 39도까지 났었는데 지금은 내렸어요", {"발열": "absent"}),
+        # turbo drops the full stop: only the headache is gone, not the cough before it.
+        ("기침이 계속 나요 머리는 아팠는데 지금은 괜찮아졌어요", {"기침": "present", "두통": "absent"}),
+    ],
+)
+def test_script_phrases_of_2026_10_09(text: str, expected: dict) -> None:
+    assert {item.name: item.status for item in extract_intake(text).symptoms} == expected
+
+
+# Recordings of 2026-10-09 (scripts 28~36), as the phone heard them.
+def test_score_now_stays_with_its_symptom() -> None:
+    # turbo; the "now" score went to 저림, the next symptom, before.
+    text = "사흘 전부터 허리 아래쪽이 아파요 처음에는 7점이었는데 지금은 4점이에요 다리가 저려요"
+    assert facts(text) == {"요통": ("present", "7/10점 → 4/10점", None), "저림": ("present", None, None)}
+    assert "요통" in facts("사흘 전부터 허리 아래쪽에 아파요")  # on-device
+
+
+def test_corrected_dose_across_a_question_mark_and_allergy_with_에() -> None:
+    turbo = extract_intake("타이레놀 한 알? 아니, 두 알 먹었어요. 페니실린 알레르기가 있어요.")
+    device = extract_intake("타이레놀 한알 아니 두알 먹었어요 페니실린에 알레르기가 있어요")
+    assert (turbo.medications, device.medications) == (["타이레놀 두 알"], ["타이레놀 두 알"])
+    assert device.allergies == ["페니실린"]
+
+
+def test_meal_onset_without_부터_and_a_count_is_not_an_onset() -> None:
+    symptoms = {item.name: item.onset for item in
+                extract_intake("아까 점심 먹고 나서 명치가 아파요 참기 힘들 정도예요 하루 서너 번 토했어요").symptoms}
+    assert symptoms == {"복통": "아까 점심 먹고 나서", "구토": None}
+
+
+def test_on_device_spelling_of_메스꺼워요() -> None:
+    assert "메스꺼움" in facts("속이 매스꺼워요")
+
+
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        # Said by the user without a script: patients do not always speak politely to a recorder.
+        ("어제부터 머리가 많이 아픔 그리고 오한도 좀 있음", {"두통": ("present", "심함", None), "오한": ("present", None, None)}),
+        ("열 없음. 기침함. 코가 막힘", {"발열": ("absent", None, None), "기침": ("present", None, None),
+                                     "코막힘": ("present", None, None)}),
+        ("배가 아팠는데 지금은 괜찮음", {"복통": ("absent", None, None)}),
+        ("콧막힘 있음", {"코막힘": ("present", None, None)}),  # the name itself ends in 힘
+    ],
+)
+def test_plain_음슴체_endings(text: str, expected: dict) -> None:
+    assert facts(text) == expected

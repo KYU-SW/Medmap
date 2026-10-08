@@ -221,7 +221,7 @@ RULES = (
     SymptomRule(
         "요통",
         re.compile(
-            rf"요통|허리\s*통증|허리(?:\s*(?:아래|위|밑)\s*쪽?(?:이|은|도)?)?(?:가|는|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
+            rf"요통|허리\s*통증|허리(?:\s*(?:아래|위|밑)\s*쪽?(?:이|은|도|에)?)?(?:가|는|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
             r"(?:아프|아파|아팠|아픈|쑤시|쑤셔|결리|결려|뻐근|당기|당겨|삐끗)"
         ),
         re.compile(
@@ -240,7 +240,7 @@ RULES = (
     ),
     SymptomRule(
         "메스꺼움",
-        re.compile(r"메스꺼|메스껍|메슥|미식거|울렁|구역질|구역감|헛구역|토할\s*(?:것\s*)?같"),
+        re.compile(r"[메매]스꺼|[메매]스껍|메슥|미식거|울렁|구역질|구역감|헛구역|토할\s*(?:것\s*)?같"),
         re.compile(
             rf"(?:메스꺼움|구역감|구역질|울렁거림){PARTICLE}\s*{ABSENT_ENDING}|"
             r"메스껍지\s*않|안\s*메스꺼|울렁거리지\s*않"
@@ -588,7 +588,7 @@ RULES = (
     ),
     SymptomRule(
         "청력 저하",
-        re.compile(r"청력|난청|(?:귀|소리|말)(?:가|이|도)?\s*(?:잘\s*)?안\s*들려|(?:귀|소리|말)(?:가|이|도)?\s*잘\s*안\s*들리"),
+        re.compile(r"청력|난청|(?<![가-힣])잘\s*안\s*들(?:려|리)|(?:귀|소리|말)(?:가|이|도)?\s*(?:잘\s*)?안\s*들려|(?:귀|소리|말)(?:가|이|도)?\s*잘\s*안\s*들리"),
         re.compile(rf"(?:청력\s*저하|난청){PARTICLE}\s*{ABSENT_ENDING}|(?:귀|소리)(?:는|도)?\s*잘\s*들려"),
         "귀",
     ),
@@ -611,7 +611,7 @@ SITE_WORD_PATTERN = re.compile(
 
 ONSET_PATTERN = re.compile(
     r"(?<![가-힣A-Za-z0-9])(?:"
-    r"(?:아까\s*)?(?:아침|점심|저녁)(?:\s*밥)?(?:을|를)?\s*먹고\s*(?:나서|난\s*(?:뒤|후))?\s*부터|아까부터|"
+    r"(?:아까\s*)?(?:아침|점심|저녁)(?:\s*밥)?(?:을|를)?\s*먹고\s*(?:(?:나서|난\s*(?:뒤|후))(?:\s*부터)?|부터)|아까부터|"
     r"\d{1,2}\s*월\s*\d{1,2}\s*일(?:\s*(?:쯤|경))?(?:\s*부터)?|"
     r"(?:지난\s*주|저번\s*주|이번\s*주)\s*[월화수목금토일]요일(?:부터|쯤)?|"
     r"[월화수목금토일]요일(?:부터|쯤)?|"
@@ -623,7 +623,7 @@ ONSET_PATTERN = re.compile(
     # "어제까지 설사했는데" says when it ended, not when it started.
     r"(?:오늘|어제|그제|그저께|엊그제|방금|아침|점심|저녁|밤|새벽)(?!\s*까지)(?:부터)?|"
     r"(?:하루|이틀|사흘|나흘|닷새|엿새|이레|여드레|아흐레|열흘)"
-    r"(?!\s*에|\s*(?:\d+|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*(?:번|회|차례))"
+    r"(?!\s*에|\s*(?:\d+|한두|두세|서너|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\s*(?:번|회|차례))"
     r"(?:\s*(?:전부터|전|동안|째))?|"
     r"(?:일주일|한\s*주|두\s*주|한\s*달|두\s*달)(?!\s*에)"
     r"(?:\s*(?:전부터|전|동안|째))?|"
@@ -715,7 +715,7 @@ MEDICATION_TIMING_PATTERN = re.compile(
 )
 ALLERGY_PATTERN = re.compile(
     # "페니실린, 알레르기가 있어요": STT can put a comma between the name and the word.
-    r"([가-힣A-Za-z0-9-]{2,20})\s*,?\s*알레르기(?!\s*약)"
+    r"([가-힣A-Za-z0-9-]{2,20}?)(?:에)?\s*,?\s*알레르기(?!\s*약)"
     r"(?:가|는|도)?\s*(?:있|있어|있습니다|예요|입니다|반응)"
 )
 # Names STT often gets one syllable wrong: "페니슐린", "헤니실린", "타이레농".
@@ -772,7 +772,7 @@ WEAK_ORGAN_PATTERN = re.compile(r"(?<![가-힣])(간|신장|콩팥|심장|폐|�
 ADMISSION_PATTERN = re.compile(r"(?<![가-힣])([가-힣]{2,10}?)(?:으로|로)\s*입원")
 MEDICINE_SUFFIX_PATTERN = re.compile(r"\s*약(?!간|해|하|한|했)|제(?:를|을|도|는|은|\s|$)")
 MEDICAL_SIGNAL_PATTERN = re.compile(
-    r"아프|아파|아픈|통증|열|기침|숨|호흡|답답|구토|토했|어지|설사|메스꺼|오한|"
+    r"아프|아파|아픈|통증|열|기침|숨|호흡|답답|구토|토했|어지|설사|[메매]스꺼|오한|"
     r"콧물|발진|붓|부었|부어|저리|저려|마비|출혈|두근|약|알레르기|가래|막혀|가렵|가려|"
     r"두드러기|변비|피곤|쑤시|쑤셔|울렁|몸살|현기증|침침|이명|수술|진단|"
     r"감기|배탈|체했|체한|소화|입맛|식욕|잠을|잠이|쓰려|쓰리|더부룩|벌렁|땀|경련|"
@@ -1110,6 +1110,12 @@ def _severity_for_symptom(
             text[match.end():],
         ):
             continue
+        # "처음엔 7점이었는데 지금은 4점": the second score is the "now" of the first, read with it below
+        # ("7/10점 → 4/10점"), not a score of its own for whatever symptom comes next.
+        if match.re is PAIN_SCORE_PATTERN and re.search(
+            r"\d\s*(?:점|정도)[^.!?。]{0,25}(?:지금은|현재는|이제는?)\s*(?:한\s*)?$", text[:match.start()]
+        ):
+            continue
         owner = owner_for(match)
         owner_overlaps_current = owner[0] < end and owner[1] > start
         if owner != (start, end) and not owner_overlaps_current:
@@ -1138,10 +1144,6 @@ def _severity_for_symptom(
     if not candidates:
         return None
     latest = max(candidates, key=lambda match: match.start())
-    earlier_scores = [match for match in candidates if match.re is PAIN_SCORE_PATTERN and match.start() < latest.start()]
-    # "처음엔 7점이었는데 지금은 4점": read from the first score so it becomes "7/10점 → 4/10점".
-    if earlier_scores and re.search(r"(?:지금은|현재는|이제는?)\s*(?:한\s*)?$", text[:latest.start()]):
-        latest = earlier_scores[-1]
     severity = _severity(latest.group(0))
     if severity and latest.re is PAIN_SCORE_PATTERN:
         rest = SENTENCE_SPLIT_PATTERN.split(text[latest.end():], maxsplit=1)[0]
@@ -1247,7 +1249,7 @@ def _extract_medications(text: str) -> tuple[list[str], list[str]]:
     """Return medication lines for the record ("타이레놀 500mg 하루 2회") and the bare names."""
     names: list[str] = []
     lines: list[str] = []
-    clause_boundaries = re.compile(r"[.!?。](?!\d)|(?:\s+)(?:그리고|하지만|그러나|또한)(?:\s+)|(?<=[가-힣]요)\s+")
+    clause_boundaries = re.compile(r"[.!?。](?!\d)(?!\s*아니)|(?:\s+)(?:그리고|하지만|그러나|또한)(?:\s+)|(?<=[가-힣]요)\s+")
     for clause in clause_boundaries.split(text):
         if not MEDICATION_VERB_PATTERN.search(clause):
             continue
@@ -1278,11 +1280,11 @@ def _extract_medications(text: str) -> tuple[list[str], list[str]]:
             tail = clause[position + len(name):min(next_position, position + len(name) + 30)]
             dose = DOSE_PATTERN.search(tail)
             # "한 알, 아니 두 알": the patient corrected the dose.
-            corrected = dose and re.match(r"\s*,?\s*아니(?:고|라)?\s*,?\s*", tail[dose.end():])
+            corrected = dose and re.match(r"\s*[,?]?\s*아니(?:고|라)?\s*,?\s*", tail[dose.end():])
             if corrected:
                 dose = DOSE_PATTERN.match(tail, dose.end() + corrected.end()) or dose
             doses = [
-                re.sub(r"밀리그램|밀리", "mg", re.sub(r"(?<=\d)\s+", "", dose.group(0)))
+                re.sub(r"(?<=[한두세반])(?=[알정포봉캡])", " ", re.sub(r"밀리그램|밀리", "mg", re.sub(r"(?<=\d)\s+", "", dose.group(0))))
                 for dose in [dose] if dose
             ]
             timings = [
@@ -1319,6 +1321,29 @@ def _spoken_temperature_to_digits(text: str) -> str:
     return SPOKEN_TEMPERATURE_PATTERN.sub(digits, text)
 
 
+# Notes written or said in 음슴체 ("머리가 많이 아픔, 오한도 있음, 약 먹었음") read as the polite endings the rules know.
+# Whole words only, except 함/됨/ㅆ음 endings: "콧막힘" is the symptom's name, "기침함" is "기침해요".
+PLAIN_ENDING_PATTERN = re.compile(
+    r"((?<![가-힣])(?:아픔|없음|괜찮음|남|막힘|쑤심|결림)|함|됨|[가-힣]음)(?=[\s.,!?]|$)"
+)
+PLAIN_ENDINGS = {"아픔": "아파요", "없음": "없어요", "괜찮음": "괜찮아요", "함": "해요", "남": "나요", "막힘": "막혀요",
+                 "쑤심": "쑤셔요", "결림": "결려요", "됨": "돼요"}
+
+
+def _polite_endings(text: str) -> str:
+    def polite(match: re.Match[str]) -> str:
+        word = match.group(1)
+        if word in PLAIN_ENDINGS:
+            return PLAIN_ENDINGS[word]
+        stem = word[0]
+        # 있음, 먹었음, 아팠음: a syllable ending in ㅆ before 음 → 있어요, 먹었어요, 아팠어요.
+        if (ord(stem) - 0xAC00) % 28 == 20:
+            return f"{stem}어요"
+        return word
+
+    return PLAIN_ENDING_PATTERN.sub(polite, text)
+
+
 def _space_glued_words(text: str) -> str:
     """STT and quick typing drop spaces: "가슴이답답하고아파요" → "가슴이 답답하고 아파요"."""
     text = GLUED_SUBJECT_PATTERN.sub(r"\1 ", text)
@@ -1332,7 +1357,7 @@ LISTED_BEFORE_NEGATION_PATTERN = re.compile(rf"\s*{LIST_CONNECTOR}{NEGATION_LATE
 # "머리도 아팠지만 지금은 괜찮아졌어요": had it, gone now.
 GONE_NOW_PATTERN = re.compile(
     # "열은 났었는데 지금은 내렸어요", "어제까지 설사했는데 오늘은 안 했어요"
-    r"[가-힣]{0,3}?(?:지만|는데)\s+(?:지금은|이제는?|이젠|현재는|오늘은)\s*"
+    r"(?:(?!요\s|고\s)[^.?!,]){0,15}?(?:지만|는데)\s+(?:지금은|이제는?|이젠|현재는|오늘은)\s*"
     r"(?:괜찮|다\s*나았|나았|없어졌|안\s*아파|(?:열이\s*)?(?:다\s*)?내렸|떨어졌|멈췄|그쳤|안\s*했|안\s*해)"
 )
 # "페니실린을 먹고 두드러기가 생긴 적이 있어요": a past reaction to a medicine is an allergy, not a symptom now.
@@ -1342,15 +1367,22 @@ DRUG_REACTION_PATTERN = re.compile(
 )
 
 
+# "피곤하고 입맛이 없어요": 하고 after a 하다 word ends a verb, it does not list a noun like "열하고 오한은".
+HADA_ROOT_PATTERN = re.compile(r"(?:피곤|답답|더부룩|뻐근|따끔|얼얼|묵직|나른|무기력|어질어질|울렁|메슥|으슬으슬|오싹)$")
+
+
 def _is_negated_in_list(text: str, evidence: re.Match[str]) -> bool:
     after = text[evidence.end():]
     if re.search(rf"{LIST_CONNECTOR}$", evidence.group(0)):  # "열이나" already took the connector
         return bool(re.match(NEGATION_LATER_IN_CLAUSE, after))
-    return bool(LISTED_BEFORE_NEGATION_PATTERN.match(after) or GONE_NOW_PATTERN.match(after))
+    listed = LISTED_BEFORE_NEGATION_PATTERN.match(after)
+    if listed and HADA_ROOT_PATTERN.search(evidence.group(0)) and re.match(r"\s*하고", after):
+        listed = None
+    return bool(listed or GONE_NOW_PATTERN.match(after))
 
 
 def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtractionResponse:
-    normalized = _spoken_temperature_to_digits(_space_glued_words(" ".join(text.strip().split())))
+    normalized = _spoken_temperature_to_digits(_space_glued_words(_polite_endings(" ".join(text.strip().split()))))
     matches: list[tuple[SymptomRule, re.Match[str], bool]] = []
     for rule in RULES:
         mention = _first_symptom_match(rule.mention, normalized)
