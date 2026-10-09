@@ -426,8 +426,8 @@ RULES = (
     ),
     SymptomRule(
         "토혈",
-        re.compile(r"토혈|피(?:를)?\s*토했|피(?:를)?\s*토해|토(?:에|한\s*것에)\s*피|피가\s*섞인\s*구토"),
-        re.compile(rf"토혈{PARTICLE}\s*{ABSENT_ENDING}"),
+        re.compile(r"토혈|피(?:를)?\s*토했|피(?:를)?\s*토해|토(?:에|한\s*것에)\s*피|피가\s*섞인\s*구토|토할\s*때\s*피"),
+        re.compile(rf"토혈{PARTICLE}\s*{ABSENT_ENDING}|피(?:는|를|도)?\s*(?:안\s*토(?:했|해)|토하지\s*않)"),
     ),
     SymptomRule(
         "혈변",
@@ -1325,9 +1325,9 @@ def _spoken_temperature_to_digits(text: str) -> str:
 # Notes written or said in 음슴체 ("머리가 많이 아픔, 오한도 있음, 약 먹었음") read as the polite endings the rules know.
 # Whole words only, except 함/됨/ㅆ음 endings: "콧막힘" is the symptom's name, "기침함" is "기침해요".
 PLAIN_ENDING_PATTERN = re.compile(
-    r"((?<![가-힣])(?:아픔|없음|괜찮음|남|막힘|쑤심|결림|마름)|함|됨|[가-힣]음)(?=[\s.,!?]|$)"
+    r"((?<=숨\s)참|(?<=숨이\s)참|(?<=못\s)잠|(?<![가-힣])(?:아픔|없음|괜찮음|남|막힘|쑤심|결림|마름)|아님|피움|마심|(?<=[가-힣])임|함|됨|[가-힣]음)(?=[\s.,!?]|$)"
 )
-PLAIN_ENDINGS = {"아픔": "아파요", "없음": "없어요", "괜찮음": "괜찮아요", "함": "해요", "남": "나요", "막힘": "막혀요",
+PLAIN_ENDINGS = {"참": "차요", "잠": "자요", "아님": "아니에요", "피움": "피워요", "마심": "마셔요", "임": "이에요", "아픔": "아파요", "없음": "없어요", "괜찮음": "괜찮아요", "함": "해요", "남": "나요", "막힘": "막혀요",
                  "쑤심": "쑤셔요", "결림": "결려요", "마름": "말라요", "됨": "돼요"}
 
 

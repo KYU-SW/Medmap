@@ -262,3 +262,29 @@ def test_contrast_medium_allergy_and_metformin_heard_wrong() -> None:
     assert (result.medications, result.allergies) == (["갑상선약"], ["조영제"])
     for heard in ("매트프로민을 하루 두 번 먹고 있어요", "매트 프로면 하루 두 번 먹고 있어요"):
         assert extract_intake(heard).medications == ["메트포르민 하루 2회"]
+
+
+# 반말·음슴체 and the seven symptoms not recorded yet, checked as text (2026-10-09).
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("머리 아파", {"두통": "present"}),
+        ("기침은 안 나", {"기침": "absent"}),
+        ("머리 아팠는데 지금은 괜찮아", {"두통": "absent"}),
+        ("숨 참", {"호흡곤란": "present"}),
+        ("잠 못 잠", {"불면": "present"}),
+        ("설사 안 함", {"설사": "absent"}),
+        ("토할 때 피가 섞여 나왔음", {"토혈": "present"}),
+        ("피는 안 토했어요", {"토혈": "absent", "구토": "present"}),
+        ("입안이 헐었어", {"입안 통증": "present"}),
+        ("숨쉴 때 쌕쌕거림", {"쌕쌕거림": "present"}),
+        ("오줌이 찔끔찔끔 나옴", {"배뇨 곤란": "present"}),
+    ],
+)
+def test_casual_speech(text: str, expected: dict) -> None:
+    assert {item.name: item.status for item in extract_intake(text).symptoms} == expected
+
+
+def test_casual_profile() -> None:
+    profile = extract_intake("나 서른다섯 살 여자임. 임신 아님. 담배 안 피움. 술은 가끔 마심").profile
+    assert (profile.age, profile.sex, profile.pregnancy, profile.smoking, profile.drinking) == (35, "female", "no", "never", "yes")
