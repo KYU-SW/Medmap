@@ -126,6 +126,34 @@ export function tracksFrequency(name: string): boolean {
   return FREQUENCY_SYMPTOMS.has(name);
 }
 
+// The rules write a pill taken with no name said anywhere as "이름 모르는 약 자기 전 한 알" (2026-10-09).
+const UNNAMED_MEDICINE = "이름 모르는 약";
+
+/** Medicine lines whose name the patient still has to give. */
+export function unnamedMedicines(list: string): string[] {
+  return parseList(list).filter((line) => line.startsWith(UNNAMED_MEDICINE));
+}
+
+/** The medicine list with the patient's name in place of "이름 모르는 약" on one line. A line with only that
+ * name ("타이레놀") is dropped: "타이레놀 자기 전 한 알" says the same and more. */
+export function nameMedicine(list: string, line: string, name: string): string {
+  return parseList(list)
+    .filter((item) => item !== name)
+    .map((item) => (item === line ? `${name}${item.slice(UNNAMED_MEDICINE.length)}` : item))
+    .join(", ");
+}
+
+const MEDICINE_DETAIL = /\d|(?:반|한|두|세)\s*(?:알|정|포|봉|캡슐)|하루|아침|점심|저녁|자기\s*전|식후|식전|마다|필요할\s*때|아플\s*때/;
+
+/** Medicines said by name only ("타이레놀 먹었어요"): how much and when matter to the doctor. */
+export function medicinesWithoutDose(list: string): string[] {
+  return parseList(list).filter((line) => !line.startsWith(UNNAMED_MEDICINE) && !MEDICINE_DETAIL.test(line));
+}
+
+export function addMedicineDetail(list: string, line: string, detail: string): string {
+  return parseList(list).map((item) => (item === line ? `${item} ${detail}` : item)).join(", ");
+}
+
 export function parseList(value: string): string[] {
   return [...new Set(value.split(/[,，、\n]/).map((item) => item.trim()).filter(Boolean))];
 }

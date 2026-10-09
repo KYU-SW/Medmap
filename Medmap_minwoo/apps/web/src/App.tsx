@@ -13,10 +13,14 @@ import {
   followUpQuestions,
   formatOnset,
   localDateString,
+  addMedicineDetail,
+  medicinesWithoutDose,
+  nameMedicine,
   parseList,
   SUPPORTED_SYMPTOMS,
   tracksFrequency,
   type FollowUpQuestion,
+  unnamedMedicines,
   URGENT_NOTICE,
   severeNotice,
   severeSymptoms,
@@ -761,6 +765,26 @@ export default function App() {
     setConfirmed(false);
   }
 
+  // Questions about the medicine list: a pill taken without a name, a medicine named without how much.
+  const medicineQuestions = [
+    ...unnamedMedicines(listDrafts.medications).map((line) => ({
+      key: `medicine:${line}`,
+      question: `먹은 약 이름이 뭔가요? (${line.replace("이름 모르는 약", "").trim() || "약"})`,
+      placeholder: "예: 타이레놀",
+      choices: undefined,
+      apply: (answer: string) => answer.trim()
+        && updateListDraft("medications", nameMedicine(listDrafts.medications, line, answer.trim())),
+    })),
+    ...medicinesWithoutDose(listDrafts.medications).map((line) => ({
+      key: `dose:${line}`,
+      question: `${line}: 한 번에 얼마나 먹었나요?`,
+      placeholder: "예: 500mg, 자기 전 한 알",
+      choices: ["반 알", "한 알", "두 알"],
+      apply: (answer: string) => answer.trim()
+        && updateListDraft("medications", addMedicineDetail(listDrafts.medications, line, answer.trim())),
+    })),
+  ].filter((question) => !skippedQuestions.has(question.key));
+
   function updateListDraft(key: keyof ListDrafts, value: string) {
     setListDrafts((current) => ({ ...current, [key]: value }));
     setConfirmed(false);
@@ -1233,7 +1257,8 @@ export default function App() {
                 <p>원문을 확인하고 필요하면 아래 ‘증상 직접 추가’로 넣어 주세요.</p>
               </div>
             )}
-            {followUpQuestions(intake.symptoms).filter((question) => !skippedQuestions.has(question.key)).length > 0 && (
+            {followUpQuestions(intake.symptoms).filter((question) => !skippedQuestions.has(question.key)).length
+              + medicineQuestions.length > 0 && (
               <div className="follow-up">
                 <strong>추가로 알려 주세요</strong>
                 {followUpQuestions(intake.symptoms)
@@ -1279,6 +1304,38 @@ export default function App() {
                       </div>
                     </div>
                   ))}
+                {medicineQuestions.map(({ key, question, placeholder, choices, apply }) => (
+                  <div className="follow-up-item" key={key}>
+                    <p>{question}</p>
+                    {choices && (
+                      <div className="follow-up-choices">
+                        {choices.map((choice) => (
+                          <button className="button--secondary" type="button" key={choice} onClick={() => apply(choice)}>
+                            {choice}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    <div className="follow-up-answer">
+                      <input
+                        value={answerDrafts[key] ?? ""}
+                        placeholder={placeholder}
+                        aria-label={question}
+                        onChange={(event) => setAnswerDrafts((current) => ({ ...current, [key]: event.target.value }))}
+                      />
+                      <button className="button--secondary" type="button" onClick={() => apply(answerDrafts[key] ?? "")}>
+                        입력
+                      </button>
+                      <button
+                        className="button--secondary"
+                        type="button"
+                        onClick={() => setSkippedQuestions((current) => new Set(current).add(key))}
+                      >
+                        건너뛰기
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
             <p>잘못 정리된 내용은 직접 고친 뒤 확인해 주세요.</p>
