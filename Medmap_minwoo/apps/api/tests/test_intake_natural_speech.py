@@ -63,8 +63,14 @@ def test_taking_a_medicine_without_a_reaction_is_not_an_allergy() -> None:
     assert (result.medications, result.allergies) == (["타이레놀"], [])
 
 
-def test_breathing_that_got_better_is_still_a_finding() -> None:
-    assert [(item.name, item.status) for item in extract_intake("숨 쉬기가 괜찮아졌어요").symptoms] == [("호흡곤란", "present")]
+def test_better_is_still_a_finding_but_fine_now_is_gone() -> None:
+    # 2026-10-09 user decision: plain "괜찮아졌어요" is gone now; "좀/조금/많이 괜찮아졌어요" is better, still there.
+    def found(text: str) -> list:
+        return [(item.name, item.status, item.trend) for item in extract_intake(text).symptoms]
+    assert found("숨 쉬기가 좀 괜찮아졌어요") == [("호흡곤란", "present", "improving")]
+    assert found("숨 쉬기가 괜찮아졌어요") == [("호흡곤란", "absent", None)]
+    assert found("배는 괜찮아졌어요") == [("복통", "absent", None)]
+    assert found("머리가 많이 괜찮아졌어요") == [("두통", "present", "improving")]
 
 
 RHINITIS_TURBO = (
@@ -311,3 +317,38 @@ def test_pill_without_a_name() -> None:
     assert extract_intake("자기 전에 한 알 먹어요").medications == ["이름 모르는 약 자기 전 한 알"]
     assert extract_intake("아침마다 두 알씩 먹고 있어요").medications == ["이름 모르는 약 아침마다 두 알"]
     assert extract_intake("타이레놀을 먹어요. 자기 전에 한 알 먹어요").medications == ["타이레놀"]
+
+
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        # on-device, 2026-10-09: "체형"(체한) 건지 doubts itself, not the breathing said before it
+        ("숨이 차요 체형 건지는 모르겠어요", {"호흡곤란": ("present", None)}),
+        ("기침이 나요 감기인지 모르겠어요", {"기침": ("present", None)}),
+        ("열이 나는 것 같아요 잘 모르겠어요", {"발열": ("uncertain", None)}),
+        # a body part with how it changed
+        ("배가 좀 나아졌어", {"복통": ("present", "improving")}),
+        ("허리가 좀 나아졌어요", {"요통": ("present", "improving")}),
+        ("무릎이 좀 나아졌어요", {"관절 통증": ("present", "improving")}),
+        ("머리가 더 심해졌어", {"두통": ("present", "worsening")}),
+        ("가슴이 좀 나아졌어요", {}),  # 흉통 or 답답함: not guessed
+    ],
+)
+def test_doubt_and_change_without_a_symptom_word(text: str, expected: dict) -> None:
+    assert {item.name: (item.status, item.trend) for item in extract_intake(text).symptoms} == expected
+
+
+@pytest.mark.parametrize(
+    ("text", "medications", "allergies"),
+    [
+        # Review of 2026-10-09: "7 정도" is how bad, not seven tablets; "아무거나" is not a food.
+        ("배가 아파요 아픈 정도는 7 정도인데 아무것도 못 먹었어요", [], []),
+        ("타이레놀 먹었는데 아픈 건 5 정도예요", ["타이레놀"], []),
+        ("타이레놀 2정 먹었어요", ["타이레놀 2정"], []),
+        ("아무거나 먹으면 두드러기가 나요", [], []),
+        ("음식을 먹으면 가려워요", [], []),
+    ],
+)
+def test_words_that_only_look_like_a_dose_or_a_food(text: str, medications: list, allergies: list) -> None:
+    result = extract_intake(text)
+    assert (result.medications, result.allergies) == (medications, allergies)

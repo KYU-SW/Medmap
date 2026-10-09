@@ -31,6 +31,10 @@ IMPROVEMENT_PHRASE = (
     r"(?:(?:조금|좀|많이|전보다)\s*)?"
     r"(?:괜찮아졌|나아졌|호전됐|좋아졌|덜해졌|줄었)"
 )
+# "배가 좀 나아졌어요", "머리가 더 심해졌어": a body part with how it changed names the pain there.
+CHANGE_PHRASE = (
+    rf"(?:{IMPROVEMENT_PHRASE}|(?:(?:더|점점|많이|훨씬)\s*)?(?:심해졌|악화됐|나빠졌))"
+)
 RESOLVED_STATE = (
     r"(?:(?:완전히\s*)?(?:사라졌|없어졌|멈췄|가라앉았)|"
     r"(?:다|완전히)\s*(?:나았|괜찮아졌|좋아졌))"
@@ -61,7 +65,7 @@ RULES = (
             rf"두통|머리\s*통증|머리(?:가|는|도|야)?\s*(?:{INLINE_ONSET}\s*)?"
             rf"(?:같이\s*|함께\s*)?{INTENSITY_PHRASE}"
             rf"(?:아프|아파|아팠|아픈|지끈|욱신|띵)|"
-            rf"(?:두통|머리)(?:이|가|은|는|도)?\s*{IMPROVEMENT_PHRASE}"
+            rf"(?:두통|머리)(?:이|가|은|는|도)?\s*{CHANGE_PHRASE}"
         ),
         re.compile(
             rf"(?:두통|머리\s*통증)(?:은|이|도)?\s*{NOW_ADVERB}(?:없|아니)|"
@@ -124,6 +128,7 @@ RULES = (
         re.compile(
             rf"머리(?:랑|와|하고)\s*(?:배|복부|속)(?:가|는|도)?\s*"
             rf"(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}(?:아프|아파|아팠|아픈)|"
+            rf"(?:복통|(?<![가-힣])배)(?:가|는|도)?\s*{CHANGE_PHRASE}|"
             rf"(?:배|복부|속)(?:랑|과|하고)\s*머리(?:가|는|도)?\s*"
             rf"(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}(?:아프|아파|아팠|아픈)|"
             rf"(?:배|복부|속|명치|옆구리)(?:이|가|는|도|야)?\s*(?:{INLINE_ONSET}\s*)?"
@@ -168,7 +173,7 @@ RULES = (
         re.compile(
             rf"인후통|목\s*통증|목감기|목(?:이|은|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
             r"(?:아프|아파|아팠|아픈|따끔|따끈|따가|따갑|칼칼|부었|부어|붓)|"
-            rf"(?:인후통|목)(?:이|은|도)?\s*{IMPROVEMENT_PHRASE}|"
+            rf"(?:인후통|목)(?:이|은|도)?\s*{CHANGE_PHRASE}|"
             r"침(?:을)?\s*삼키기(?:가)?\s*(?:힘들|어렵|아프)|침(?:을)?\s*삼킬\s*때(?:마다)?\s*(?:아프|아파|따끔)"
         ),
         re.compile(
@@ -221,6 +226,7 @@ RULES = (
     SymptomRule(
         "요통",
         re.compile(
+            rf"(?:요통|허리)(?:가|는|도)?\s*{CHANGE_PHRASE}|"
             rf"요통|허리\s*통증|허리(?:\s*(?:아래|위|밑)\s*쪽?(?:이|은|도|에)?)?(?:가|는|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
             r"(?:아프|아파|아팠|아픈|쑤시|쑤셔|결리|결려|뻐근|당기|당겨|삐끗)"
         ),
@@ -345,6 +351,7 @@ RULES = (
     SymptomRule(
         "귀 통증",
         re.compile(
+            rf"귀(?:가|는|도)?\s*{CHANGE_PHRASE}|"
             rf"귀\s*통증|귀(?:가|는|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
             r"(?:아프|아파|아팠|아픈|찌르|먹먹|욱신)"
         ),
@@ -363,6 +370,7 @@ RULES = (
     SymptomRule(
         "치통",
         re.compile(
+            rf"(?:치통|(?<![가-힣])이|이빨|치아)(?:가|이|는|도)?\s*{CHANGE_PHRASE}|"
             rf"치통|(?:(?<![가-힣])이|이빨|치아|잇몸|어금니)(?:가|이|는|도)?\s*{INTENSITY_PHRASE}"
             r"(?:아프|아파|아팠|아픈|시려|시리|욱신|쑤셔)"
         ),
@@ -496,6 +504,7 @@ RULES = (
     SymptomRule(
         "관절 통증",
         re.compile(
+            rf"(?:관절통|{JOINT_PART})(?:이|가|은|는|도)?\s*{CHANGE_PHRASE}|"
             rf"관절통|(?:{JOINT_PART})(?:이|가|은|는|도)?\s*(?:{INLINE_ONSET}\s*)?{INTENSITY_PHRASE}"
             r"(?:아프|아파|아팠|아픈|쑤시|쑤셔|시큰|시려|결려|붓|부었)|"
             rf"(?:{JOINT_PART})\s*통증"
@@ -693,7 +702,7 @@ DRUG_NAME_PATTERN = re.compile(
 # replaced by a similar-sounding medicine, so the patient can correct it on the review screen.
 UNKNOWN_DOSED_MEDICATION_PATTERN = re.compile(
     r"(?<![가-힣A-Za-z])([가-힣A-Za-z]{2,10}?)(?:을|를|은|는|도)?\s*"
-    r"(?=\d+(?:\.\d+)?\s*(?:mg|밀리그램|mcg|정|알|캡슐)|(?:한|두|세|네)\s*(?:정|알|캡슐))"
+    r"(?=\d+(?:\.\d+)?\s*(?:mg|밀리그램|mcg|정(?!도)|알(?!레)|캡슐)|(?:한|두|세|네)\s*(?:정(?!도)|알(?!레)|캡슐))"
 )
 # STT's many spellings of "타이레놀" with no dose after them ("타이륜을 먹었어요", "타이레노 먹었어요"), kept as said.
 # ponytail: Tylenol only, the one name STT kept garbling in tests; add others when recordings show them.
@@ -704,12 +713,12 @@ MEDICATION_VERB_PATTERN = re.compile(
     r"먹|복용|처방|투여|맞았|맞고|흡입|뿌리|뿌려|바르|발라|발랐|붙이|붙여|붙였|마셨|마시|마셔"
 )
 DOSE_PATTERN = re.compile(
-    r"\d+(?:\.\d+)?\s*(?:mg|밀리그램|밀리|mcg|g|그램|ml|cc|정|알|캡슐|포|봉|방울|퍼프)|"
-    r"(?:한|두|세|반)\s*(?:알|정|포|봉|캡슐)"
+    r"\d+(?:\.\d+)?\s*(?:mg|밀리그램|밀리|mcg|g|그램|ml|cc|정(?!도)|알(?!레)|캡슐|포|봉|방울|퍼프)|"
+    r"(?:한|두|세|반)\s*(?:알(?!레)|정(?!도)|포|봉|캡슐)"
 )
 MEDICATION_TIMING_PATTERN = re.compile(
     r"하루(?:에)?\s*(?:\d+|한|두|세|네)\s*(?:번|회|차례)|(?:\d+|한|두|세|네|여섯)\s*시간\s*마다|"
-    r"하루(?=(?:에)?\s*(?:\d+|한|두|세|네|반)\s*(?:알|정|포|봉|캡슐))|"
+    r"하루(?=(?:에)?\s*(?:\d+|한|두|세|네|반)\s*(?:알(?!레)|정(?!도)|포|봉|캡슐))|"
     r"(?:아침|점심|저녁|자기\s*전|식후|식전)(?:\s*(?:,|하고|이랑)?\s*(?:아침|점심|저녁|자기\s*전))*"
     r"(?:\s*(?:에|마다|으로|로))?|(?:필요할|아플)\s*때"
 )
@@ -1300,7 +1309,7 @@ def _extract_medications(text: str) -> tuple[list[str], list[str]]:
     # on the review screen. Not when another sentence named it ("타이레놀을 먹어요. 자기 전에 한 알").
     if not names:
         for clause in clause_boundaries.split(text):
-            pill = re.search(r"(?:한|두|세|반|\d+)\s*(?:알|정|캡슐|포)", clause)
+            pill = re.search(r"(?:한|두|세|반|\d+)\s*(?:알(?!레)|정(?!도)|캡슐|포)", clause)
             if pill and MEDICATION_VERB_PATTERN.search(clause[pill.end():]):
                 timing = MEDICATION_TIMING_PATTERN.search(clause)
                 when = [re.sub(r"\s*(?:에|으로|로)$", "", re.sub(r"\s+", " ", timing.group(0)))] if timing else []
@@ -1419,11 +1428,11 @@ def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtra
             matches.append((rule, evidence, absent is not None))
     carried_matches, carried_spans = _carried_subject_matches(normalized, matches)
     matches += carried_matches
-    # "많이 먹으면 부어요", "그거 먹으면": an adverb or a pointer word is not what the patient reacts to.
+    # "많이 먹으면 부어요", "그거 먹으면", "아무거나 먹으면": not a thing the patient reacts to.
     reactions = [
         reaction for reaction in DRUG_REACTION_PATTERN.finditer(normalized)
         if not (NON_SUBJECT_WORD_PATTERN.fullmatch(reaction.group(1))
-                or re.fullmatch(r"이거|그거|저거|이것|그것|뭔가|뭘|뭐", reaction.group(1)))
+                or re.fullmatch(r"이거|그거|저거|이것|그것|뭔가|뭘|뭐|뭐든지?|아무거나|아무것이나|음식|밥", reaction.group(1)))
     ]
     matches = [
         (rule, evidence, is_absent or _is_negated_in_list(normalized, evidence))
@@ -1482,6 +1491,9 @@ def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtra
         trend = next(filter(None, (
             _trend_for_symptom(normalized, start, end, mention_positions) for start, end in mentions[rule.name]
         )), None)
+        # "배는 괜찮아졌어요" says it is gone; "좀 괜찮아졌어요" says it is better, still there.
+        if re.search(r"(?<!좀 )(?<!조금 )(?<!약간 )(?<!많이 )(?<!전보다 )괜찮아졌$", evidence.group(0)):
+            is_absent = True
         is_uncertain = _is_uncertain(normalized, evidence.start(), positions)
         if is_uncertain:
             is_absent = False
@@ -1651,7 +1663,10 @@ def _is_uncertain(text: str, evidence_start: int, positions: list[tuple[int, int
     for neighbour in (index + 1, index - 1):
         if 0 <= neighbour < len(spans):
             start, end = spans[neighbour]
-            if not mentions_other_symptom(start, end) and hedges(start, end):
+            # "숨이 차요 체한 건지는 모르겠어요", "기침이 나요 감기인지 모르겠어요": the next clause doubts
+            # something of its own, not the symptom said plainly before it.
+            doubts_its_own = re.search(r"(?:건지|인지|한지)(?:는|도)?\s*(?:잘\s*)?모르", text[start:end])
+            if not mentions_other_symptom(start, end) and not doubts_its_own and hedges(start, end):
                 return True
     return False
 
