@@ -1266,7 +1266,7 @@ def _extract_medications(text: str) -> tuple[list[str], list[str]]:
             # "어제 두 알", "아파서 두 알": a time, an adverb or a verb before the dose is not a medicine's name.
             if (NON_SUBJECT_WORD_PATTERN.fullmatch(match.group(1))
                     or re.fullmatch(r"매일|하루|한번|다시|그냥|이거|그거|저거|아니", match.group(1))
-                    or re.search(r"(?:서|고|며|면|니까|는데|지만)$", match.group(1))):
+                    or re.search(r"(?:서|고|며|면|니까|는데|지만|마다)$", match.group(1))):
                 continue
             if not any(start <= match.start() < start + len(name) + 3 for start, name in found):
                 found.append((match.start(), match.group(1)))
@@ -1296,6 +1296,16 @@ def _extract_medications(text: str) -> tuple[list[str], list[str]]:
             # "하루 한 알" reads timing first; "500mg 하루 2회" reads dose first.
             details = timings + doses if timings == ["하루"] else doses + timings
             lines.append(" ".join([name, *details]))
+    # "자기 전에 한 알 먹어요" with no medicine named anywhere: keep that a pill is taken, for the patient to name
+    # on the review screen. Not when another sentence named it ("타이레놀을 먹어요. 자기 전에 한 알").
+    if not names:
+        for clause in clause_boundaries.split(text):
+            pill = re.search(r"(?:한|두|세|반|\d+)\s*(?:알|정|캡슐|포)", clause)
+            if pill and MEDICATION_VERB_PATTERN.search(clause[pill.end():]):
+                timing = MEDICATION_TIMING_PATTERN.search(clause)
+                when = [re.sub(r"\s*(?:에|으로|로)$", "", re.sub(r"\s+", " ", timing.group(0)))] if timing else []
+                lines.append(" ".join(["이름 모르는 약", *when, re.sub(r"(?<=[한두세반])(?=[알정포캡])", " ", pill.group(0))]))
+                break
     return lines, names
 
 
@@ -1325,10 +1335,10 @@ def _spoken_temperature_to_digits(text: str) -> str:
 # Notes written or said in 음슴체 ("머리가 많이 아픔, 오한도 있음, 약 먹었음") read as the polite endings the rules know.
 # Whole words only, except 함/됨/ㅆ음 endings: "콧막힘" is the symptom's name, "기침함" is "기침해요".
 PLAIN_ENDING_PATTERN = re.compile(
-    r"((?<=숨\s)참|(?<=숨이\s)참|(?<=못\s)잠|(?<![가-힣])(?:아픔|없음|괜찮음|남|막힘|쑤심|결림|마름)|아님|피움|마심|(?<=[가-힣])임|함|됨|[가-힣]음)(?=[\s.,!?]|$)"
+    r"((?<=숨\s)참|(?<=숨이\s)참|(?<=못\s)잠|(?<![가-힣])(?:아픔|없음|괜찮음|남|막힘|쑤심|결림|마름|부음)|아님|피움|마심|(?<=[가-힣])임|함|됨|[가-힣]음)(?=[\s.,!?]|$)"
 )
 PLAIN_ENDINGS = {"참": "차요", "잠": "자요", "아님": "아니에요", "피움": "피워요", "마심": "마셔요", "임": "이에요", "아픔": "아파요", "없음": "없어요", "괜찮음": "괜찮아요", "함": "해요", "남": "나요", "막힘": "막혀요",
-                 "쑤심": "쑤셔요", "결림": "결려요", "마름": "말라요", "됨": "돼요"}
+                 "쑤심": "쑤셔요", "결림": "결려요", "마름": "말라요", "부음": "부어요", "됨": "돼요"}
 
 
 def _polite_endings(text: str) -> str:
@@ -1373,9 +1383,14 @@ GONE_NOW_PATTERN = re.compile(
     r"(?:괜찮|다\s*나았|나았|없어졌|안\s*아파|(?:열이\s*)?(?:다\s*)?내렸|떨어졌|멈췄|그쳤|안\s*했|안\s*해)"
 )
 # "페니실린을 먹고 두드러기가 생긴 적이 있어요": a past reaction to a medicine is an allergy, not a symptom now.
+# "새우를 먹으면 입술이 부어요": a reaction every time something is eaten is an allergy too.
+ALLERGIC_REACTION = r"(?:두드러기|발진|가려움|가려웠|가려워|가렵|붓|부었|부어|숨이\s*막|쇼크)"
 DRUG_REACTION_PATTERN = re.compile(
-    r"(?<![가-힣])([가-힣A-Za-z]{2,12}?)(?:을|를)\s*(?:먹고|먹었더니|먹은\s*(?:뒤|후)에?|맞고|맞았더니|복용하고)\s*"
-    r"[^.?!]{0,20}?(?:두드러기|발진|가려움|가려웠|붓|부었|숨이\s*막|쇼크)[^.?!]{0,15}?(?:적이|적도)\s*있"
+    # The particle may drop only before "먹으면": "아무것도 먹고 ... 아스피린을 먹고 두드러기" named 아무것도.
+    r"(?<![가-힣])([가-힣A-Za-z]{2,12}?)(?:(?:을|를|만)\s*"
+    r"(?:먹고|먹었더니|먹은\s*(?:뒤|후)에?|맞고|맞았더니|복용하고)\s*"
+    rf"[^.?!]{{0,20}}?{ALLERGIC_REACTION}[^.?!]{{0,15}}?(?:적이|적도)\s*있|"
+    rf"(?:을|를|만)?\s*(?:먹으면|먹기만\s*하면|먹을\s*때마다|맞으면)\s*[^.?!]{{0,20}}?{ALLERGIC_REACTION})"
 )
 
 
@@ -1404,7 +1419,12 @@ def extract_intake(text: str, reference_date: date | None = None) -> IntakeExtra
             matches.append((rule, evidence, absent is not None))
     carried_matches, carried_spans = _carried_subject_matches(normalized, matches)
     matches += carried_matches
-    reactions = list(DRUG_REACTION_PATTERN.finditer(normalized))
+    # "많이 먹으면 부어요", "그거 먹으면": an adverb or a pointer word is not what the patient reacts to.
+    reactions = [
+        reaction for reaction in DRUG_REACTION_PATTERN.finditer(normalized)
+        if not (NON_SUBJECT_WORD_PATTERN.fullmatch(reaction.group(1))
+                or re.fullmatch(r"이거|그거|저거|이것|그것|뭔가|뭘|뭐", reaction.group(1)))
+    ]
     matches = [
         (rule, evidence, is_absent or _is_negated_in_list(normalized, evidence))
         for rule, evidence, is_absent in matches

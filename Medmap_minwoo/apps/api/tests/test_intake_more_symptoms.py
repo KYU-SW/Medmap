@@ -205,8 +205,8 @@ def test_normal_temperature_is_not_turned_into_a_finding(text: str) -> None:
         # STT misheard "타이레놀"; the name is kept as said for the patient to correct, not swapped for a lookalike.
         ("테렌을 500mg을 한 번에 먹었고", ["테렌 500mg"]),
         ("타이륜을 두정 복용했어요", ["타이륜 두 정"]),
-        ("어제 두 알 먹었어요", []),
-        ("너무 아파서 두 알 먹었어요", []),
+        ("어제 두 알 먹었어요", ["이름 모르는 약 두 알"]),  # no name anywhere: kept for the patient to name
+        ("너무 아파서 두 알 먹었어요", ["이름 모르는 약 두 알"]),
         ("물을 500ml 마셨어요", []),
     ],
 )

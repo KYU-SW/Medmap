@@ -288,3 +288,26 @@ def test_casual_speech(text: str, expected: dict) -> None:
 def test_casual_profile() -> None:
     profile = extract_intake("나 서른다섯 살 여자임. 임신 아님. 담배 안 피움. 술은 가끔 마심").profile
     assert (profile.age, profile.sex, profile.pregnancy, profile.smoking, profile.drinking) == (35, "female", "no", "never", "yes")
+
+
+@pytest.mark.parametrize(
+    ("text", "allergies", "symptoms"),
+    [
+        ("새우를 먹으면 입술이 부어요", ["새우"], []),
+        ("새우 먹으면 입술 부음", ["새우"], []),
+        ("땅콩만 먹으면 두드러기가 나요", ["땅콩"], []),
+        ("많이 먹으면 다리가 부어요", [], ["부종"]),  # 많이 is not a food
+        ("우유를 먹으면 설사해요", [], ["설사"]),  # not an allergic reaction
+        # on-device, 2026-10-07: "아무것도" before another sentence's reaction is not an allergy
+        ("아직 아무것도 먹고 있어요 예전에 아스피린을 먹고 두드러기가 난 적이 있어요", ["아스피린"], []),
+    ],
+)
+def test_food_allergy_said_as_a_reaction(text: str, allergies: list, symptoms: list) -> None:
+    result = extract_intake(text)
+    assert (result.allergies, [item.name for item in result.symptoms]) == (allergies, symptoms)
+
+
+def test_pill_without_a_name() -> None:
+    assert extract_intake("자기 전에 한 알 먹어요").medications == ["이름 모르는 약 자기 전 한 알"]
+    assert extract_intake("아침마다 두 알씩 먹고 있어요").medications == ["이름 모르는 약 아침마다 두 알"]
+    assert extract_intake("타이레놀을 먹어요. 자기 전에 한 알 먹어요").medications == ["타이레놀"]
