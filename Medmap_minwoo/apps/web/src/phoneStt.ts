@@ -40,10 +40,6 @@ export function deviceSttReady(): Promise<boolean> {
   return deviceReady;
 }
 
-// The app has no web server of its own; until the intake rules move to the phone, it reaches the
-// PC API through `adb reverse tcp:8000 tcp:8000` (docs/ANDROID_APP.md).
-export const API_BASE = usesPhoneStt ? "http://localhost:8000" : "";
-
 // 16 kHz float samples → little-endian 16-bit PCM, base64 for the plugin bridge.
 export function pcm16Base64(chunks: Float32Array[]): string {
   const length = chunks.reduce((total, chunk) => total + chunk.length, 0);

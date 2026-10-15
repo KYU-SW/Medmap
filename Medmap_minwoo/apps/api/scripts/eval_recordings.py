@@ -3,7 +3,8 @@
 The scripts file holds one script per block: a line starting with its number, then the text on the next line.
 Each recording is matched to the most similar script. The script's facts (symptoms with presence, onset, severity,
 count and trend; medicines; allergies; history) are the answer; on-device and turbo facts are compared with them.
-turbo's spelled-out numbers are turned into digits with the app's own function (apps/web/src/transcriptCheck.ts).
+turbo's spelled-out numbers are turned into digits with the app's own function (apps/web/src/transcriptCheck.ts),
+and every text is read by the app's own rules (apps/web/src/intake/extractor.ts), both run by Node as they are.
 
     cd apps/api
     .venv\\Scripts\\python.exe -m scripts.eval_recordings results.jsonl scripts.txt
@@ -17,30 +18,40 @@ import re
 import subprocess
 import sys
 
-from app.services.intake_extractor import extract_intake
-
-TRANSCRIPT_CHECK = Path(__file__).resolve().parents[2] / "web" / "src" / "transcriptCheck.ts"
+WEB_SOURCE = Path(__file__).resolve().parents[2] / "web" / "src"
 
 
-def digits(texts: list[str]) -> list[str]:
-    """The app shows turbo's text through spokenNumbersToDigits; Node runs the TypeScript as is."""
+def run_app(module: str, function: str, values: list) -> list:
+    """Call one of the app's TypeScript functions on each value; Node runs the TypeScript as is."""
     program = (
-        f"import {{ spokenNumbersToDigits }} from {json.dumps(TRANSCRIPT_CHECK.as_uri())};"
+        f"import {{ {function} }} from {json.dumps((WEB_SOURCE / module).as_uri())};"
         "let input = ''; process.stdin.on('data', (chunk) => input += chunk);"
-        "process.stdin.on('end', () => console.log(JSON.stringify(JSON.parse(input).map(spokenNumbersToDigits))));"
+        f"process.stdin.on('end', () => console.log(JSON.stringify(JSON.parse(input).map((value) => {function}(value)))));"
     )
-    result = subprocess.run(["node", "--input-type=module", "-e", program], input=json.dumps(texts),
+    result = subprocess.run(["node", "--input-type=module", "-e", program], input=json.dumps(values),
                             capture_output=True, check=True, text=True, encoding="utf-8")
     return json.loads(result.stdout)
 
 
+READ: dict[str, dict] = {}
+
+
+def read_all(texts: list[str]) -> None:
+    """Read every text once with the app's rules (no reference date: onset dates are not scored)."""
+    new = sorted({text for text in texts if text not in READ})
+    READ.update(zip(new, run_app("intake/extractor.ts", "extractIntake", new)))
+
+
+SYMPTOM_KEYS = ("name", "status", "onset", "severity", "frequency", "trend")
+
+
 def facts(text: str) -> dict[str, set]:
-    result = extract_intake(text)
+    result = READ[text]
     return {
-        "symptoms": {(s.name, s.status, s.onset, s.severity, s.frequency, s.trend) for s in result.symptoms},
-        "medications": set(result.medications),
-        "allergies": set(result.allergies),
-        "history": set(result.medical_history),
+        "symptoms": {tuple(s[key] for key in SYMPTOM_KEYS) for s in result["symptoms"]},
+        "medications": set(result["medications"]),
+        "allergies": set(result["allergies"]),
+        "history": set(result["medical_history"]),
     }
 
 
@@ -51,22 +62,22 @@ def merged(device: str, turbo: str) -> dict[str, set]:
     presence, onset and any severity, count or trend turbo heard; nothing only the on-device text heard is
     dropped; a medicine, allergy or past condition is removed only when turbo heard another name in its place.
     """
-    quick, careful = extract_intake(device), extract_intake(turbo)
-    symptoms = {s.name: s for s in quick.symptoms}
-    for after in careful.symptoms:
-        before = symptoms.get(after.name)
+    quick, careful = READ[device], READ[turbo]
+    symptoms = {s["name"]: s for s in quick["symptoms"]}
+    for after in careful["symptoms"]:
+        before = symptoms.get(after["name"])
         if before is None:
-            symptoms[after.name] = after
+            symptoms[after["name"]] = after
         else:
-            details = {key: getattr(after, key) for key in ("severity", "frequency", "trend") if getattr(after, key)}
-            symptoms[after.name] = before.model_copy(update={"status": after.status, "onset": after.onset, **details})
+            details = {key: after[key] for key in ("severity", "frequency", "trend") if after[key]}
+            symptoms[after["name"]] = {**before, "status": after["status"], "onset": after["onset"], **details}
     lists = {}
     for key, field in (("medications", "medications"), ("allergies", "allergies"), ("history", "medical_history")):
-        mine, theirs = getattr(quick, field), getattr(careful, field)
+        mine, theirs = quick[field], careful[field]
         added = [item for item in theirs if item not in mine]
         lists[key] = set(added + ([item for item in mine if item in theirs] if added else mine))
     return {
-        "symptoms": {(s.name, s.status, s.onset, s.severity, s.frequency, s.trend) for s in symptoms.values()},
+        "symptoms": {tuple(s[key] for key in SYMPTOM_KEYS) for s in symptoms.values()},
         **lists,
     }
 
@@ -88,8 +99,9 @@ def main() -> int:
     sys.stdout.reconfigure(encoding="utf-8")
     scripts = dict(re.findall(r"^(\d+)\b.*\n(.+)$", args.scripts.read_text(encoding="utf-8"), re.M))
     rows = [json.loads(line) for line in args.results.read_text(encoding="utf-8").splitlines() if line.strip()]
-    for row, turbo in zip(rows, digits([row["turbo"] for row in rows])):
+    for row, turbo in zip(rows, run_app("transcriptCheck.ts", "spokenNumbersToDigits", [row["turbo"] for row in rows])):
         row["turbo"] = turbo
+    read_all([*scripts.values(), *(row[engine] for row in rows for engine in ("device", "turbo"))])
     counts = {"device": 0, "turbo": 0, "merged": 0}
     for row in rows:
         number, script = max(scripts.items(), key=lambda item: SequenceMatcher(None, item[1], row["turbo"]).ratio())

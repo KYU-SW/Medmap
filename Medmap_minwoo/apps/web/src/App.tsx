@@ -28,7 +28,8 @@ import {
 } from "./symptomOptions";
 import { buildSymptomHistories, buildTimeline, type SymptomHistoryPoint } from "./timeline";
 import { dayKey, monthGrid } from "./calendar";
-import { API_BASE, DeviceStt, deviceSttReady, pcm16Base64, usesPhoneStt, Whisper } from "./phoneStt";
+import { DeviceStt, deviceSttReady, pcm16Base64, usesPhoneStt, Whisper } from "./phoneStt";
+import { extractIntake } from "./intake/extractor";
 import { describeChanges, factChanges, spokenNumbersToDigits, type FactChange } from "./transcriptCheck";
 import type { PluginListenerHandle } from "@capacitor/core";
 import { hasSpeech, joinChunks, tidyCaption, trimSilence } from "./speechAudio";
@@ -467,11 +468,7 @@ export default function App() {
       setIntake(null);
       setConfirmed(false);
       setStatus("done");
-      const processingTime = Number(data.processing_seconds);
-      const timing = Number.isFinite(processingTime)
-        ? ` 변환 시간은 ${processingTime.toFixed(2)}초입니다.`
-        : "";
-      setMessage(`변환 결과를 확인하고 틀린 부분을 직접 수정해 주세요.${timing}`);
+      setMessage("변환 결과를 확인하고 틀린 부분을 직접 수정해 주세요.");
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "음성 변환에 실패했습니다.");
@@ -511,7 +508,6 @@ export default function App() {
       setMessage("녹음된 말소리가 없습니다. 다시 시도해 주세요.");
       return;
     }
-    const stoppedAt = performance.now();
     if (session) {
       try {
         const { transcript: deviceText } = await DeviceStt.stop();
@@ -520,10 +516,7 @@ export default function App() {
           setIntake(null);
           setConfirmed(false);
           setStatus("done");
-          setMessage(
-            `변환 결과를 확인하고 틀린 부분을 직접 수정해 주세요. 녹음 종료 후 ${((performance.now() - stoppedAt) / 1000).toFixed(1)}초.`
-              + " 정밀 인식으로 한 번 더 확인하고 있습니다.",
-          );
+          setMessage("변환 결과를 확인하고 틀린 부분을 직접 수정해 주세요. 정밀 인식으로 한 번 더 확인하고 있습니다.");
           // turbo checks the same audio while the patient reads; the result is compared in extractMedicalInformation.
           turboCheckRef.current = {
             deviceText,
@@ -546,30 +539,16 @@ export default function App() {
       setIntake(null);
       setConfirmed(false);
       setStatus("done");
-      setMessage(
-        `변환 결과를 확인하고 틀린 부분을 직접 수정해 주세요. 녹음 종료 후 ${((performance.now() - stoppedAt) / 1000).toFixed(1)}초`
-          + ` (녹음 ${result.audio_seconds.toFixed(1)}초${result.load_seconds > 0.5 ? `, 모델 불러오기 ${result.load_seconds.toFixed(1)}초` : ""}).`,
-      );
+      setMessage("변환 결과를 확인하고 틀린 부분을 직접 수정해 주세요.");
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "음성 변환에 실패했습니다.");
     }
   }
 
-  async function fetchIntake(text: string): Promise<IntakeResult> {
-    const response = await fetch(`${API_BASE}/v1/intake/extract`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ transcript: text, reference_date: localDateString() }),
-    });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.detail || "의료정보를 정리하지 못했습니다.");
-    return {
-      ...data,
-      medical_history: data.medical_history ?? [],
-      others_symptoms: data.others_symptoms ?? [],
-      profile: data.profile ?? {},
-    };
+  // The rules run on the phone itself (intake/extractor.ts), so reading needs no server (2026-10-15).
+  function readIntake(text: string): IntakeResult {
+    return extractIntake(text, localDateString());
   }
 
   // Runs in the background after the review screen opens on the on-device transcript. When turbo hears the medical
@@ -589,13 +568,13 @@ export default function App() {
       if (!turboText) return;
       const changes = turboText === check.deviceText
         ? []
-        : factChanges(...await Promise.all([fetchIntake(check.deviceText), fetchIntake(turboText)]));
+        : factChanges(readIntake(check.deviceText), readIntake(turboText));
       // A new recording or typed text started while turbo ran: this result no longer applies.
       if (turboCheckRef.current !== check) return;
       // Kept even without changes, so the patient can read what turbo heard.
       setVerification({ quickText: check.deviceText, turboText, changes });
     } catch {
-      // The check is a second opinion; without the API the on-device transcript stands.
+      // The check is a second opinion; if turbo fails, the on-device transcript stands.
     } finally {
       if (turboCheckRef.current === check) setTurboChecking(false);
     }
@@ -649,7 +628,7 @@ export default function App() {
     setExtracting(true);
     setConfirmed(false);
     try {
-      const result = await fetchIntake(text);
+      const result = readIntake(text);
       setIntake(result);
       setSkippedQuestions(new Set());
       setAnswerDrafts({});
@@ -676,26 +655,10 @@ export default function App() {
       updateSymptom(index, { [question.field]: value });
       return;
     }
-    // Reuse the extractor so "어제부터" gets the same wording and date as a spoken onset.
-    let onset: Pick<SymptomObservation, "onset" | "onset_date"> = { onset: value, onset_date: null };
-    try {
-      const response = await fetch(`${API_BASE}/v1/intake/extract`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          transcript: `${value} ${intake.symptoms[index].source_text}`,
-          reference_date: localDateString(),
-        }),
-      });
-      const data = await response.json();
-      const found = response.ok
-        ? (data.symptoms as SymptomObservation[]).find((symptom) => symptom.name === question.symptom && symptom.onset)
-        : undefined;
-      if (found) onset = { onset: found.onset, onset_date: found.onset_date ?? null };
-    } catch {
-      // Keep the words as typed; the date stays empty.
-    }
-    updateSymptom(index, onset);
+    // Reuse the extractor so "어제부터" gets the same wording and date as a spoken onset; otherwise keep the words.
+    const found = readIntake(`${value} ${intake.symptoms[index].source_text}`).symptoms
+      .find((symptom) => symptom.name === question.symptom && symptom.onset);
+    updateSymptom(index, found ? { onset: found.onset, onset_date: found.onset_date } : { onset: value, onset_date: null });
   }
 
   function updateSymptom(index: number, changes: Partial<SymptomObservation>) {

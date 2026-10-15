@@ -1,7 +1,7 @@
 # 안드로이드 앱 (폰 안 음성 인식 시험판)
 
 지금 웹 화면을 Capacitor로 감싼 안드로이드 앱이다. 녹음한 음성은 **휴대폰 안의 whisper.cpp**(turbo 모델, q8_0 압축)가 글자로 바꾸고,
-음성은 휴대폰 밖으로 나가지 않는다. 증상 정리 규칙은 아직 Python이라 PC의 API를 USB(`adb reverse`)로 부른다.
+음성은 휴대폰 밖으로 나가지 않는다. 증상 정리 규칙도 앱 안(`apps/web/src/intake/extractor.ts`)에서 돌아서, 설치 뒤에는 PC 없이 쓴다(2026-10-15).
 iOS는 Mac이 있어야 빌드할 수 있어 아직 만들지 않았다.
 
 ## 구성
@@ -10,7 +10,7 @@ iOS는 Mac이 있어야 빌드할 수 있어 아직 만들지 않았다.
 - `android/app/src/main/cpp/`: whisper.cpp v1.9.4를 빌드 때 받아 앱에 넣는 CMake 설정과 JNI 코드. 64비트 ARM 폰만, 항상 최적화 빌드,
   ARMv8.2 명령(dotprod·fp16) 사용 — 이 명령이 없는 아주 오래된 폰에서는 앱이 꺼진다(배포 전에 다시 볼 것)
 - `android/app/src/main/java/kr/medmap/app/WhisperPlugin.java`: 웹 화면에서 부르는 `Whisper.transcribe` / `Whisper.status`
-- `apps/web/src/phoneStt.ts`: 앱 안에서는 녹음 종료 후 16kHz 음성을 플러그인으로 넘기고, 증상 정리는 `http://localhost:8000`으로 보낸다
+- `apps/web/src/phoneStt.ts`: 앱 안에서는 녹음 종료 후 16kHz 음성을 플러그인으로 넘긴다. 증상 정리는 `src/intake/extractor.ts`가 앱 안에서 한다
 - 모델 파일 `ggml-large-v3-turbo-q8_0.bin`(약 870MB, Hugging Face `ggerganov/whisper.cpp`에서 받거나 원본에서 변환)은 APK에 넣지 않고
   `/sdcard/Android/data/kr.medmap.app/files/`에 adb로 한 번 복사한다. 그 폴더에 q8_0 → q4_0 → q5_0 순서로 먼저 있는 파일을 쓴다
 
@@ -24,13 +24,12 @@ iOS는 Mac이 있어야 빌드할 수 있어 아직 만들지 않았다.
 ## 설치와 실행
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_android_app.ps1   # 빌드 → 설치 → 모델 복사 → adb reverse
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_api.ps1               # 증상 정리용 PC 서버
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_android_app.ps1   # 빌드 → 설치 → 모델 복사
 ```
 
-- 앱을 열고 `음성으로 기록` → 마이크 권한 허용 → 말하기 → `녹음 종료`. 변환이 끝나면 화면 위에 휴대폰 변환 시간이 나온다.
-- 첫 변환은 모델을 불러오느라 더 걸린다(시간도 따로 표시).
-- USB를 다시 꽂으면 `adb reverse`가 풀린다. 증상 정리가 안 되면 `adb reverse tcp:8000 tcp:8000`을 다시 실행한다.
+- 앱을 열고 `음성으로 기록` → 마이크 권한 허용 → 말하기 → `녹음 종료`. (변환 시간 화면 표시는 측정이 끝나 2026-10-15에 없앴다.
+  시간은 `apps/api/scripts/run_recordings.py` 측정 결과나 logcat `whisper_print_timings`로 본다.)
+- 첫 변환은 모델을 불러오느라 더 걸린다.
 - (기기 내장 인식이 없을 때) 녹음 중 자막: 1.5초마다 작은 모델(`ggml-base-q8_0.bin`, 약 80MB, 같은 폴더)로 지금까지의 녹음을 대략 변환해 보여 준다.
   녹음 종료 후 결과는 turbo로 전체를 다시 변환한 것이다. 자막 모델이 없으면 자막 없이 녹음만 한다.
 - 녹음 앞뒤의 조용한 부분은 잘라서 변환한다. 조용한 부분을 넣으면 모델이 없는 말을 지어낸다(`감사합니다.`, `맨날 그러냐`).
