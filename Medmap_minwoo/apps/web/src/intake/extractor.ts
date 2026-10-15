@@ -1,7 +1,7 @@
 // Rule-based reading of a patient's words into symptoms, medicines, allergies, history and basic information.
-// Runs on the phone itself, so the app needs no server (2026-10-15). It started as a line-for-line port of
-// apps/api/app/services/intake_extractor.py and must give the same result for every sentence in golden.json
-// (intake.test.ts); from now on the rules are changed here.
+// Runs on the phone itself, so the app needs no server (2026-10-15). It started as a line-for-line port of the
+// Python rules (apps/api/app/services/intake_extractor.py, removed after the port; see Git history) and gives the same
+// result for every sentence in golden.json (intake.test.ts). The rules are changed only here.
 
 export type SymptomObservation = {
   name: string;

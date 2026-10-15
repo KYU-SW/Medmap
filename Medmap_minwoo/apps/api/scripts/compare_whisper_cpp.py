@@ -14,8 +14,8 @@ from time import perf_counter
 
 import av
 
-from app.services.intake_extractor import extract_intake
 from app.services.stt_service import FasterWhisperService
+from scripts.eval_recordings import run_app
 
 ROOT = Path(__file__).resolve().parents[3]
 WHISPER_CPP = ROOT / "local-cache" / "whisper-cpp"
@@ -61,7 +61,9 @@ def whisper_cpp(cli: Path, model: Path, wav: Path, threads: int, prompt: str | N
 
 
 def symptom_names(text: str) -> list[str]:
-    return [f"{item.name}({item.status})" for item in extract_intake(text).symptoms]
+    """The symptoms the app's own rules (apps/web/src/intake/extractor.ts) read in the text."""
+    result = run_app("intake/extractor.ts", "extractIntake", [text])[0]
+    return [f"{item['name']}({item['status']})" for item in result["symptoms"]]
 
 
 def main() -> int:
