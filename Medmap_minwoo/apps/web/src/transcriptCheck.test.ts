@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { describeChanges, factChanges, spokenNumbersToDigits } from "./transcriptCheck";
+import { applyListChanges, describeChanges, factChanges, spokenNumbersToDigits } from "./transcriptCheck";
 
 const facts = (
   symptoms: Array<[string, string, string | null]>,
@@ -143,5 +143,29 @@ describe("factChanges for how bad, how often and which way", () => {
       { symptoms: [pain("심함", "improving")], medications: [], allergies: [] },
     );
     expect(describeChanges(text, text, changes)).toEqual(["복통 정도: 경미함 → 심함, 추세: 없음 → 좋아지는 중"]);
+  });
+});
+
+describe("applyListChanges", () => {
+  it("puts turbo's line in place of the patient's line for the same medicine", () => {
+    // Quick heard "타이레놀", the patient answered 두 알, turbo heard 세 알 (2026-10-15).
+    expect(applyListChanges(["타이레놀 두 알", "혈압약 아침"], [
+      { value: "타이레놀 세 알", add: true },
+      { value: "타이레놀", add: false },
+    ])).toEqual(["혈압약 아침", "타이레놀 세 알"]);
+  });
+
+  it("keeps two lines of one medicine when turbo heard both", () => {
+    expect(applyListChanges(["타이레놀"], [
+      { value: "타이레놀 500mg 아침", add: true },
+      { value: "타이레놀 자기 전 한 알", add: true },
+    ])).toEqual(["타이레놀 500mg 아침", "타이레놀 자기 전 한 알"]);
+  });
+
+  it("still swaps a name turbo heard as another name", () => {
+    expect(applyListChanges(["스타일에 500mg"], [
+      { value: "타이레놀 500mg", add: true },
+      { value: "스타일에 500mg", add: false },
+    ])).toEqual(["타이레놀 500mg"]);
   });
 });

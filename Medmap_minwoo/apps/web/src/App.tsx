@@ -30,7 +30,7 @@ import { buildSymptomHistories, buildTimeline, type SymptomHistoryPoint } from "
 import { dayKey, monthGrid } from "./calendar";
 import { DeviceStt, deviceSttReady, pcm16Base64, usesPhoneStt, Whisper } from "./phoneStt";
 import { extractIntake } from "./intake/extractor";
-import { describeChanges, factChanges, spokenNumbersToDigits, type FactChange } from "./transcriptCheck";
+import { applyListChanges, describeChanges, factChanges, spokenNumbersToDigits, type FactChange } from "./transcriptCheck";
 import type { PluginListenerHandle } from "@capacitor/core";
 import { hasSpeech, joinChunks, tidyCaption, trimSilence } from "./speechAudio";
 import { buildSymptomEpisodes } from "./symptomEpisodes";
@@ -612,11 +612,9 @@ export default function App() {
     });
     setListDrafts((current) => {
       const next = { ...current };
-      for (const change of changes) {
-        if (change.kind === "symptom") continue;
-        const items = parseList(next[change.kind]);
-        next[change.kind] = [...new Set(change.add ? [...items, change.value] : items.filter((item) => item !== change.value))]
-          .join(", ");
+      for (const kind of ["medications", "allergies", "medical_history"] as const) {
+        const listChanges = changes.flatMap((change) => change.kind === kind ? [change] : []);
+        if (listChanges.length) next[kind] = applyListChanges(parseList(next[kind]), listChanges).join(", ");
       }
       return next;
     });

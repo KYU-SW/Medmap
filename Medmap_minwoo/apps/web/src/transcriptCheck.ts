@@ -71,6 +71,17 @@ export function factChanges<S extends Symptom>(quick: Facts<S>, careful: Facts<S
   return changes;
 }
 
+/** A medicine, allergy or condition list after "모두 반영". turbo's line takes the place of the patient's line for the
+ * same name, also one the patient filled in after the quick transcript: "타이레놀" answered as "타이레놀 두 알",
+ * then turbo heard "타이레놀 세 알" (2026-10-15). */
+export function applyListChanges(items: string[], changes: Array<{ value: string; add: boolean }>): string[] {
+  const nameOf = (line: string) => line.split(/\s+/)[0];
+  const added = changes.filter((change) => change.add).map((change) => change.value);
+  const removed = new Set(changes.filter((change) => !change.add).map((change) => change.value));
+  const replaced = new Set(added.map(nameOf));
+  return [...new Set([...items.filter((item) => !removed.has(item) && !replaced.has(nameOf(item))), ...added])];
+}
+
 type Token = { text: string; start: number };
 
 function tokens(text: string): Token[] {
