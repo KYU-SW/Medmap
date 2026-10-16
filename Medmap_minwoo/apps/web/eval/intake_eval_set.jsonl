@@ -1,0 +1,360 @@
+{"id":"B001","category":"기본","text":"머리가 깨질 것처럼 아파요.","symptoms":[{"name":"두통","status":"present"}]}
+{"id":"B002","category":"기본","text":"두통 때문에 일을 못 하겠어요.","symptoms":[{"name":"두통","status":"present"}]}
+{"id":"B003","category":"기본","text":"열이 펄펄 끓어요.","symptoms":[{"name":"발열","status":"present"}]}
+{"id":"B004","category":"기본","text":"몸에서 열이 좀 나요.","symptoms":[{"name":"발열","status":"present"}]}
+{"id":"B005","category":"기본","text":"기침이 계속 나와요.","symptoms":[{"name":"기침","status":"present"}]}
+{"id":"B006","category":"기본","text":"밤마다 콜록콜록 기침해요.","symptoms":[{"name":"기침","status":"present"}]}
+{"id":"B007","category":"기본","text":"숨이 차요.","symptoms":[{"name":"호흡곤란","status":"present"}]}
+{"id":"B008","category":"기본","text":"계단 오를 때 숨쉬기가 힘들어요.","symptoms":[{"name":"호흡곤란","status":"present"}]}
+{"id":"B009","category":"기본","text":"가슴이 답답해요.","symptoms":[{"name":"가슴 답답함","status":"present"}]}
+{"id":"B010","category":"기본","text":"가슴이 꽉 막힌 것처럼 답답해요.","symptoms":[{"name":"가슴 답답함","status":"present"}]}
+{"id":"B011","category":"기본","text":"배가 아파요.","symptoms":[{"name":"복통","status":"present"}]}
+{"id":"B012","category":"기본","text":"아랫배가 살살 아파요.","symptoms":[{"name":"복통","status":"present"}]}
+{"id":"B013","category":"기본","text":"토했어요.","symptoms":[{"name":"구토","status":"present"}]}
+{"id":"B014","category":"기본","text":"아침에 먹은 걸 다 게워냈어요.","symptoms":[{"name":"구토","status":"present"}]}
+{"id":"B015","category":"기본","text":"가슴이 찌르듯이 아파요.","symptoms":[{"name":"흉통","status":"present"}]}
+{"id":"B016","category":"기본","text":"가슴 통증이 있어요.","symptoms":[{"name":"흉통","status":"present"}]}
+{"id":"B017","category":"기본","text":"목이 따가워요.","symptoms":[{"name":"인후통","status":"present"}]}
+{"id":"B018","category":"기본","text":"침 삼킬 때 목이 아파요.","symptoms":[{"name":"인후통","status":"present"}]}
+{"id":"B019","category":"기본","text":"콧물이 줄줄 흘러요.","symptoms":[{"name":"콧물","status":"present"}]}
+{"id":"B020","category":"기본","text":"맑은 콧물이 나요.","symptoms":[{"name":"콧물","status":"present"}]}
+{"id":"B021","category":"기본","text":"코가 막혀요.","symptoms":[{"name":"코막힘","status":"present"}]}
+{"id":"B022","category":"기본","text":"양쪽 코가 다 막혔어요.","symptoms":[{"name":"코막힘","status":"present"}]}
+{"id":"B023","category":"기본","text":"가래가 끓어요.","symptoms":[{"name":"가래","status":"present"}]}
+{"id":"B024","category":"기본","text":"누런 가래가 나와요.","symptoms":[{"name":"가래","status":"present"}]}
+{"id":"B025","category":"기본","text":"몸이 으슬으슬 추워요.","symptoms":[{"name":"오한","status":"present"}]}
+{"id":"B026","category":"기본","text":"오한이 들어요.","symptoms":[{"name":"오한","status":"present"}]}
+{"id":"B027","category":"기본","text":"온몸이 쑤셔요.","symptoms":[{"name":"근육통","status":"present"}]}
+{"id":"B028","category":"기본","text":"몸살 기운이 있어요.","symptoms":[{"name":"근육통","status":"present"}]}
+{"id":"B029","category":"기본","text":"허리가 아파요.","symptoms":[{"name":"요통","status":"present"}]}
+{"id":"B030","category":"기본","text":"허리가 끊어질 것 같아요.","symptoms":[{"name":"요통","status":"present"}]}
+{"id":"B031","category":"기본","text":"어지러워요.","symptoms":[{"name":"어지러움","status":"present"}]}
+{"id":"B032","category":"기본","text":"일어날 때 핑 돌아요.","symptoms":[{"name":"어지러움","status":"present"}]}
+{"id":"B033","category":"기본","text":"속이 메스꺼워요.","symptoms":[{"name":"메스꺼움","status":"present"}]}
+{"id":"B034","category":"기본","text":"속이 울렁거려요.","symptoms":[{"name":"메스꺼움","status":"present"}]}
+{"id":"B035","category":"기본","text":"설사를 해요.","symptoms":[{"name":"설사","status":"present"}]}
+{"id":"B036","category":"기본","text":"물 같은 변을 봐요.","symptoms":[{"name":"설사","status":"present"}]}
+{"id":"B037","category":"기본","text":"변비가 있어요.","symptoms":[{"name":"변비","status":"present"}]}
+{"id":"B038","category":"기본","text":"며칠째 변을 못 봤어요.","symptoms":[{"name":"변비","status":"present"}]}
+{"id":"B039","category":"기본","text":"팔에 두드러기가 났어요.","symptoms":[{"name":"발진","status":"present"}]}
+{"id":"B040","category":"기본","text":"몸에 빨간 반점이 올라왔어요.","symptoms":[{"name":"발진","status":"present"}]}
+{"id":"B041","category":"기본","text":"너무 피곤해요.","symptoms":[{"name":"피로","status":"present"}]}
+{"id":"B042","category":"기본","text":"몸에 힘이 없어요.","symptoms":[{"name":"피로","status":"present"}]}
+{"id":"B043","category":"기본","text":"가슴이 두근거려요.","symptoms":[{"name":"두근거림","status":"present"}]}
+{"id":"B044","category":"기본","text":"심장이 빨리 뛰어요.","symptoms":[{"name":"두근거림","status":"present"}]}
+{"id":"B045","category":"기본","text":"손이 저려요.","symptoms":[{"name":"저림","status":"present"}]}
+{"id":"B046","category":"기본","text":"다리가 저릿저릿해요.","symptoms":[{"name":"저림","status":"present"}]}
+{"id":"B047","category":"기본","text":"체했어요.","symptoms":[{"name":"소화불량","status":"present"}]}
+{"id":"B048","category":"기본","text":"속이 더부룩해요.","symptoms":[{"name":"소화불량","status":"present"}]}
+{"id":"B049","category":"기본","text":"속이 쓰려요.","symptoms":[{"name":"속쓰림","status":"present"}]}
+{"id":"B050","category":"기본","text":"명치가 타는 것처럼 쓰려요.","symptoms":[{"name":"속쓰림","status":"present"}]}
+{"id":"B051","category":"기본","text":"입맛이 없어요.","symptoms":[{"name":"식욕부진","status":"present"}]}
+{"id":"B052","category":"기본","text":"밥을 통 못 먹겠어요.","symptoms":[{"name":"식욕부진","status":"present"}]}
+{"id":"B053","category":"기본","text":"잠을 못 자요.","symptoms":[{"name":"불면","status":"present"}]}
+{"id":"B054","category":"기본","text":"밤에 잠이 안 와요.","symptoms":[{"name":"불면","status":"present"}]}
+{"id":"B055","category":"기본","text":"다리가 부었어요.","symptoms":[{"name":"부종","status":"present"}]}
+{"id":"B056","category":"기본","text":"아침에 얼굴이 퉁퉁 부어요.","symptoms":[{"name":"부종","status":"present"}]}
+{"id":"B057","category":"기본","text":"귀가 아파요.","symptoms":[{"name":"귀 통증","status":"present"}]}
+{"id":"B058","category":"기본","text":"오른쪽 귀 안쪽이 욱신거려요.","symptoms":[{"name":"귀 통증","status":"present"}]}
+{"id":"B059","category":"기본","text":"눈이 아파요.","symptoms":[{"name":"눈 통증","status":"present"}]}
+{"id":"B060","category":"기본","text":"눈이 시리고 아파요.","symptoms":[{"name":"눈 통증","status":"present"}]}
+{"id":"B061","category":"기본","text":"이가 아파요.","symptoms":[{"name":"치통","status":"present"}]}
+{"id":"B062","category":"기본","text":"어금니가 욱신거려요.","symptoms":[{"name":"치통","status":"present"}]}
+{"id":"B063","category":"기본","text":"식은땀이 나요.","symptoms":[{"name":"식은땀","status":"present"}]}
+{"id":"B064","category":"기본","text":"자다가 식은땀을 흘려요.","symptoms":[{"name":"식은땀","status":"present"}]}
+{"id":"B065","category":"기본","text":"피부가 가려워요.","symptoms":[{"name":"가려움","status":"present"}]}
+{"id":"B066","category":"기본","text":"등이 근질근질 가려워요.","symptoms":[{"name":"가려움","status":"present"}]}
+{"id":"B067","category":"기본","text":"눈이 침침해요.","symptoms":[{"name":"시야 이상","status":"present"}]}
+{"id":"B068","category":"기본","text":"물건이 두 개로 겹쳐 보여요.","symptoms":[{"name":"시야 이상","status":"present"}]}
+{"id":"B069","category":"기본","text":"손이 떨려요.","symptoms":[{"name":"떨림","status":"present"}]}
+{"id":"B070","category":"기본","text":"컵을 들면 손이 덜덜 떨려요.","symptoms":[{"name":"떨림","status":"present"}]}
+{"id":"B071","category":"기본","text":"귀에서 삐 소리가 나요.","symptoms":[{"name":"이명","status":"present"}]}
+{"id":"B072","category":"기본","text":"이명이 있어요.","symptoms":[{"name":"이명","status":"present"}]}
+{"id":"B073","category":"기본","text":"코피가 났어요.","symptoms":[{"name":"코피","status":"present"}]}
+{"id":"B074","category":"기본","text":"코에서 피가 자꾸 나요.","symptoms":[{"name":"코피","status":"present"}]}
+{"id":"B075","category":"기본","text":"기침할 때 피가 섞여 나와요.","symptoms":[{"name":"객혈","status":"present"},{"name":"기침","status":"present"}]}
+{"id":"B076","category":"기본","text":"피 섞인 가래가 나와요.","symptoms":[{"name":"객혈","status":"present"},{"name":"가래","status":"present"}]}
+{"id":"B077","category":"기본","text":"피를 토했어요.","symptoms":[{"name":"토혈","status":"present"},{"name":"구토","status":"present"}]}
+{"id":"B078","category":"기본","text":"검붉은 피를 토했어요.","symptoms":[{"name":"토혈","status":"present"},{"name":"구토","status":"present"}]}
+{"id":"B079","category":"기본","text":"변에 피가 묻어 나와요.","symptoms":[{"name":"혈변","status":"present"}]}
+{"id":"B080","category":"기본","text":"변이 까맣게 나와요.","symptoms":[{"name":"혈변","status":"present"}]}
+{"id":"B081","category":"기본","text":"소변에 피가 섞여 나와요.","symptoms":[{"name":"혈뇨","status":"present"}]}
+{"id":"B082","category":"기본","text":"소변 색이 빨개요.","symptoms":[{"name":"혈뇨","status":"present"}]}
+{"id":"B083","category":"기본","text":"소변 볼 때 따가워요.","symptoms":[{"name":"배뇨통","status":"present"}]}
+{"id":"B084","category":"기본","text":"오줌 눌 때 아파요.","symptoms":[{"name":"배뇨통","status":"present"}]}
+{"id":"B085","category":"기본","text":"소변을 너무 자주 봐요.","symptoms":[{"name":"빈뇨","status":"present"}]}
+{"id":"B086","category":"기본","text":"밤에 소변 때문에 몇 번씩 깨요.","symptoms":[{"name":"빈뇨","status":"present"}]}
+{"id":"B087","category":"기본","text":"어제 갑자기 쓰러졌어요.","symptoms":[{"name":"기절","status":"present","onset_date":"2026-10-16"}]}
+{"id":"B088","category":"기본","text":"잠깐 정신을 잃었어요.","symptoms":[{"name":"기절","status":"present"}]}
+{"id":"B089","category":"기본","text":"오른쪽 팔다리에 힘이 빠져요.","symptoms":[{"name":"마비","status":"present"}]}
+{"id":"B090","category":"기본","text":"한쪽 얼굴이 처졌어요.","symptoms":[{"name":"마비","status":"present"}]}
+{"id":"B091","category":"기본","text":"말이 어눌하게 나와요.","symptoms":[{"name":"말 어눌함","status":"present"}]}
+{"id":"B092","category":"기본","text":"발음이 자꾸 꼬여요.","symptoms":[{"name":"말 어눌함","status":"present"}]}
+{"id":"B093","category":"기본","text":"목소리가 쉬었어요.","symptoms":[{"name":"쉰 목소리","status":"present"}]}
+{"id":"B094","category":"기본","text":"목이 잠겨서 목소리가 안 나와요.","symptoms":[{"name":"쉰 목소리","status":"present"}]}
+{"id":"B095","category":"기본","text":"살이 많이 빠졌어요.","symptoms":[{"name":"체중 감소","status":"present"}]}
+{"id":"B096","category":"기본","text":"한 달 만에 5킬로가 빠졌어요.","symptoms":[{"name":"체중 감소","status":"present"}]}
+{"id":"B097","category":"기본","text":"경련을 했어요.","symptoms":[{"name":"경련","status":"present"}]}
+{"id":"B098","category":"기본","text":"발작이 왔어요.","symptoms":[{"name":"경련","status":"present"}]}
+{"id":"B099","category":"기본","text":"무릎이 아파요.","symptoms":[{"name":"관절 통증","status":"present"}]}
+{"id":"B100","category":"기본","text":"어깨가 결리고 아파요.","symptoms":[{"name":"관절 통증","status":"present"}]}
+{"id":"B101","category":"기본","text":"입안이 헐었어요.","symptoms":[{"name":"입안 통증","status":"present"}]}
+{"id":"B102","category":"기본","text":"구내염이 생겼어요.","symptoms":[{"name":"입안 통증","status":"present"}]}
+{"id":"B103","category":"기본","text":"재채기가 계속 나요.","symptoms":[{"name":"재채기","status":"present"}]}
+{"id":"B104","category":"기본","text":"아침마다 재채기를 해요.","symptoms":[{"name":"재채기","status":"present"}]}
+{"id":"B105","category":"기본","text":"숨 쉴 때 쌕쌕 소리가 나요.","symptoms":[{"name":"쌕쌕거림","status":"present"}]}
+{"id":"B106","category":"기본","text":"숨소리가 쌕쌕거려요.","symptoms":[{"name":"쌕쌕거림","status":"present"}]}
+{"id":"B107","category":"기본","text":"소변이 잘 안 나와요.","symptoms":[{"name":"배뇨 곤란","status":"present"}]}
+{"id":"B108","category":"기본","text":"소변 보기가 힘들어요.","symptoms":[{"name":"배뇨 곤란","status":"present"}]}
+{"id":"B109","category":"기본","text":"눈이 빨갛게 충혈됐어요.","symptoms":[{"name":"눈 충혈","status":"present"}]}
+{"id":"B110","category":"기본","text":"눈이 빨개졌어요.","symptoms":[{"name":"눈 충혈","status":"present"}]}
+{"id":"B111","category":"기본","text":"생리통이 심해요.","symptoms":[{"name":"생리통","status":"present","severity":"심함"}]}
+{"id":"B112","category":"기본","text":"생리할 때 배가 너무 아파요.","symptoms":[{"name":"생리통","status":"present"}]}
+{"id":"B113","category":"기본","text":"배가 빵빵해요.","symptoms":[{"name":"복부 팽만","status":"present"}]}
+{"id":"B114","category":"기본","text":"가스가 차요.","symptoms":[{"name":"복부 팽만","status":"present"}]}
+{"id":"B115","category":"기본","text":"목에 뭐가 걸린 것 같아요.","symptoms":[{"name":"목 이물감","status":"present"}]}
+{"id":"B116","category":"기본","text":"목에 이물감이 있어요.","symptoms":[{"name":"목 이물감","status":"present"}]}
+{"id":"B117","category":"기본","text":"눈곱이 많이 껴요.","symptoms":[{"name":"눈 분비물","status":"present"}]}
+{"id":"B118","category":"기본","text":"눈물이 계속 나요.","symptoms":[{"name":"눈 분비물","status":"present"}]}
+{"id":"B119","category":"기본","text":"뒷목이 당겨요.","symptoms":[{"name":"목 결림","status":"present"}]}
+{"id":"B120","category":"기본","text":"목이 뻐근해요.","symptoms":[{"name":"목 결림","status":"present"}]}
+{"id":"B121","category":"기본","text":"손발이 차가워요.","symptoms":[{"name":"손발 차가움","status":"present"}]}
+{"id":"B122","category":"기본","text":"손발이 얼음장 같아요.","symptoms":[{"name":"손발 차가움","status":"present"}]}
+{"id":"B123","category":"기본","text":"우울해요.","symptoms":[{"name":"우울감","status":"present"}]}
+{"id":"B124","category":"기본","text":"기분이 계속 가라앉아요.","symptoms":[{"name":"우울감","status":"present"}]}
+{"id":"B125","category":"기본","text":"불안해요.","symptoms":[{"name":"불안감","status":"present"}]}
+{"id":"B126","category":"기본","text":"자꾸 초조하고 불안해요.","symptoms":[{"name":"불안감","status":"present"}]}
+{"id":"B127","category":"기본","text":"귀가 잘 안 들려요.","symptoms":[{"name":"청력 저하","status":"present"}]}
+{"id":"B128","category":"기본","text":"왼쪽 귀가 먹먹하고 잘 안 들려요.","symptoms":[{"name":"청력 저하","status":"present"}]}
+{"id":"B129","category":"기본","text":"입이 바짝 말라요.","symptoms":[{"name":"입마름","status":"present"}]}
+{"id":"B130","category":"기본","text":"자꾸 목이 말라서 물을 많이 마셔요.","symptoms":[{"name":"입마름","status":"present"}]}
+{"id":"N001","category":"부정","text":"열은 없어요.","symptoms":[{"name":"발열","status":"absent"}]}
+{"id":"N002","category":"부정","text":"기침은 안 해요.","symptoms":[{"name":"기침","status":"absent"}]}
+{"id":"N003","category":"부정","text":"머리는 안 아파요.","symptoms":[{"name":"두통","status":"absent"}]}
+{"id":"N004","category":"부정","text":"배가 아프지는 않아요.","symptoms":[{"name":"복통","status":"absent"}]}
+{"id":"N005","category":"부정","text":"숨차거나 그런 건 없어요.","symptoms":[{"name":"호흡곤란","status":"absent"}]}
+{"id":"N006","category":"부정","text":"콧물이나 코막힘은 없어요.","symptoms":[{"name":"콧물","status":"absent"},{"name":"코막힘","status":"absent"}]}
+{"id":"N007","category":"부정","text":"구토는 안 했어요.","symptoms":[{"name":"구토","status":"absent"}]}
+{"id":"N008","category":"부정","text":"설사는 없고 변비가 있어요.","symptoms":[{"name":"설사","status":"absent"},{"name":"변비","status":"present"}]}
+{"id":"N009","category":"부정","text":"어지럽진 않아요.","symptoms":[{"name":"어지러움","status":"absent"}]}
+{"id":"N010","category":"부정","text":"가슴 통증은 없어요.","symptoms":[{"name":"흉통","status":"absent"}]}
+{"id":"N011","category":"부정","text":"목은 안 아프고 기침만 해요.","symptoms":[{"name":"인후통","status":"absent"},{"name":"기침","status":"present"}]}
+{"id":"N012","category":"부정","text":"열도 없고 오한도 없어요.","symptoms":[{"name":"발열","status":"absent"},{"name":"오한","status":"absent"}]}
+{"id":"N013","category":"부정","text":"두통은 이제 없어요.","symptoms":[{"name":"두통","status":"absent"}]}
+{"id":"N014","category":"부정","text":"배는 이제 괜찮아졌어요.","symptoms":[{"name":"복통","status":"absent"}]}
+{"id":"N015","category":"부정","text":"토하지는 않았는데 메스꺼워요.","symptoms":[{"name":"구토","status":"absent"},{"name":"메스꺼움","status":"present"}]}
+{"id":"N016","category":"부정","text":"소변 볼 때 아프진 않아요.","symptoms":[{"name":"배뇨통","status":"absent"}]}
+{"id":"N017","category":"부정","text":"가래는 안 나와요.","symptoms":[{"name":"가래","status":"absent"}]}
+{"id":"N018","category":"부정","text":"가려운 건 없어요.","symptoms":[{"name":"가려움","status":"absent"}]}
+{"id":"N019","category":"부정","text":"잠은 잘 자요.","symptoms":[{"name":"불면","status":"absent"}]}
+{"id":"N020","category":"부정","text":"입맛은 괜찮아요.","symptoms":[{"name":"식욕부진","status":"absent"}]}
+{"id":"N021","category":"부정","text":"허리는 더 이상 안 아파요.","symptoms":[{"name":"요통","status":"absent"}]}
+{"id":"N022","category":"부정","text":"기침이 멈췄어요.","symptoms":[{"name":"기침","status":"absent"}]}
+{"id":"N023","category":"부정","text":"열이 내렸어요.","symptoms":[{"name":"발열","status":"absent"}]}
+{"id":"N024","category":"부정","text":"숨 쉬는 건 괜찮아요.","symptoms":[{"name":"호흡곤란","status":"absent"}]}
+{"id":"N025","category":"부정","text":"두근거림은 없었어요.","symptoms":[{"name":"두근거림","status":"absent"}]}
+{"id":"U001","category":"불확실","text":"숨이 차는지는 잘 모르겠어요.","symptoms":[{"name":"호흡곤란","status":"uncertain"}]}
+{"id":"U002","category":"불확실","text":"열이 있는지 없는지 헷갈려요.","symptoms":[{"name":"발열","status":"uncertain"}]}
+{"id":"U003","category":"불확실","text":"확실하진 않은데 손이 좀 저린 것 같아요.","symptoms":[{"name":"저림","status":"uncertain"}]}
+{"id":"U004","category":"불확실","text":"어지러운 것 같기도 하고 잘 모르겠어요.","symptoms":[{"name":"어지러움","status":"uncertain"}]}
+{"id":"U005","category":"불확실","text":"열이 나는 것 같아요.","symptoms":[{"name":"발열","status":"present"}]}
+{"id":"U006","category":"불확실","text":"기침은 잘 모르겠어요.","symptoms":[{"name":"기침","status":"uncertain"}]}
+{"id":"U007","category":"불확실","text":"가슴이 두근거리는지는 확실하지 않아요.","symptoms":[{"name":"두근거림","status":"uncertain"}]}
+{"id":"U008","category":"불확실","text":"머리가 아파요. 열은 있는지 모르겠어요.","symptoms":[{"name":"두통","status":"present"},{"name":"발열","status":"uncertain"}]}
+{"id":"U009","category":"불확실","text":"이거 때문에 그런지는 모르겠는데 배가 아파요.","symptoms":[{"name":"복통","status":"present"}]}
+{"id":"U010","category":"불확실","text":"귀가 잘 안 들리는 것 같기도 해요.","symptoms":[{"name":"청력 저하","status":"uncertain"}]}
+{"id":"U011","category":"불확실","text":"눈이 침침한 것 같은데 확실하진 않아요.","symptoms":[{"name":"시야 이상","status":"uncertain"}]}
+{"id":"U012","category":"불확실","text":"기침도 하고 가래도 있는데 열은 잘 모르겠어요.","symptoms":[{"name":"기침","status":"present"},{"name":"가래","status":"present"},{"name":"발열","status":"uncertain"}]}
+{"id":"U013","category":"불확실","text":"소변을 자주 보는 건지 헷갈려요.","symptoms":[{"name":"빈뇨","status":"uncertain"}]}
+{"id":"U014","category":"불확실","text":"열이 좀 있는 거 같기도 하고 아닌 거 같기도 해요.","symptoms":[{"name":"발열","status":"uncertain"}]}
+{"id":"U015","category":"불확실","text":"다리가 부은 건지 원래 그런 건지 모르겠어요.","symptoms":[{"name":"부종","status":"uncertain"}]}
+{"id":"U016","category":"불확실","text":"숨이 차요. 쌕쌕거리는지는 모르겠어요.","symptoms":[{"name":"호흡곤란","status":"present"},{"name":"쌕쌕거림","status":"uncertain"}]}
+{"id":"U017","category":"불확실","text":"체한 건지 잘 모르겠어요.","symptoms":[{"name":"소화불량","status":"uncertain"}]}
+{"id":"U018","category":"불확실","text":"머리 아픈 게 약 때문인지는 모르겠어요.","symptoms":[{"name":"두통","status":"present"}]}
+{"id":"U019","category":"불확실","text":"오한이 있었던 것 같기도 해요.","symptoms":[{"name":"오한","status":"uncertain"}]}
+{"id":"U020","category":"불확실","text":"몸살인지 아닌지 확실하지 않아요.","symptoms":[{"name":"근육통","status":"uncertain"}]}
+{"id":"T001","category":"시간","text":"오늘 아침부터 배가 아파요.","symptoms":[{"name":"복통","status":"present","onset_date":"2026-10-17"}]}
+{"id":"T002","category":"시간","text":"어제부터 기침이 나요.","symptoms":[{"name":"기침","status":"present","onset_date":"2026-10-16"}]}
+{"id":"T003","category":"시간","text":"그저께부터 열이 나요.","symptoms":[{"name":"발열","status":"present","onset_date":"2026-10-15"}]}
+{"id":"T004","category":"시간","text":"3일 전부터 머리가 아파요.","symptoms":[{"name":"두통","status":"present","onset_date":"2026-10-14"}]}
+{"id":"T005","category":"시간","text":"사흘 전부터 설사를 해요.","symptoms":[{"name":"설사","status":"present","onset_date":"2026-10-14"}]}
+{"id":"T006","category":"시간","text":"이틀째 토하고 있어요.","symptoms":[{"name":"구토","status":"present","onset_date":"2026-10-16"}]}
+{"id":"T007","category":"시간","text":"5일째 콧물이 나요.","symptoms":[{"name":"콧물","status":"present","onset_date":"2026-10-13"}]}
+{"id":"T008","category":"시간","text":"일주일 전부터 허리가 아파요.","symptoms":[{"name":"요통","status":"present","onset":true}]}
+{"id":"T009","category":"시간","text":"2주 전부터 기침을 해요.","symptoms":[{"name":"기침","status":"present","onset":true}]}
+{"id":"T010","category":"시간","text":"한 달 전부터 피곤해요.","symptoms":[{"name":"피로","status":"present","onset":true}]}
+{"id":"T011","category":"시간","text":"10월 1일부터 어지러워요.","symptoms":[{"name":"어지러움","status":"present","onset_date":"2026-10-01"}]}
+{"id":"T012","category":"시간","text":"월요일부터 목이 아파요.","symptoms":[{"name":"인후통","status":"present","onset_date":"2026-10-12"}]}
+{"id":"T013","category":"시간","text":"방금 전에 코피가 났어요.","symptoms":[{"name":"코피","status":"present","onset_date":"2026-10-17"}]}
+{"id":"T014","category":"시간","text":"어젯밤부터 열이 났어요.","symptoms":[{"name":"발열","status":"present","onset_date":"2026-10-16"}]}
+{"id":"T015","category":"시간","text":"엊그제부터 콧물이 나요.","symptoms":[{"name":"콧물","status":"present","onset":true}]}
+{"id":"T016","category":"시간","text":"어제부터 머리가 아프고 열도 나요.","symptoms":[{"name":"두통","status":"present","onset_date":"2026-10-16"},{"name":"발열","status":"present","onset_date":"2026-10-16"}]}
+{"id":"T017","category":"시간","text":"어제부터 가슴이 답답하고 아파요.","symptoms":[{"name":"가슴 답답함","status":"present","onset_date":"2026-10-16"},{"name":"흉통","status":"present","onset_date":"2026-10-16"}]}
+{"id":"T018","category":"시간","text":"몇 주 전부터 무릎이 아파요.","symptoms":[{"name":"관절 통증","status":"present","onset":true}]}
+{"id":"T019","category":"시간","text":"오늘부터 설사를 해요.","symptoms":[{"name":"설사","status":"present","onset_date":"2026-10-17"}]}
+{"id":"T020","category":"시간","text":"4일 전 저녁부터 배가 아팠어요.","symptoms":[{"name":"복통","status":"present","onset_date":"2026-10-13"}]}
+{"id":"T021","category":"시간","text":"어제 저녁에 토했어요.","symptoms":[{"name":"구토","status":"present","onset_date":"2026-10-16"}]}
+{"id":"T022","category":"시간","text":"지난달부터 잠을 못 자요.","symptoms":[{"name":"불면","status":"present","onset":true}]}
+{"id":"T023","category":"시간","text":"9월 30일부터 기침이 나요.","symptoms":[{"name":"기침","status":"present","onset_date":"2026-09-30"}]}
+{"id":"T024","category":"시간","text":"10월 20일부터 머리가 아파요.","symptoms":[{"name":"두통","status":"present","onset_date":"2025-10-20"}]}
+{"id":"T025","category":"시간","text":"이틀 전부터 목이 아프고 오늘은 열도 나요.","symptoms":[{"name":"인후통","status":"present","onset_date":"2026-10-15"},{"name":"발열","status":"present","onset_date":"2026-10-17"}]}
+{"id":"T026","category":"시간","text":"사흘째 설사하고 오늘 아침에는 토했어요.","symptoms":[{"name":"설사","status":"present","onset_date":"2026-10-15"},{"name":"구토","status":"present","onset_date":"2026-10-17"}]}
+{"id":"T027","category":"시간","text":"어제부터 기침이 나요. 하루에 세 번 정도 심하게 해요.","symptoms":[{"name":"기침","status":"present","onset_date":"2026-10-16"}]}
+{"id":"T028","category":"시간","text":"수요일부터 배가 아파요.","symptoms":[{"name":"복통","status":"present","onset_date":"2026-10-14"}]}
+{"id":"T029","category":"시간","text":"3시간 전부터 가슴이 아파요.","symptoms":[{"name":"흉통","status":"present","onset":true}]}
+{"id":"T030","category":"시간","text":"6개월 전부터 손이 떨려요.","symptoms":[{"name":"떨림","status":"present","onset":true}]}
+{"id":"S001","category":"정도·횟수·추세","text":"머리가 참을 만하게 아파요.","symptoms":[{"name":"두통","status":"present","severity":"경미함"}]}
+{"id":"S002","category":"정도·횟수·추세","text":"배가 데굴데굴 구를 정도로 아파요.","symptoms":[{"name":"복통","status":"present","severity":"심함"}]}
+{"id":"S003","category":"정도·횟수·추세","text":"허리 통증이 10점 중에 7점이에요.","symptoms":[{"name":"요통","status":"present","severity":"7/10점"}]}
+{"id":"S004","category":"정도·횟수·추세","text":"열이 38.5도까지 올라요.","symptoms":[{"name":"발열","status":"present","severity":"38.5℃"}]}
+{"id":"S005","category":"정도·횟수·추세","text":"열이 39도까지 올랐다가 지금은 37.8도예요.","symptoms":[{"name":"발열","status":"present","severity":"39℃ → 37.8℃"}]}
+{"id":"S006","category":"정도·횟수·추세","text":"오늘 토를 세 번 했어요.","symptoms":[{"name":"구토","status":"present","frequency":"3회","onset_date":"2026-10-17"}]}
+{"id":"S007","category":"정도·횟수·추세","text":"하루에 설사를 다섯 번 해요.","symptoms":[{"name":"설사","status":"present","frequency":"하루 5회"}]}
+{"id":"S008","category":"정도·횟수·추세","text":"두통이 살짝 있어요.","symptoms":[{"name":"두통","status":"present","severity":"경미함"}]}
+{"id":"S009","category":"정도·횟수·추세","text":"기침이 심해요.","symptoms":[{"name":"기침","status":"present","severity":"심함"}]}
+{"id":"S010","category":"정도·횟수·추세","text":"가슴이 답답한 게 중간 정도예요.","symptoms":[{"name":"가슴 답답함","status":"present","severity":"중간"}]}
+{"id":"S011","category":"정도·횟수·추세","text":"배 아픈 게 점점 심해지고 있어요.","symptoms":[{"name":"복통","status":"present","trend":"worsening"}]}
+{"id":"S012","category":"정도·횟수·추세","text":"기침이 좀 나아졌어요.","symptoms":[{"name":"기침","status":"present","trend":"improving"}]}
+{"id":"S013","category":"정도·횟수·추세","text":"열이 어제보다 좀 내렸어요.","symptoms":[{"name":"발열","status":"present","trend":"improving"}]}
+{"id":"S014","category":"정도·횟수·추세","text":"머리 아픈 건 그대로예요.","symptoms":[{"name":"두통","status":"present","trend":"unchanged"}]}
+{"id":"S015","category":"정도·횟수·추세","text":"숨찬 게 잠을 못 잘 정도예요.","symptoms":[{"name":"호흡곤란","status":"present","severity":"심함"}]}
+{"id":"S016","category":"정도·횟수·추세","text":"목이 죽을 것 같이 아파요.","symptoms":[{"name":"인후통","status":"present","severity":"심함"}]}
+{"id":"S017","category":"정도·횟수·추세","text":"허리가 심하진 않은데 계속 아파요.","symptoms":[{"name":"요통","status":"present","severity":"경미함"}]}
+{"id":"S018","category":"정도·횟수·추세","text":"설사를 한두 번 했어요.","symptoms":[{"name":"설사","status":"present","frequency":"1~2회"}]}
+{"id":"S019","category":"정도·횟수·추세","text":"배가 아픈 정도는 10점 만점에 8점이에요.","symptoms":[{"name":"복통","status":"present","severity":"8/10점"}]}
+{"id":"S020","category":"정도·횟수·추세","text":"토는 두 번 했고 설사는 네 번 했어요.","symptoms":[{"name":"구토","status":"present","frequency":"2회"},{"name":"설사","status":"present","frequency":"4회"}]}
+{"id":"S021","category":"정도·횟수·추세","text":"두통이 갈수록 심해져요.","symptoms":[{"name":"두통","status":"present","trend":"worsening"}]}
+{"id":"S022","category":"정도·횟수·추세","text":"콧물은 많이 줄었어요.","symptoms":[{"name":"콧물","status":"present","trend":"improving"}]}
+{"id":"S023","category":"정도·횟수·추세","text":"어지러운 게 좀 괜찮아졌어요.","symptoms":[{"name":"어지러움","status":"present","trend":"improving"}]}
+{"id":"S024","category":"정도·횟수·추세","text":"무릎이 너무 아파서 못 걷겠어요.","symptoms":[{"name":"관절 통증","status":"present","severity":"심함"}]}
+{"id":"S025","category":"정도·횟수·추세","text":"체온이 37.5도예요.","symptoms":[{"name":"발열","status":"present","severity":"37.5℃"}]}
+{"id":"S026","category":"정도·횟수·추세","text":"열이 삼십팔 도 넘어요.","symptoms":[{"name":"발열","status":"present","severity":"38℃"}]}
+{"id":"S027","category":"정도·횟수·추세","text":"기침이 전보다 심해졌어요.","symptoms":[{"name":"기침","status":"present","trend":"worsening"}]}
+{"id":"S028","category":"정도·횟수·추세","text":"숨이 약간 차요.","symptoms":[{"name":"호흡곤란","status":"present","severity":"경미함"}]}
+{"id":"S029","category":"정도·횟수·추세","text":"배가 보통 정도로 아파요.","symptoms":[{"name":"복통","status":"present","severity":"중간"}]}
+{"id":"S030","category":"정도·횟수·추세","text":"구토를 열 번 넘게 했어요.","symptoms":[{"name":"구토","status":"present","frequency":"10회"}]}
+{"id":"O001","category":"다른 사람","text":"남편도 기침을 해요.","others":[{"person":"남편","symptom":"기침"}]}
+{"id":"O002","category":"다른 사람","text":"아이가 열이 나요.","others":[{"person":"아이","symptom":"발열"}]}
+{"id":"O003","category":"다른 사람","text":"엄마가 고혈압이 있어요.","others":[{"person":"엄마","symptom":"고혈압"}]}
+{"id":"O004","category":"다른 사람","text":"저는 머리가 아프고 남편은 배가 아파요.","symptoms":[{"name":"두통","status":"present"}],"others":[{"person":"남편","symptom":"복통"}]}
+{"id":"O005","category":"다른 사람","text":"딸이 어제부터 토했어요.","others":[{"person":"딸","symptom":"구토"}]}
+{"id":"O006","category":"다른 사람","text":"아들이 콧물이 나고 기침해요.","others":[{"person":"아들","symptom":"콧물"},{"person":"아들","symptom":"기침"}]}
+{"id":"O007","category":"다른 사람","text":"동생이 설사를 해요. 저는 괜찮아요.","others":[{"person":"동생","symptom":"설사"}]}
+{"id":"O008","category":"다른 사람","text":"아빠가 당뇨가 있어요.","others":[{"person":"아빠","symptom":"당뇨"}]}
+{"id":"O009","category":"다른 사람","text":"가족들이 다 감기에 걸렸어요."}
+{"id":"O010","category":"다른 사람","text":"아내가 두통이 심하대요. 저는 목이 아파요.","symptoms":[{"name":"인후통","status":"present"}],"others":[{"person":"아내","symptom":"두통"}]}
+{"id":"O011","category":"다른 사람","text":"친구가 열이 나서 걱정이에요.","others":[{"person":"친구","symptom":"발열"}]}
+{"id":"O012","category":"다른 사람","text":"애가 밤새 기침을 했어요.","others":[{"person":"애","symptom":"기침"}]}
+{"id":"O013","category":"다른 사람","text":"할머니가 천식이 있으세요.","others":[{"person":"할머니","symptom":"천식"}]}
+{"id":"O014","category":"다른 사람","text":"남편이 담배를 피워요.","profile":{"smoking":null}}
+{"id":"O015","category":"다른 사람","text":"아이가 5살이에요. 저는 열이 나요.","symptoms":[{"name":"발열","status":"present"}],"profile":{"age":null}}
+{"id":"M001","category":"약·알레르기·과거력","text":"타이레놀을 먹었어요.","medications":["타이레놀"]}
+{"id":"M002","category":"약·알레르기·과거력","text":"타이레놀 500mg 하루 2번 먹고 있어요.","medications":["타이레놀"]}
+{"id":"M003","category":"약·알레르기·과거력","text":"아스피린을 매일 먹어요.","medications":["아스피린"]}
+{"id":"M004","category":"약·알레르기·과거력","text":"페니실린 알레르기가 있어요.","allergies":["페니실린"]}
+{"id":"M005","category":"약·알레르기·과거력","text":"고혈압이 있어요.","medical_history":["고혈압"]}
+{"id":"M006","category":"약·알레르기·과거력","text":"당뇨병 진단을 받았어요.","medical_history":["당뇨"]}
+{"id":"M007","category":"약·알레르기·과거력","text":"천식은 없어요."}
+{"id":"M008","category":"약·알레르기·과거력","text":"고혈압 약을 먹어요.","medications":["고혈압 약"]}
+{"id":"M009","category":"약·알레르기·과거력","text":"위염으로 진단받았어요.","medical_history":["위염"]}
+{"id":"M010","category":"약·알레르기·과거력","text":"맹장 수술을 받았어요.","medical_history":["맹장 수술"]}
+{"id":"M011","category":"약·알레르기·과거력","text":"땅콩 알레르기가 있어요.","allergies":["땅콩"]}
+{"id":"M012","category":"약·알레르기·과거력","text":"새우를 먹으면 두드러기가 나요.","allergies":["새우"]}
+{"id":"M013","category":"약·알레르기·과거력","text":"혈압이 높아요.","medical_history":["혈압 높음"]}
+{"id":"M014","category":"약·알레르기·과거력","text":"작년에 폐렴으로 입원했어요.","medical_history":["폐렴"]}
+{"id":"M015","category":"약·알레르기·과거력","text":"갑상선이 안 좋아요.","medical_history":["갑상선"]}
+{"id":"M016","category":"약·알레르기·과거력","text":"감기약을 먹었는데 안 나아요.","medications":["감기약"]}
+{"id":"M017","category":"약·알레르기·과거력","text":"두통약을 먹었어요.","medications":["두통약"]}
+{"id":"M018","category":"약·알레르기·과거력","text":"기침약 먹고 있어요.","medications":["기침약"]}
+{"id":"M019","category":"약·알레르기·과거력","text":"열이 나서 해열제를 먹었어요.","symptoms":[{"name":"발열","status":"present"}],"medications":["해열제"]}
+{"id":"M020","category":"약·알레르기·과거력","text":"아목시실린을 처방받아 먹고 있어요.","medications":["아목시실린"]}
+{"id":"M021","category":"약·알레르기·과거력","text":"연고를 발랐어요.","medications":["연고"]}
+{"id":"M022","category":"약·알레르기·과거력","text":"벤토린을 쓰고 있어요.","medications":["벤토린"]}
+{"id":"M023","category":"약·알레르기·과거력","text":"스텐트 시술 받았어요.","medical_history":["스텐트 시술"]}
+{"id":"M024","category":"약·알레르기·과거력","text":"우울증 진단을 받았어요.","medical_history":["우울증"]}
+{"id":"M025","category":"약·알레르기·과거력","text":"아스피린에 알레르기가 있어서 못 먹어요.","allergies":["아스피린"]}
+{"id":"M026","category":"약·알레르기·과거력","text":"혈압약이랑 당뇨약을 먹어요.","medications":["혈압약","당뇨약"]}
+{"id":"M027","category":"약·알레르기·과거력","text":"콜레스테롤이 높다고 들었어요.","medical_history":["콜레스테롤 높음"]}
+{"id":"M028","category":"약·알레르기·과거력","text":"신장이 안 좋아요.","medical_history":["신장"]}
+{"id":"M029","category":"약·알레르기·과거력","text":"간 수술을 받은 적 있어요.","medical_history":["간 수술"]}
+{"id":"M030","category":"약·알레르기·과거력","text":"꽃가루 알레르기가 있어요.","allergies":["꽃가루"]}
+{"id":"P001","category":"기본 정보","text":"저는 34살 여자예요.","profile":{"age":34,"sex":"female"}}
+{"id":"P002","category":"기본 정보","text":"나이는 70이고 남자입니다.","profile":{"age":70,"sex":"male"}}
+{"id":"P003","category":"기본 정보","text":"임신 중이에요.","profile":{"pregnancy":"yes","sex":"female"}}
+{"id":"P004","category":"기본 정보","text":"임신은 아니에요.","profile":{"pregnancy":"no"}}
+{"id":"P005","category":"기본 정보","text":"임신인지 모르겠어요.","profile":{"pregnancy":"unknown"}}
+{"id":"P006","category":"기본 정보","text":"담배를 하루에 반 갑 피워요.","profile":{"smoking":"current"}}
+{"id":"P007","category":"기본 정보","text":"담배는 3년 전에 끊었어요.","profile":{"smoking":"former"}}
+{"id":"P008","category":"기본 정보","text":"담배는 안 피워요.","profile":{"smoking":"never"}}
+{"id":"P009","category":"기본 정보","text":"술은 가끔 마셔요.","profile":{"drinking":"yes"}}
+{"id":"P010","category":"기본 정보","text":"술은 안 마셔요.","profile":{"drinking":"no"}}
+{"id":"P011","category":"기본 정보","text":"여자친구가 열이 나요.","others":[{"person":"여자친구","symptom":"발열"}],"profile":{"sex":null}}
+{"id":"P012","category":"기본 정보","text":"3살 때 천식이 있었어요.","medical_history":["천식"],"profile":{"age":null}}
+{"id":"P013","category":"기본 정보","text":"스물다섯 살이에요.","profile":{"age":25}}
+{"id":"P014","category":"기본 정보","text":"저는 남성이고 담배 피워요.","profile":{"sex":"male","smoking":"current"}}
+{"id":"P015","category":"기본 정보","text":"50대 여성이에요.","profile":{"sex":"female"}}
+{"id":"C001","category":"구어·STT","text":"머리 아퍼","symptoms":[{"name":"두통","status":"present"}]}
+{"id":"C002","category":"구어·STT","text":"배 아픔","symptoms":[{"name":"복통","status":"present"}]}
+{"id":"C003","category":"구어·STT","text":"어제부터 열 남","symptoms":[{"name":"발열","status":"present","onset_date":"2026-10-16"}]}
+{"id":"C004","category":"구어·STT","text":"기침 계속 함","symptoms":[{"name":"기침","status":"present"}]}
+{"id":"C005","category":"구어·STT","text":"가슴이답답하고아파요","symptoms":[{"name":"가슴 답답함","status":"present"},{"name":"흉통","status":"present"}]}
+{"id":"C006","category":"구어·STT","text":"배가아파요","symptoms":[{"name":"복통","status":"present"}]}
+{"id":"C007","category":"구어·STT","text":"머리가지끈지끈해요","symptoms":[{"name":"두통","status":"present"}]}
+{"id":"C008","category":"구어·STT","text":"폭통이 있어요","symptoms":[{"name":"복통","status":"present"}]}
+{"id":"C009","category":"구어·STT","text":"목이 칼칼해요","symptoms":[{"name":"인후통","status":"present"}]}
+{"id":"C010","category":"구어·STT","text":"속이 니글거려요","symptoms":[{"name":"메스꺼움","status":"present"}]}
+{"id":"C011","category":"구어·STT","text":"배가 싸르르 아파요","symptoms":[{"name":"복통","status":"present"}]}
+{"id":"C012","category":"구어·STT","text":"머리가 띵해요","symptoms":[{"name":"두통","status":"present"}]}
+{"id":"C013","category":"구어·STT","text":"콧물이 질질 나요","symptoms":[{"name":"콧물","status":"present"}]}
+{"id":"C014","category":"구어·STT","text":"열이 막 나고 오슬오슬 떨려요","symptoms":[{"name":"발열","status":"present"},{"name":"오한","status":"present"}]}
+{"id":"C015","category":"구어·STT","text":"목이 너무 따끔거려요","symptoms":[{"name":"인후통","status":"present"}]}
+{"id":"C016","category":"구어·STT","text":"배탈 났어요","symptoms":[{"name":"복통","status":"present"}]}
+{"id":"C017","category":"구어·STT","text":"목감기 걸렸어요","symptoms":[{"name":"인후통","status":"present"}]}
+{"id":"C018","category":"구어·STT","text":"코감기예요","symptoms":[{"name":"콧물","status":"present"}]}
+{"id":"C019","category":"구어·STT","text":"감기에 걸렸어요","unlisted":["감기"]}
+{"id":"C020","category":"구어·STT","text":"몸이 천근만근이에요","symptoms":[{"name":"피로","status":"present"}]}
+{"id":"C021","category":"구어·STT","text":"머리 아프고 열나","symptoms":[{"name":"두통","status":"present"},{"name":"발열","status":"present"}]}
+{"id":"C022","category":"구어·STT","text":"기침이랑 가래 있음","symptoms":[{"name":"기침","status":"present"},{"name":"가래","status":"present"}]}
+{"id":"C023","category":"구어·STT","text":"허리 쑤심","symptoms":[{"name":"요통","status":"present"}]}
+{"id":"C024","category":"구어·STT","text":"숨 차","symptoms":[{"name":"호흡곤란","status":"present"}]}
+{"id":"C025","category":"구어·STT","text":"배가 엄청 아파요 진짜로","symptoms":[{"name":"복통","status":"present"}]}
+{"id":"C026","category":"구어·STT","text":"머리가 아프고요 열은 없고요","symptoms":[{"name":"두통","status":"present"},{"name":"발열","status":"absent"}]}
+{"id":"C027","category":"구어·STT","text":"어 그러니까 음 배가 좀 아픈데요","symptoms":[{"name":"복통","status":"present"}]}
+{"id":"C028","category":"구어·STT","text":"열이 삼십팔 점 오도예요","symptoms":[{"name":"발열","status":"present","severity":"38.5℃"}]}
+{"id":"C029","category":"구어·STT","text":"토할 것 같아요","symptoms":[{"name":"메스꺼움","status":"present"}]}
+{"id":"C030","category":"구어·STT","text":"설사 쫙쫙 해요","symptoms":[{"name":"설사","status":"present"}]}
+{"id":"X001","category":"복합","text":"어제 저녁부터 배가 아프기 시작했는데요, 오늘 아침에 두 번 토했어요. 열은 없고 설사는 아직 안 했어요.","symptoms":[{"name":"복통","status":"present","onset_date":"2026-10-16"},{"name":"구토","status":"present","frequency":"2회"},{"name":"발열","status":"absent"},{"name":"설사","status":"absent"}]}
+{"id":"X002","category":"복합","text":"3일 전부터 목이 아프고 기침이 나요. 가래도 좀 있고요. 열은 38도 정도 나요. 타이레놀 먹었어요.","symptoms":[{"name":"인후통","status":"present","onset_date":"2026-10-14"},{"name":"기침","status":"present","onset_date":"2026-10-14"},{"name":"가래","status":"present"},{"name":"발열","status":"present","severity":"38℃"}],"medications":["타이레놀"]}
+{"id":"X003","category":"복합","text":"제가 고혈압이 있어서 혈압약을 먹고 있는데요, 요즘 머리가 자주 아프고 어지러워요.","symptoms":[{"name":"두통","status":"present"},{"name":"어지러움","status":"present"}],"medications":["혈압약"],"medical_history":["고혈압"]}
+{"id":"X004","category":"복합","text":"가슴이 쥐어짜듯이 아프고 식은땀이 나요. 왼쪽 팔도 저려요.","symptoms":[{"name":"흉통","status":"present"},{"name":"식은땀","status":"present"},{"name":"저림","status":"present"}]}
+{"id":"X005","category":"복합","text":"저희 애가 아니라 제가 열이 나요. 남편은 괜찮아요.","symptoms":[{"name":"발열","status":"present"}]}
+{"id":"X006","category":"복합","text":"일주일째 기침을 하는데 밤에 특히 심해요. 숨 쉴 때 쌕쌕 소리도 나고 천식이 있어요.","symptoms":[{"name":"기침","status":"present","onset":true},{"name":"쌕쌕거림","status":"present"}],"medical_history":["천식"]}
+{"id":"X007","category":"복합","text":"소변 볼 때 따갑고 자주 마려워요. 열은 없어요. 페니실린 알레르기 있어요.","symptoms":[{"name":"배뇨통","status":"present"},{"name":"빈뇨","status":"present"},{"name":"발열","status":"absent"}],"allergies":["페니실린"]}
+{"id":"X008","category":"복합","text":"어지럽고 속이 메스꺼워요. 토하지는 않았어요. 귀에서 윙 소리도 나요.","symptoms":[{"name":"어지러움","status":"present"},{"name":"메스꺼움","status":"present"},{"name":"구토","status":"absent"},{"name":"이명","status":"present"}]}
+{"id":"X009","category":"복합","text":"오늘 아침에 갑자기 오른쪽 팔다리에 힘이 빠지고 말이 어눌해졌어요.","symptoms":[{"name":"마비","status":"present","onset_date":"2026-10-17"},{"name":"말 어눌함","status":"present","onset_date":"2026-10-17"}]}
+{"id":"X010","category":"복합","text":"허리가 아픈데 다리까지 저려요. 오래 앉아 있으면 더 심해져요.","symptoms":[{"name":"요통","status":"present"},{"name":"저림","status":"present"}]}
+{"id":"X011","category":"복합","text":"배가 아프고 허리도 아파요. 임신은 아니에요.","symptoms":[{"name":"복통","status":"present"},{"name":"요통","status":"present"}],"profile":{"pregnancy":"no"}}
+{"id":"X012","category":"복합","text":"두 달 전부터 살이 빠지고 밤에 식은땀이 나요. 기침도 계속해요.","symptoms":[{"name":"체중 감소","status":"present","onset":true},{"name":"식은땀","status":"present"},{"name":"기침","status":"present"}]}
+{"id":"X013","category":"복합","text":"콧물 나고 재채기가 계속 나요. 눈도 가렵고요. 열은 없어요.","symptoms":[{"name":"콧물","status":"present"},{"name":"재채기","status":"present"},{"name":"가려움","status":"present"},{"name":"발열","status":"absent"}]}
+{"id":"X014","category":"복합","text":"어제 술을 많이 마셨는데 오늘 속이 쓰리고 머리가 아파요.","symptoms":[{"name":"속쓰림","status":"present","onset_date":"2026-10-17"},{"name":"두통","status":"present","onset_date":"2026-10-17"}]}
+{"id":"X015","category":"복합","text":"검은 변을 봤고 어지러워요. 아스피린을 먹고 있어요.","symptoms":[{"name":"혈변","status":"present"},{"name":"어지러움","status":"present"}],"medications":["아스피린"]}
+{"id":"X016","category":"복합","text":"목이 아파서 침 삼키기가 힘들고 열이 39도예요. 오한도 있어요.","symptoms":[{"name":"인후통","status":"present"},{"name":"발열","status":"present","severity":"39℃"},{"name":"오한","status":"present"}]}
+{"id":"X017","category":"복합","text":"어제부터 설사를 네 번 했고 배가 살살 아파요. 물은 잘 마셔요.","symptoms":[{"name":"설사","status":"present","onset_date":"2026-10-16","frequency":"4회"},{"name":"복통","status":"present"}]}
+{"id":"X018","category":"복합","text":"제가 34살인데요, 요즘 잠을 못 자고 자꾸 불안하고 우울해요.","symptoms":[{"name":"불면","status":"present"},{"name":"불안감","status":"present"},{"name":"우울감","status":"present"}],"profile":{"age":34}}
+{"id":"X019","category":"복합","text":"숨이 차고 다리가 부었어요. 심장이 안 좋아요.","symptoms":[{"name":"호흡곤란","status":"present"},{"name":"부종","status":"present"}],"medical_history":["심장"]}
+{"id":"X020","category":"복합","text":"눈이 빨갛고 눈곱이 껴요. 아프지는 않아요.","symptoms":[{"name":"눈 충혈","status":"present"},{"name":"눈 분비물","status":"present"},{"name":"눈 통증","status":"absent"}]}
+{"id":"X021","category":"복합","text":"머리가 아프다가 지금은 괜찮아요. 근데 목이 계속 아파요.","symptoms":[{"name":"두통","status":"absent"},{"name":"인후통","status":"present"}]}
+{"id":"X022","category":"복합","text":"기침할 때 피가 나오고 숨이 차요. 열은 없어요.","symptoms":[{"name":"객혈","status":"present"},{"name":"기침","status":"present"},{"name":"호흡곤란","status":"present"},{"name":"발열","status":"absent"}]}
+{"id":"X023","category":"복합","text":"어제 회사에서 잠깐 기절했어요. 그 전에 가슴이 두근거렸어요.","symptoms":[{"name":"기절","status":"present","onset_date":"2026-10-16"},{"name":"두근거림","status":"present"}]}
+{"id":"X024","category":"복합","text":"변비가 일주일째예요. 배가 빵빵하고 가스가 차요.","symptoms":[{"name":"변비","status":"present","onset":true},{"name":"복부 팽만","status":"present"}]}
+{"id":"X025","category":"복합","text":"70살이고요, 당뇨가 있어요. 발이 저리고 손발이 차가워요.","symptoms":[{"name":"저림","status":"present"},{"name":"손발 차가움","status":"present"}],"medical_history":["당뇨"],"profile":{"age":70}}
+{"id":"L001","category":"목록 밖","text":"겨드랑이가 아파요.","unlisted":["겨드랑이"]}
+{"id":"L002","category":"목록 밖","text":"엉덩이가 아파요.","unlisted":["엉덩이"]}
+{"id":"L003","category":"목록 밖","text":"옆구리가 결려요.","unlisted":["옆구리"]}
+{"id":"L004","category":"목록 밖","text":"잇몸에서 피가 나요.","unlisted":["잇몸"]}
+{"id":"L005","category":"목록 밖","text":"멍이 잘 들어요.","unlisted":["멍"]}
+{"id":"L006","category":"목록 밖","text":"머리카락이 많이 빠져요.","unlisted":["머리카락"]}
+{"id":"L007","category":"목록 밖","text":"손톱이 갈라져요.","unlisted":["손톱"]}
+{"id":"L008","category":"목록 밖","text":"입냄새가 심해요.","unlisted":["입냄새"]}
+{"id":"L009","category":"목록 밖","text":"딸꾹질이 안 멈춰요.","unlisted":["딸꾹질"]}
+{"id":"L010","category":"목록 밖","text":"발뒤꿈치가 아파요.","unlisted":["발뒤꿈치"]}

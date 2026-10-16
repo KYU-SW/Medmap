@@ -119,7 +119,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_web_desktop.ps
 ```
 
 - 📱 휴대폰으로 시험하기: [docs/MOBILE_TEST.md](docs/MOBILE_TEST.md), [docs/TEMPORARY_REMOTE_TEST.md](docs/TEMPORARY_REMOTE_TEST.md)
-- 🧪 테스트: `apps/api`에서 `.venv\Scripts\python.exe -m pytest`, `apps/web`에서 `corepack pnpm test`
+- 🧪 테스트: `apps/api`에서 `.venv\Scripts\python.exe -m pytest`, `apps/web`에서 `corepack pnpm test`, 증상 정리 정확도는 `apps/web`에서 `node eval/evaluate.ts`
 - 모델·패키지·가상환경은 Git에서 제외한 `local-cache/`, `apps/api/.venv`, `apps/web/node_modules`에 모입니다.
 
 ---
@@ -215,6 +215,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_web_desktop.ps
 - 증상 정리 규칙(약 1,800줄)을 Python 서버에서 **TypeScript로 옮겨 앱 안에서** 실행 → 안드로이드 앱이 PC 없이 동작
 - 옮기기 전 규칙으로 시험 문장 630개의 결과를 정답 파일로 저장하고, 옮긴 규칙이 **630개 모두 같은 결과**를 내는지 자동 테스트로 확인
 - 정답 녹음 채점 도구도 앱과 같은 규칙을 쓰도록 변경
+
+### 2026-10-17 · 📏 증상 정리 정확도 평가
+- 규칙 출력이 아닌 명세 기준으로 정답을 단 **평가 문장 360개**(증상 65종, 부정·불확실·시간·정도·구어·복합 등)와 채점기(`apps/web/eval`)
+- 첫 측정: 증상 이름+상태 **F1 93.5%**, 위험 증상 놓침 0/25, 시작 날짜 100%, 약한 곳은 `~지는 않아요` 부정(72.2%)과 추세(62.5%)
 ---
 
 ## 📚 참고 문서
