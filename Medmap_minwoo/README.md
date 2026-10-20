@@ -219,6 +219,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_web_desktop.ps
 ### 2026-10-17 · 📏 증상 정리 정확도 평가
 - 규칙 출력이 아닌 명세 기준으로 정답을 단 **평가 문장 360개**(증상 65종, 부정·불확실·시간·정도·구어·복합 등)와 채점기(`apps/web/eval`)
 - 첫 측정: 증상 이름+상태 **F1 93.5%**, 위험 증상 놓침 0/25, 시작 날짜 100%, 약한 곳은 `~지는 않아요` 부정(72.2%)과 추세(62.5%)
+
+### 2026-10-21 · 🤖 증상 모델 학습 준비
+- 로컬 한국어 LLM(EXAONE 3.5 7.8B, Ollama)으로 **학습 문장 생성기**(`apps/web/train/generate.ts`): 증상·상태·말투 13종을 무작위로 정하고,
+  LLM이 환자 말을 쓴 뒤 다시 읽어 검토한 문장만 남김. 동시 요청으로 생성 속도 약 2배
+- 문장 하나에서 65개 증상의 있음·없음·모름을 고르는 **분류 모델 학습 스크립트**(`apps/web/train/train.py`, PyTorch)
+- 채점기에 모델만 / 규칙+모델 채점 추가(`node eval/evaluate.ts --model|--hybrid <예측 파일>`)
 ---
 
 ## 📚 참고 문서

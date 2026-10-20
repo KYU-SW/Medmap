@@ -2,8 +2,10 @@
 // The labels follow docs/INTAKE_EXTRACTION.md, not the rules' own output, so golden.json (the rules' saved output)
 // cannot stand in for them. Run from apps/web:  node eval/evaluate.ts            (summary)
 //                                              node eval/evaluate.ts --errors   (also every wrong item)
+// With a model's saved predictions (train/train.py): --model <file> scores the model's symptoms alone,
+// --hybrid <file> keeps the rules' symptoms, adds the model's new ones and takes the model's status where they differ.
 import { readFileSync } from "node:fs";
-import { extractIntake, type IntakeExtraction } from "../src/intake/extractor.ts";
+import { extractIntake, type IntakeExtraction, type SymptomObservation } from "../src/intake/extractor.ts";
 
 type GoldSymptom = {
   name: string;
@@ -30,6 +32,30 @@ type Item = {
 const REFERENCE_DATE = "2026-10-17";
 const DANGER = new Set(["흉통", "객혈", "토혈", "혈변", "기절", "마비", "말 어눌함", "경련"]);
 const showErrors = process.argv.includes("--errors");
+const option = (flag: string) => {
+  const index = process.argv.indexOf(flag);
+  return index >= 0 ? process.argv[index + 1] : undefined;
+};
+const mode = option("--model") ? "model" : option("--hybrid") ? "hybrid" : "rules";
+type Predicted = Array<{ name: string; status: SymptomObservation["status"] }>;
+const predictions: Record<string, Predicted> = mode === "rules"
+  ? {}
+  : JSON.parse(readFileSync(option("--model") ?? option("--hybrid")!, "utf8"));
+const observation = ({ name, status }: Predicted[number]): SymptomObservation => ({
+  name, status, body_site: null, onset: null, onset_date: null, severity: null, frequency: null, trend: null, source_text: "(모델)",
+});
+
+/** The symptoms scored for one item under the chosen mode. */
+function symptomsFor(id: string, rules: SymptomObservation[]): SymptomObservation[] {
+  if (mode === "rules") return rules;
+  const model = predictions[id] ?? [];
+  if (mode === "model") return model.map(observation);
+  const merged = rules.map((symptom) => {
+    const guess = model.find((item) => item.name === symptom.name);
+    return guess && guess.status !== symptom.status ? { ...symptom, status: guess.status } : symptom;
+  });
+  return [...merged, ...model.filter((item) => !rules.some((symptom) => symptom.name === item.name)).map(observation)];
+}
 const items: Item[] = readFileSync(new URL("./intake_eval_set.jsonl", import.meta.url), "utf8")
   .split("\n").filter((line) => line.trim()).map((line) => JSON.parse(line));
 
@@ -85,7 +111,8 @@ function scoreList(gold: string[], predicted: string[], into: Count, label: stri
 }
 
 for (const item of items) {
-  const result = extractIntake(item.text, REFERENCE_DATE);
+  const extracted = extractIntake(item.text, REFERENCE_DATE);
+  const result = { ...extracted, symptoms: symptomsFor(item.id, extracted.symptoms) };
   const wrong: string[] = [];
   const gold = item.symptoms ?? [];
   const predicted = new Map(result.symptoms.map((symptom) => [symptom.name, symptom]));
@@ -153,7 +180,8 @@ for (const item of items) {
 }
 
 const ratio = ({ gold, right }: { gold: number; right: number }) => `${pct(gold ? right / gold : 1)} (${right}/${gold})`;
-console.log(`평가 문장 ${items.length}개, 기준 날짜 ${REFERENCE_DATE}, 틀린 문장 ${errors.length}개\n`);
+const modeLabel = { rules: "규칙만", model: "모델만", hybrid: "규칙+모델" }[mode];
+console.log(`[${modeLabel}] 평가 문장 ${items.length}개, 기준 날짜 ${REFERENCE_DATE}, 틀린 문장 ${errors.length}개\n`);
 console.log("[증상]");
 console.log(row("이름만", found));
 console.log(row("이름+상태", strict));
