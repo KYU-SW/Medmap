@@ -119,7 +119,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_web_desktop.ps
 ```
 
 - 📱 휴대폰으로 시험하기: [docs/MOBILE_TEST.md](docs/MOBILE_TEST.md), [docs/TEMPORARY_REMOTE_TEST.md](docs/TEMPORARY_REMOTE_TEST.md)
-- 🧪 테스트: `apps/api`에서 `.venv\Scripts\python.exe -m pytest`, `apps/web`에서 `corepack pnpm test`, 증상 정리 정확도는 `apps/web`에서 `node eval/evaluate.ts`
+- 🧪 테스트: `apps/api`에서 `.venv\Scripts\python.exe -m pytest`, `apps/web`에서 `corepack pnpm test`, 증상 정리 정확도는 `apps/web`에서 `node eval/evaluate.ts`, 목록 밖 증상은 `node eval/evaluate_outside.ts`
 - 모델·패키지·가상환경은 Git에서 제외한 `local-cache/`, `apps/api/.venv`, `apps/web/node_modules`에 모입니다.
 
 ---
@@ -225,6 +225,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_web_desktop.ps
   LLM이 환자 말을 쓴 뒤 다시 읽어 검토한 문장만 남김. 동시 요청으로 생성 속도 약 2배
 - 문장 하나에서 65개 증상의 있음·없음·모름을 고르는 **분류 모델 학습 스크립트**(`apps/web/train/train.py`, PyTorch)
 - 채점기에 모델만 / 규칙+모델 채점 추가(`node eval/evaluate.ts --model|--hybrid <예측 파일>`)
+
+### 2026-10-25 · 🔎 목록 밖 증상 찾기 모델
+- 65종 분류 모델(F1 53%)은 접고, 규칙이 모르는 증상(`허벅지가 저려요`, `딸꾹질`)을 **문장에서 찾아내는 구간 모델**로 방향 전환
+- DDXPlus 기반 **증상 사전**(`vocabulary.json`: 증상 34종, 종류 16종, 부위 116곳)으로 찾은 구간에 이름을 붙임: 증상 이름 → `종류/부위`(`통증/허벅지`) → 기타
+- 학습 문장 생성기(`train/generate_spans.ts`)와 학습 스크립트(`train/train_spans.py`), 목록 밖 평가 문장 125개와 채점기(`node eval/evaluate_outside.ts`)
+- 2,971문장으로 학습한 결과(RoBERTa-small): 목록 밖 증상 **83.7%** 찾음(규칙만 37.0%), 찾은 것의 상태 96.1%·이름 81.8%, 잘못 알림 11개
 ---
 
 ## 📚 참고 문서

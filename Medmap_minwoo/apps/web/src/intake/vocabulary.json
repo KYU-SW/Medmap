@@ -1,0 +1,1516 @@
+{
+  "about": "Symptom names for the span model (HANDOFF 7-1-1). listed: the rules' 65 symptoms with a plain hint. A symptom outside them is named by (1) symptoms, else (2) a kind + a body site, else (3) the patient's own words. ddxplus is the DDXPlus evidence code (symptoms, kinds) or English body-site name (sites; sided ones exist as (R)/(L)). words are what patients say, matched loosely.",
+  "listed": {
+    "두통": "머리가 아픔",
+    "발열": "열이 남",
+    "기침": "기침",
+    "호흡곤란": "숨이 참",
+    "가슴 답답함": "가슴이 답답함",
+    "복통": "배가 아픔",
+    "구토": "토함",
+    "흉통": "가슴이 아픔",
+    "인후통": "목구멍이 아픔",
+    "콧물": "콧물",
+    "코막힘": "코가 막힘",
+    "가래": "가래",
+    "오한": "춥고 떨림",
+    "근육통": "몸살, 온몸이 쑤심",
+    "요통": "허리가 아픔",
+    "어지러움": "어지러움",
+    "메스꺼움": "속이 울렁거림",
+    "설사": "설사",
+    "변비": "변을 못 봄",
+    "발진": "피부에 붉은 것이나 두드러기가 남",
+    "피로": "피곤하고 기운이 없음",
+    "두근거림": "심장이 두근거림",
+    "저림": "손발이나 팔다리가 저림",
+    "소화불량": "체함, 더부룩함",
+    "속쓰림": "속이 쓰림",
+    "식욕부진": "입맛이 없음",
+    "불면": "잠을 못 잠",
+    "부종": "몸이 부음",
+    "귀 통증": "귀가 아픔",
+    "눈 통증": "눈이 아픔",
+    "치통": "이가 아픔",
+    "식은땀": "식은땀",
+    "가려움": "가려움",
+    "시야 이상": "눈이 침침하거나 흐리거나 겹쳐 보임",
+    "떨림": "손이 떨림",
+    "이명": "귀에서 소리가 남",
+    "코피": "코피",
+    "객혈": "기침할 때 피가 나옴",
+    "토혈": "피를 토함",
+    "혈변": "변에 피가 섞이거나 변이 까맘",
+    "혈뇨": "소변에 피가 섞임",
+    "배뇨통": "소변 볼 때 아픔",
+    "빈뇨": "소변을 자주 봄",
+    "기절": "쓰러지거나 정신을 잃음",
+    "마비": "한쪽 팔다리에 힘이 빠지거나 얼굴이 처짐",
+    "말 어눌함": "말이 어눌함",
+    "쉰 목소리": "목소리가 쉼",
+    "체중 감소": "살이 빠짐",
+    "경련": "경련, 발작",
+    "관절 통증": "무릎·어깨·발목 같은 관절이 아픔",
+    "입안 통증": "입안이나 혀가 헐거나 아픔",
+    "재채기": "재채기",
+    "쌕쌕거림": "숨 쉴 때 쌕쌕 소리",
+    "배뇨 곤란": "소변이 잘 안 나옴",
+    "눈 충혈": "눈이 빨개짐",
+    "생리통": "생리할 때 아픔",
+    "복부 팽만": "배에 가스가 차고 빵빵함",
+    "목 이물감": "목에 뭐가 걸린 느낌",
+    "눈 분비물": "눈곱이나 눈물이 많이 남",
+    "목 결림": "뒷목이 당기거나 뻐근함",
+    "손발 차가움": "손발이 차가움",
+    "우울감": "기분이 처지고 우울함",
+    "불안감": "불안하고 초조함",
+    "청력 저하": "귀가 잘 안 들림",
+    "입마름": "입이 마름"
+  },
+  "symptoms": [
+    {
+      "name": "창백함",
+      "ddxplus": "E_154",
+      "words": [
+        "창백",
+        "얼굴이 하얗",
+        "핏기가 없",
+        "얼굴이 누렇"
+      ]
+    },
+    {
+      "name": "질식감",
+      "ddxplus": "E_75",
+      "words": [
+        "숨이 막히",
+        "숨 막힐 것",
+        "질식할 것",
+        "목이 조이"
+      ]
+    },
+    {
+      "name": "기분 변화",
+      "ddxplus": "E_114",
+      "words": [
+        "짜증이 늘",
+        "예민해",
+        "감정 기복",
+        "화가 자주"
+      ]
+    },
+    {
+      "name": "질 분비물",
+      "ddxplus": "E_163",
+      "words": [
+        "냉이",
+        "질 분비물",
+        "밑에서 분비물",
+        "냉 냄새"
+      ]
+    },
+    {
+      "name": "림프절 부음",
+      "ddxplus": "E_9",
+      "words": [
+        "임파선",
+        "림프절",
+        "멍울",
+        "몽우리"
+      ]
+    },
+    {
+      "name": "삼킴 곤란",
+      "ddxplus": "E_65",
+      "words": [
+        "삼키기 힘들",
+        "삼키기 어렵",
+        "넘기기 힘들",
+        "음식이 안 넘어"
+      ]
+    },
+    {
+      "name": "입 벌리기 어려움",
+      "ddxplus": "E_205",
+      "words": [
+        "입이 안 벌어",
+        "입 벌리기 힘들",
+        "입을 못 벌"
+      ]
+    },
+    {
+      "name": "침 과다",
+      "ddxplus": "E_190",
+      "words": [
+        "침이 많이",
+        "침이 자꾸 고",
+        "침을 흘"
+      ]
+    },
+    {
+      "name": "혼란",
+      "ddxplus": "E_39",
+      "words": [
+        "정신이 오락가락",
+        "여기가 어딘지",
+        "헷갈리고 멍",
+        "사람을 못 알아"
+      ]
+    },
+    {
+      "name": "눈꺼풀 처짐",
+      "ddxplus": "E_172",
+      "words": [
+        "눈꺼풀이 처지",
+        "눈이 잘 안 떠",
+        "눈꺼풀이 무거"
+      ]
+    },
+    {
+      "name": "멍·출혈 경향",
+      "ddxplus": "E_178",
+      "words": [
+        "멍이 잘",
+        "멍이 자꾸",
+        "피가 잘 안 멈"
+      ]
+    },
+    {
+      "name": "체중 증가",
+      "ddxplus": "E_96",
+      "words": [
+        "살이 쪘",
+        "체중이 늘",
+        "몸무게가 늘"
+      ]
+    },
+    {
+      "name": "땀 과다",
+      "ddxplus": "E_50",
+      "words": [
+        "땀이 많이",
+        "땀이 비 오듯",
+        "땀을 너무"
+      ]
+    },
+    {
+      "name": "월경 과다",
+      "ddxplus": "E_145",
+      "words": [
+        "생리 양이 많",
+        "생리가 길",
+        "생리를 오래"
+      ]
+    },
+    {
+      "name": "안면 홍조",
+      "ddxplus": "E_92",
+      "words": [
+        "얼굴이 빨개",
+        "볼이 빨개",
+        "얼굴이 화끈",
+        "홍조"
+      ]
+    },
+    {
+      "name": "흰 변·진한 소변",
+      "ddxplus": "E_188",
+      "words": [
+        "변이 하얗",
+        "회색 변",
+        "소변이 콜라",
+        "소변 색이 진"
+      ]
+    },
+    {
+      "name": "근육 경련",
+      "ddxplus": "E_193",
+      "words": [
+        "쥐가 나",
+        "쥐가 자주",
+        "근육이 파르르",
+        "눈 밑이 떨"
+      ]
+    },
+    {
+      "name": "목 경직",
+      "ddxplus": "E_192",
+      "words": [
+        "목이 안 돌아가",
+        "고개를 못 돌",
+        "고개가 안 돌"
+      ]
+    },
+    {
+      "name": "안구 운동 이상",
+      "ddxplus": "E_180",
+      "words": [
+        "눈동자가 마음대로",
+        "눈이 한쪽으로 돌아"
+      ]
+    },
+    {
+      "name": "이인감",
+      "ddxplus": "E_171",
+      "words": [
+        "내 몸 같지 않",
+        "붕 뜬 느낌",
+        "현실감이 없"
+      ]
+    },
+    {
+      "name": "죽을 것 같은 공포",
+      "ddxplus": "E_111",
+      "words": [
+        "죽을 것 같은 공포",
+        "곧 죽을 것 같",
+        "죽을까 봐 무서"
+      ]
+    },
+    {
+      "name": "후각 상실",
+      "ddxplus": "E_103",
+      "words": [
+        "냄새를 못 맡",
+        "냄새가 안 나",
+        "냄새를 모르겠"
+      ]
+    },
+    {
+      "name": "수면 무호흡",
+      "ddxplus": "E_23",
+      "words": [
+        "자다가 숨을 안 쉬",
+        "코 골다가 멈",
+        "숨이 멎는다"
+      ]
+    },
+    {
+      "name": "야간 호흡곤란",
+      "ddxplus": "E_67",
+      "words": [
+        "숨이 차서 깨",
+        "숨이 막혀서 깨"
+      ]
+    },
+    {
+      "name": "코·목 가려움",
+      "ddxplus": "E_169",
+      "words": [
+        "코가 간지럽",
+        "코가 가렵",
+        "목이 간질"
+      ]
+    },
+    {
+      "name": "눈 가려움",
+      "ddxplus": "E_170",
+      "words": [
+        "눈이 가렵",
+        "눈이 간지럽"
+      ]
+    },
+    {
+      "name": "팔다리 힘 빠짐",
+      "ddxplus": "E_84",
+      "words": [
+        "팔다리에 힘이 없",
+        "양쪽 다리에 힘이",
+        "팔에 힘이 안 들어"
+      ]
+    },
+    {
+      "name": "얼굴 근육 약화",
+      "ddxplus": "E_83",
+      "words": [
+        "얼굴에 힘이 없",
+        "얼굴 근육이"
+      ]
+    },
+    {
+      "name": "딸꾹질",
+      "ddxplus": null,
+      "words": [
+        "딸꾹질"
+      ]
+    },
+    {
+      "name": "탈모",
+      "ddxplus": null,
+      "words": [
+        "머리카락이 빠",
+        "머리가 빠",
+        "탈모"
+      ]
+    },
+    {
+      "name": "입냄새",
+      "ddxplus": null,
+      "words": [
+        "입냄새",
+        "입에서 냄새"
+      ]
+    },
+    {
+      "name": "미각 이상",
+      "ddxplus": null,
+      "words": [
+        "맛을 못 느끼",
+        "맛이 이상",
+        "입이 쓰"
+      ]
+    },
+    {
+      "name": "코골이",
+      "ddxplus": null,
+      "words": [
+        "코를 골",
+        "코골이"
+      ]
+    },
+    {
+      "name": "야뇨",
+      "ddxplus": null,
+      "words": [
+        "자다가 오줌",
+        "이불에 실수"
+      ]
+    }
+  ],
+  "kinds": [
+    {
+      "name": "통증",
+      "ddxplus": "E_55",
+      "words": [
+        "아프",
+        "아파",
+        "아팠",
+        "통증",
+        "쑤시",
+        "욱신",
+        "찌릿",
+        "시큰",
+        "따가",
+        "쓰라",
+        "쑤셔",
+        "지끈",
+        "찌르",
+        "찔러",
+        "콕콕",
+        "욱씬"
+      ]
+    },
+    {
+      "name": "부종",
+      "ddxplus": "E_152",
+      "words": [
+        "붓",
+        "부었",
+        "부어",
+        "퉁퉁",
+        "부기"
+      ]
+    },
+    {
+      "name": "저림·감각 이상",
+      "ddxplus": "E_177",
+      "words": [
+        "저리",
+        "저려",
+        "저릿",
+        "감각이 없",
+        "감각이 둔",
+        "남의 살 같"
+      ]
+    },
+    {
+      "name": "가려움",
+      "ddxplus": "E_136",
+      "words": [
+        "가렵",
+        "가려",
+        "근질",
+        "간지"
+      ]
+    },
+    {
+      "name": "발진·붉어짐",
+      "ddxplus": "E_133",
+      "words": [
+        "빨갛",
+        "빨개",
+        "붉",
+        "두드러기",
+        "반점",
+        "뾰루지",
+        "올라왔",
+        "물집"
+      ]
+    },
+    {
+      "name": "혹·멍울",
+      "ddxplus": "E_9",
+      "words": [
+        "혹",
+        "멍울",
+        "덩어리",
+        "몽우리",
+        "뭐가 만져",
+        "볼록"
+      ]
+    },
+    {
+      "name": "출혈",
+      "ddxplus": "E_178",
+      "words": [
+        "피가 나",
+        "피가 묻",
+        "피가 비",
+        "출혈"
+      ]
+    },
+    {
+      "name": "멍",
+      "ddxplus": "E_178",
+      "words": [
+        "멍"
+      ]
+    },
+    {
+      "name": "결림·뻐근함",
+      "ddxplus": null,
+      "words": [
+        "결리",
+        "결려",
+        "뻐근",
+        "당기",
+        "담 걸",
+        "뻣뻣"
+      ]
+    },
+    {
+      "name": "힘 빠짐",
+      "ddxplus": "E_176",
+      "words": [
+        "힘이 빠",
+        "힘이 없",
+        "힘이 안 들어",
+        "마비"
+      ]
+    },
+    {
+      "name": "경련·떨림",
+      "ddxplus": "E_193",
+      "words": [
+        "쥐가",
+        "떨리",
+        "떨려",
+        "경련",
+        "실룩"
+      ]
+    },
+    {
+      "name": "시림·차가움",
+      "ddxplus": null,
+      "words": [
+        "시리",
+        "시려",
+        "차갑",
+        "차가"
+      ]
+    },
+    {
+      "name": "열감",
+      "ddxplus": null,
+      "words": [
+        "화끈",
+        "뜨겁",
+        "열감",
+        "후끈"
+      ]
+    },
+    {
+      "name": "분비물",
+      "ddxplus": null,
+      "words": [
+        "고름",
+        "진물",
+        "분비물",
+        "냄새나는"
+      ]
+    },
+    {
+      "name": "변색",
+      "ddxplus": null,
+      "words": [
+        "색이 변",
+        "하얗게",
+        "노랗게",
+        "파랗게",
+        "까맣게",
+        "보라색"
+      ]
+    },
+    {
+      "name": "갈라짐·벗겨짐",
+      "ddxplus": null,
+      "words": [
+        "갈라지",
+        "갈라져",
+        "벗겨지",
+        "각질",
+        "트고",
+        "텄",
+        "벗겨",
+        "갈라"
+      ]
+    }
+  ],
+  "sites": [
+    {
+      "name": "엉덩뼈 날개",
+      "ddxplus": "iliac wing",
+      "words": [
+        "골반 옆",
+        "골반뼈",
+        "엉덩뼈"
+      ]
+    },
+    {
+      "name": "사타구니",
+      "ddxplus": "groin",
+      "words": [
+        "사타구니",
+        "서혜부",
+        "샅"
+      ]
+    },
+    {
+      "name": "겨드랑이",
+      "ddxplus": "axilla",
+      "words": [
+        "겨드랑이",
+        "겨드랑",
+        "액와"
+      ]
+    },
+    {
+      "name": "편도",
+      "ddxplus": "tonsil",
+      "words": [
+        "편도",
+        "편도선"
+      ]
+    },
+    {
+      "name": "항문",
+      "ddxplus": "anus",
+      "words": [
+        "항문",
+        "똥꼬",
+        "엉덩이 안쪽"
+      ]
+    },
+    {
+      "name": "발목 뒤",
+      "ddxplus": "posterior aspect of the ankle",
+      "words": [
+        "발목 뒤",
+        "아킬레스"
+      ]
+    },
+    {
+      "name": "뒷머리",
+      "ddxplus": "back of head",
+      "words": [
+        "뒷머리",
+        "뒤통수",
+        "후두부"
+      ]
+    },
+    {
+      "name": "뒷목",
+      "ddxplus": "back of the neck",
+      "words": [
+        "뒷목",
+        "목덜미"
+      ]
+    },
+    {
+      "name": "아래팔",
+      "ddxplus": "forearm",
+      "words": [
+        "아래팔",
+        "팔뚝",
+        "전완"
+      ]
+    },
+    {
+      "name": "아래쪽 가슴",
+      "ddxplus": "lower chest",
+      "words": [
+        "가슴 아래",
+        "아래쪽 가슴",
+        "가슴 밑"
+      ]
+    },
+    {
+      "name": "위팔 앞",
+      "ddxplus": "biceps",
+      "words": [
+        "알통",
+        "위팔",
+        "이두"
+      ]
+    },
+    {
+      "name": "입",
+      "ddxplus": "mouth",
+      "words": [
+        "입",
+        "입안"
+      ]
+    },
+    {
+      "name": "울대",
+      "ddxplus": "thyroid cartilage",
+      "words": [
+        "울대",
+        "울대뼈",
+        "후두"
+      ]
+    },
+    {
+      "name": "발목",
+      "ddxplus": "ankle",
+      "words": [
+        "발목"
+      ]
+    },
+    {
+      "name": "음핵",
+      "ddxplus": "clitoris",
+      "words": [
+        "음핵",
+        "클리토리스"
+      ]
+    },
+    {
+      "name": "꼬리뼈",
+      "ddxplus": "coccyx",
+      "words": [
+        "꼬리뼈",
+        "미골"
+      ]
+    },
+    {
+      "name": "목뼈",
+      "ddxplus": "cervical spine",
+      "words": [
+        "목뼈",
+        "경추"
+      ]
+    },
+    {
+      "name": "등뼈",
+      "ddxplus": "thoracic spine",
+      "words": [
+        "등뼈",
+        "흉추",
+        "등 가운데"
+      ]
+    },
+    {
+      "name": "허리뼈",
+      "ddxplus": "lumbar spine",
+      "words": [
+        "허리뼈",
+        "요추",
+        "허리"
+      ]
+    },
+    {
+      "name": "입꼬리",
+      "ddxplus": "commissure",
+      "words": [
+        "입꼬리",
+        "입가",
+        "입아귀"
+      ]
+    },
+    {
+      "name": "발 바깥쪽",
+      "ddxplus": "lateral side of the foot",
+      "words": [
+        "발 바깥쪽",
+        "발 옆"
+      ]
+    },
+    {
+      "name": "팔꿈치",
+      "ddxplus": "elbow",
+      "words": [
+        "팔꿈치",
+        "팔굽"
+      ]
+    },
+    {
+      "name": "오금",
+      "ddxplus": "popliteal fossa",
+      "words": [
+        "오금",
+        "무릎 뒤",
+        "무릎 뒤쪽"
+      ]
+    },
+    {
+      "name": "골반 위쪽",
+      "ddxplus": "iliac crest",
+      "words": [
+        "골반 위",
+        "허리 옆 뼈",
+        "장골"
+      ]
+    },
+    {
+      "name": "허벅지",
+      "ddxplus": "thigh",
+      "words": [
+        "허벅지",
+        "대퇴부",
+        "대퇴",
+        "넓적다리",
+        "허벅다리"
+      ]
+    },
+    {
+      "name": "목 옆",
+      "ddxplus": "side of the neck",
+      "words": [
+        "목 옆",
+        "옆목",
+        "목 옆쪽"
+      ]
+    },
+    {
+      "name": "옆가슴",
+      "ddxplus": "side of the chest",
+      "words": [
+        "옆가슴",
+        "가슴 옆",
+        "갈비뼈 옆",
+        "갈비뼈"
+      ]
+    },
+    {
+      "name": "아랫니",
+      "ddxplus": "lower teeth",
+      "words": [
+        "아랫니",
+        "아래 이",
+        "아래 어금니"
+      ]
+    },
+    {
+      "name": "윗니",
+      "ddxplus": "upper teeth",
+      "words": [
+        "윗니",
+        "위 이",
+        "위 어금니"
+      ]
+    },
+    {
+      "name": "정수리",
+      "ddxplus": "top of the head",
+      "words": [
+        "정수리",
+        "머리 꼭대기"
+      ]
+    },
+    {
+      "name": "약지",
+      "ddxplus": "finger (ring finger)",
+      "words": [
+        "약지",
+        "넷째 손가락",
+        "약손가락"
+      ]
+    },
+    {
+      "name": "새끼손가락",
+      "ddxplus": "finger (little finger)",
+      "words": [
+        "새끼손가락",
+        "소지"
+      ]
+    },
+    {
+      "name": "검지",
+      "ddxplus": "finger (index)",
+      "words": [
+        "검지",
+        "집게손가락",
+        "둘째 손가락"
+      ]
+    },
+    {
+      "name": "중지",
+      "ddxplus": "finger (middle)",
+      "words": [
+        "중지",
+        "가운뎃손가락",
+        "셋째 손가락"
+      ]
+    },
+    {
+      "name": "발등",
+      "ddxplus": "dorsal aspect of the foot",
+      "words": [
+        "발등"
+      ]
+    },
+    {
+      "name": "손목 바깥쪽",
+      "ddxplus": "dorsal aspect of the wrist",
+      "words": [
+        "손목 바깥",
+        "손목 등"
+      ]
+    },
+    {
+      "name": "손등",
+      "ddxplus": "dorsal aspect of the hand",
+      "words": [
+        "손등"
+      ]
+    },
+    {
+      "name": "아래팔 안쪽",
+      "ddxplus": "palmar side of the forearm",
+      "words": [
+        "팔 안쪽",
+        "아래팔 안쪽"
+      ]
+    },
+    {
+      "name": "손목 안쪽",
+      "ddxplus": "palmar face of the wrist",
+      "words": [
+        "손목 안쪽",
+        "손목 안"
+      ]
+    },
+    {
+      "name": "엉덩이",
+      "ddxplus": "buttock",
+      "words": [
+        "엉덩이",
+        "볼기",
+        "둔부",
+        "궁둥이"
+      ]
+    },
+    {
+      "name": "옆구리",
+      "ddxplus": "flank",
+      "words": [
+        "옆구리"
+      ]
+    },
+    {
+      "name": "아랫배 옆",
+      "ddxplus": "iliac fossa",
+      "words": [
+        "아랫배 옆",
+        "장골와"
+      ]
+    },
+    {
+      "name": "이마",
+      "ddxplus": "forehead",
+      "words": [
+        "이마"
+      ]
+    },
+    {
+      "name": "아래 잇몸",
+      "ddxplus": "lower gum",
+      "words": [
+        "아래 잇몸",
+        "아랫잇몸"
+      ]
+    },
+    {
+      "name": "위 잇몸",
+      "ddxplus": "upper gum",
+      "words": [
+        "위 잇몸",
+        "윗잇몸"
+      ]
+    },
+    {
+      "name": "무릎",
+      "ddxplus": "knee",
+      "words": [
+        "무릎"
+      ]
+    },
+    {
+      "name": "귀두",
+      "ddxplus": "glans",
+      "words": [
+        "귀두"
+      ]
+    },
+    {
+      "name": "대음순",
+      "ddxplus": "labia majora",
+      "words": [
+        "대음순"
+      ]
+    },
+    {
+      "name": "엄지발가락",
+      "ddxplus": "big toe",
+      "words": [
+        "엄지발가락"
+      ]
+    },
+    {
+      "name": "고관절",
+      "ddxplus": "hip",
+      "words": [
+        "고관절",
+        "엉덩관절",
+        "골반"
+      ]
+    },
+    {
+      "name": "윗가슴",
+      "ddxplus": "upper chest",
+      "words": [
+        "윗가슴",
+        "가슴 위쪽"
+      ]
+    },
+    {
+      "name": "처녀막",
+      "ddxplus": "hymen",
+      "words": [
+        "처녀막"
+      ]
+    },
+    {
+      "name": "갈비뼈 아래",
+      "ddxplus": "hypochondrium",
+      "words": [
+        "갈비뼈 아래",
+        "갈비 밑",
+        "늑골 아래"
+      ]
+    },
+    {
+      "name": "허벅지 뒤",
+      "ddxplus": "ischio jambier",
+      "words": [
+        "허벅지 뒤",
+        "뒷허벅지",
+        "햄스트링"
+      ]
+    },
+    {
+      "name": "볼",
+      "ddxplus": "cheek",
+      "words": [
+        "뺨",
+        "볼살",
+        "볼이",
+        "볼에",
+        "광대"
+      ]
+    },
+    {
+      "name": "볼 안쪽",
+      "ddxplus": "internal cheek",
+      "words": [
+        "볼 안쪽",
+        "볼 안"
+      ]
+    },
+    {
+      "name": "콩팥 부위",
+      "ddxplus": "renal fossa",
+      "words": [
+        "콩팥",
+        "신장 쪽",
+        "허리 뒤 옆"
+      ]
+    },
+    {
+      "name": "목젖",
+      "ddxplus": "uvula",
+      "words": [
+        "목젖"
+      ]
+    },
+    {
+      "name": "아랫입술",
+      "ddxplus": "bottom lip",
+      "words": [
+        "아랫입술"
+      ]
+    },
+    {
+      "name": "윗입술",
+      "ddxplus": "upper lip",
+      "words": [
+        "윗입술"
+      ]
+    },
+    {
+      "name": "턱 끝",
+      "ddxplus": "chin",
+      "words": [
+        "턱 끝",
+        "아래턱 끝",
+        "턱끝"
+      ]
+    },
+    {
+      "name": "종아리",
+      "ddxplus": "calf",
+      "words": [
+        "종아리",
+        "장딴지"
+      ]
+    },
+    {
+      "name": "턱",
+      "ddxplus": "jaw",
+      "words": [
+        "턱",
+        "턱관절",
+        "아래턱"
+      ]
+    },
+    {
+      "name": "코",
+      "ddxplus": "nose",
+      "words": [
+        "코",
+        "콧속",
+        "콧등"
+      ]
+    },
+    {
+      "name": "뒤통수 아래",
+      "ddxplus": "occiput",
+      "words": [
+        "뒤통수 아래",
+        "뒷머리 아래"
+      ]
+    },
+    {
+      "name": "눈",
+      "ddxplus": "eye",
+      "words": [
+        "눈",
+        "눈알",
+        "눈두덩"
+      ]
+    },
+    {
+      "name": "날개뼈",
+      "ddxplus": "scapula",
+      "words": [
+        "날개뼈",
+        "견갑골",
+        "어깻죽지"
+      ]
+    },
+    {
+      "name": "귀",
+      "ddxplus": "ear",
+      "words": [
+        "귀",
+        "귓속",
+        "귓바퀴"
+      ]
+    },
+    {
+      "name": "둘째 발가락",
+      "ddxplus": "toe (1)",
+      "words": [
+        "둘째 발가락"
+      ]
+    },
+    {
+      "name": "셋째 발가락",
+      "ddxplus": "toe (2)",
+      "words": [
+        "셋째 발가락",
+        "가운데 발가락"
+      ]
+    },
+    {
+      "name": "넷째 발가락",
+      "ddxplus": "toe (3)",
+      "words": [
+        "넷째 발가락"
+      ]
+    },
+    {
+      "name": "입천장",
+      "ddxplus": "palace",
+      "words": [
+        "입천장",
+        "구개"
+      ]
+    },
+    {
+      "name": "질벽",
+      "ddxplus": "vaginal wall",
+      "words": [
+        "질벽"
+      ]
+    },
+    {
+      "name": "손바닥",
+      "ddxplus": "palm",
+      "words": [
+        "손바닥"
+      ]
+    },
+    {
+      "name": "새끼발가락",
+      "ddxplus": "little toe (4)",
+      "words": [
+        "새끼발가락"
+      ]
+    },
+    {
+      "name": "소음순",
+      "ddxplus": "labia minora",
+      "words": [
+        "소음순"
+      ]
+    },
+    {
+      "name": "목구멍",
+      "ddxplus": "pharynx",
+      "words": [
+        "목구멍",
+        "목 안",
+        "인두"
+      ]
+    },
+    {
+      "name": "발바닥",
+      "ddxplus": "sole",
+      "words": [
+        "발바닥"
+      ]
+    },
+    {
+      "name": "엄지손가락",
+      "ddxplus": "thumb",
+      "words": [
+        "엄지손가락",
+        "엄지"
+      ]
+    },
+    {
+      "name": "치골",
+      "ddxplus": "pubis",
+      "words": [
+        "치골",
+        "불두덩"
+      ]
+    },
+    {
+      "name": "음경",
+      "ddxplus": "penis",
+      "words": [
+        "음경",
+        "성기"
+      ]
+    },
+    {
+      "name": "음낭",
+      "ddxplus": "scrotum",
+      "words": [
+        "음낭"
+      ]
+    },
+    {
+      "name": "유방",
+      "ddxplus": "breast",
+      "words": [
+        "유방",
+        "젖가슴",
+        "젖"
+      ]
+    },
+    {
+      "name": "혀 위",
+      "ddxplus": "above the tongue",
+      "words": [
+        "혀 위",
+        "혓바닥 위"
+      ]
+    },
+    {
+      "name": "혀 밑",
+      "ddxplus": "under the tongue",
+      "words": [
+        "혀 밑",
+        "혀 아래"
+      ]
+    },
+    {
+      "name": "턱 밑",
+      "ddxplus": "under the jaw",
+      "words": [
+        "턱 밑",
+        "턱 아래"
+      ]
+    },
+    {
+      "name": "뒤꿈치",
+      "ddxplus": "heel",
+      "words": [
+        "뒤꿈치",
+        "발뒤꿈치"
+      ]
+    },
+    {
+      "name": "관자놀이",
+      "ddxplus": "temple",
+      "words": [
+        "관자놀이",
+        "측두부"
+      ]
+    },
+    {
+      "name": "고환",
+      "ddxplus": "testicle",
+      "words": [
+        "고환",
+        "불알"
+      ]
+    },
+    {
+      "name": "등",
+      "ddxplus": "posterior chest wall",
+      "words": [
+        "등",
+        "등짝",
+        "등 쪽"
+      ]
+    },
+    {
+      "name": "정강이",
+      "ddxplus": "tibia",
+      "words": [
+        "정강이",
+        "정강이뼈",
+        "경골"
+      ]
+    },
+    {
+      "name": "기관",
+      "ddxplus": "trachea",
+      "words": [
+        "숨통",
+        "기관지"
+      ]
+    },
+    {
+      "name": "승모근",
+      "ddxplus": "trapezius",
+      "words": [
+        "승모근",
+        "어깨 위 근육"
+      ]
+    },
+    {
+      "name": "위팔 뒤",
+      "ddxplus": "triceps",
+      "words": [
+        "팔 뒤쪽",
+        "위팔 뒤",
+        "삼두"
+      ]
+    },
+    {
+      "name": "요도",
+      "ddxplus": "urethra",
+      "words": [
+        "요도",
+        "오줌 나오는 곳"
+      ]
+    },
+    {
+      "name": "질",
+      "ddxplus": "vagina",
+      "words": [
+        "질",
+        "밑"
+      ]
+    },
+    {
+      "name": "배",
+      "ddxplus": "belly",
+      "words": [
+        "배",
+        "복부",
+        "뱃속"
+      ]
+    },
+    {
+      "name": "입술",
+      "ddxplus": "vermilion",
+      "words": [
+        "입술"
+      ]
+    },
+    {
+      "name": "질 입구",
+      "ddxplus": "vulval vestibule",
+      "words": [
+        "질 입구",
+        "외음부"
+      ]
+    },
+    {
+      "name": "어깨",
+      "ddxplus": "shoulder",
+      "words": [
+        "어깨"
+      ]
+    },
+    {
+      "name": "명치",
+      "ddxplus": "epigastric",
+      "words": [
+        "명치",
+        "윗배",
+        "상복부"
+      ]
+    },
+    {
+      "name": "머리",
+      "ddxplus": null,
+      "words": [
+        "머리",
+        "두피"
+      ]
+    },
+    {
+      "name": "가슴",
+      "ddxplus": null,
+      "words": [
+        "가슴"
+      ]
+    },
+    {
+      "name": "목",
+      "ddxplus": null,
+      "words": [
+        "목"
+      ]
+    },
+    {
+      "name": "팔",
+      "ddxplus": null,
+      "words": [
+        "팔"
+      ]
+    },
+    {
+      "name": "다리",
+      "ddxplus": null,
+      "words": [
+        "다리"
+      ]
+    },
+    {
+      "name": "손",
+      "ddxplus": null,
+      "words": [
+        "손"
+      ]
+    },
+    {
+      "name": "발",
+      "ddxplus": null,
+      "words": [
+        "발"
+      ]
+    },
+    {
+      "name": "손가락",
+      "ddxplus": null,
+      "words": [
+        "손가락"
+      ]
+    },
+    {
+      "name": "발가락",
+      "ddxplus": null,
+      "words": [
+        "발가락"
+      ]
+    },
+    {
+      "name": "혀",
+      "ddxplus": null,
+      "words": [
+        "혀",
+        "혓바닥"
+      ]
+    },
+    {
+      "name": "잇몸",
+      "ddxplus": null,
+      "words": [
+        "잇몸"
+      ]
+    },
+    {
+      "name": "이",
+      "ddxplus": null,
+      "words": [
+        "이빨",
+        "치아",
+        "어금니",
+        "앞니"
+      ]
+    },
+    {
+      "name": "손발톱",
+      "ddxplus": null,
+      "words": [
+        "손톱",
+        "발톱"
+      ]
+    },
+    {
+      "name": "피부",
+      "ddxplus": null,
+      "words": [
+        "피부",
+        "살갗"
+      ]
+    },
+    {
+      "name": "온몸",
+      "ddxplus": null,
+      "words": [
+        "온몸",
+        "전신",
+        "몸 전체"
+      ]
+    }
+  ]
+}

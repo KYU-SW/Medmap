@@ -1,0 +1,125 @@
+{"id":"Z001","category":"이름","text":"요즘 음식이 잘 안 넘어가요.","outside":[{"span":"음식이 잘 안 넘어가","status":"present","name":"삼킴 곤란"}]}
+{"id":"Z002","category":"이름","text":"밥 먹을 때 삼키기가 힘들어요.","outside":[{"span":"삼키기가 힘들어","status":"present","name":"삼킴 곤란"}]}
+{"id":"Z003","category":"이름","text":"목에 멍울이 만져져요.","outside":[{"span":"목에 멍울이 만져져","status":"present","name":"림프절 부음"}]}
+{"id":"Z004","category":"이름","text":"임파선이 부은 것 같아요.","outside":[{"span":"임파선이 부은","status":"present","name":"림프절 부음"}]}
+{"id":"Z005","category":"이름","text":"얼굴이 창백하다는 말을 자주 들어요.","outside":[{"span":"얼굴이 창백","status":"present","name":"창백함"}]}
+{"id":"Z006","category":"이름","text":"요즘 핏기가 하나도 없대요.","outside":[{"span":"핏기가 하나도 없","status":"present","name":"창백함"}]}
+{"id":"Z007","category":"이름","text":"갑자기 숨이 막힐 것 같았어요.","outside":[{"span":"숨이 막힐 것 같았","status":"present","name":"질식감"}]}
+{"id":"Z008","category":"이름","text":"요즘 짜증이 너무 늘었어요.","outside":[{"span":"짜증이 너무 늘었","status":"present","name":"기분 변화"}]}
+{"id":"Z009","category":"이름","text":"냉이 많아지고 냄새가 나요.","outside":[{"span":"냉이 많아지고 냄새가 나","status":"present","name":"질 분비물"}]}
+{"id":"Z010","category":"이름","text":"입이 잘 안 벌어져요.","outside":[{"span":"입이 잘 안 벌어져","status":"present","name":"입 벌리기 어려움"}]}
+{"id":"Z011","category":"이름","text":"자꾸 침이 고여서 뱉게 돼요.","outside":[{"span":"침이 고여서","status":"present","name":"침 과다"}]}
+{"id":"Z012","category":"이름","text":"아버지가 아니라 제가 요즘 정신이 오락가락해요.","outside":[{"span":"정신이 오락가락","status":"present","name":"혼란"}]}
+{"id":"Z013","category":"이름","text":"오후만 되면 눈꺼풀이 처져요.","outside":[{"span":"눈꺼풀이 처져","status":"present","name":"눈꺼풀 처짐"}]}
+{"id":"Z014","category":"이름","text":"살짝 부딪혀도 멍이 잘 들어요.","outside":[{"span":"멍이 잘 들어","status":"present","name":"멍·출혈 경향"}]}
+{"id":"Z015","category":"이름","text":"석 달 사이에 살이 많이 쪘어요.","outside":[{"span":"살이 많이 쪘","status":"present","name":"체중 증가"}]}
+{"id":"Z016","category":"이름","text":"가만히 있어도 땀이 비 오듯 나요.","outside":[{"span":"땀이 비 오듯 나","status":"present","name":"땀 과다"}]}
+{"id":"Z017","category":"이름","text":"생리 양이 너무 많아졌어요.","outside":[{"span":"생리 양이 너무 많아졌","status":"present","name":"월경 과다"}]}
+{"id":"Z018","category":"이름","text":"얼굴이 자꾸 화끈거리고 빨개져요.","outside":[{"span":"얼굴이 자꾸 화끈거리고 빨개져","status":"present","name":"안면 홍조"}]}
+{"id":"Z019","category":"이름","text":"소변 색이 콜라처럼 진해요.","outside":[{"span":"소변 색이 콜라처럼 진해","status":"present","name":"흰 변·진한 소변"}]}
+{"id":"Z020","category":"이름","text":"밤에 자다가 종아리에 쥐가 나요.","outside":[{"span":"종아리에 쥐가 나","status":"present","name":"근육 경련"}]}
+{"id":"Z021","category":"이름","text":"자고 일어났더니 고개를 못 돌리겠어요.","outside":[{"span":"고개를 못 돌리겠","status":"present","name":"목 경직"}]}
+{"id":"Z022","category":"이름","text":"가끔 내 몸이 내 몸 같지 않아요.","outside":[{"span":"내 몸이 내 몸 같지 않아","status":"present","name":"이인감"}]}
+{"id":"Z023","category":"이름","text":"감기 걸린 뒤로 냄새를 못 맡아요.","outside":[{"span":"냄새를 못 맡아","status":"present","name":"후각 상실"}]}
+{"id":"Z024","category":"이름","text":"아내가 그러는데 제가 자다가 숨을 안 쉰대요.","outside":[{"span":"자다가 숨을 안 쉰대","status":"present","name":"수면 무호흡"}]}
+{"id":"Z025","category":"목록 안(부위)","text":"새벽에 숨이 차서 깨요.","symptoms":[{"name":"호흡곤란","status":"present"}]}
+{"id":"Z026","category":"목록 안(부위)","text":"코가 간지럽고 재채기가 나요.","symptoms":[{"name":"재채기","status":"present"},{"name":"가려움","status":"present"}]}
+{"id":"Z027","category":"목록 안(부위)","text":"눈이 너무 가려워요.","symptoms":[{"name":"가려움","status":"present"}]}
+{"id":"Z028","category":"이름","text":"딸꾹질이 이틀째 안 멈춰요.","outside":[{"span":"딸꾹질이 이틀째 안 멈춰","status":"present","name":"딸꾹질"}]}
+{"id":"Z029","category":"이름","text":"머리카락이 한 움큼씩 빠져요.","outside":[{"span":"머리카락이 한 움큼씩 빠져","status":"present","name":"탈모"}]}
+{"id":"Z030","category":"이름","text":"입에서 냄새가 심하게 나요.","outside":[{"span":"입에서 냄새가 심하게 나","status":"present","name":"입냄새"}]}
+{"id":"Z031","category":"이름","text":"요즘 음식 맛을 잘 못 느끼겠어요.","outside":[{"span":"맛을 잘 못 느끼겠","status":"present","name":"미각 이상"}]}
+{"id":"Z032","category":"이름","text":"양쪽 다리에 힘이 하나도 없어요.","outside":[{"span":"양쪽 다리에 힘이 하나도 없","status":"present","name":"팔다리 힘 빠짐"}]}
+{"id":"Z033","category":"이름","text":"코를 너무 심하게 곤대요.","outside":[{"span":"코를 너무 심하게 곤대","status":"present","name":"코골이"}]}
+{"id":"Z034","category":"이름","text":"갑자기 곧 죽을 것 같은 공포가 밀려왔어요.","outside":[{"span":"곧 죽을 것 같은 공포","status":"present","name":"죽을 것 같은 공포"}]}
+{"id":"Z035","category":"이름","text":"변이 하얗게 나와요.","outside":[{"span":"변이 하얗게 나와","status":"present","name":"흰 변·진한 소변"}]}
+{"id":"Z036","category":"종류+부위","text":"대퇴부가 아파요.","outside":[{"span":"대퇴부가 아파","status":"present","name":"통증/허벅지"}]}
+{"id":"Z037","category":"종류+부위","text":"오른쪽 허벅지가 쿡쿡 쑤셔요.","outside":[{"span":"오른쪽 허벅지가 쿡쿡 쑤셔","status":"present","name":"통증/허벅지"}]}
+{"id":"Z038","category":"종류+부위","text":"겨드랑이가 아파요.","outside":[{"span":"겨드랑이가 아파","status":"present","name":"통증/겨드랑이"}]}
+{"id":"Z039","category":"종류+부위","text":"엉덩이가 너무 아파서 못 앉겠어요.","outside":[{"span":"엉덩이가 너무 아파서","status":"present","name":"통증/엉덩이"}]}
+{"id":"Z040","category":"종류+부위","text":"꼬리뼈가 욱신거려요.","outside":[{"span":"꼬리뼈가 욱신거려","status":"present","name":"통증/꼬리뼈"}]}
+{"id":"Z041","category":"종류+부위","text":"사타구니가 당기고 아파요.","outside":[{"span":"사타구니가 당기고 아파","status":"present","name":"통증/사타구니"}]}
+{"id":"Z042","category":"종류+부위","text":"발뒤꿈치가 아파서 걷기 힘들어요.","outside":[{"span":"발뒤꿈치가 아파서","status":"present","name":"통증/뒤꿈치"}]}
+{"id":"Z043","category":"종류+부위","text":"아침에 발바닥이 찌릿해요.","outside":[{"span":"발바닥이 찌릿해","status":"present","name":"통증/발바닥"}]}
+{"id":"Z044","category":"종류+부위","text":"정강이가 시큰거려요.","outside":[{"span":"정강이가 시큰거려","status":"present","name":"통증/정강이"}]}
+{"id":"Z045","category":"목록 안(부위)","text":"종아리가 퉁퉁 부었어요.","symptoms":[{"name":"부종","status":"present"}]}
+{"id":"Z046","category":"목록 안(부위)","text":"발등이 부어서 신발이 안 들어가요.","symptoms":[{"name":"부종","status":"present"}]}
+{"id":"Z047","category":"목록 안(부위)","text":"오금이 부어올랐어요.","symptoms":[{"name":"부종","status":"present"}]}
+{"id":"Z048","category":"종류+부위","text":"관자놀이가 지끈거려요.","outside":[{"span":"관자놀이가 지끈거려","status":"present","name":"통증/관자놀이"}]}
+{"id":"Z049","category":"종류+부위","text":"날개뼈 쪽이 결려요.","outside":[{"span":"날개뼈 쪽이 결려","status":"present","name":"결림·뻐근함/날개뼈"}]}
+{"id":"Z050","category":"종류+부위","text":"옆구리가 결려요.","outside":[{"span":"옆구리가 결려","status":"present","name":"결림·뻐근함/옆구리"}]}
+{"id":"Z051","category":"종류+부위","text":"승모근이 뭉쳐서 뻐근해요.","outside":[{"span":"승모근이 뭉쳐서 뻐근해","status":"present","name":"결림·뻐근함/승모근"}]}
+{"id":"Z052","category":"종류+부위","text":"잇몸에서 피가 나요.","outside":[{"span":"잇몸에서 피가 나","status":"present","name":"출혈/잇몸"}]}
+{"id":"Z053","category":"종류+부위","text":"양치할 때마다 잇몸이 피가 비쳐요.","outside":[{"span":"잇몸이 피가 비쳐","status":"present","name":"출혈/잇몸"}]}
+{"id":"Z054","category":"종류+부위","text":"항문에서 피가 묻어나요.","outside":[{"span":"항문에서 피가 묻어나","status":"present","name":"출혈/항문"}]}
+{"id":"Z055","category":"종류+부위","text":"허벅지에 멍이 들었는데 부딪힌 적이 없어요.","outside":[{"span":"허벅지에 멍이 들었는데 부딪힌 적이 없","status":"present","name":"멍/허벅지"}]}
+{"id":"Z056","category":"종류+부위","text":"겨드랑이에 혹이 만져져요.","outside":[{"span":"겨드랑이에 혹이 만져져","status":"present","name":"혹·멍울/겨드랑이"}]}
+{"id":"Z057","category":"종류+부위","text":"유방에 몽우리가 잡혀요.","outside":[{"span":"유방에 몽우리가 잡혀","status":"present","name":"혹·멍울/유방"}]}
+{"id":"Z058","category":"종류+부위","text":"목 옆에 볼록한 게 생겼어요.","outside":[{"span":"목 옆에 볼록한 게 생겼","status":"present","name":"혹·멍울/목 옆"}]}
+{"id":"Z059","category":"목록 안(부위)","text":"엄지발가락이 빨갛게 부었어요.","symptoms":[{"name":"부종","status":"present"}]}
+{"id":"Z060","category":"목록 안(부위)","text":"손바닥이 자꾸 가려워요.","symptoms":[{"name":"가려움","status":"present"}]}
+{"id":"Z061","category":"목록 안(부위)","text":"두피가 가렵고 각질이 생겨요.","symptoms":[{"name":"가려움","status":"present"}]}
+{"id":"Z062","category":"목록 안(부위)","text":"사타구니가 가렵고 빨개요.","symptoms":[{"name":"가려움","status":"present"}]}
+{"id":"Z063","category":"목록 안(부위)","text":"엄지손가락 감각이 둔해요.","symptoms":[{"name":"저림","status":"present"}]}
+{"id":"Z064","category":"목록 안(부위)","text":"허벅지 바깥쪽이 남의 살 같아요.","symptoms":[{"name":"저림","status":"present"}]}
+{"id":"Z065","category":"종류+부위","text":"입술이 갈라지고 피가 나요.","outside":[{"span":"입술이 갈라지고 피가 나","status":"present","name":"갈라짐·벗겨짐/입술"}]}
+{"id":"Z066","category":"종류+부위","text":"발바닥 피부가 벗겨져요.","outside":[{"span":"발바닥 피부가 벗겨져","status":"present","name":"갈라짐·벗겨짐/발바닥"}]}
+{"id":"Z067","category":"종류+부위","text":"손톱이 노랗게 변했어요.","outside":[{"span":"손톱이 노랗게 변했","status":"present","name":"변색/손발톱"}]}
+{"id":"Z068","category":"종류+부위","text":"발가락 끝이 파랗게 변해요.","outside":[{"span":"발가락 끝이 파랗게 변해","status":"present","name":"변색/발가락"}]}
+{"id":"Z069","category":"종류+부위","text":"귀에서 고름이 나와요.","outside":[{"span":"귀에서 고름이 나와","status":"present","name":"분비물/귀"}]}
+{"id":"Z070","category":"종류+부위","text":"배꼽에서 진물이 나요.","outside":[{"span":"배꼽에서 진물이 나","status":"present","name":"분비물/배"}]}
+{"id":"Z071","category":"종류+부위","text":"이가 시려서 찬물을 못 마셔요.","outside":[{"span":"이가 시려서","status":"present","name":"시림·차가움/이"}]}
+{"id":"Z072","category":"종류+부위","text":"무릎이 시려요.","outside":[{"span":"무릎이 시려","status":"present","name":"시림·차가움/무릎"}]}
+{"id":"Z073","category":"종류+부위","text":"발바닥이 화끈거려요.","outside":[{"span":"발바닥이 화끈거려","status":"present","name":"열감/발바닥"}]}
+{"id":"Z074","category":"종류+부위","text":"눈 밑이 계속 떨려요.","outside":[{"span":"눈 밑이 계속 떨려","status":"present","name":"근육 경련"}]}
+{"id":"Z075","category":"목록 안(부위)","text":"오른팔에 힘이 안 들어가요.","symptoms":[{"name":"마비","status":"present"}]}
+{"id":"Z076","category":"목록 안(부위)","text":"혀가 따가워요.","symptoms":[{"name":"입안 통증","status":"present"}]}
+{"id":"Z077","category":"목록 안(부위)","text":"목젖이 부은 것 같아요.","symptoms":[{"name":"부종","status":"present"}]}
+{"id":"Z078","category":"목록 안(부위)","text":"턱 밑이 부어서 아파요.","symptoms":[{"name":"부종","status":"present"}]}
+{"id":"Z079","category":"목록 안(부위)","text":"손등에 물집이 잡혔어요.","symptoms":[{"name":"발진","status":"present"}]}
+{"id":"Z080","category":"종류+부위","text":"고환이 아파요.","outside":[{"span":"고환이 아파","status":"present","name":"통증/고환"}]}
+{"id":"Z081","category":"종류+부위","text":"갈비뼈 아래가 콕콕 찔러요.","outside":[{"span":"갈비뼈 아래가 콕콕 찔러","status":"present","name":"통증/갈비뼈 아래"}]}
+{"id":"Z082","category":"종류+부위","text":"팔꿈치 바깥쪽이 시큰해요.","outside":[{"span":"팔꿈치 바깥쪽이 시큰해","status":"present","name":"통증/팔꿈치"}]}
+{"id":"Z083","category":"목록 안(부위)","text":"손목 안쪽이 저려요.","symptoms":[{"name":"저림","status":"present"}]}
+{"id":"Z084","category":"종류+부위","text":"정수리가 아파요.","outside":[{"span":"정수리가 아파","status":"present","name":"통증/정수리"}]}
+{"id":"Z085","category":"목록 안(부위)","text":"이마에 뾰루지가 잔뜩 났어요.","symptoms":[{"name":"발진","status":"present"}]}
+{"id":"Z086","category":"기타","text":"손톱이 자꾸 부서져요.","outside":[{"span":"손톱이 자꾸 부서져","status":"present","name":"기타"}]}
+{"id":"Z087","category":"기타","text":"몸에서 이상한 냄새가 나요.","outside":[{"span":"몸에서 이상한 냄새가 나","status":"present","name":"기타"}]}
+{"id":"Z088","category":"기타","text":"자꾸 헛것이 보여요.","outside":[{"span":"헛것이 보여","status":"present","name":"기타"}]}
+{"id":"Z089","category":"기타","text":"건망증이 심해졌어요.","outside":[{"span":"건망증이 심해졌","status":"present","name":"기타"}]}
+{"id":"Z090","category":"기타","text":"추위를 너무 많이 타요.","outside":[{"span":"추위를 너무 많이 타","status":"present","name":"기타"}]}
+{"id":"Z091","category":"목록 안(부위)","text":"트림이 아니라 신물이 넘어와요.","symptoms":[{"name":"속쓰림","status":"present"}]}
+{"id":"Z092","category":"기타","text":"걸을 때 자꾸 한쪽으로 쏠려요.","outside":[{"span":"걸을 때 자꾸 한쪽으로 쏠려","status":"present","name":"기타"}]}
+{"id":"Z093","category":"기타","text":"소변에 거품이 많이 껴요.","outside":[{"span":"소변에 거품이 많이 껴","status":"present","name":"기타"}]}
+{"id":"Z094","category":"기타","text":"빛을 보면 눈이 부셔서 못 견디겠어요.","outside":[{"span":"빛을 보면 눈이 부셔서","status":"present","name":"기타"}]}
+{"id":"Z095","category":"기타","text":"목소리가 떨려서 말하기 힘들어요.","outside":[{"span":"목소리가 떨려서","status":"present","name":"기타"}]}
+{"id":"Z096","category":"없음·모름","text":"삼키는 건 괜찮아요.","outside":[{"span":"삼키는 건 괜찮아","status":"absent","name":"삼킴 곤란"}]}
+{"id":"Z097","category":"없음·모름","text":"멍울 같은 건 안 만져져요.","outside":[{"span":"멍울 같은 건 안 만져져","status":"absent","name":"림프절 부음"}]}
+{"id":"Z098","category":"없음·모름","text":"허벅지는 이제 안 아파요.","outside":[{"span":"허벅지는 이제 안 아파","status":"absent","name":"통증/허벅지"}]}
+{"id":"Z099","category":"없음·모름","text":"잇몸에서 피는 안 나요.","outside":[{"span":"잇몸에서 피는 안 나","status":"absent","name":"출혈/잇몸"}]}
+{"id":"Z100","category":"없음·모름","text":"냄새는 잘 맡아요.","outside":[{"span":"냄새는 잘 맡아","status":"absent","name":"후각 상실"}]}
+{"id":"Z101","category":"목록 안(부위)","text":"종아리가 부은 건지 잘 모르겠어요.","symptoms":[{"name":"부종","status":"uncertain"}]}
+{"id":"Z102","category":"없음·모름","text":"겨드랑이에 뭐가 만져지는 것 같기도 하고 확실하진 않아요.","outside":[{"span":"겨드랑이에 뭐가 만져지는 것 같기도 하고 확실하진 않아","status":"uncertain","name":"혹·멍울/겨드랑이"}]}
+{"id":"Z103","category":"없음·모름","text":"자다가 숨을 멈추는지는 모르겠어요.","outside":[{"span":"자다가 숨을 멈추는지는 모르겠","status":"uncertain","name":"수면 무호흡"}]}
+{"id":"Z104","category":"없음·모름","text":"땀이 많이 나는 편은 아니에요.","outside":[{"span":"땀이 많이 나는 편은 아니","status":"absent","name":"땀 과다"}]}
+{"id":"Z105","category":"없음·모름","text":"살이 찐 건지 부은 건지 헷갈려요.","outside":[{"span":"살이 찐 건지","status":"uncertain","name":"체중 증가"}]}
+{"id":"Z106","category":"함께","text":"머리가 아프고 관자놀이도 욱신거려요.","symptoms":[{"name":"두통","status":"present"}],"outside":[{"span":"관자놀이도 욱신거려","status":"present","name":"통증/관자놀이"}]}
+{"id":"Z107","category":"함께","text":"열이 나고 목에 멍울이 잡혀요.","symptoms":[{"name":"발열","status":"present"}],"outside":[{"span":"목에 멍울이 잡혀","status":"present","name":"림프절 부음"}]}
+{"id":"Z108","category":"함께","text":"기침이 나고 냄새를 못 맡겠어요.","symptoms":[{"name":"기침","status":"present"}],"outside":[{"span":"냄새를 못 맡겠","status":"present","name":"후각 상실"}]}
+{"id":"Z109","category":"함께","text":"배가 아프고 변이 하얗게 나와요.","symptoms":[{"name":"복통","status":"present"}],"outside":[{"span":"변이 하얗게 나와","status":"present","name":"흰 변·진한 소변"}]}
+{"id":"Z110","category":"목록 안(부위)","text":"허리가 아프고 엉덩이까지 저려요.","symptoms":[{"name":"요통","status":"present"},{"name":"저림","status":"present"}]}
+{"id":"Z111","category":"함께","text":"설사를 하고 항문이 따가워요.","symptoms":[{"name":"설사","status":"present"}],"outside":[{"span":"항문이 따가워","status":"present","name":"통증/항문"}]}
+{"id":"Z112","category":"함께","text":"어지럽고 얼굴이 창백해졌어요.","symptoms":[{"name":"어지러움","status":"present"}],"outside":[{"span":"얼굴이 창백해졌","status":"present","name":"창백함"}]}
+{"id":"Z113","category":"목록 안(부위)","text":"콧물이 나고 눈이 가려워요. 열은 없어요.","symptoms":[{"name":"콧물","status":"present"},{"name":"발열","status":"absent"},{"name":"가려움","status":"present"}]}
+{"id":"Z114","category":"함께","text":"어제부터 목이 아프고 삼키기도 힘들어요.","symptoms":[{"name":"인후통","status":"present","onset_date":"2026-10-16"}],"outside":[{"span":"삼키기도 힘들어","status":"present","name":"삼킴 곤란"}]}
+{"id":"Z115","category":"목록 안(부위)","text":"숨이 차고 종아리가 부었어요.","symptoms":[{"name":"호흡곤란","status":"present"},{"name":"부종","status":"present"}]}
+{"id":"Z116","category":"다른 사람","text":"아이가 딸꾹질을 계속해요.","others_outside":[{"person":"아이","span":"딸꾹질을 계속해"}]}
+{"id":"Z117","category":"다른 사람","text":"남편이 코를 심하게 골아요. 저는 잇몸에서 피가 나요.","outside":[{"span":"잇몸에서 피가 나","status":"present","name":"출혈/잇몸"}],"others_outside":[{"person":"남편","span":"코를 심하게 골아"}]}
+{"id":"Z118","category":"다른 사람","text":"엄마가 허벅지가 아프대요.","others_outside":[{"person":"엄마","span":"허벅지가 아프대"}]}
+{"id":"Z119","category":"다른 사람","text":"딸이 머리카락이 많이 빠진대요.","others_outside":[{"person":"딸","span":"머리카락이 많이 빠진대"}]}
+{"id":"Z120","category":"증상 아님","text":"허벅지 운동을 열심히 하고 있어요."}
+{"id":"Z121","category":"증상 아님","text":"겨드랑이 제모를 했어요."}
+{"id":"Z122","category":"증상 아님","text":"냄새 좋은 향수를 샀어요."}
+{"id":"Z123","category":"증상 아님","text":"땀을 흘리며 운동하는 걸 좋아해요."}
+{"id":"Z124","category":"증상 아님","text":"발바닥 마사지를 받았어요."}
+{"id":"Z125","category":"증상 아님","text":"잇몸 치료는 작년에 끝났어요."}

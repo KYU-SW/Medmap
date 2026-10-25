@@ -1,0 +1,3615 @@
+{
+"B001": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "머리가 깨질 것처럼 아파요"
+}
+],
+"B002": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "두통 때문에"
+}
+],
+"B003": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "열이 펄펄 끓어요"
+}
+],
+"B004": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "몸에서 열이 좀 나요"
+}
+],
+"B005": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "기침이 계속 나와요"
+}
+],
+"B006": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "밤마다 콜록콜록 기침해요"
+}
+],
+"B007": [
+{
+"start": 0,
+"end": 5,
+"status": "present",
+"text": "숨이 차요"
+}
+],
+"B008": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "계단 오를 때 숨쉬기가 힘들어요"
+}
+],
+"B009": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "가슴이 답답해요"
+}
+],
+"B010": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "가슴이 꽉 막힌 것처럼 답답해요"
+}
+],
+"B011": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "배가 아파요"
+}
+],
+"B012": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "아랫배가 살살 아파요"
+}
+],
+"B013": [
+{
+"start": 0,
+"end": 4,
+"status": "present",
+"text": "토했어요"
+}
+],
+"B014": [],
+"B015": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "가슴이 찌르듯이 아파요"
+}
+],
+"B016": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "가슴 통증이 있어요"
+}
+],
+"B017": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "목이 따가워요"
+}
+],
+"B018": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "침 삼킬 때 목이 아파요"
+}
+],
+"B019": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "콧물이 줄줄 흘러요"
+}
+],
+"B020": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "맑은 콧물이 나요"
+}
+],
+"B021": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "코가 막혀요"
+}
+],
+"B022": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "양쪽 코가 다 막혔어요"
+}
+],
+"B023": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "가래가 끓어요"
+}
+],
+"B024": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "누런 가래가 나와요"
+}
+],
+"B025": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "몸이 으슬으슬 추워요"
+}
+],
+"B026": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "오한이 들어요"
+}
+],
+"B027": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "온몸이 쑤셔요"
+}
+],
+"B028": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "몸살 기운이 있어요"
+}
+],
+"B029": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "허리가 아파요"
+}
+],
+"B030": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "허리가 끊어질 것 같아요"
+}
+],
+"B031": [
+{
+"start": 0,
+"end": 5,
+"status": "present",
+"text": "어지러워요"
+}
+],
+"B032": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "일어날 때 핑 돌아요"
+}
+],
+"B033": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "속이 메스꺼워요"
+}
+],
+"B034": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "속이 울렁거려요"
+}
+],
+"B035": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "설사를 해요"
+}
+],
+"B036": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "물 같은 변을 봐요"
+}
+],
+"B037": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "변비가 있어요"
+}
+],
+"B038": [],
+"B039": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "팔에 두드러기가 났어요"
+}
+],
+"B040": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "몸에 빨간 반점이 올라왔어요"
+}
+],
+"B041": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "너무 피곤해요"
+}
+],
+"B042": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "몸에 힘이 없어요"
+}
+],
+"B043": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "가슴이 두근거려요"
+}
+],
+"B044": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "심장이 빨리 뛰어요"
+}
+],
+"B045": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "손이 저려요"
+}
+],
+"B046": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "다리가 저릿저릿해요"
+}
+],
+"B047": [],
+"B048": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "속이 더부룩해요"
+}
+],
+"B049": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "속이 쓰려요"
+}
+],
+"B050": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "명치가 타는 것처럼 쓰려요"
+}
+],
+"B051": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "입맛이 없어요"
+}
+],
+"B052": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "밥을 통 못 먹겠어요"
+}
+],
+"B053": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "잠을 못 자요"
+}
+],
+"B054": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "밤에 잠이 안 와요"
+}
+],
+"B055": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "다리가 부었어요"
+}
+],
+"B056": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "아침에 얼굴이 퉁퉁 부어요"
+}
+],
+"B057": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "귀가 아파요"
+}
+],
+"B058": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "오른쪽 귀 안쪽이 욱신거려요"
+}
+],
+"B059": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "눈이 아파요"
+}
+],
+"B060": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "눈이 시리고 아파요"
+}
+],
+"B061": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "이가 아파요"
+}
+],
+"B062": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "어금니가 욱신거려요"
+}
+],
+"B063": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "식은땀이 나요"
+}
+],
+"B064": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "자다가 식은땀을 흘려요"
+}
+],
+"B065": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "피부가 가려워요"
+}
+],
+"B066": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "등이 근질근질 가려워요"
+}
+],
+"B067": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "눈이 침침해요"
+}
+],
+"B068": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "물건이 두 개로 겹쳐 보여요"
+}
+],
+"B069": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "손이 떨려요"
+}
+],
+"B070": [
+{
+"start": 6,
+"end": 15,
+"status": "present",
+"text": "손이 덜덜 떨려요"
+}
+],
+"B071": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "귀에서 삐 소리가 나요"
+}
+],
+"B072": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "이명이 있어요"
+}
+],
+"B073": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "코피가 났어요"
+}
+],
+"B074": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "코에서 피가 자꾸 나요"
+}
+],
+"B075": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "기침할 때 피가 섞여 나와요"
+}
+],
+"B076": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "피 섞인 가래가 나와요"
+}
+],
+"B077": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "피를 토했어요"
+}
+],
+"B078": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "검붉은 피를 토했어요"
+}
+],
+"B079": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "변에 피가 묻어 나와요"
+}
+],
+"B080": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "변이 까맣게 나와요"
+}
+],
+"B081": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "소변에 피가 섞여 나와요"
+}
+],
+"B082": [
+{
+"start": 0,
+"end": 2,
+"status": "present",
+"text": "소변"
+},
+{
+"start": 3,
+"end": 9,
+"status": "present",
+"text": "색이 빨개요"
+}
+],
+"B083": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "소변 볼 때 따가워요"
+}
+],
+"B084": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "오줌 눌 때 아파요"
+}
+],
+"B085": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "소변을 너무 자주 봐요"
+}
+],
+"B086": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "밤에 소변 때문에 몇 번씩 깨요"
+}
+],
+"B087": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "어제 갑자기 쓰러졌어요"
+}
+],
+"B088": [],
+"B089": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "오른쪽 팔다리에 힘이 빠져요"
+}
+],
+"B090": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "한쪽 얼굴이 처졌어요"
+}
+],
+"B091": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "말이 어눌하게 나와요"
+}
+],
+"B092": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "발음이 자꾸 꼬여요"
+}
+],
+"B093": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "목소리가 쉬었어요"
+}
+],
+"B094": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "목이 잠겨서 목소리가 안 나와요"
+}
+],
+"B095": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "살이 많이 빠졌어요"
+}
+],
+"B096": [
+{
+"start": 7,
+"end": 16,
+"status": "present",
+"text": "5킬로가 빠졌어요"
+}
+],
+"B097": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "경련을 했어요"
+}
+],
+"B098": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "발작이 왔어요"
+}
+],
+"B099": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "무릎이 아파요"
+}
+],
+"B100": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "어깨가 결리고 아파요"
+}
+],
+"B101": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "입안이 헐었어요"
+}
+],
+"B102": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "구내염이 생겼어요"
+}
+],
+"B103": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "재채기가 계속 나요"
+}
+],
+"B104": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "아침마다 재채기를 해요"
+}
+],
+"B105": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "숨 쉴 때 쌕쌕 소리가 나요"
+}
+],
+"B106": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "숨소리가 쌕쌕거려요"
+}
+],
+"B107": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "소변이 잘 안 나와요"
+}
+],
+"B108": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "소변 보기가 힘들어요"
+}
+],
+"B109": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "눈이 빨갛게 충혈됐어요"
+}
+],
+"B110": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "눈이 빨개졌어요"
+}
+],
+"B111": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "생리통이 심해요"
+}
+],
+"B112": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "생리할 때 배가 너무 아파요"
+}
+],
+"B113": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "배가 빵빵해요"
+}
+],
+"B114": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "가스가 차요"
+}
+],
+"B115": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "목에 뭐가 걸린 것 같아요"
+}
+],
+"B116": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "목에 이물감이 있어요"
+}
+],
+"B117": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "눈곱이 많이 껴요"
+}
+],
+"B118": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "눈물이 계속 나요"
+}
+],
+"B119": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "뒷목이 당겨요"
+}
+],
+"B120": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "목이 뻐근해요"
+}
+],
+"B121": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "손발이 차가워요"
+}
+],
+"B122": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "손발이 얼음장 같아요"
+}
+],
+"B123": [
+{
+"start": 0,
+"end": 4,
+"status": "present",
+"text": "우울해요"
+}
+],
+"B124": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "기분이 계속 가라앉아요"
+}
+],
+"B125": [
+{
+"start": 0,
+"end": 4,
+"status": "present",
+"text": "불안해요"
+}
+],
+"B126": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "자꾸 초조하고 불안해요"
+}
+],
+"B127": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "귀가 잘 안 들려요"
+}
+],
+"B128": [
+{
+"start": 0,
+"end": 18,
+"status": "present",
+"text": "왼쪽 귀가 먹먹하고 잘 안 들려요"
+}
+],
+"B129": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "입이 바짝 말라요"
+}
+],
+"B130": [
+{
+"start": 3,
+"end": 18,
+"status": "present",
+"text": "목이 말라서 물을 많이 마셔"
+}
+],
+"N001": [
+{
+"start": 0,
+"end": 6,
+"status": "absent",
+"text": "열은 없어요"
+}
+],
+"N002": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "기침은 안 해요"
+}
+],
+"N003": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "머리는 안 아파요"
+}
+],
+"N004": [
+{
+"start": 0,
+"end": 11,
+"status": "absent",
+"text": "배가 아프지는 않아요"
+}
+],
+"N005": [
+{
+"start": 0,
+"end": 13,
+"status": "absent",
+"text": "숨차거나 그런 건 없어요"
+}
+],
+"N006": [
+{
+"start": 0,
+"end": 13,
+"status": "absent",
+"text": "콧물이나 코막힘은 없어요"
+}
+],
+"N007": [
+{
+"start": 0,
+"end": 9,
+"status": "absent",
+"text": "구토는 안 했어요"
+}
+],
+"N008": [
+{
+"start": 0,
+"end": 6,
+"status": "absent",
+"text": "설사는 없고"
+}
+],
+"N009": [
+{
+"start": 0,
+"end": 8,
+"status": "absent",
+"text": "어지럽진 않아요"
+}
+],
+"N010": [
+{
+"start": 0,
+"end": 10,
+"status": "absent",
+"text": "가슴 통증은 없어요"
+}
+],
+"N011": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "목은 안 아프고 기침만 해요"
+}
+],
+"N012": [
+{
+"start": 0,
+"end": 5,
+"status": "present",
+"text": "열도 없고"
+},
+{
+"start": 6,
+"end": 13,
+"status": "present",
+"text": "오한도 없어요"
+}
+],
+"N013": [
+{
+"start": 0,
+"end": 10,
+"status": "absent",
+"text": "두통은 이제 없어요"
+}
+],
+"N014": [
+{
+"start": 0,
+"end": 12,
+"status": "absent",
+"text": "배는 이제 괜찮아졌어요"
+}
+],
+"N015": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "토하지는 않았는데 메스꺼워요"
+}
+],
+"N016": [],
+"N017": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "가래는 안 나와요"
+}
+],
+"N018": [
+{
+"start": 0,
+"end": 9,
+"status": "absent",
+"text": "가려운 건 없어요"
+}
+],
+"N019": [],
+"N020": [
+{
+"start": 0,
+"end": 8,
+"status": "absent",
+"text": "입맛은 괜찮아요"
+}
+],
+"N021": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "허리는 더 이상 안 아파요"
+}
+],
+"N022": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "기침이 멈췄어요"
+}
+],
+"N023": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "열이 내렸어요"
+}
+],
+"N024": [
+{
+"start": 0,
+"end": 11,
+"status": "absent",
+"text": "숨 쉬는 건 괜찮아요"
+}
+],
+"N025": [
+{
+"start": 0,
+"end": 10,
+"status": "absent",
+"text": "두근거림은 없었어요"
+}
+],
+"U001": [
+{
+"start": 0,
+"end": 15,
+"status": "uncertain",
+"text": "숨이 차는지는 잘 모르겠어요"
+}
+],
+"U002": [
+{
+"start": 0,
+"end": 10,
+"status": "uncertain",
+"text": "열이 있는지 없는지"
+}
+],
+"U003": [
+{
+"start": 9,
+"end": 22,
+"status": "uncertain",
+"text": "손이 좀 저린 것 같아요"
+}
+],
+"U004": [
+{
+"start": 0,
+"end": 21,
+"status": "uncertain",
+"text": "어지러운 것 같기도 하고 잘 모르겠어요"
+}
+],
+"U005": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "열이 나는 것 같아요"
+}
+],
+"U006": [
+{
+"start": 0,
+"end": 3,
+"status": "absent",
+"text": "기침은"
+}
+],
+"U007": [
+{
+"start": 0,
+"end": 20,
+"status": "uncertain",
+"text": "가슴이 두근거리는지는 확실하지 않아요"
+}
+],
+"U008": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "머리가 아파요"
+},
+{
+"start": 9,
+"end": 21,
+"status": "uncertain",
+"text": "열은 있는지 모르겠어요"
+}
+],
+"U009": [
+{
+"start": 18,
+"end": 24,
+"status": "present",
+"text": "배가 아파요"
+}
+],
+"U010": [
+{
+"start": 0,
+"end": 19,
+"status": "present",
+"text": "귀가 잘 안 들리는 것 같기도 해요"
+}
+],
+"U011": [
+{
+"start": 0,
+"end": 12,
+"status": "uncertain",
+"text": "눈이 침침한 것 같은데"
+}
+],
+"U012": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "기침도 하고 가래도 있는데"
+}
+],
+"U013": [
+{
+"start": 0,
+"end": 17,
+"status": "uncertain",
+"text": "소변을 자주 보는 건지 헷갈려요"
+}
+],
+"U014": [
+{
+"start": 0,
+"end": 1,
+"status": "uncertain",
+"text": "열"
+}
+],
+"U015": [
+{
+"start": 0,
+"end": 24,
+"status": "uncertain",
+"text": "다리가 부은 건지 원래 그런 건지 모르겠어요"
+}
+],
+"U016": [
+{
+"start": 0,
+"end": 5,
+"status": "present",
+"text": "숨이 차요"
+}
+],
+"U017": [
+{
+"start": 0,
+"end": 13,
+"status": "uncertain",
+"text": "체한 건지 잘 모르겠어요"
+}
+],
+"U018": [
+{
+"start": 0,
+"end": 5,
+"status": "present",
+"text": "머리 아픈"
+}
+],
+"U019": [
+{
+"start": 0,
+"end": 16,
+"status": "present",
+"text": "오한이 있었던 것 같기도 해요"
+}
+],
+"U020": [
+{
+"start": 0,
+"end": 17,
+"status": "uncertain",
+"text": "몸살인지 아닌지 확실하지 않아요"
+}
+],
+"T001": [
+{
+"start": 8,
+"end": 14,
+"status": "present",
+"text": "배가 아파요"
+}
+],
+"T002": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "어제부터 기침이 나요"
+}
+],
+"T003": [
+{
+"start": 6,
+"end": 11,
+"status": "present",
+"text": "열이 나요"
+}
+],
+"T004": [
+{
+"start": 7,
+"end": 14,
+"status": "present",
+"text": "머리가 아파요"
+}
+],
+"T005": [],
+"T006": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "이틀째 토하고 있어요"
+}
+],
+"T007": [
+{
+"start": 0,
+"end": 1,
+"status": "present",
+"text": "5"
+},
+{
+"start": 4,
+"end": 10,
+"status": "present",
+"text": "콧물이 나요"
+}
+],
+"T008": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "일주일 전부터 허리가 아파요"
+}
+],
+"T009": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "2주 전부터 기침을 해요"
+}
+],
+"T010": [],
+"T011": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "10월 1일부터 어지러워요"
+}
+],
+"T012": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "월요일부터 목이 아파요"
+}
+],
+"T013": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "방금 전에 코피가 났어요"
+}
+],
+"T014": [
+{
+"start": 6,
+"end": 12,
+"status": "present",
+"text": "열이 났어요"
+}
+],
+"T015": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "엊그제부터 콧물이 나요"
+}
+],
+"T016": [
+{
+"start": 5,
+"end": 18,
+"status": "present",
+"text": "머리가 아프고 열도 나요"
+}
+],
+"T017": [
+{
+"start": 5,
+"end": 17,
+"status": "present",
+"text": "가슴이 답답하고 아파요"
+}
+],
+"T018": [
+{
+"start": 8,
+"end": 15,
+"status": "present",
+"text": "무릎이 아파요"
+}
+],
+"T019": [
+{
+"start": 0,
+"end": 4,
+"status": "present",
+"text": "오늘부터"
+},
+{
+"start": 5,
+"end": 11,
+"status": "present",
+"text": "설사를 해요"
+}
+],
+"T020": [
+{
+"start": 0,
+"end": 1,
+"status": "present",
+"text": "4"
+}
+],
+"T021": [],
+"T022": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "지난달부터 잠을 못 자요"
+}
+],
+"T023": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "9월 30일부터 기침이 나요"
+}
+],
+"T024": [
+{
+"start": 10,
+"end": 17,
+"status": "present",
+"text": "머리가 아파요"
+}
+],
+"T025": [
+{
+"start": 7,
+"end": 23,
+"status": "present",
+"text": "목이 아프고 오늘은 열도 나요"
+}
+],
+"T026": [
+{
+"start": 0,
+"end": 21,
+"status": "present",
+"text": "사흘째 설사하고 오늘 아침에는 토했어요"
+}
+],
+"T027": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "어제부터 기침이 나요"
+}
+],
+"T028": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "수요일부터 배가 아파요"
+}
+],
+"T029": [
+{
+"start": 8,
+"end": 15,
+"status": "present",
+"text": "가슴이 아파요"
+}
+],
+"T030": [
+{
+"start": 8,
+"end": 14,
+"status": "present",
+"text": "손이 떨려요"
+}
+],
+"S001": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "머리가 참을 만하게 아파요"
+}
+],
+"S002": [
+{
+"start": 0,
+"end": 18,
+"status": "present",
+"text": "배가 데굴데굴 구를 정도로 아파요"
+}
+],
+"S003": [
+{
+"start": 0,
+"end": 19,
+"status": "present",
+"text": "허리 통증이 10점 중에 7점이에요"
+}
+],
+"S004": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "열이 38.5도까지 올라요"
+}
+],
+"S005": [
+{
+"start": 0,
+"end": 25,
+"status": "present",
+"text": "열이 39도까지 올랐다가 지금은 37.8도예요"
+}
+],
+"S006": [],
+"S007": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "하루에 설사를 다섯 번 해요"
+}
+],
+"S008": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "두통이 살짝 있어요"
+}
+],
+"S009": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "기침이 심해요"
+}
+],
+"S010": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "가슴이 답답한 게 중간 정도예요"
+}
+],
+"S011": [
+{
+"start": 0,
+"end": 18,
+"status": "present",
+"text": "배 아픈 게 점점 심해지고 있어요"
+}
+],
+"S012": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "기침이 좀 나아졌어요"
+}
+],
+"S013": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "열이 어제보다 좀 내렸어요"
+}
+],
+"S014": [
+{
+"start": 0,
+"end": 13,
+"status": "absent",
+"text": "머리 아픈 건 그대로예요"
+}
+],
+"S015": [
+{
+"start": 0,
+"end": 16,
+"status": "present",
+"text": "숨찬 게 잠을 못 잘 정도예요"
+}
+],
+"S016": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "목이 죽을 것 같이 아파요"
+}
+],
+"S017": [
+{
+"start": 0,
+"end": 18,
+"status": "present",
+"text": "허리가 심하진 않은데 계속 아파요"
+}
+],
+"S018": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "설사를 한두 번 했어요"
+}
+],
+"S019": [
+{
+"start": 0,
+"end": 23,
+"status": "present",
+"text": "배가 아픈 정도는 10점 만점에 8점이에요"
+}
+],
+"S020": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "토는 두 번 했고"
+},
+{
+"start": 10,
+"end": 21,
+"status": "present",
+"text": "설사는 네 번 했어요"
+}
+],
+"S021": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "두통이 갈수록 심해져요"
+}
+],
+"S022": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "콧물은 많이 줄었어요"
+}
+],
+"S023": [
+{
+"start": 0,
+"end": 15,
+"status": "absent",
+"text": "어지러운 게 좀 괜찮아졌어요"
+}
+],
+"S024": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "무릎이 너무 아파서 못 걷겠어요"
+}
+],
+"S025": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "체온이 37.5도예요"
+}
+],
+"S026": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "열이 삼십팔 도 넘어요"
+}
+],
+"S027": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "기침이 전보다 심해졌어요"
+}
+],
+"S028": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "숨이 약간 차요"
+}
+],
+"S029": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "배가 보통 정도로 아파요"
+}
+],
+"S030": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "구토를 열 번 넘게 했어요"
+}
+],
+"O001": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "남편도 기침을 해요"
+}
+],
+"O002": [],
+"O003": [],
+"O004": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "저는 머리가 아프고"
+},
+{
+"start": 11,
+"end": 21,
+"status": "present",
+"text": "남편은 배가 아파요"
+}
+],
+"O005": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "딸이 어제부터 토했어요"
+}
+],
+"O006": [],
+"O007": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "동생이 설사를 해요"
+}
+],
+"O008": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "아빠가 당뇨가 있어요"
+}
+],
+"O009": [],
+"O010": [
+{
+"start": 14,
+"end": 16,
+"status": "present",
+"text": "저는"
+}
+],
+"O011": [],
+"O012": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "애가 밤새 기침을 했어요"
+}
+],
+"O013": [],
+"O014": [],
+"O015": [
+{
+"start": 11,
+"end": 13,
+"status": "present",
+"text": "저는"
+}
+],
+"M001": [],
+"M002": [],
+"M003": [],
+"M004": [],
+"M005": [],
+"M006": [],
+"M007": [],
+"M008": [],
+"M009": [],
+"M010": [],
+"M011": [],
+"M012": [
+{
+"start": 0,
+"end": 16,
+"status": "present",
+"text": "새우를 먹으면 두드러기가 나요"
+}
+],
+"M013": [],
+"M014": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "작년에 폐렴으로 입원했어요"
+}
+],
+"M015": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "갑상선이 안 좋아요"
+}
+],
+"M016": [],
+"M017": [],
+"M018": [],
+"M019": [
+{
+"start": 6,
+"end": 7,
+"status": "present",
+"text": "해"
+}
+],
+"M020": [],
+"M021": [],
+"M022": [],
+"M023": [],
+"M024": [],
+"M025": [],
+"M026": [],
+"M027": [],
+"M028": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "신장이 안 좋아요"
+}
+],
+"M029": [],
+"M030": [],
+"P001": [],
+"P002": [],
+"P003": [],
+"P004": [],
+"P005": [],
+"P006": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "담배를 하루에 반 갑 피워요"
+}
+],
+"P007": [],
+"P008": [],
+"P009": [],
+"P010": [],
+"P011": [],
+"P012": [],
+"P013": [],
+"P014": [],
+"P015": [],
+"C001": [
+{
+"start": 0,
+"end": 5,
+"status": "present",
+"text": "머리 아퍼"
+}
+],
+"C002": [
+{
+"start": 0,
+"end": 4,
+"status": "present",
+"text": "배 아픔"
+}
+],
+"C003": [
+{
+"start": 5,
+"end": 8,
+"status": "present",
+"text": "열 남"
+}
+],
+"C004": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "기침 계속 함"
+}
+],
+"C005": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "가슴이답답하고아파요"
+}
+],
+"C006": [
+{
+"start": 0,
+"end": 5,
+"status": "present",
+"text": "배가아파요"
+}
+],
+"C007": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "머리가지끈지끈해요"
+}
+],
+"C008": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "폭통이 있어요"
+}
+],
+"C009": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "목이 칼칼해요"
+}
+],
+"C010": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "속이 니글거려요"
+}
+],
+"C011": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "배가 싸르르 아파요"
+}
+],
+"C012": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "머리가 띵해요"
+}
+],
+"C013": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "콧물이 질질 나요"
+}
+],
+"C014": [
+{
+"start": 0,
+"end": 16,
+"status": "present",
+"text": "열이 막 나고 오슬오슬 떨려요"
+}
+],
+"C015": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "목이 너무 따끔거려요"
+}
+],
+"C016": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "배탈 났어요"
+}
+],
+"C017": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "목감기 걸렸어요"
+}
+],
+"C018": [
+{
+"start": 0,
+"end": 5,
+"status": "present",
+"text": "코감기예요"
+}
+],
+"C019": [],
+"C020": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "몸이 천근만근이에요"
+}
+],
+"C021": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "머리 아프고 열나"
+}
+],
+"C022": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "기침이랑 가래 있음"
+}
+],
+"C023": [
+{
+"start": 0,
+"end": 5,
+"status": "present",
+"text": "허리 쑤심"
+}
+],
+"C024": [
+{
+"start": 0,
+"end": 3,
+"status": "present",
+"text": "숨 차"
+}
+],
+"C025": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "배가 엄청 아파요"
+}
+],
+"C026": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "머리가 아프고요"
+},
+{
+"start": 9,
+"end": 15,
+"status": "absent",
+"text": "열은 없고요"
+}
+],
+"C027": [
+{
+"start": 9,
+"end": 18,
+"status": "present",
+"text": "배가 좀 아픈데요"
+}
+],
+"C028": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "열이 삼십팔 점 오도예요"
+}
+],
+"C029": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "토할 것 같아요"
+}
+],
+"C030": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "설사 쫙쫙 해요"
+}
+],
+"X001": [
+{
+"start": 8,
+"end": 21,
+"status": "present",
+"text": "배가 아프기 시작했는데요"
+},
+{
+"start": 46,
+"end": 58,
+"status": "present",
+"text": "설사는 아직 안 했어요"
+}
+],
+"X002": [
+{
+"start": 7,
+"end": 20,
+"status": "present",
+"text": "목이 아프고 기침이 나요"
+},
+{
+"start": 22,
+"end": 31,
+"status": "present",
+"text": "가래도 좀 있고요"
+},
+{
+"start": 33,
+"end": 45,
+"status": "present",
+"text": "열은 38도 정도 나요"
+}
+],
+"X003": [
+{
+"start": 29,
+"end": 45,
+"status": "present",
+"text": "머리가 자주 아프고 어지러워요"
+}
+],
+"X004": [
+{
+"start": 0,
+"end": 21,
+"status": "present",
+"text": "가슴이 쥐어짜듯이 아프고 식은땀이 나요"
+},
+{
+"start": 23,
+"end": 32,
+"status": "present",
+"text": "왼쪽 팔도 저려요"
+}
+],
+"X005": [],
+"X006": [
+{
+"start": 0,
+"end": 22,
+"status": "present",
+"text": "일주일째 기침을 하는데 밤에 특히 심해요"
+},
+{
+"start": 24,
+"end": 42,
+"status": "present",
+"text": "숨 쉴 때 쌕쌕 소리도 나고 천식"
+}
+],
+"X007": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "소변 볼 때"
+},
+{
+"start": 7,
+"end": 18,
+"status": "present",
+"text": "따갑고 자주 마려워요"
+}
+],
+"X008": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "어지럽고 속이 메스꺼워요"
+},
+{
+"start": 15,
+"end": 24,
+"status": "present",
+"text": "토하지는 않았어요"
+},
+{
+"start": 26,
+"end": 38,
+"status": "present",
+"text": "귀에서 윙 소리도 나요"
+}
+],
+"X009": [
+{
+"start": 11,
+"end": 26,
+"status": "present",
+"text": "오른쪽 팔다리에 힘이 빠지고"
+},
+{
+"start": 27,
+"end": 36,
+"status": "present",
+"text": "말이 어눌해졌어요"
+}
+],
+"X010": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "허리가 아픈데"
+},
+{
+"start": 8,
+"end": 16,
+"status": "present",
+"text": "다리까지 저려요"
+}
+],
+"X011": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "배가 아프고 허리도 아파요"
+}
+],
+"X012": [
+{
+"start": 8,
+"end": 25,
+"status": "present",
+"text": "살이 빠지고 밤에 식은땀이 나요"
+},
+{
+"start": 27,
+"end": 35,
+"status": "present",
+"text": "기침도 계속해요"
+}
+],
+"X013": [
+{
+"start": 0,
+"end": 16,
+"status": "present",
+"text": "콧물 나고 재채기가 계속 나요"
+},
+{
+"start": 18,
+"end": 25,
+"status": "present",
+"text": "눈도 가렵고요"
+},
+{
+"start": 27,
+"end": 33,
+"status": "absent",
+"text": "열은 없어요"
+}
+],
+"X014": [
+{
+"start": 17,
+"end": 23,
+"status": "present",
+"text": "속이 쓰리고"
+},
+{
+"start": 24,
+"end": 31,
+"status": "present",
+"text": "머리가 아파요"
+}
+],
+"X015": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "검은 변을 봤고 어지러워요"
+}
+],
+"X016": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "목이 아파서 침 삼키기가 힘들고"
+},
+{
+"start": 18,
+"end": 26,
+"status": "present",
+"text": "열이 39도예요"
+}
+],
+"X017": [
+{
+"start": 5,
+"end": 25,
+"status": "present",
+"text": "설사를 네 번 했고 배가 살살 아파요"
+}
+],
+"X018": [
+{
+"start": 14,
+"end": 34,
+"status": "present",
+"text": "잠을 못 자고 자꾸 불안하고 우울해요"
+}
+],
+"X019": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "숨이 차고 다리가 부었어요"
+},
+{
+"start": 16,
+"end": 25,
+"status": "present",
+"text": "심장이 안 좋아요"
+}
+],
+"X020": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "눈이 빨갛고 눈곱이 껴요"
+}
+],
+"X021": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "머리가 아프다가 지금은 괜찮아요"
+},
+{
+"start": 22,
+"end": 31,
+"status": "present",
+"text": "목이 계속 아파요"
+}
+],
+"X022": [
+{
+"start": 0,
+"end": 18,
+"status": "present",
+"text": "기침할 때 피가 나오고 숨이 차요"
+},
+{
+"start": 20,
+"end": 26,
+"status": "absent",
+"text": "열은 없어요"
+}
+],
+"X023": [
+{
+"start": 23,
+"end": 33,
+"status": "present",
+"text": "가슴이 두근거렸어요"
+}
+],
+"X024": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "변비가 일주일째예요"
+},
+{
+"start": 12,
+"end": 26,
+"status": "present",
+"text": "배가 빵빵하고 가스가 차요"
+}
+],
+"X025": [
+{
+"start": 8,
+"end": 15,
+"status": "present",
+"text": "당뇨가 있어요"
+},
+{
+"start": 17,
+"end": 23,
+"status": "present",
+"text": "발이 저리고"
+},
+{
+"start": 24,
+"end": 32,
+"status": "present",
+"text": "손발이 차가워요"
+}
+],
+"L001": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "겨드랑이가 아파요"
+}
+],
+"L002": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "엉덩이가 아파요"
+}
+],
+"L003": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "옆구리가 결려요"
+}
+],
+"L004": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "잇몸에서 피가 나요"
+}
+],
+"L005": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "멍이 잘 들어요"
+}
+],
+"L006": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "머리카락이 많이 빠져요"
+}
+],
+"L007": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "손톱이 갈라져요"
+}
+],
+"L008": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "입냄새가 심해요"
+}
+],
+"L009": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "딸꾹질이 안 멈춰요"
+}
+],
+"L010": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "발뒤꿈치가 아파요"
+}
+],
+"Z001": [
+{
+"start": 3,
+"end": 15,
+"status": "present",
+"text": "음식이 잘 안 넘어가요"
+}
+],
+"Z002": [
+{
+"start": 0,
+"end": 16,
+"status": "present",
+"text": "밥 먹을 때 삼키기가 힘들어요"
+}
+],
+"Z003": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "목에 멍울이 만져져요"
+}
+],
+"Z004": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "임파선이 부은 것 같아요"
+}
+],
+"Z005": [
+{
+"start": 0,
+"end": 19,
+"status": "present",
+"text": "얼굴이 창백하다는 말을 자주 들어요"
+}
+],
+"Z006": [],
+"Z007": [
+{
+"start": 0,
+"end": 16,
+"status": "present",
+"text": "갑자기 숨이 막힐 것 같았어요"
+}
+],
+"Z008": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "요즘 짜증이 너무 늘었어요"
+}
+],
+"Z009": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "냉이 많아지고 냄새가 나요"
+}
+],
+"Z010": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "입이 잘 안 벌어져요"
+}
+],
+"Z011": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "자꾸 침이 고여서 뱉게 돼요"
+}
+],
+"Z012": [
+{
+"start": 15,
+"end": 25,
+"status": "present",
+"text": "정신이 오락가락해요"
+}
+],
+"Z013": [
+{
+"start": 7,
+"end": 15,
+"status": "present",
+"text": "눈꺼풀이 처져요"
+}
+],
+"Z014": [
+{
+"start": 0,
+"end": 16,
+"status": "present",
+"text": "살짝 부딪혀도 멍이 잘 들어요"
+}
+],
+"Z015": [],
+"Z016": [
+{
+"start": 0,
+"end": 18,
+"status": "present",
+"text": "가만히 있어도 땀이 비 오듯 나요"
+}
+],
+"Z017": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "생리 양이 너무 많아졌어요"
+}
+],
+"Z018": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "얼굴이 자꾸 화끈거리고 빨개져요"
+}
+],
+"Z019": [
+{
+"start": 0,
+"end": 2,
+"status": "present",
+"text": "소변"
+},
+{
+"start": 3,
+"end": 14,
+"status": "present",
+"text": "색이 콜라처럼 진해요"
+}
+],
+"Z020": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "밤에 자다가 종아리에 쥐가 나요"
+}
+],
+"Z021": [
+{
+"start": 9,
+"end": 20,
+"status": "present",
+"text": "고개를 못 돌리겠어요"
+}
+],
+"Z022": [
+{
+"start": 3,
+"end": 18,
+"status": "present",
+"text": "내 몸이 내 몸 같지 않아요"
+}
+],
+"Z023": [
+{
+"start": 9,
+"end": 18,
+"status": "present",
+"text": "냄새를 못 맡아요"
+}
+],
+"Z024": [],
+"Z025": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "새벽에 숨이 차서 깨요"
+}
+],
+"Z026": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "코가 간지럽고 재채기가 나요"
+}
+],
+"Z027": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "눈이 너무 가려워요"
+}
+],
+"Z028": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "딸꾹질이 이틀째 안 멈춰요"
+}
+],
+"Z029": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "머리카락이 한 움큼씩 빠져요"
+}
+],
+"Z030": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "입에서 냄새가 심하게 나요"
+}
+],
+"Z031": [
+{
+"start": 3,
+"end": 18,
+"status": "present",
+"text": "음식 맛을 잘 못 느끼겠어요"
+}
+],
+"Z032": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "양쪽 다리에 힘이 하나도 없어요"
+}
+],
+"Z033": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "코를 너무 심하게 곤대요"
+}
+],
+"Z034": [
+{
+"start": 6,
+"end": 23,
+"status": "present",
+"text": "죽을 것 같은 공포가 밀려왔어요"
+}
+],
+"Z035": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "변이 하얗게 나와요"
+}
+],
+"Z036": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "대퇴부가 아파요"
+}
+],
+"Z037": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "오른쪽 허벅지가 쿡쿡 쑤셔요"
+}
+],
+"Z038": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "겨드랑이가 아파요"
+}
+],
+"Z039": [
+{
+"start": 0,
+"end": 18,
+"status": "present",
+"text": "엉덩이가 너무 아파서 못 앉겠어요"
+}
+],
+"Z040": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "꼬리뼈가 욱신거려요"
+}
+],
+"Z041": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "사타구니가 당기고 아파요"
+}
+],
+"Z042": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "발뒤꿈치가 아파서 걷기 힘들어요"
+}
+],
+"Z043": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "아침에 발바닥이 찌릿해요"
+}
+],
+"Z044": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "정강이가 시큰거려요"
+}
+],
+"Z045": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "종아리가 퉁퉁 부었어요"
+}
+],
+"Z046": [
+{
+"start": 0,
+"end": 18,
+"status": "present",
+"text": "발등이 부어서 신발이 안 들어가요"
+}
+],
+"Z047": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "오금이 부어올랐어요"
+}
+],
+"Z048": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "관자놀이가 지끈거려요"
+}
+],
+"Z049": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "날개뼈 쪽이 결려요"
+}
+],
+"Z050": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "옆구리가 결려요"
+}
+],
+"Z051": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "승모근이 뭉쳐서 뻐근해요"
+}
+],
+"Z052": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "잇몸에서 피가 나요"
+}
+],
+"Z053": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "양치할 때마다"
+},
+{
+"start": 8,
+"end": 18,
+"status": "present",
+"text": "잇몸이 피가 비쳐요"
+}
+],
+"Z054": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "항문에서 피가 묻어나요"
+}
+],
+"Z055": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "허벅지에 멍이 들었는데 부딪"
+}
+],
+"Z056": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "겨드랑이에 혹이 만져져요"
+}
+],
+"Z057": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "유방에 몽우리가 잡혀요"
+}
+],
+"Z058": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "목 옆에 볼록한 게 생겼어요"
+}
+],
+"Z059": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "엄지발가락이 빨갛게 부었어요"
+}
+],
+"Z060": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "손바닥이 자꾸 가려워요"
+}
+],
+"Z061": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "두피가 가렵고 각질이 생겨요"
+}
+],
+"Z062": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "사타구니가 가렵고 빨개요"
+}
+],
+"Z063": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "엄지손가락 감각이 둔해요"
+}
+],
+"Z064": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "허벅지 바깥쪽이 남의 살 같아요"
+}
+],
+"Z065": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "입술이 갈라지고 피가 나요"
+}
+],
+"Z066": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "발바닥 피부가 벗겨져요"
+}
+],
+"Z067": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "손톱이 노랗게 변했어요"
+}
+],
+"Z068": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "발가락 끝이 파랗게 변해요"
+}
+],
+"Z069": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "귀에서 고름이 나와요"
+}
+],
+"Z070": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "배꼽에서 진물이 나요"
+}
+],
+"Z071": [
+{
+"start": 0,
+"end": 16,
+"status": "present",
+"text": "이가 시려서 찬물을 못 마셔요"
+}
+],
+"Z072": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "무릎이 시려요"
+}
+],
+"Z073": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "발바닥이 화끈거려요"
+}
+],
+"Z074": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "눈 밑이 계속 떨려요"
+}
+],
+"Z075": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "오른팔에 힘이 안 들어가요"
+}
+],
+"Z076": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "혀가 따가워요"
+}
+],
+"Z077": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "목젖이 부은 것 같아요"
+}
+],
+"Z078": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "턱 밑이 부어서 아파요"
+}
+],
+"Z079": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "손등에 물집이 잡혔어요"
+}
+],
+"Z080": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "고환이 아파요"
+}
+],
+"Z081": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "갈비뼈 아래가 콕콕 찔러요"
+}
+],
+"Z082": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "팔꿈치 바깥쪽이 시큰해요"
+}
+],
+"Z083": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "손목 안쪽이 저려요"
+}
+],
+"Z084": [
+{
+"start": 0,
+"end": 8,
+"status": "present",
+"text": "정수리가 아파요"
+}
+],
+"Z085": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "이마에 뾰루지가 잔뜩 났어요"
+}
+],
+"Z086": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "손톱이 자꾸 부서져요"
+}
+],
+"Z087": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "몸에서 이상한 냄새가 나요"
+}
+],
+"Z088": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "자꾸 헛것이 보여요"
+}
+],
+"Z089": [
+{
+"start": 0,
+"end": 10,
+"status": "present",
+"text": "건망증이 심해졌어요"
+}
+],
+"Z090": [
+{
+"start": 0,
+"end": 2,
+"status": "present",
+"text": "추위"
+}
+],
+"Z091": [
+{
+"start": 8,
+"end": 16,
+"status": "present",
+"text": "신물이 넘어와요"
+}
+],
+"Z092": [
+{
+"start": 0,
+"end": 16,
+"status": "present",
+"text": "걸을 때 자꾸 한쪽으로 쏠려요"
+}
+],
+"Z093": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "소변에 거품이 많이 껴요"
+}
+],
+"Z094": [
+{
+"start": 6,
+"end": 20,
+"status": "present",
+"text": "눈이 부셔서 못 견디겠어요"
+}
+],
+"Z095": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "목소리가 떨려서 말하기 힘들어요"
+}
+],
+"Z096": [
+{
+"start": 0,
+"end": 2,
+"status": "absent",
+"text": "삼키"
+}
+],
+"Z097": [
+{
+"start": 0,
+"end": 14,
+"status": "absent",
+"text": "멍울 같은 건 안 만져져요"
+}
+],
+"Z098": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "허벅지는 이제 안 아파요"
+}
+],
+"Z099": [
+{
+"start": 0,
+"end": 12,
+"status": "present",
+"text": "잇몸에서 피는 안 나요"
+}
+],
+"Z100": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "냄새는 잘 맡아요"
+}
+],
+"Z101": [
+{
+"start": 0,
+"end": 18,
+"status": "uncertain",
+"text": "종아리가 부은 건지 잘 모르겠어요"
+}
+],
+"Z102": [
+{
+"start": 0,
+"end": 22,
+"status": "uncertain",
+"text": "겨드랑이에 뭐가 만져지는 것 같기도 하고"
+}
+],
+"Z103": [
+{
+"start": 0,
+"end": 18,
+"status": "uncertain",
+"text": "자다가 숨을 멈추는지는 모르겠어요"
+}
+],
+"Z104": [
+{
+"start": 0,
+"end": 1,
+"status": "absent",
+"text": "땀"
+}
+],
+"Z105": [
+{
+"start": 0,
+"end": 18,
+"status": "uncertain",
+"text": "살이 찐 건지 부은 건지 헷갈려요"
+}
+],
+"Z106": [
+{
+"start": 0,
+"end": 19,
+"status": "present",
+"text": "머리가 아프고 관자놀이도 욱신거려요"
+}
+],
+"Z107": [
+{
+"start": 0,
+"end": 5,
+"status": "present",
+"text": "열이 나고"
+},
+{
+"start": 6,
+"end": 16,
+"status": "present",
+"text": "목에 멍울이 잡혀요"
+}
+],
+"Z108": [
+{
+"start": 0,
+"end": 17,
+"status": "present",
+"text": "기침이 나고 냄새를 못 맡겠어요"
+}
+],
+"Z109": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "배가 아프고"
+},
+{
+"start": 7,
+"end": 17,
+"status": "present",
+"text": "변이 하얗게 나와요"
+}
+],
+"Z110": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "허리가 아프고"
+},
+{
+"start": 8,
+"end": 17,
+"status": "present",
+"text": "엉덩이까지 저려요"
+}
+],
+"Z111": [
+{
+"start": 0,
+"end": 6,
+"status": "present",
+"text": "설사를 하고"
+},
+{
+"start": 7,
+"end": 15,
+"status": "present",
+"text": "항문이 따가워요"
+}
+],
+"Z112": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "어지럽고 얼굴이 창백해졌어요"
+}
+],
+"Z113": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "콧물이 나고 눈이 가려워요"
+}
+],
+"Z114": [
+{
+"start": 5,
+"end": 21,
+"status": "present",
+"text": "목이 아프고 삼키기도 힘들어요"
+}
+],
+"Z115": [
+{
+"start": 0,
+"end": 15,
+"status": "present",
+"text": "숨이 차고 종아리가 부었어요"
+}
+],
+"Z116": [],
+"Z117": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "남편이 코를 심하게 골아요"
+},
+{
+"start": 16,
+"end": 29,
+"status": "present",
+"text": "저는 잇몸에서 피가 나요"
+}
+],
+"Z118": [],
+"Z119": [],
+"Z120": [],
+"Z121": [],
+"Z122": [],
+"Z123": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "땀을 흘리며 운동하는"
+}
+],
+"Z124": [],
+"Z125": []
+}

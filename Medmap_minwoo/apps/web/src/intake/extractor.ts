@@ -1667,7 +1667,7 @@ function bodySiteFor(text: string, evidence: Evidence, symptomRule: Rule): strin
  *
  * "남편도 기침을 하고 열이 나요" keeps 남편 for the whole sentence; "저는" or a new
  * sentence brings it back to the patient. */
-function otherPersonFor(text: string, evidenceStart: number): string | null {
+export function otherPersonFor(text: string, evidenceStart: number): string | null {
   let sentenceStart = 0;
   for (const boundary of SENTENCE_SPLIT_PATTERN.finditer(text, 0, evidenceStart)) sentenceStart = boundary.end;
   let person: string | null = null;
