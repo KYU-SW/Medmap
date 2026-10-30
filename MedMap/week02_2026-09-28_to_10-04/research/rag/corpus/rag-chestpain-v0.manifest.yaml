@@ -1,0 +1,998 @@
+corpus:
+  corpus_id: rag-chestpain
+  corpus_version: rag-chestpain-v0
+  freeze_stage: C6-doc
+  freeze_scope: 문서 원문 수준 freeze(C3·C4·C6). C5 chunk·색인은 미착수 — 이후 색인 버전은 이 manifest SHA를 참조
+  frozen_at: '2026-10-02T12:23:27+09:00'
+  n_sources: 18
+  storage_root: ~/medmap_rag_corpus/rag-chestpain-v0/ (git 밖, 읽기 전용)
+  sha256sums_sha256: 4390cf6ad9f011ab446f0e72da0ce9c0eb59dd0bce133575189891cde6d3ee60
+  approval: 사용자 2026-10-02 '1번 승인' — 연구용 Frozen Corpus v0. 제품 배포 승인 아님
+  inclusion_rule: CC BY/CC0(상업·가공 허용 명시)만 · NC 제외 · ND 제외 · ESC 관련 제외 · license unclear 제외 · XML <permissions> 재검사 통과
+  coverage_gap_policy: 부족 범위는 다른 출처로 채우지 않고 COVERAGE_GAP 기록
+  exploratory_after_freeze: false
+  builder: scripts/rag/build_corpus_v0.py
+  retrieval_api: https://www.ebi.ac.uk/europepmc/webservices/rest
+sources:
+- source_id: SRC-0001
+  candidate_id: R-CP-01
+  title: Diretriz Brasileira de Atendimento à Dor Torácica na Unidade de Emergência – 2025
+  organization_or_authors: Silva PGMBE, Soeiro AM, Ornelas CE, Feitosa-Filho GS, Lopes RD, Lino DODC, Furtado RHM, Guimarães HP, Volschan A, Gomes BFO, Polanczyk CA, Rochitte CE, Serrano CV, Virgens CMBD,
+    Mesquita CT, Menendez EJ, Adam EL, Mastrocola F, Silveira FS, Silva FSMD, Dutra GP, Moreira HG, Barros IML, Petriz JLF, Silva Filho JRO, Marchini JFM, Ohe LN, Hajjar LA, Lunardi MC, Oliveira Junior
+    MT, Filgueiras Filho NM, Silvestre OM, Villela PB, Soares PR, Sampaio PPN, Oliveira RS, Lima RSL, Felicioni SP, Timerman S, Leal TCAT, Mathias Junior W.
+  journal: Arquivos brasileiros de cardiologia
+  publication_year: 2025
+  update_date: '2026-09-26'
+  first_publication_date: '2025-12-01'
+  source_type: guideline
+  language: en+pt
+  doi_or_pmcid:
+    doi: 10.36660/abc.20250620
+    pmcid: PMC12981354
+    pmid: '41379176'
+  authority_tier: TIER1
+  authority_note: 브라질 심장학회 지침(2025)
+  scope_tags:
+  - chest_pain
+  - acs
+  license:
+    license_exact:
+    - https://creativecommons.org/licenses/by/4.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12981354/fullTextXML (<permissions>)
+    license_quote: https://creativecommons.org/licenses/by/4.0/ This is an open-access article distributed under the terms of the Creative Commons Attribution License
+    license_checked_at: '2026-10-02T12:21:38+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: Silva PGMBE, Soeiro AM, Ornelas CE, Feitosa-Filho GS, Lopes RD, Lino DODC, Furtado RHM, Guimarães HP, Volschan A, Gomes BFO, Polanczyk CA, Rochitte CE, Serrano CV, Virgens CMBD, Mesquita
+    CT, Menendez EJ, Adam EL, Mastrocola F, Silveira FS, Silva FSMD, Dutra GP, Moreira HG, Barros IML, Petriz JLF, Silva Filho JRO, Marchini JFM, Ohe LN, Hajjar LA, Lunardi MC, Oliveira Junior MT, Filgueiras
+    Filho NM, Silvestre OM, Villela PB, Soares PR, Sampaio PPN, Oliveira RS, Lima RSL, Felicioni SP, Timerman S, Leal TCAT, Mathias Junior W. Diretriz Brasileira de Atendimento à Dor Torácica na Unidade
+    de Emergência – 2025. Arquivos brasileiros de cardiologia 2025. doi:10.36660/abc.20250620. https://creativecommons.org/licenses/by/4.0/
+  original_url: https://doi.org/10.36660/abc.20250620
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12981354/fullTextXML
+  retrieved_at: '2026-10-02T12:21:38+09:00'
+  local_path: raw/SRC-0001_PMC12981354.xml
+  local_file_sha256: a23a7dc6af7401ea10195791114d0e5b3dedd662595f26df4c216a879fea447b
+  meta_path: meta/SRC-0001_PMC12981354.epmc.json
+  meta_sha256: fbd9f4fe42b8f0b6c5a121ee05aca5f2dc6c9c85b2e52fb93a7e866a7fd1c811
+  file_format: jats_xml
+  bytes: 1081364
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0002
+  candidate_id: R-CP-02
+  title: SIRM/SIC consensus document on the management of patients with acute chest pain
+  organization_or_authors: Esposito A, Faletti R, Palmisano A, Gatti M, Seitun S, Mantini C, Agostoni P, Andreini D, Barillà F, Barison A, Calabrò P, Cameli M, Carerj S, Catalano C, Chiocchi M, Ciccone
+    MM, Curcio A, D'Ascenzo F, Dell'Aversana S, Falzea F, Francone M, Galea N, Giovagnoni A, Guglielmo M, Laghi A, Liguori C, Lovato L, Marano R, Montone RA, Morrone D, Natale L, Nodari S, Oppizzi M, Paolillo
+    S, Polimeni A, Pontone G, Porto I, Pradella S, Russo V, Russo V, Saba L, Sinagra G, Slavich M, Spaccarotella C, Tore D, Vignale D, Vizza CD, Muscoli S, Perrone Filardi P, Indolfi C.
+  journal: La Radiologia medica
+  publication_year: 2025
+  update_date: '2026-09-19'
+  first_publication_date: '2025-09-23'
+  source_type: consensus
+  language: en
+  doi_or_pmcid:
+    doi: 10.1007/s11547-025-02076-x
+    pmcid: PMC12669346
+    pmid: '40986133'
+  authority_tier: TIER1
+  authority_note: SIRM/SIC 학회 합의문(2025)
+  scope_tags:
+  - chest_pain
+  - acs
+  license:
+    license_exact:
+    - http://creativecommons.org/licenses/by/4.0/
+    - https://creativecommons.org/licenses/by/4.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12669346/fullTextXML (<permissions>)
+    license_quote: '© The Author(s) 2025 2025 https://creativecommons.org/licenses/by/4.0/ Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits
+      use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons
+      licence, and '
+    license_checked_at: '2026-10-02T12:21:44+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: Esposito A, Faletti R, Palmisano A, Gatti M, Seitun S, Mantini C, Agostoni P, Andreini D, Barillà F, Barison A, Calabrò P, Cameli M, Carerj S, Catalano C, Chiocchi M, Ciccone MM, Curcio
+    A, D'Ascenzo F, Dell'Aversana S, Falzea F, Francone M, Galea N, Giovagnoni A, Guglielmo M, Laghi A, Liguori C, Lovato L, Marano R, Montone RA, Morrone D, Natale L, Nodari S, Oppizzi M, Paolillo S, Polimeni
+    A, Pontone G, Porto I, Pradella S, Russo V, Russo V, Saba L, Sinagra G, Slavich M, Spaccarotella C, Tore D, Vignale D, Vizza CD, Muscoli S, Perrone Filardi P, Indolfi C. SIRM/SIC consensus document
+    on the management of patients with acute chest pain. La Radiologia medica 2025. doi:10.1007/s11547-025-02076-x. http://creativecommons.org/licenses/by/4.0/, https://creativecommons.org/licenses/by/4.0/
+  original_url: https://doi.org/10.1007/s11547-025-02076-x
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12669346/fullTextXML
+  retrieved_at: '2026-10-02T12:21:44+09:00'
+  local_path: raw/SRC-0002_PMC12669346.xml
+  local_file_sha256: 3208bf801e726ba7b827839894b5e2c4f43d453e14ab5974c17d83f6e7532e98
+  meta_path: meta/SRC-0002_PMC12669346.epmc.json
+  meta_sha256: 65accbe6e9c3b5f899e9290f1a033eacefa746aad76d71232bff0e93a20212d4
+  file_format: jats_xml
+  bytes: 124773
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0003
+  candidate_id: R-CP-03
+  title: 'Quality of undifferentiated chest pain evaluation and diagnosis guidelines: a systematic review and critical appraisal'
+  organization_or_authors: Palmer N, Pasumarthi T, O'Connell J, Lee B, Yu T, Kothapudi VN, Patel S, Morgan RL.
+  journal: JRSM open
+  publication_year: 2024
+  update_date: '2025-01-31'
+  first_publication_date: '2024-11-20'
+  source_type: systematic_review
+  language: en
+  doi_or_pmcid:
+    doi: 10.1177/20542704241288955
+    pmcid: PMC11772255
+    pmid: '39882330'
+  authority_tier: TIER2
+  authority_note: 흉통 지침 품질 SR
+  scope_tags:
+  - chest_pain
+  license:
+    license_exact:
+    - https://creativecommons.org/licenses/by/4.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11772255/fullTextXML (<permissions>)
+    license_quote: '© 2024 The Author(s) 2024 The Royal Society of Medicine https://creativecommons.org/licenses/by/4.0/ This article is distributed under the terms of the Creative Commons Attribution 4.0
+      License ( https://creativecommons.org/licenses/by/4.0/ ) which permits any use, reproduction and distribution of the work without further permission provided the original work is attributed as specified
+      on the SAGE '
+    license_checked_at: '2026-10-02T12:21:49+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: 'Palmer N, Pasumarthi T, O''Connell J, Lee B, Yu T, Kothapudi VN, Patel S, Morgan RL. Quality of undifferentiated chest pain evaluation and diagnosis guidelines: a systematic review
+    and critical appraisal. JRSM open 2024. doi:10.1177/20542704241288955. https://creativecommons.org/licenses/by/4.0/'
+  original_url: https://doi.org/10.1177/20542704241288955
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11772255/fullTextXML
+  retrieved_at: '2026-10-02T12:21:49+09:00'
+  local_path: raw/SRC-0003_PMC11772255.xml
+  local_file_sha256: e9c23da774ef971271e79355eeb20d5258e1c9310068f7eac2e1af1beb80a7e6
+  meta_path: meta/SRC-0003_PMC11772255.epmc.json
+  meta_sha256: f2cfd6c5e1061bd68a6bba4937f0a14bbadca3001e4288185653e6b462857663
+  file_format: jats_xml
+  bytes: 72968
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0004
+  candidate_id: R-CP-04
+  title: Clinical assessment of patients with chest pain; a systematic review of predictive tools
+  organization_or_authors: Ayerbe L, González E, Gallo V, Coleman CL, Wragg A, Robson J.
+  journal: BMC cardiovascular disorders
+  publication_year: 2016
+  update_date: '2025-06-26'
+  first_publication_date: '2016-01-20'
+  source_type: systematic_review
+  language: en
+  doi_or_pmcid:
+    doi: 10.1186/s12872-016-0196-4
+    pmcid: PMC4721048
+    pmid: '26790953'
+  authority_tier: TIER2
+  authority_note: 흉통 예측 도구 SR
+  scope_tags:
+  - chest_pain
+  - acs
+  license:
+    license_exact:
+    - http://creativecommons.org/licenses/by/4.0/
+    - http://creativecommons.org/publicdomain/zero/1.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4721048/fullTextXML (<permissions>)
+    license_quote: © Ayerbe et al. 2016 Open Access This article is distributed under the terms of the Creative Commons Attribution 4.0 International License ( http://creativecommons.org/licenses/by/4.0/
+      ), which permits unrestricted use, distribution, and reproduction in any medium, provided you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons
+      license, and ind
+    license_checked_at: '2026-10-02T12:21:55+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: Ayerbe L, González E, Gallo V, Coleman CL, Wragg A, Robson J. Clinical assessment of patients with chest pain; a systematic review of predictive tools. BMC cardiovascular disorders 2016.
+    doi:10.1186/s12872-016-0196-4. http://creativecommons.org/licenses/by/4.0/, http://creativecommons.org/publicdomain/zero/1.0/
+  original_url: https://doi.org/10.1186/s12872-016-0196-4
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4721048/fullTextXML
+  retrieved_at: '2026-10-02T12:21:55+09:00'
+  local_path: raw/SRC-0004_PMC4721048.xml
+  local_file_sha256: 8d4ffe4c2fd9430e6d5ff5e69d405c424f5f66745862edf99d89f207bcb750b1
+  meta_path: meta/SRC-0004_PMC4721048.epmc.json
+  meta_sha256: d02e5e44b11b05a806d78f8526e6d2a8d185436258d1f99ac546b805f37d29af
+  file_format: jats_xml
+  bytes: 120933
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0005
+  candidate_id: R-CP-05
+  title: Diagnostic accuracy of signs and symptoms in acute coronary syndrome and acute myocardial infarction
+  organization_or_authors: Raat W, Nees L, Vaes B.
+  journal: Scandinavian journal of primary health care
+  publication_year: 2025
+  update_date: '2025-06-06'
+  first_publication_date: '2024-09-22'
+  source_type: meta_analysis
+  language: en
+  doi_or_pmcid:
+    doi: 10.1080/02813432.2024.2406266
+    pmcid: PMC11834805
+    pmid: '39308022'
+  authority_tier: TIER2
+  authority_note: ACS·AMI 증상·징후 진단 정확도 MA
+  scope_tags:
+  - acs
+  license:
+    license_exact:
+    - http://creativecommons.org/licenses/by/4.0/
+    - https://creativecommons.org/licenses/by/4.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11834805/fullTextXML (<permissions>)
+    license_quote: © 2024 The Author(s). Published by Informa UK Limited, trading as Taylor &amp; Francis Group. This is an Open Access article distributed under the terms of the Creative Commons Attribution
+      License ( http://creativecommons.org/licenses/by/4.0/ ), which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited. The terms on which
+      this articl
+    license_checked_at: '2026-10-02T12:22:02+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: Raat W, Nees L, Vaes B. Diagnostic accuracy of signs and symptoms in acute coronary syndrome and acute myocardial infarction. Scandinavian journal of primary health care 2025. doi:10.1080/02813432.2024.2406266.
+    http://creativecommons.org/licenses/by/4.0/, https://creativecommons.org/licenses/by/4.0/
+  original_url: https://doi.org/10.1080/02813432.2024.2406266
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11834805/fullTextXML
+  retrieved_at: '2026-10-02T12:22:02+09:00'
+  local_path: raw/SRC-0005_PMC11834805.xml
+  local_file_sha256: cf3f706d26c16fd5fe3d1f47ffb1939d6657dfe9987c29aaa0b6521ee9c3ef2c
+  meta_path: meta/SRC-0005_PMC11834805.epmc.json
+  meta_sha256: 46d53f3c6d0dc0179f915a1beac70f082e4aa7be4e8e69437560d5e8ab34006f
+  file_format: jats_xml
+  bytes: 97207
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0006
+  candidate_id: R-CP-06
+  title: 'Comparative Effectiveness of Coronary CT Angiography and Standard of Care for Evaluating Acute Chest Pain: A Living Systematic Review and Meta-Analysis'
+  organization_or_authors: Barbosa MF, Canan A, Xi Y, Litt H, Diercks DB, Abbara S, Kay FU.
+  journal: Radiology. Cardiothoracic imaging
+  publication_year: 2023
+  update_date: '2023-09-13'
+  first_publication_date: '2023-08-24'
+  source_type: meta_analysis
+  language: en
+  doi_or_pmcid:
+    doi: 10.1148/ryct.230022
+    pmcid: PMC10483255
+    pmid: '37693194'
+  authority_tier: TIER2
+  authority_note: 급성 흉통 CCTA living SR·MA
+  scope_tags:
+  - chest_pain
+  - acs
+  license:
+    license_exact:
+    - https://creativecommons.org/licenses/by/4.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10483255/fullTextXML (<permissions>)
+    license_quote: © 2023 by the Radiological Society of North America, Inc. Published under a https://creativecommons.org/licenses/by/4.0/ CC BY 4.0 license.
+    license_checked_at: '2026-10-02T12:22:07+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: 'Barbosa MF, Canan A, Xi Y, Litt H, Diercks DB, Abbara S, Kay FU. Comparative Effectiveness of Coronary CT Angiography and Standard of Care for Evaluating Acute Chest Pain: A Living
+    Systematic Review and Meta-Analysis. Radiology. Cardiothoracic imaging 2023. doi:10.1148/ryct.230022. https://creativecommons.org/licenses/by/4.0/'
+  original_url: https://doi.org/10.1148/ryct.230022
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10483255/fullTextXML
+  retrieved_at: '2026-10-02T12:22:07+09:00'
+  local_path: raw/SRC-0006_PMC10483255.xml
+  local_file_sha256: 2501faba08fd002879491233fb0c1a71787411557cce67387c6fe00c1809170e
+  meta_path: meta/SRC-0006_PMC10483255.epmc.json
+  meta_sha256: 187decd147de394ab9e8355930ea389f89877006266a1b88adb7ffb44d99a6fc
+  file_format: jats_xml
+  bytes: 105708
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0007
+  candidate_id: R-PE-02
+  title: EANM guideline for ventilation/perfusion single-photon emission computed tomography (SPECT) for diagnosis of pulmonary embolism and beyond
+  organization_or_authors: Bajc M, Schümichen C, Grüning T, Lindqvist A, Le Roux PY, Alatri A, Bauer RW, Dilic M, Neilly B, Verberne HJ, Delgado Bolton RC, Jonson B.
+  journal: European journal of nuclear medicine and molecular imaging
+  publication_year: 2019
+  update_date: '2024-07-21'
+  first_publication_date: '2019-08-13'
+  source_type: guideline
+  language: en
+  doi_or_pmcid:
+    doi: 10.1007/s00259-019-04450-0
+    pmcid: PMC6813289
+    pmid: '31410539'
+  authority_tier: TIER1
+  authority_note: EANM V/Q SPECT 지침(2019)
+  scope_tags:
+  - pe
+  license:
+    license_exact:
+    - http://creativecommons.org/licenses/by/4.0/
+    - https://creativecommons.org/licenses/by/4.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6813289/fullTextXML (<permissions>)
+    license_quote: '© The Author(s) 2019 https://creativecommons.org/licenses/by/4.0/ Open Access This article is distributed under the terms of the Creative Commons Attribution 4.0 International License
+      ( http://creativecommons.org/licenses/by/4.0/ ), which permits unrestricted use, distribution, and reproduction in any medium, provided you give appropriate credit to the original author(s) and the
+      source, provide a '
+    license_checked_at: '2026-10-02T12:22:16+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: Bajc M, Schümichen C, Grüning T, Lindqvist A, Le Roux PY, Alatri A, Bauer RW, Dilic M, Neilly B, Verberne HJ, Delgado Bolton RC, Jonson B. EANM guideline for ventilation/perfusion single-photon
+    emission computed tomography (SPECT) for diagnosis of pulmonary embolism and beyond. European journal of nuclear medicine and molecular imaging 2019. doi:10.1007/s00259-019-04450-0. http://creativecommons.org/licenses/by/4.0/,
+    https://creativecommons.org/licenses/by/4.0/
+  original_url: https://doi.org/10.1007/s00259-019-04450-0
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6813289/fullTextXML
+  retrieved_at: '2026-10-02T12:22:16+09:00'
+  local_path: raw/SRC-0007_PMC6813289.xml
+  local_file_sha256: d87b987d24046c9373bf79aea76eebc3e70ac5c3f2b03542e09a31a58a22c77c
+  meta_path: meta/SRC-0007_PMC6813289.epmc.json
+  meta_sha256: 481b0bc6645d079f9ce501d6e3e5df9b2c79cd261e5ad3a03c46281fd71c2119
+  file_format: jats_xml
+  bytes: 286977
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0008
+  candidate_id: R-PE-03
+  title: 'Evidence-based perioperative diagnosis and management of pulmonary embolism: A systematic review'
+  organization_or_authors: Abate LG, Bayable SD, Fetene MB.
+  journal: Annals of medicine and surgery (2012)
+  publication_year: 2022
+  update_date: '2024-08-30'
+  first_publication_date: '2022-04-28'
+  source_type: systematic_review
+  language: en
+  doi_or_pmcid:
+    doi: 10.1016/j.amsu.2022.103684
+    pmcid: PMC9142630
+    pmid: '35638051'
+  authority_tier: TIER2
+  authority_note: 수술 전후 PE 진단·관리 SR
+  scope_tags:
+  - pe
+  license:
+    license_exact:
+    - http://creativecommons.org/licenses/by/4.0/
+    - https://creativecommons.org/licenses/by/4.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9142630/fullTextXML (<permissions>)
+    license_quote: © 2022 The Authors 2022 https://creativecommons.org/licenses/by/4.0/ This is an open access article under the CC BY license (http://creativecommons.org/licenses/by/4.0/).
+    license_checked_at: '2026-10-02T12:22:21+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: 'Abate LG, Bayable SD, Fetene MB. Evidence-based perioperative diagnosis and management of pulmonary embolism: A systematic review. Annals of medicine and surgery (2012) 2022. doi:10.1016/j.amsu.2022.103684.
+    http://creativecommons.org/licenses/by/4.0/, https://creativecommons.org/licenses/by/4.0/'
+  original_url: https://doi.org/10.1016/j.amsu.2022.103684
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9142630/fullTextXML
+  retrieved_at: '2026-10-02T12:22:21+09:00'
+  local_path: raw/SRC-0008_PMC9142630.xml
+  local_file_sha256: 0f14ecd06ea2a2cb11412914a007078ce6b9db3147474d419631fd79de3cc6bc
+  meta_path: meta/SRC-0008_PMC9142630.epmc.json
+  meta_sha256: ec08c3c8004be997c5d6dd2f16196ac87a9c38199ae41981682e6cffe461c191
+  file_format: jats_xml
+  bytes: 66501
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0009
+  candidate_id: R-PE-04
+  title: A systematic review and meta-analysis of diagnostic delay in pulmonary embolism
+  organization_or_authors: van Maanen R, Trinks-Roerdink EM, Rutten FH, Geersing GJ.
+  journal: The European journal of general practice
+  publication_year: 2022
+  update_date: '2024-08-31'
+  first_publication_date: '2022-12-01'
+  source_type: meta_analysis
+  language: en
+  doi_or_pmcid:
+    doi: 10.1080/13814788.2022.2086232
+    pmcid: PMC9246192
+    pmid: '35730378'
+  authority_tier: TIER2
+  authority_note: PE 진단 지연 SR·MA
+  scope_tags:
+  - pe
+  license:
+    license_exact:
+    - http://creativecommons.org/licenses/by/4.0/
+    - https://creativecommons.org/licenses/by/4.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9246192/fullTextXML (<permissions>)
+    license_quote: © 2022 The Author(s). Published by Informa UK Limited, trading as Taylor &amp; Francis Group. This is an Open Access article distributed under the terms of the Creative Commons Attribution
+      License ( http://creativecommons.org/licenses/by/4.0/ ), which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.
+    license_checked_at: '2026-10-02T12:22:27+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: van Maanen R, Trinks-Roerdink EM, Rutten FH, Geersing GJ. A systematic review and meta-analysis of diagnostic delay in pulmonary embolism. The European journal of general practice 2022.
+    doi:10.1080/13814788.2022.2086232. http://creativecommons.org/licenses/by/4.0/, https://creativecommons.org/licenses/by/4.0/
+  original_url: https://doi.org/10.1080/13814788.2022.2086232
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9246192/fullTextXML
+  retrieved_at: '2026-10-02T12:22:27+09:00'
+  local_path: raw/SRC-0009_PMC9246192.xml
+  local_file_sha256: dc08025329d841d3e2b02697317117c016f5bb982b978962d8b5986dc80df479
+  meta_path: meta/SRC-0009_PMC9246192.epmc.json
+  meta_sha256: a0b9ebcf6aad57ca00f13bbdd8cdc2756b40296cba3302a28c4423210bc30578
+  file_format: jats_xml
+  bytes: 86539
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0010
+  candidate_id: R-PER-01
+  title: 'Importance of ECG in the Diagnosis of Acute Pericarditis and Myocardial Infarction: A Review Article'
+  organization_or_authors: Sarda AK, Thute P.
+  journal: Cureus
+  publication_year: 2022
+  update_date: '2024-09-07'
+  first_publication_date: '2022-10-24'
+  source_type: narrative_review
+  language: en
+  doi_or_pmcid:
+    doi: 10.7759/cureus.30633
+    pmcid: PMC9683083
+    pmid: '36426313'
+  authority_tier: TIER2
+  authority_note: 심낭염·MI ECG 서술 리뷰(저권위 저널)
+  scope_tags:
+  - pericarditis
+  - acs
+  license:
+    license_exact:
+    - https://creativecommons.org/licenses/by/3.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9683083/fullTextXML (<permissions>)
+    license_quote: Copyright © 2022, Sarda et al. 2022 Sarda et al. https://creativecommons.org/licenses/by/3.0/ This is an open access article distributed under the terms of the Creative Commons Attribution
+      License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.
+    license_checked_at: '2026-10-02T12:22:33+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: 'Sarda AK, Thute P. Importance of ECG in the Diagnosis of Acute Pericarditis and Myocardial Infarction: A Review Article. Cureus 2022. doi:10.7759/cureus.30633. https://creativecommons.org/licenses/by/3.0/'
+  original_url: https://doi.org/10.7759/cureus.30633
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9683083/fullTextXML
+  retrieved_at: '2026-10-02T12:22:33+09:00'
+  local_path: raw/SRC-0010_PMC9683083.xml
+  local_file_sha256: 3ec70f10bd996d9c33e1c5c710ceb4979e8542a29bb894995af6377b8d5b63c7
+  meta_path: meta/SRC-0010_PMC9683083.epmc.json
+  meta_sha256: 7a62af5da71411f39da745dd19c4addc12136c827cfc054d3194eb9531f47047
+  file_format: jats_xml
+  bytes: 60796
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0011
+  candidate_id: R-MYO-01
+  title: 'Sudden cardiac death after acute myocarditis with arrhythmic presentation: hunting for risk predictors − a systematic review and meta-analysis'
+  organization_or_authors: Narducci ML, Ballacci F, Giordano F, Collini V, Imazio M.
+  journal: Open heart
+  publication_year: 2024
+  update_date: '2026-04-30'
+  first_publication_date: '2024-11-21'
+  source_type: meta_analysis
+  language: en
+  doi_or_pmcid:
+    doi: 10.1136/openhrt-2024-002985
+    pmcid: PMC11603706
+    pmid: '39882569'
+  authority_tier: TIER2
+  authority_note: 급성 심근염 후 SCD SR·MA
+  scope_tags:
+  - myocarditis
+  license:
+    license_exact:
+    - https://creativecommons.org/licenses/by/4.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11603706/fullTextXML (<permissions>)
+    license_quote: 'Copyright © Author(s) (or their employer(s)) 2024. Re-use permitted under CC BY. Published by BMJ Group. 2024 https://creativecommons.org/licenses/by/4.0/ This is an open access article
+      distributed in accordance with the Creative Commons Attribution 4.0 Unported (CC BY 4.0) license, which permits others to copy, redistribute, remix, transform and build upon this work for any purpose,
+      provided the '
+    license_checked_at: '2026-10-02T12:22:38+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: 'Narducci ML, Ballacci F, Giordano F, Collini V, Imazio M. Sudden cardiac death after acute myocarditis with arrhythmic presentation: hunting for risk predictors − a systematic review
+    and meta-analysis. Open heart 2024. doi:10.1136/openhrt-2024-002985. https://creativecommons.org/licenses/by/4.0/'
+  original_url: https://doi.org/10.1136/openhrt-2024-002985
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11603706/fullTextXML
+  retrieved_at: '2026-10-02T12:22:38+09:00'
+  local_path: raw/SRC-0011_PMC11603706.xml
+  local_file_sha256: 384c44a25002dd5a894c8fd706ab688e8b7d32ceaae1ed0c51fd7348b12b7e6d
+  meta_path: meta/SRC-0011_PMC11603706.epmc.json
+  meta_sha256: 4a0c45866e701358e0bdd7d74d55470c55326ce7d0bed7d4cf84e2c4a6a5d008
+  file_format: jats_xml
+  bytes: 84158
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0012
+  candidate_id: R-PTX-01
+  title: SPLF/SMFU/SRLF/SFAR/SFCTCV Guidelines for the management of patients with primary spontaneous pneumothorax
+  organization_or_authors: Jouneau S, Ricard JD, Seguin-Givelet A, Bigé N, Contou D, Desmettre T, Hugenschmitt D, Kepka S, Le Gloan K, Maitre B, Mangiapan G, Marchand-Adam S, Mariolo A, Marx T, Messika
+    J, Noël-Savina E, Oberlin M, Palmier L, Perruez M, Pichereau C, Roche N, Garnier M, Martinez M.
+  journal: Annals of intensive care
+  publication_year: 2023
+  update_date: '2026-03-29'
+  first_publication_date: '2023-09-19'
+  source_type: guideline
+  language: en
+  doi_or_pmcid:
+    doi: 10.1186/s13613-023-01181-2
+    pmcid: PMC10509123
+    pmid: '37725198'
+  authority_tier: TIER1
+  authority_note: 프랑스 5개 학회 자연 기흉 지침(2023)
+  scope_tags:
+  - pneumothorax
+  license:
+    license_exact:
+    - http://creativecommons.org/licenses/by/4.0/
+    - https://creativecommons.org/licenses/by/4.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10509123/fullTextXML (<permissions>)
+    license_quote: © The Author(s) 2023 Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction
+      in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons licence, and indicate if changes were made. The images
+      or other
+    license_checked_at: '2026-10-02T12:22:44+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: Jouneau S, Ricard JD, Seguin-Givelet A, Bigé N, Contou D, Desmettre T, Hugenschmitt D, Kepka S, Le Gloan K, Maitre B, Mangiapan G, Marchand-Adam S, Mariolo A, Marx T, Messika J, Noël-Savina
+    E, Oberlin M, Palmier L, Perruez M, Pichereau C, Roche N, Garnier M, Martinez M. SPLF/SMFU/SRLF/SFAR/SFCTCV Guidelines for the management of patients with primary spontaneous pneumothorax. Annals of
+    intensive care 2023. doi:10.1186/s13613-023-01181-2. http://creativecommons.org/licenses/by/4.0/, https://creativecommons.org/licenses/by/4.0/
+  original_url: https://doi.org/10.1186/s13613-023-01181-2
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10509123/fullTextXML
+  retrieved_at: '2026-10-02T12:22:44+09:00'
+  local_path: raw/SRC-0012_PMC10509123.xml
+  local_file_sha256: 9b0d03aee36b3e01e619bbdea869c5eeb0f786cd79cb917cf1f43a83b89e5a3c
+  meta_path: meta/SRC-0012_PMC10509123.epmc.json
+  meta_sha256: 3b0e3c3368caecede557e9ee20b15ec5b3def0716318568efd01042a4a9dc52f
+  file_format: jats_xml
+  bytes: 352340
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0013
+  candidate_id: R-GI-01
+  title: 'Esophageal emergencies: WSES guidelines'
+  organization_or_authors: Chirica M, Kelly MD, Siboni S, Aiolfi A, Riva CG, Asti E, Ferrari D, Leppäniemi A, Ten Broek RPG, Brichon PY, Kluger Y, Fraga GP, Frey G, Andreollo NA, Coccolini F, Frattini C,
+    Moore EE, Chiara O, Di Saverio S, Sartelli M, Weber D, Ansaloni L, Biffl W, Corte H, Wani I, Baiocchi G, Cattan P, Catena F, Bonavina L.
+  journal: 'World journal of emergency surgery : WJES'
+  publication_year: 2019
+  update_date: '2020-03-09'
+  first_publication_date: '2019-05-31'
+  source_type: guideline
+  language: en
+  doi_or_pmcid:
+    doi: 10.1186/s13017-019-0245-2
+    pmcid: PMC6544956
+    pmid: '31164915'
+  authority_tier: TIER1
+  authority_note: WSES 식도 응급 지침(2019)
+  scope_tags:
+  - esophageal
+  license:
+    license_exact:
+    - http://creativecommons.org/licenses/by/4.0/
+    - http://creativecommons.org/publicdomain/zero/1.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6544956/fullTextXML (<permissions>)
+    license_quote: © The Author(s). 2019 Open Access This article is distributed under the terms of the Creative Commons Attribution 4.0 International License ( http://creativecommons.org/licenses/by/4.0/
+      ), which permits unrestricted use, distribution, and reproduction in any medium, provided you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons
+      license, and in
+    license_checked_at: '2026-10-02T12:22:50+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: 'Chirica M, Kelly MD, Siboni S, Aiolfi A, Riva CG, Asti E, Ferrari D, Leppäniemi A, Ten Broek RPG, Brichon PY, Kluger Y, Fraga GP, Frey G, Andreollo NA, Coccolini F, Frattini C, Moore
+    EE, Chiara O, Di Saverio S, Sartelli M, Weber D, Ansaloni L, Biffl W, Corte H, Wani I, Baiocchi G, Cattan P, Catena F, Bonavina L. Esophageal emergencies: WSES guidelines. World journal of emergency
+    surgery : WJES 2019. doi:10.1186/s13017-019-0245-2. http://creativecommons.org/licenses/by/4.0/, http://creativecommons.org/publicdomain/zero/1.0/'
+  original_url: https://doi.org/10.1186/s13017-019-0245-2
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6544956/fullTextXML
+  retrieved_at: '2026-10-02T12:22:50+09:00'
+  local_path: raw/SRC-0013_PMC6544956.xml
+  local_file_sha256: 60faae80e65d65c6b005cdfff5161ab4a31206bae3cbe6162c1cc4c9ac60d10b
+  meta_path: meta/SRC-0013_PMC6544956.epmc.json
+  meta_sha256: 58f22667330aeca83ac5602a606542f2c5b85b9a6a857e6f089f4b6b6839b73c
+  file_format: jats_xml
+  bytes: 193503
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0014
+  candidate_id: R-PAN-01
+  title: Biobehavioral approach to distinguishing panic symptoms from medical illness
+  organization_or_authors: Tunnell NC, Corner SE, Roque AD, Kroll JL, Ritz T, Meuret AE.
+  journal: Frontiers in psychiatry
+  publication_year: 2024
+  update_date: '2024-05-24'
+  first_publication_date: '2024-05-08'
+  source_type: narrative_review
+  language: en
+  doi_or_pmcid:
+    doi: 10.3389/fpsyt.2024.1296569
+    pmcid: PMC11109415
+    pmid: '38779550'
+  authority_tier: TIER2
+  authority_note: 공황 증상 vs 신체 질환 감별 리뷰
+  scope_tags:
+  - panic
+  license:
+    license_exact:
+    - CC BY (version unstated)
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11109415/fullTextXML (<permissions>)
+    license_quote: Copyright © 2024 Tunnell, Corner, Roque, Kroll, Ritz and Meuret This is an open-access article distributed under the terms of the Creative Commons Attribution License (CC BY). The use,
+      distribution or reproduction in other forums is permitted, provided the original author(s) and the copyright owner(s) are credited and that the original publication in this journal is cited, in accordance
+      with accep
+    license_checked_at: '2026-10-02T12:22:55+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK_TEXT_ONLY_VERSION_UNSTATED
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions:
+    - CC_BY_VERSION_UNSTATED
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: Tunnell NC, Corner SE, Roque AD, Kroll JL, Ritz T, Meuret AE. Biobehavioral approach to distinguishing panic symptoms from medical illness. Frontiers in psychiatry 2024. doi:10.3389/fpsyt.2024.1296569.
+    CC BY (version unstated)
+  original_url: https://doi.org/10.3389/fpsyt.2024.1296569
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11109415/fullTextXML
+  retrieved_at: '2026-10-02T12:22:55+09:00'
+  local_path: raw/SRC-0014_PMC11109415.xml
+  local_file_sha256: e2c86d148c864f2cc074e4827ab2d3f85451b9bb08d53832fda879439c6c2107
+  meta_path: meta/SRC-0014_PMC11109415.epmc.json
+  meta_sha256: 3eaf6571a54f7573ac0c4e28f4945fb3e7b833818d1676142456145c47e7f764
+  file_format: jats_xml
+  bytes: 411608
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0015
+  candidate_id: R-AO-01
+  title: 'Diagnostic accuracy of alternative biomarkers for acute aortic syndrome: a systematic review'
+  organization_or_authors: Wren J, Goodacre S, Pandor A, Essat M, Clowes M, Cooper G, Hinchliffe R, Reed MJ, Thomas S, Wilson S.
+  journal: 'Emergency medicine journal : EMJ'
+  publication_year: 2024
+  update_date: '2026-09-23'
+  first_publication_date: '2024-10-23'
+  source_type: systematic_review
+  language: en
+  doi_or_pmcid:
+    doi: 10.1136/emermed-2023-213772
+    pmcid: PMC11503200
+    pmid: '39107052'
+  authority_tier: TIER2
+  authority_note: 급성 대동맥 증후군 대체 바이오마커 SR
+  scope_tags:
+  - aortic
+  license:
+    license_exact:
+    - https://creativecommons.org/licenses/by/4.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11503200/fullTextXML (<permissions>)
+    license_quote: Copyright © Author(s) (or their employer(s)) 2024. Re-use permitted under CC BY. Published by BMJ. This is an open access article distributed in accordance with the Creative Commons Attribution
+      4.0 Unported (CC BY 4.0) license, which permits others to copy, redistribute, remix, transform and build upon this work for any purpose, provided the original work is properly cited, a link to the
+      licence i
+    license_checked_at: '2026-10-02T12:23:02+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: present_flagged
+    third_party_flags:
+    - element: fig
+      id: F1
+      label: Figure 1
+      matched: adapted with permission from
+    c5_exclusions:
+    - fig#F1
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: 'Wren J, Goodacre S, Pandor A, Essat M, Clowes M, Cooper G, Hinchliffe R, Reed MJ, Thomas S, Wilson S. Diagnostic accuracy of alternative biomarkers for acute aortic syndrome: a systematic
+    review. Emergency medicine journal : EMJ 2024. doi:10.1136/emermed-2023-213772. https://creativecommons.org/licenses/by/4.0/'
+  original_url: https://doi.org/10.1136/emermed-2023-213772
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11503200/fullTextXML
+  retrieved_at: '2026-10-02T12:23:02+09:00'
+  local_path: raw/SRC-0015_PMC11503200.xml
+  local_file_sha256: aec322fee2474e279f6aac7ab3d8df8820cdeaa9d568e06f1e51726a261f4ba3
+  meta_path: meta/SRC-0015_PMC11503200.epmc.json
+  meta_sha256: 456bcd907854610ec1f960b670b170b0e41b65894a4afd560a7f05e0ebc31310
+  file_format: jats_xml
+  bytes: 149424
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0016
+  candidate_id: R-AO-02
+  title: 'Diagnostic accuracy of the aortic dissection detection risk score alone or with D-dimer for acute aortic syndromes: Systematic review and meta-analysis'
+  organization_or_authors: Ren S, Essat M, Pandor A, Goodacre S, Ren S, Clowes M, Bima P, Toyofuku M, McLatchie R, Bossone E.
+  journal: PloS one
+  publication_year: 2024
+  update_date: '2026-09-22'
+  first_publication_date: '2024-06-21'
+  source_type: meta_analysis
+  language: en
+  doi_or_pmcid:
+    doi: 10.1371/journal.pone.0304401
+    pmcid: PMC11192411
+    pmid: '38905181'
+  authority_tier: TIER2
+  authority_note: ADD-RS ± D-dimer MA
+  scope_tags:
+  - aortic
+  license:
+    license_exact:
+    - https://creativecommons.org/licenses/by/4.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11192411/fullTextXML (<permissions>)
+    license_quote: © 2024 Ren et al This is an open access article distributed under the terms of the Creative Commons Attribution License , which permits unrestricted use, distribution, and reproduction
+      in any medium, provided the original author and source are credited.
+    license_checked_at: '2026-10-02T12:23:11+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: 'Ren S, Essat M, Pandor A, Goodacre S, Ren S, Clowes M, Bima P, Toyofuku M, McLatchie R, Bossone E. Diagnostic accuracy of the aortic dissection detection risk score alone or with D-dimer
+    for acute aortic syndromes: Systematic review and meta-analysis. PloS one 2024. doi:10.1371/journal.pone.0304401. https://creativecommons.org/licenses/by/4.0/'
+  original_url: https://doi.org/10.1371/journal.pone.0304401
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11192411/fullTextXML
+  retrieved_at: '2026-10-02T12:23:11+09:00'
+  local_path: raw/SRC-0016_PMC11192411.xml
+  local_file_sha256: 787bd981c944a9880ef4f967f65bbd83fbcef84f32a4dbe27116d10d380afaa8
+  meta_path: meta/SRC-0016_PMC11192411.epmc.json
+  meta_sha256: cc512aea3058bd7a52facf04bac50664c36f701fa4472f8beea2bda78125c969
+  file_format: jats_xml
+  bytes: 133454
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0017
+  candidate_id: R-AO-03
+  title: 'Diagnostic biomarkers and aortic dissection: a systematic review and meta-analysis'
+  organization_or_authors: Chen H, Li Y, Li Z, Shi Y, Zhu H.
+  journal: BMC cardiovascular disorders
+  publication_year: 2023
+  update_date: '2023-11-21'
+  first_publication_date: '2023-10-10'
+  source_type: meta_analysis
+  language: en
+  doi_or_pmcid:
+    doi: 10.1186/s12872-023-03448-9
+    pmcid: PMC10563263
+    pmid: '37817089'
+  authority_tier: TIER2
+  authority_note: 대동맥 박리 바이오마커 SR·MA
+  scope_tags:
+  - aortic
+  license:
+    license_exact:
+    - http://creativecommons.org/licenses/by/4.0/
+    - http://creativecommons.org/publicdomain/zero/1.0/
+    - https://creativecommons.org/licenses/by/4.0/
+    - https://creativecommons.org/publicdomain/zero/1.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10563263/fullTextXML (<permissions>)
+    license_quote: © The Author(s) 2023 Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction
+      in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons licence, and indicate if changes were made. The images
+      or other
+    license_checked_at: '2026-10-02T12:23:16+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: none_flagged
+    third_party_flags: []
+    c5_exclusions: []
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: 'Chen H, Li Y, Li Z, Shi Y, Zhu H. Diagnostic biomarkers and aortic dissection: a systematic review and meta-analysis. BMC cardiovascular disorders 2023. doi:10.1186/s12872-023-03448-9.
+    http://creativecommons.org/licenses/by/4.0/, http://creativecommons.org/publicdomain/zero/1.0/, https://creativecommons.org/licenses/by/4.0/, https://creativecommons.org/publicdomain/zero/1.0/'
+  original_url: https://doi.org/10.1186/s12872-023-03448-9
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10563263/fullTextXML
+  retrieved_at: '2026-10-02T12:23:16+09:00'
+  local_path: raw/SRC-0017_PMC10563263.xml
+  local_file_sha256: 8a116745a7becb6999886cda173c9a1befcc378c2bf70e4f797097480d2f1421
+  meta_path: meta/SRC-0017_PMC10563263.epmc.json
+  meta_sha256: 1098518358d9eb965e7e6ffa64298b23799d3035afdbd9837c5c508d8c612d36
+  file_format: jats_xml
+  bytes: 149082
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'
+- source_id: SRC-0018
+  candidate_id: R-AO-04
+  title: Current Understanding of Aortic Dissection
+  organization_or_authors: Yuan X, Mitsis A, Nienaber CA, Nienaber CA.
+  journal: Life (Basel, Switzerland)
+  publication_year: 2022
+  update_date: '2022-10-30'
+  first_publication_date: '2022-10-14'
+  source_type: narrative_review
+  language: en
+  doi_or_pmcid:
+    doi: 10.3390/life12101606
+    pmcid: PMC9605578
+    pmid: '36295040'
+  authority_tier: TIER2
+  authority_note: 대동맥 박리 서술 리뷰
+  scope_tags:
+  - aortic
+  license:
+    license_exact:
+    - https://creativecommons.org/licenses/by/4.0/
+    license_evidence_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9605578/fullTextXML (<permissions>)
+    license_quote: © 2022 by the authors. Licensee MDPI, Basel, Switzerland. This article is an open access article distributed under the terms and conditions of the Creative Commons Attribution (CC BY)
+      license ( https://creativecommons.org/licenses/by/4.0/ ).
+    license_checked_at: '2026-10-02T12:23:22+09:00'
+    evidence_level: XML_LICENSE
+    epmc_meta_license: cc by
+    license_check: OK
+    third_party_content: present_flagged
+    third_party_flags:
+    - element: fig
+      id: life-12-01606-f003
+      label: Figure 3
+      matched: reproduced from
+    c5_exclusions:
+    - fig#life-12-01606-f003
+    legal_questions: []
+  reuse_status: PRODUCTION_ALLOWED
+  ai_software_reuse: YES (CC BY/CC0 — 출처 표시)
+  research_use: 'YES'
+  production_use: NOT_APPROVED (연구용 승인만, 2026-10-02 사용자)
+  production_eligible: false
+  permission_required: 'NO'
+  attribution_text: Yuan X, Mitsis A, Nienaber CA, Nienaber CA. Current Understanding of Aortic Dissection. Life (Basel, Switzerland) 2022. doi:10.3390/life12101606. https://creativecommons.org/licenses/by/4.0/
+  original_url: https://doi.org/10.3390/life12101606
+  retrieval_url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9605578/fullTextXML
+  retrieved_at: '2026-10-02T12:23:22+09:00'
+  local_path: raw/SRC-0018_PMC9605578.xml
+  local_file_sha256: 1ea2faa27442021ba5709360d977cd2fb417ae4bc5fc8d0ce3ba59336e269363
+  meta_path: meta/SRC-0018_PMC9605578.epmc.json
+  meta_sha256: 5cc049abf3d21aabe035ead0d48d94f77d9672a262b6601075fe73f1359dcd98
+  file_format: jats_xml
+  bytes: 182768
+  approval_status: approved
+  approval_by: user (2026-10-02, 연구용 v0, 제품 배포 승인 아님)
+  approval_at: '2026-10-02'

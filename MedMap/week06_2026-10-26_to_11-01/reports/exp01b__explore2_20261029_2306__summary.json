@@ -1,0 +1,1223 @@
+{
+ "OLD_GRADED": {
+  "ALL": {
+   "n": 100,
+   "top1_pess": {
+    "k": 20,
+    "n": 100,
+    "rate": 0.2
+   },
+   "top1_opt": {
+    "k": 74,
+    "n": 100,
+    "rate": 0.74
+   },
+   "top3_pess": {
+    "k": 90,
+    "n": 100,
+    "rate": 0.9
+   },
+   "top3_opt": {
+    "k": 91,
+    "n": 100,
+    "rate": 0.91
+   },
+   "alt_first_pess": {
+    "k": 27,
+    "n": 100,
+    "rate": 0.27
+   },
+   "alt_first_opt": {
+    "k": 79,
+    "n": 100,
+    "rate": 0.79
+   },
+   "review_incl": {
+    "k": 81,
+    "n": 100,
+    "rate": 0.81
+   },
+   "review_size_mean": 1.92,
+   "review_random_expected": 0.64,
+   "tie_rate": {
+    "k": 64,
+    "n": 100,
+    "rate": 0.64
+   },
+   "top_distribution": {
+    "TIE2": 8,
+    "TIE3": 56,
+    "UNIQUE:Tuberculosis": 36
+   },
+   "max_unique_share": 0.36,
+   "used_codes_mean": 4.39,
+   "input_codes_mean": 12.14,
+   "pos_in_graph_mean": 4.14,
+   "gap_C_mean_A": 0.96,
+   "gap_C_mean_B": 0.96,
+   "A_review_signal": {
+    "k": 1,
+    "n": 100,
+    "rate": 0.01
+   },
+   "A_gap_flag": {
+    "k": 65,
+    "n": 100,
+    "rate": 0.65
+   },
+   "A_old_any_unexplained": {
+    "k": 65,
+    "n": 100,
+    "rate": 0.65
+   },
+   "B_review_signal": {
+    "k": 32,
+    "n": 100,
+    "rate": 0.32
+   }
+  },
+  "Pulmonary embolism": {
+   "n": 25,
+   "top1_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "top1_opt": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "top3_pess": {
+    "k": 16,
+    "n": 25,
+    "rate": 0.64
+   },
+   "top3_opt": {
+    "k": 16,
+    "n": 25,
+    "rate": 0.64
+   },
+   "alt_first_pess": {
+    "k": 5,
+    "n": 25,
+    "rate": 0.2
+   },
+   "alt_first_opt": {
+    "k": 5,
+    "n": 25,
+    "rate": 0.2
+   },
+   "review_incl": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "review_size_mean": 2.08,
+   "review_random_expected": 0.6933,
+   "tie_rate": {
+    "k": 9,
+    "n": 25,
+    "rate": 0.36
+   },
+   "top_distribution": {
+    "TIE3": 9,
+    "UNIQUE:Tuberculosis": 16
+   },
+   "max_unique_share": 0.64,
+   "used_codes_mean": 5.16,
+   "input_codes_mean": 16.08,
+   "pos_in_graph_mean": 5.16,
+   "gap_C_mean_A": 1.76,
+   "gap_C_mean_B": 1.76,
+   "A_review_signal": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "A_gap_flag": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "A_old_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "B_review_signal": {
+    "k": 11,
+    "n": 25,
+    "rate": 0.44
+   },
+   "pe_miss_top3_pess": 9,
+   "pe_miss_alt_first_pess": 20,
+   "pe_miss_review": 1
+  },
+  "Pericarditis": {
+   "n": 25,
+   "top1_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "top1_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top3_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top3_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "alt_first_pess": {
+    "k": 1,
+    "n": 25,
+    "rate": 0.04
+   },
+   "alt_first_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "review_incl": {
+    "k": 17,
+    "n": 25,
+    "rate": 0.68
+   },
+   "review_size_mean": 1.36,
+   "review_random_expected": 0.4533,
+   "tie_rate": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top_distribution": {
+    "TIE2": 2,
+    "TIE3": 23
+   },
+   "max_unique_share": 0.0,
+   "used_codes_mean": 3.96,
+   "input_codes_mean": 12.16,
+   "pos_in_graph_mean": 3.96,
+   "gap_C_mean_A": 1.48,
+   "gap_C_mean_B": 1.48,
+   "A_review_signal": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "A_gap_flag": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "A_old_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "B_review_signal": {
+    "k": 1,
+    "n": 25,
+    "rate": 0.04
+   }
+  },
+  "Myocarditis": {
+   "n": 25,
+   "top1_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "top1_opt": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "top3_pess": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "top3_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "alt_first_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "alt_first_opt": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "review_incl": {
+    "k": 16,
+    "n": 25,
+    "rate": 0.64
+   },
+   "review_size_mean": 1.64,
+   "review_random_expected": 0.5467,
+   "tie_rate": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top_distribution": {
+    "TIE2": 1,
+    "TIE3": 24
+   },
+   "max_unique_share": 0.0,
+   "used_codes_mean": 4.92,
+   "input_codes_mean": 12.16,
+   "pos_in_graph_mean": 3.92,
+   "gap_C_mean_A": 0.6,
+   "gap_C_mean_B": 0.6,
+   "A_review_signal": {
+    "k": 1,
+    "n": 25,
+    "rate": 0.04
+   },
+   "A_gap_flag": {
+    "k": 15,
+    "n": 25,
+    "rate": 0.6
+   },
+   "A_old_any_unexplained": {
+    "k": 15,
+    "n": 25,
+    "rate": 0.6
+   },
+   "B_review_signal": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "Tuberculosis": {
+   "n": 25,
+   "top1_pess": {
+    "k": 20,
+    "n": 25,
+    "rate": 0.8
+   },
+   "top1_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top3_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top3_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "alt_first_pess": {
+    "k": 21,
+    "n": 25,
+    "rate": 0.84
+   },
+   "alt_first_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "review_incl": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "review_size_mean": 2.6,
+   "review_random_expected": 0.8667,
+   "tie_rate": {
+    "k": 5,
+    "n": 25,
+    "rate": 0.2
+   },
+   "top_distribution": {
+    "TIE2": 5,
+    "UNIQUE:Tuberculosis": 20
+   },
+   "max_unique_share": 0.8,
+   "used_codes_mean": 3.52,
+   "input_codes_mean": 8.16,
+   "pos_in_graph_mean": 3.52,
+   "gap_C_mean_A": 0.0,
+   "gap_C_mean_B": 0.0,
+   "A_review_signal": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "A_gap_flag": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "A_old_any_unexplained": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "B_review_signal": {
+    "k": 20,
+    "n": 25,
+    "rate": 0.8
+   }
+  }
+ },
+ "NEW_GRADED": {
+  "ALL": {
+   "n": 100,
+   "top1_pess": {
+    "k": 20,
+    "n": 100,
+    "rate": 0.2
+   },
+   "top1_opt": {
+    "k": 88,
+    "n": 100,
+    "rate": 0.88
+   },
+   "top3_pess": {
+    "k": 71,
+    "n": 100,
+    "rate": 0.71
+   },
+   "top3_opt": {
+    "k": 96,
+    "n": 100,
+    "rate": 0.96
+   },
+   "alt_first_pess": {
+    "k": 27,
+    "n": 100,
+    "rate": 0.27
+   },
+   "alt_first_opt": {
+    "k": 90,
+    "n": 100,
+    "rate": 0.9
+   },
+   "review_incl": {
+    "k": 81,
+    "n": 100,
+    "rate": 0.81
+   },
+   "review_size_mean": 1.78,
+   "review_random_expected": 0.5933,
+   "tie_rate": {
+    "k": 73,
+    "n": 100,
+    "rate": 0.73
+   },
+   "top_distribution": {
+    "TIE2": 17,
+    "TIE3": 32,
+    "TIE4": 24,
+    "UNIQUE:Tuberculosis": 27
+   },
+   "max_unique_share": 0.27,
+   "used_codes_mean": 4.96,
+   "input_codes_mean": 12.14,
+   "pos_in_graph_mean": 4.71,
+   "gap_C_mean_A": 1.2,
+   "gap_C_mean_B": 1.2,
+   "A_review_signal": {
+    "k": 1,
+    "n": 100,
+    "rate": 0.01
+   },
+   "A_gap_flag": {
+    "k": 65,
+    "n": 100,
+    "rate": 0.65
+   },
+   "A_old_any_unexplained": {
+    "k": 65,
+    "n": 100,
+    "rate": 0.65
+   },
+   "B_review_signal": {
+    "k": 32,
+    "n": 100,
+    "rate": 0.32
+   }
+  },
+  "Pulmonary embolism": {
+   "n": 25,
+   "top1_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "top1_opt": {
+    "k": 14,
+    "n": 25,
+    "rate": 0.56
+   },
+   "top3_pess": {
+    "k": 16,
+    "n": 25,
+    "rate": 0.64
+   },
+   "top3_opt": {
+    "k": 21,
+    "n": 25,
+    "rate": 0.84
+   },
+   "alt_first_pess": {
+    "k": 5,
+    "n": 25,
+    "rate": 0.2
+   },
+   "alt_first_opt": {
+    "k": 16,
+    "n": 25,
+    "rate": 0.64
+   },
+   "review_incl": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "review_size_mean": 2.08,
+   "review_random_expected": 0.6933,
+   "tie_rate": {
+    "k": 18,
+    "n": 25,
+    "rate": 0.72
+   },
+   "top_distribution": {
+    "TIE2": 9,
+    "TIE3": 4,
+    "TIE4": 5,
+    "UNIQUE:Tuberculosis": 7
+   },
+   "max_unique_share": 0.28,
+   "used_codes_mean": 6.68,
+   "input_codes_mean": 16.08,
+   "pos_in_graph_mean": 6.68,
+   "gap_C_mean_A": 2.72,
+   "gap_C_mean_B": 2.72,
+   "A_review_signal": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "A_gap_flag": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "A_old_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "B_review_signal": {
+    "k": 11,
+    "n": 25,
+    "rate": 0.44
+   },
+   "pe_miss_top3_pess": 9,
+   "pe_miss_alt_first_pess": 20,
+   "pe_miss_review": 1
+  },
+  "Pericarditis": {
+   "n": 25,
+   "top1_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "top1_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top3_pess": {
+    "k": 6,
+    "n": 25,
+    "rate": 0.24
+   },
+   "top3_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "alt_first_pess": {
+    "k": 1,
+    "n": 25,
+    "rate": 0.04
+   },
+   "alt_first_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "review_incl": {
+    "k": 17,
+    "n": 25,
+    "rate": 0.68
+   },
+   "review_size_mean": 0.8,
+   "review_random_expected": 0.2667,
+   "tie_rate": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top_distribution": {
+    "TIE2": 2,
+    "TIE3": 4,
+    "TIE4": 19
+   },
+   "max_unique_share": 0.0,
+   "used_codes_mean": 4.72,
+   "input_codes_mean": 12.16,
+   "pos_in_graph_mean": 4.72,
+   "gap_C_mean_A": 1.48,
+   "gap_C_mean_B": 1.48,
+   "A_review_signal": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "A_gap_flag": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "A_old_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "B_review_signal": {
+    "k": 1,
+    "n": 25,
+    "rate": 0.04
+   }
+  },
+  "Myocarditis": {
+   "n": 25,
+   "top1_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "top1_opt": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "top3_pess": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "top3_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "alt_first_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "alt_first_opt": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "review_incl": {
+    "k": 16,
+    "n": 25,
+    "rate": 0.64
+   },
+   "review_size_mean": 1.64,
+   "review_random_expected": 0.5467,
+   "tie_rate": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top_distribution": {
+    "TIE2": 1,
+    "TIE3": 24
+   },
+   "max_unique_share": 0.0,
+   "used_codes_mean": 4.92,
+   "input_codes_mean": 12.16,
+   "pos_in_graph_mean": 3.92,
+   "gap_C_mean_A": 0.6,
+   "gap_C_mean_B": 0.6,
+   "A_review_signal": {
+    "k": 1,
+    "n": 25,
+    "rate": 0.04
+   },
+   "A_gap_flag": {
+    "k": 15,
+    "n": 25,
+    "rate": 0.6
+   },
+   "A_old_any_unexplained": {
+    "k": 15,
+    "n": 25,
+    "rate": 0.6
+   },
+   "B_review_signal": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "Tuberculosis": {
+   "n": 25,
+   "top1_pess": {
+    "k": 20,
+    "n": 25,
+    "rate": 0.8
+   },
+   "top1_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top3_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top3_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "alt_first_pess": {
+    "k": 21,
+    "n": 25,
+    "rate": 0.84
+   },
+   "alt_first_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "review_incl": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "review_size_mean": 2.6,
+   "review_random_expected": 0.8667,
+   "tie_rate": {
+    "k": 5,
+    "n": 25,
+    "rate": 0.2
+   },
+   "top_distribution": {
+    "TIE2": 5,
+    "UNIQUE:Tuberculosis": 20
+   },
+   "max_unique_share": 0.8,
+   "used_codes_mean": 3.52,
+   "input_codes_mean": 8.16,
+   "pos_in_graph_mean": 3.52,
+   "gap_C_mean_A": 0.0,
+   "gap_C_mean_B": 0.0,
+   "A_review_signal": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "A_gap_flag": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "A_old_any_unexplained": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "B_review_signal": {
+    "k": 20,
+    "n": 25,
+    "rate": 0.8
+   }
+  }
+ },
+ "NEW_SPEC": {
+  "ALL": {
+   "n": 100,
+   "top1_pess": {
+    "k": 20,
+    "n": 100,
+    "rate": 0.2
+   },
+   "top1_opt": {
+    "k": 74,
+    "n": 100,
+    "rate": 0.74
+   },
+   "top3_pess": {
+    "k": 90,
+    "n": 100,
+    "rate": 0.9
+   },
+   "top3_opt": {
+    "k": 91,
+    "n": 100,
+    "rate": 0.91
+   },
+   "alt_first_pess": {
+    "k": 27,
+    "n": 100,
+    "rate": 0.27
+   },
+   "alt_first_opt": {
+    "k": 79,
+    "n": 100,
+    "rate": 0.79
+   },
+   "review_incl": {
+    "k": 81,
+    "n": 100,
+    "rate": 0.81
+   },
+   "review_size_mean": 1.78,
+   "review_random_expected": 0.5933,
+   "tie_rate": {
+    "k": 64,
+    "n": 100,
+    "rate": 0.64
+   },
+   "top_distribution": {
+    "TIE2": 8,
+    "TIE3": 56,
+    "UNIQUE:Tuberculosis": 36
+   },
+   "max_unique_share": 0.36,
+   "used_codes_mean": 4.96,
+   "input_codes_mean": 12.14,
+   "pos_in_graph_mean": 4.71,
+   "gap_C_mean_A": 1.2,
+   "gap_C_mean_B": 1.2,
+   "A_review_signal": {
+    "k": 1,
+    "n": 100,
+    "rate": 0.01
+   },
+   "A_gap_flag": {
+    "k": 65,
+    "n": 100,
+    "rate": 0.65
+   },
+   "A_old_any_unexplained": {
+    "k": 65,
+    "n": 100,
+    "rate": 0.65
+   },
+   "B_review_signal": {
+    "k": 32,
+    "n": 100,
+    "rate": 0.32
+   }
+  },
+  "Pulmonary embolism": {
+   "n": 25,
+   "top1_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "top1_opt": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "top3_pess": {
+    "k": 16,
+    "n": 25,
+    "rate": 0.64
+   },
+   "top3_opt": {
+    "k": 16,
+    "n": 25,
+    "rate": 0.64
+   },
+   "alt_first_pess": {
+    "k": 5,
+    "n": 25,
+    "rate": 0.2
+   },
+   "alt_first_opt": {
+    "k": 5,
+    "n": 25,
+    "rate": 0.2
+   },
+   "review_incl": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "review_size_mean": 2.08,
+   "review_random_expected": 0.6933,
+   "tie_rate": {
+    "k": 9,
+    "n": 25,
+    "rate": 0.36
+   },
+   "top_distribution": {
+    "TIE3": 9,
+    "UNIQUE:Tuberculosis": 16
+   },
+   "max_unique_share": 0.64,
+   "used_codes_mean": 6.68,
+   "input_codes_mean": 16.08,
+   "pos_in_graph_mean": 6.68,
+   "gap_C_mean_A": 2.72,
+   "gap_C_mean_B": 2.72,
+   "A_review_signal": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "A_gap_flag": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "A_old_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "B_review_signal": {
+    "k": 11,
+    "n": 25,
+    "rate": 0.44
+   },
+   "pe_miss_top3_pess": 9,
+   "pe_miss_alt_first_pess": 20,
+   "pe_miss_review": 1
+  },
+  "Pericarditis": {
+   "n": 25,
+   "top1_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "top1_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top3_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top3_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "alt_first_pess": {
+    "k": 1,
+    "n": 25,
+    "rate": 0.04
+   },
+   "alt_first_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "review_incl": {
+    "k": 17,
+    "n": 25,
+    "rate": 0.68
+   },
+   "review_size_mean": 0.8,
+   "review_random_expected": 0.2667,
+   "tie_rate": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top_distribution": {
+    "TIE2": 2,
+    "TIE3": 23
+   },
+   "max_unique_share": 0.0,
+   "used_codes_mean": 4.72,
+   "input_codes_mean": 12.16,
+   "pos_in_graph_mean": 4.72,
+   "gap_C_mean_A": 1.48,
+   "gap_C_mean_B": 1.48,
+   "A_review_signal": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "A_gap_flag": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "A_old_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "B_review_signal": {
+    "k": 1,
+    "n": 25,
+    "rate": 0.04
+   }
+  },
+  "Myocarditis": {
+   "n": 25,
+   "top1_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "top1_opt": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "top3_pess": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "top3_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "alt_first_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "alt_first_opt": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "review_incl": {
+    "k": 16,
+    "n": 25,
+    "rate": 0.64
+   },
+   "review_size_mean": 1.64,
+   "review_random_expected": 0.5467,
+   "tie_rate": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top_distribution": {
+    "TIE2": 1,
+    "TIE3": 24
+   },
+   "max_unique_share": 0.0,
+   "used_codes_mean": 4.92,
+   "input_codes_mean": 12.16,
+   "pos_in_graph_mean": 3.92,
+   "gap_C_mean_A": 0.6,
+   "gap_C_mean_B": 0.6,
+   "A_review_signal": {
+    "k": 1,
+    "n": 25,
+    "rate": 0.04
+   },
+   "A_gap_flag": {
+    "k": 15,
+    "n": 25,
+    "rate": 0.6
+   },
+   "A_old_any_unexplained": {
+    "k": 15,
+    "n": 25,
+    "rate": 0.6
+   },
+   "B_review_signal": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "Tuberculosis": {
+   "n": 25,
+   "top1_pess": {
+    "k": 20,
+    "n": 25,
+    "rate": 0.8
+   },
+   "top1_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top3_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "top3_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "alt_first_pess": {
+    "k": 21,
+    "n": 25,
+    "rate": 0.84
+   },
+   "alt_first_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "review_incl": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "review_size_mean": 2.6,
+   "review_random_expected": 0.8667,
+   "tie_rate": {
+    "k": 5,
+    "n": 25,
+    "rate": 0.2
+   },
+   "top_distribution": {
+    "TIE2": 5,
+    "UNIQUE:Tuberculosis": 20
+   },
+   "max_unique_share": 0.8,
+   "used_codes_mean": 3.52,
+   "input_codes_mean": 8.16,
+   "pos_in_graph_mean": 3.52,
+   "gap_C_mean_A": 0.0,
+   "gap_C_mean_B": 0.0,
+   "A_review_signal": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "A_gap_flag": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "A_old_any_unexplained": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "B_review_signal": {
+    "k": 20,
+    "n": 25,
+    "rate": 0.8
+   }
+  }
+ },
+ "kb": {
+  "OLD": {
+   "Myocarditis": {
+    "dismech": 12,
+    "hsdn": 8
+   },
+   "Pericarditis": {
+    "dismech": 11,
+    "hsdn": 6
+   },
+   "Pulmonary embolism": {
+    "dismech": 12,
+    "hsdn": 17
+   },
+   "Tuberculosis": {
+    "dismech": 10,
+    "hsdn": 8
+   }
+  },
+  "NEW": {
+   "Myocarditis": {
+    "dismech": 12,
+    "hsdn": 8
+   },
+   "Pericarditis": {
+    "dismech": 11,
+    "hsdn": 6
+   },
+   "Pulmonary embolism": {
+    "dismech": 12,
+    "hsdn": 17
+   },
+   "Tuberculosis": {
+    "dismech": 10,
+    "hsdn": 8
+   }
+  }
+ },
+ "graph_counts": {
+  "OLD": {
+   "nodes_by_kind": {
+    "DISEASE": 4,
+    "FINDING": 97,
+    "RISK_FACTOR": 9,
+    "TEST": 11
+   },
+   "edges_by_rel_class": {
+    "DIFFERENTIAL_OF|DISMECH_AI_CURATED": 2,
+    "EVALUATES|DISMECH_AI_CURATED": 11,
+    "IS_A|HPO_ONTOLOGY": 24,
+    "RISK_FACTOR_FOR|DISMECH_QUOTE_IN_ABSTRACT": 9,
+    "SUGGESTS|DISMECH_NO_REF": 11,
+    "SUGGESTS|DISMECH_QUOTE_IN_ABSTRACT": 34,
+    "SUGGESTS|HSDN_LITERATURE_COOCCURRENCE": 39
+   }
+  },
+  "NEW": {
+   "nodes_by_kind": {
+    "DISEASE": 4,
+    "FINDING": 98,
+    "RISK_FACTOR": 9,
+    "TEST": 11
+   },
+   "edges_by_rel_class": {
+    "DIFFERENTIAL_OF|DISMECH_AI_CURATED": 2,
+    "EVALUATES|DISMECH_AI_CURATED": 11,
+    "IS_A|HPO_ONTOLOGY": 24,
+    "RISK_FACTOR_FOR|DISMECH_QUOTE_IN_ABSTRACT": 9,
+    "SUGGESTS|DISMECH_NO_REF": 11,
+    "SUGGESTS|DISMECH_QUOTE_IN_ABSTRACT": 34,
+    "SUGGESTS|HSDN_LITERATURE_COOCCURRENCE": 39
+   }
+  }
+ }
+}

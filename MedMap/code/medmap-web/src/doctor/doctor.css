@@ -1,0 +1,229 @@
+@import url('./fonts/wanted-sans/WantedSansVariable.css');
+
+/* Doctor Mode(#/doctor) 화면 디자인 — 포스터 흰 바탕 의사 시안 기준. .doctor 아래에만 적용(환자 화면 plain.css 불변).
+   밝은 회색 바탕 + 흰 카드 + 남색 글자 + 보라 강조 1색. 빨강은 쓰지 않는다(검증된 안전 경고가 아님). */
+.doctor {
+  --dr-canvas: #F3F4F7;
+  --dr-surface: #FFFFFF;
+  --dr-surface-2: #F7F8FA;
+  --dr-hairline: #E3E6EB;
+  --dr-hairline-strong: #CBD0D8;
+  --dr-ink: #141A2E;
+  --dr-ink-muted: #3E4659;
+  --dr-ink-subtle: #5E6678;
+  --dr-accent: #4B3FC9;
+  --dr-accent-strong: #3A2FA8;
+  --dr-accent-soft: #EFEDFC;
+  --dr-accent-line: #C9C3F3;
+  --dr-neutral-soft: #EDF0F4;
+  --dr-shadow: 0 1px 2px rgba(20, 26, 46, 0.04), 0 4px 16px rgba(20, 26, 46, 0.04);
+  --dr-r: 14px;
+  --dr-r-sm: 10px;
+  font-family: 'Wanted Sans Variable', 'Wanted Sans', system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--dr-ink);
+  font-variant-numeric: tabular-nums;
+}
+body:has(.doctor) { background: var(--dr-canvas, #F3F4F7); }
+.app.doctor { max-width: none; min-height: 100vh; padding: 0 32px 24px; background: #F3F4F7; }
+.doctor :focus-visible { outline: 3px solid var(--dr-accent); outline-offset: 2px; }
+.doctor h2, .doctor h3, .doctor h4 { letter-spacing: -0.01em; }
+.doctor .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.doctor .hint { color: var(--dr-ink-subtle); font-size: 14px; margin: 2px 0; }
+
+/* 상단 */
+.doctor .doctor-header {
+  position: sticky; top: 0; z-index: 2;
+  margin: 0 -32px 20px; padding: 14px 32px; min-height: 64px;
+  background: rgba(255, 255, 255, 0.94); border-bottom: 1px solid var(--dr-hairline);
+  backdrop-filter: saturate(1.2) blur(6px);
+}
+.doctor-header__brand { display: inline-flex; align-items: center; gap: 10px; }
+.doctor-header__logo {
+  display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 8px;
+  background: var(--dr-accent); color: #fff; font-weight: 800; font-size: 16px;
+}
+.doctor-header__logo::before { content: 'M';
+}
+.doctor .app-header__brand { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; }
+.doctor-header__mode { color: var(--dr-ink-subtle); font-size: 15px; padding-left: 10px; border-left: 1px solid var(--dr-hairline-strong); }
+.doctor-header__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.doctor-header__patient { font-size: 19px; font-weight: 700; }
+
+.doctor-chip {
+  display: inline-flex; align-items: center; margin: 0; padding: 4px 12px; border-radius: 999px;
+  border: 1px solid var(--dr-hairline-strong); background: var(--dr-surface); color: var(--dr-ink-muted);
+  font-size: 14px; font-weight: 600; white-space: nowrap;
+}
+.doctor-chip[data-state="PENDING"] { border-style: dashed; }
+.doctor-chip[data-state="ENTERED"] { border-color: var(--dr-accent-line); background: var(--dr-accent-soft); color: var(--dr-accent-strong); }
+.doctor-chip--accent { border-color: var(--dr-accent); background: var(--dr-accent); color: #fff; }
+
+/* 2단: 왼쪽 환자 증상(40) | 오른쪽 의사 판단(60) */
+.doctor .doctor-layout { display: grid; gap: 20px; }
+@media (min-width: 900px) {
+  .doctor .doctor-layout { grid-template-columns: minmax(0, 40fr) minmax(0, 60fr); align-items: start; }
+}
+.doctor .doctor-layout__main, .doctor .doctor-layout__side { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+/* 넓은 화면(발표·진료실 모니터): 오른쪽을 진단 입력(전체 폭) 아래 후보 | 핵심 질문 2열로 — 1080 높이 안에 질문이 보이게 */
+@media (min-width: 1280px) {
+  .doctor .doctor-layout { grid-template-columns: minmax(0, 37fr) minmax(0, 63fr); }
+  .doctor .doctor-layout__main { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
+  .doctor .doctor-layout__main > .doctor-wd { grid-column: 1 / -1; }
+}
+
+/* 카드 */
+.doctor .doctor-section {
+  margin: 0; padding: 24px 28px; background: var(--dr-surface);
+  border: 1px solid var(--dr-hairline); border-radius: var(--dr-r); box-shadow: var(--dr-shadow);
+}
+.doctor .doctor-section h2 { margin: 0; font-size: 22px; font-weight: 750; line-height: 1.3; }
+.doctor-section__head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 8px 16px; margin-bottom: 16px; }
+.doctor-section__head--stack { display: block; }
+.doctor-section__sub { margin: 4px 0 0; color: var(--dr-ink-subtle); font-size: 15px; }
+.doctor-section__eyebrow { color: var(--dr-ink-subtle); }
+.doctor .doctor-section .doctor-section__eyebrow { font-size: 16px; font-weight: 650; }
+.doctor-section__foot { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--dr-hairline); }
+
+/* 입력·버튼(Doctor 안에서만) */
+.doctor .field { gap: 6px; margin-bottom: 14px; }
+.doctor .field > span { font-size: 15px; font-weight: 600; color: var(--dr-ink-muted); }
+.doctor input, .doctor textarea {
+  padding: 12px 14px; border: 1px solid var(--dr-hairline-strong); border-radius: var(--dr-r-sm);
+  background: var(--dr-surface); color: var(--dr-ink); font-size: 17px;
+}
+.doctor input:focus-visible, .doctor textarea:focus-visible { outline: 3px solid var(--dr-accent-line); border-color: var(--dr-accent); outline-offset: 0; }
+.doctor .button {
+  min-height: 46px; padding: 10px 18px; border: 1px solid var(--dr-hairline-strong); border-radius: var(--dr-r-sm);
+  background: var(--dr-surface); color: var(--dr-ink); font-weight: 600; font-size: 16px;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.doctor .button:hover:not(:disabled) { border-color: var(--dr-accent); background: var(--dr-accent-soft); }
+.doctor .button--primary { background: var(--dr-accent); border-color: var(--dr-accent); color: #fff; }
+.doctor .button--primary:hover:not(:disabled) { background: var(--dr-accent-strong); border-color: var(--dr-accent-strong); }
+.doctor .question__more, .doctor .doctor-more {
+  font: inherit; font-size: 15px; font-weight: 600; margin-top: 10px; padding: 8px 2px; min-height: 40px;
+  border: 0; background: none; color: var(--dr-accent); cursor: pointer; text-decoration: underline; text-underline-offset: 3px;
+}
+.doctor .notice { border: 1px solid var(--dr-hairline-strong); border-left: 4px solid var(--dr-ink-muted); border-radius: var(--dr-r-sm); background: var(--dr-surface); }
+
+/* 왼쪽: 환자 증상 요약 */
+.doctor-summary__meta { margin: 0; font-size: 22px; font-weight: 750; }
+.doctor .doctor-summary__group { margin-top: 18px; }
+.doctor .doctor-summary__heading { margin: 0 0 8px; font-size: 15px; font-weight: 650; color: var(--dr-ink-subtle); }
+.doctor-symptoms { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+.doctor-symptom {
+  display: flex; flex-direction: column; gap: 4px; padding: 16px 18px; min-width: 0;
+  border: 1px solid var(--dr-accent-line); border-radius: var(--dr-r-sm); background: var(--dr-accent-soft);
+}
+.doctor-symptom__label { font-size: 26px; font-weight: 800; line-height: 1.2; color: var(--dr-ink); overflow-wrap: anywhere; }
+.doctor-symptom__note { font-size: 13px; color: var(--dr-ink-subtle); }
+.doctor-symptom--chief { border-color: var(--dr-accent); }
+.doctor-symptom--chief .doctor-symptom__note { color: var(--dr-accent-strong); font-weight: 650; }
+
+.doctor-tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.doctor-tag {
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px;
+  border: 1px solid var(--dr-hairline-strong); background: var(--dr-surface); font-size: 16px; font-weight: 600;
+}
+.doctor-tags--negative .doctor-tag { background: var(--dr-neutral-soft); border-color: #D4DAE3; color: var(--dr-ink-muted); }
+.doctor-tags--neutral .doctor-tag { background: var(--dr-surface-2); border-style: dashed; color: var(--dr-ink-muted); font-weight: 500; }
+.doctor-tag--value { background: var(--dr-surface-2); }
+.doctor-tag__key { color: var(--dr-ink-subtle); font-weight: 500; }
+
+/* 확인한 내용(질문 — 답) */
+.doctor-record { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--dr-hairline); }
+.doctor-record__head { margin-bottom: 6px; }
+.doctor .doctor-record__title { margin: 0; font-size: 17px; color: var(--dr-ink); }
+.doctor-record__body { position: relative; }
+.doctor-record[data-collapsed="true"] .doctor-record__body { max-height: 360px; overflow: hidden; }
+.doctor-record[data-collapsed="true"] .doctor-record__body::after {
+  content: ''; position: absolute; inset: auto 0 0; height: 56px; background: linear-gradient(rgba(255,255,255,0), #fff);
+}
+.doctor .doctor-record__group { margin: 12px 0 2px; font-size: 13px; }
+.doctor-record__list { list-style: none; margin: 0; padding: 0; }
+.doctor-record__row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; align-items: baseline;
+  padding: 10px 0; border-bottom: 1px solid var(--dr-hairline);
+}
+.doctor-record__row .summary__question { color: var(--dr-ink-muted); font-size: 16px; }
+.doctor-record__row .summary__answer { font-weight: 700; text-align: right; max-width: 22ch; }
+.doctor-aside { margin-top: 18px; padding: 14px 16px; border: 1px dashed var(--dr-hairline-strong); border-radius: var(--dr-r-sm); background: var(--dr-surface-2); }
+.doctor-aside .doctor-summary__group { margin-top: 10px; }
+
+/* 오른쪽: 의사가 현재 의심하는 진단 */
+.doctor-wd--set { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; }
+.doctor-wd__body { min-width: 0; flex: 1 1 320px; }
+.doctor .doctor-wd__value { margin: 6px 0 0; font-size: 30px; font-weight: 800; line-height: 1.25; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+.doctor .doctor-wd__value[data-empty="true"] { font-size: 22px; color: var(--dr-ink-subtle); font-weight: 650; }
+.doctor .doctor-wd > h2 { margin-bottom: 6px; }
+.doctor-wd__search { margin-top: 14px; }
+.doctor .doctor-wd__search input { padding: 16px 18px; font-size: 20px; border-width: 2px; }
+.doctor-wd__matches {
+  list-style: none; margin: -6px 0 14px; padding: 6px; display: flex; flex-direction: column; gap: 2px;
+  border: 1px solid var(--dr-hairline-strong); border-radius: var(--dr-r-sm); background: var(--dr-surface); box-shadow: var(--dr-shadow);
+}
+.doctor .doctor-wd__match { width: 100%; border-color: transparent; font-size: 18px; text-align: left; }
+.doctor-wd__actions { margin-top: 4px; }
+
+/* 함께 확인할 질환 후보: 순서만(번호·점수 없음) */
+.doctor .doctor-candidates__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
+.doctor-candidate {
+  position: relative; padding: 10px 4px 10px 22px; font-size: 18px; font-weight: 650; line-height: 1.35;
+  border-bottom: 1px solid var(--dr-hairline); overflow-wrap: anywhere;
+}
+.doctor-candidate::before {
+  content: ''; position: absolute; left: 4px; top: 50%; width: 8px; height: 8px; margin-top: -4px;
+  border-radius: 50%; background: var(--dr-hairline-strong);
+}
+.doctor-candidate:last-child { border-bottom: 0; }
+
+/* 다음으로 확인할 핵심 질문(강조) */
+.doctor .doctor-next { border: 2px solid var(--dr-accent); box-shadow: 0 6px 24px rgba(75, 63, 201, 0.10); }
+.doctor .doctor-next .question { margin: 0; }
+.doctor .doctor-next .question__text { margin: 0 0 14px; font-size: 26px; font-weight: 800; line-height: 1.3; letter-spacing: -0.02em; }
+.doctor .doctor-next .question__label { margin: 0 0 2px; font-size: 15px; color: var(--dr-ink-subtle); }
+.doctor .doctor-next .question__choices { display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; }
+.doctor .doctor-next .question__choices[data-many="true"] {
+  max-height: 300px; overflow-y: auto; padding: 4px; margin: 0 -4px; overscroll-behavior: contain;
+}
+.doctor .doctor-next .choice { min-height: 48px; padding: 10px 20px; border-radius: 999px; font-size: 17px; text-align: center; }
+.doctor .doctor-next .choice[aria-pressed="true"] { background: var(--dr-accent); border-color: var(--dr-accent); color: #fff; }
+.doctor .doctor-next .question__search { margin-bottom: 12px; max-width: 420px; }
+.doctor .doctor-next .question__more { margin-right: 16px; }
+.doctor .doctor-next .question__next { margin-top: 14px; min-width: 140px; text-align: center; }
+.doctor .doctor-next .question__selected { margin-top: 8px; }
+.doctor .doctor-patient-said {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
+  margin: 0 0 16px; padding: 12px 16px; border: 1px solid var(--dr-accent-line); border-left: 4px solid var(--dr-accent);
+  border-radius: var(--dr-r-sm); background: var(--dr-accent-soft);
+}
+.doctor .doctor-patient-said p { margin: 0; font-weight: 650; }
+.doctor .doctor-next [role="status"] { font-size: 17px; }
+
+/* 하단: 향후 확장(축약) */
+.doctor-footer { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 16px; margin-top: 24px; }
+.doctor-coming { flex: 1 1 480px; min-width: 0; }
+.doctor .doctor-coming__title { margin: 0 0 6px; font-size: 14px; font-weight: 650; color: var(--dr-ink-subtle); }
+.doctor-coming__list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 14px; color: var(--dr-ink-subtle); }
+.doctor-coming__list li::before { content: '○ '; }
+.doctor .doctor-restart { min-height: 42px; font-size: 15px; }
+.doctor .doctor-notice { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--dr-hairline); color: var(--dr-ink-subtle); font-size: 13px; }
+
+/* 불러오기 화면 */
+.doctor-load { display: grid; gap: 20px; }
+@media (min-width: 900px) { .doctor-load { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); align-items: start; } }
+
+/* 좁은 화면 */
+@media (max-width: 599px) {
+  .app.doctor { padding: 0 16px 20px; }
+  .doctor .doctor-header { position: static; margin: 0 -16px 16px; padding: 10px 16px; }
+  .doctor-header__mode { display: none; }
+  .doctor .doctor-section { padding: 18px 16px; }
+  .doctor-symptom__label { font-size: 22px; }
+  .doctor .doctor-next .question__text { font-size: 22px; }
+  .doctor .doctor-wd__value { font-size: 24px; }
+  .doctor-record__row { grid-template-columns: 1fr; }
+  .doctor-record__row .summary__answer { text-align: left; max-width: none; }
+}

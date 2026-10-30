@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { COPY } from '../copy.js'
 import { evidenceShortLabel, questionText } from '../../terminology/labels.js'
 
@@ -5,12 +6,12 @@ function Items({ heading, items }) {
   if (!items?.length) return null
   return (
     <div className="doctor-summary__group">
-      <h3 className="doctor-summary__heading">{heading}</h3>
-      <ul className="list doctor-summary__list">
+      <h4 className="doctor-summary__heading doctor-record__group">{heading}</h4>
+      <ul className="doctor-record__list">
         {items.map((item) => (
-          <li key={item.question_id}>
+          <li key={item.question_id} className="doctor-record__row">
             <span className="summary__question">{item.question_ko}</span>
-            {' — '}
+            <span className="visually-hidden">{' — '}</span>
             <span className="summary__answer">{item.answer_ko}</span>
           </li>
         ))}
@@ -24,8 +25,8 @@ function Labels({ heading, testId, labels }) {
   return (
     <div className="doctor-summary__group" data-testid={testId}>
       <h4 className="doctor-summary__heading">{heading}</h4>
-      <ul className="list doctor-summary__list">
-        {labels.map(({ id, label }) => <li key={id}>{label}</li>)}
+      <ul className="doctor-tags doctor-tags--neutral">
+        {labels.map(({ id, label }) => <li key={id} className="doctor-tag">{label}</li>)}
       </ul>
     </div>
   )
@@ -42,30 +43,95 @@ function unappliedLabels(cache, summary, status) {
     .filter((entry) => entry.label)
 }
 
+// 위쪽 한눈 요약: PatientState 에 반영된 답을 짧은 표시명 태그로 다시 보여준다(표시만, 아래 "확인한 내용"과 같은 데이터).
+// 짧은 표시명이 없는 항목은 태그로 만들지 않는다(아래 기록에는 그대로 남는다).
+function shortTags(items, exclude) {
+  return (items ?? [])
+    .filter((item) => item.question_id !== exclude)
+    .map((item) => ({ id: item.question_id, label: evidenceShortLabel(item.question_id), answer: item.answer_ko }))
+    .filter((item) => item.label)
+}
+
+const RECORD_COLLAPSED = 6
+
 // 환자 요약은 blind 대상이 아니다(환자가 확인한 사실). 진단 후보는 여기 없다.
 export default function PatientSummarySection({ summary, cache = [] }) {
+  const [recordOpen, setRecordOpen] = useState(false)
   const chief = summary.chief_complaint
   const positive = unappliedLabels(cache, summary, 'POSITIVE')
   const negative = unappliedLabels(cache, summary, 'NEGATIVE')
+  const positiveTags = shortTags(summary.confirmed_positive, chief?.question_id)
+  const negativeTags = shortTags(summary.confirmed_negative)
+  const valueTags = shortTags(summary.confirmed_values)
+  const recordCount = ['confirmed_positive', 'confirmed_negative', 'confirmed_values', 'not_applicable']
+    .reduce((n, key) => n + (summary[key]?.length ?? 0), 0)
+  const collapsible = recordCount > RECORD_COLLAPSED
   return (
-    <section className="sheet doctor-section" aria-labelledby="doctor-summary-title">
-      <h2 id="doctor-summary-title">{COPY.summaryTitle}</h2>
-      <p className="summary__meta">{`${summary.age}세 · ${COPY.sex[summary.sex] ?? summary.sex}`}</p>
-      {chief && (
-        <div className="doctor-summary__group">
-          <h3 className="doctor-summary__heading">{COPY.chiefComplaint}</h3>
-          <p>{chief.label_ko ?? chief.question_ko}</p>
+    <section className="sheet doctor-section doctor-summary" aria-labelledby="doctor-summary-title">
+      <div className="doctor-section__head">
+        <h2 id="doctor-summary-title">{COPY.summaryTitle}</h2>
+        <p className="summary__meta doctor-summary__meta">{`${summary.age}세 · ${COPY.sex[summary.sex] ?? summary.sex}`}</p>
+      </div>
+      {(chief || positiveTags.length > 0) && (
+        <div className="doctor-summary__group doctor-summary__main">
+          <h3 className="doctor-summary__heading">{COPY.summaryMain}</h3>
+          <ul className="doctor-symptoms">
+            {chief && (
+              <li className="doctor-symptom doctor-symptom--chief">
+                <span className="doctor-symptom__label">{chief.label_ko ?? chief.question_ko}</span>
+                <span className="doctor-symptom__note">{COPY.chiefComplaint}</span>
+              </li>
+            )}
+            {positiveTags.map((tag) => (
+              <li key={tag.id} className="doctor-symptom">
+                <span className="doctor-symptom__label">{tag.label}</span>
+                <span className="doctor-symptom__note">{COPY.unappliedPositive}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
-      <div data-testid="doctor-findings-applied">
-        <h3 className="doctor-summary__heading">{COPY.appliedTitle}</h3>
-        <Items heading={COPY.positive} items={summary.confirmed_positive} />
-        <Items heading={COPY.negative} items={summary.confirmed_negative} />
-        <Items heading={COPY.values} items={summary.confirmed_values} />
-        <Items heading={COPY.notApplicable} items={summary.not_applicable} />
+      {valueTags.length > 0 && (
+        <div className="doctor-summary__group">
+          <h3 className="doctor-summary__heading">{COPY.summaryValueTags}</h3>
+          <ul className="doctor-tags">
+            {valueTags.map((tag) => (
+              <li key={tag.id} className="doctor-tag doctor-tag--value">
+                <span className="doctor-tag__key">{tag.label}</span> {tag.answer}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {negativeTags.length > 0 && (
+        <div className="doctor-summary__group">
+          <h3 className="doctor-summary__heading">{COPY.summaryNegativeTags}</h3>
+          <ul className="doctor-tags doctor-tags--negative">
+            {negativeTags.map((tag) => <li key={tag.id} className="doctor-tag">{`${tag.label} 없음`}</li>)}
+          </ul>
+        </div>
+      )}
+      <div className="doctor-record" data-testid="doctor-findings-applied"
+        data-collapsed={collapsible && !recordOpen ? 'true' : 'false'}>
+        <div className="doctor-record__head">
+          <h3 className="doctor-summary__heading doctor-record__title">{COPY.recordTitle}</h3>
+          <p className="hint">{COPY.appliedTitle}</p>
+        </div>
+        <div className="doctor-record__body" id="doctor-record-body">
+          <Items heading={COPY.positive} items={summary.confirmed_positive} />
+          <Items heading={COPY.negative} items={summary.confirmed_negative} />
+          <Items heading={COPY.values} items={summary.confirmed_values} />
+          <Items heading={COPY.notApplicable} items={summary.not_applicable} />
+        </div>
+        {collapsible && (
+          <button type="button" className="question__more doctor-more" aria-expanded={recordOpen}
+            aria-controls="doctor-record-body" onClick={() => setRecordOpen((v) => !v)}>
+            {recordOpen ? COPY.recordLess : COPY.recordMore(recordCount)}
+          </button>
+        )}
       </div>
       {(positive.length > 0 || negative.length > 0) && (
-        <div data-testid="doctor-findings-unapplied">
+        <div className="doctor-aside" data-testid="doctor-findings-unapplied">
           <h3 className="doctor-summary__heading">{COPY.unappliedTitle}</h3>
           <p className="hint">{COPY.unappliedNote}</p>
           <Labels heading={COPY.unappliedPositive} testId="unapplied-positive" labels={positive} />
@@ -73,7 +139,7 @@ export default function PatientSummarySection({ summary, cache = [] }) {
         </div>
       )}
       {summary.unknown?.length > 0 && (
-        <div data-testid="doctor-findings-unknown">
+        <div className="doctor-aside" data-testid="doctor-findings-unknown">
           <h3 className="doctor-summary__heading">{COPY.unknownTitle}</h3>
           <Items heading={COPY.unknown} items={summary.unknown} />
         </div>

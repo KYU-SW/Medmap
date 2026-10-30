@@ -182,7 +182,11 @@ test('coming-soon slots render without fake results and the prototype notice is 
   const { api } = fakeApi()
   render(<DoctorApp api={api} />)
   await screen.findByText(COPY.comingSoonTitle)
-  expect(screen.getAllByText(COPY.comingSoonReason)).toHaveLength(Object.keys(COPY.comingSoon).length)
+  // 2026-10-08 디자인: "향후 확장" 한 줄 목록으로 축약 — 항목마다 이름, 사유 문구는 한 번, 누를 수 있는 컨트롤 없음
+  for (const label of Object.values(COPY.comingSoon)) expect(screen.getByText(label)).toBeInTheDocument()
+  expect(screen.getAllByText(COPY.comingSoonReason)).toHaveLength(1)
+  const coming = screen.getByRole('heading', { name: COPY.comingSoonTitle }).closest('section')
+  expect(coming.querySelectorAll('button, input, a')).toHaveLength(0)
   expect(screen.getByText(COPY.prototypeNotice)).toBeInTheDocument()
 })
 

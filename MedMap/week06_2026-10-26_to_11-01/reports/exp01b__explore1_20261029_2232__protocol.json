@@ -1,0 +1,157 @@
+{
+ "created": "2026-10-29 22:32:09",
+ "type": "EXPLORATORY(사전등록 심사 없음, 사용자 지시)",
+ "code_sha256": {
+  "graph_engine.py": "0673561c3e6cc1c6cd4246df4fe3e36e7a180195e9e2da118156f906eb0c0b9a",
+  "knowledge_real_kg.py": "166ca978b3b69d079e6fe27238a64303df5443618b05023e1609ef7d7f6e9845",
+  "ddxplus_adapter.py": "ad38eeca0485f1e2c6eff7389c26cf653523bfc772fe508ed5c5ba1f211f5991",
+  "explore1.py": "801519399adfe6eba2859bc006dcf987244efd76f7e4a17ea9f068f6999b9964",
+  "report_ko.py": "1bdd8243446e34be54f9d105647d7ededf9f1b409e4b257b1ed1641004d57236"
+ },
+ "mapping_summary": {
+  "total": 223,
+  "symptoms": 110,
+  "antecedents": 113,
+  "EXACT": 36,
+  "EXACT_BROADER": 16,
+  "EXACT_COMPOSITE": 1,
+  "REVIEW": 47,
+  "NO_CONCEPT": 16,
+  "NO_KB_RELATION": 8,
+  "NOT_ASSESSED": 99,
+  "used_in_inference": 53,
+  "negative_answer_usable": 35
+ },
+ "mapping_sha256": "baaae7314ee0477899afc839785d06f4b0e7fa56713506d09718ac9708053d68",
+ "kg_counts": {
+  "nodes_by_kind": {
+   "DISEASE": 4,
+   "FINDING": 97,
+   "RISK_FACTOR": 9,
+   "TEST": 11
+  },
+  "edges_by_rel_class": {
+   "DIFFERENTIAL_OF|DISMECH_AI_CURATED": 2,
+   "EVALUATES|DISMECH_AI_CURATED": 11,
+   "IS_A|HPO_ONTOLOGY": 24,
+   "RISK_FACTOR_FOR|DISMECH_QUOTE_IN_ABSTRACT": 9,
+   "SUGGESTS|DISMECH_NO_REF": 11,
+   "SUGGESTS|DISMECH_QUOTE_IN_ABSTRACT": 34,
+   "SUGGESTS|HSDN_LITERATURE_COOCCURRENCE": 39
+  }
+ },
+ "kg_sources": {
+  "hp.obo": {
+   "path": "/home/<user>/medmap/data/hpo/hp.obo",
+   "sha256": "93dace952fcb3ec4728818857f6ba76bc2d5312f4d83266519b8694b8e798f22",
+   "data_version": "hp/releases/2026-09-01",
+   "license": "HPO 라이선스(hpo.jax.org 이용 조건, 출처 표기)"
+  },
+  "phenotype.hpoa": {
+   "path": "/home/<user>/medmap/data/hpo/phenotype.hpoa",
+   "sha256": "e89aa39c8f97bf5a52c5d160f9250a603681d630ade8ec2679d84ac5aece1f72",
+   "version_line": "#version: 2026-09-02"
+  },
+  "dismech": {
+   "path": "/home/<user>/medmap/data/dismech/raw/dismech/kb/disorders",
+   "commit": "eaa5fe99bd0289e737d65646456d928b1f973282",
+   "license": "BSD-3-Clause"
+  },
+  "umls_mrconso_hpo": {
+   "path": "/home/<user>/medmap/data/umls/mrconso_eng.parquet",
+   "use": "HSDN 증상 CUI → HP 코드(SAB=HPO, SUPPRESS=N, 유일할 때만)",
+   "license": "UMLS 라이선스 — 로컬 사용만, 문자열 비출력·비배포"
+  },
+  "hsdn": {
+   "path": "/home/<user>/medmap/data/hsdn/processed/hsdn_edges_mesh.parquet",
+   "sha256": "20121675bca663dbd35733de5efcf611a0b3647489086c8f95a95ba10f8b4985",
+   "min_cooccurrence": 10,
+   "license": "RESEARCH_USE_CHECK_REQUIRED(data/hsdn/README)"
+  }
+ },
+ "selection": {
+  "rule": "PATHOLOGY ∈ 4질환, holdout=False, 개발 사례(dev_cases_20261029_1456, 매핑 수정에 사용)와 row 겹침 제외,\n  sha256(\"EXP01B_EXPLORE1|\"+row_index) 오름차순 질환별 앞 25.",
+  "n_per_disease": 25,
+  "candidates": {
+   "Pulmonary embolism": 22052,
+   "Pericarditis": 18236,
+   "Myocarditis": 8843,
+   "Tuberculosis": 12962
+  },
+  "dev_rows_excluded": [
+   91145,
+   185305,
+   194181,
+   201242,
+   268135,
+   778094,
+   838400,
+   1007063
+  ],
+  "split_check": {
+   "rows": 1025602,
+   "holdout": 204663
+  }
+ },
+ "conditions": {
+  "A": "WD = 정답",
+  "B": "WD = OTHERS[정답][k % 3]",
+  "OTHERS": {
+   "Pulmonary embolism": [
+    "Pericarditis",
+    "Myocarditis",
+    "Tuberculosis"
+   ],
+   "Pericarditis": [
+    "Pulmonary embolism",
+    "Myocarditis",
+    "Tuberculosis"
+   ],
+   "Myocarditis": [
+    "Pulmonary embolism",
+    "Pericarditis",
+    "Tuberculosis"
+   ],
+   "Tuberculosis": [
+    "Pulmonary embolism",
+    "Pericarditis",
+    "Myocarditis"
+   ]
+  }
+ },
+ "metrics": {
+  "A_input_codes": "환자 EVIDENCES 의 고유 DDXPlus 코드 수(병력 포함)",
+  "A_exact_codes": "그중 매핑 상태 EXACT·EXACT_COMPOSITE(흉통은 E_53 동반 시) 코드 수",
+  "A_used_codes": "그래프 HP 노드 기록을 만든 코드 수(EXACT·EXACT_BROADER·흉통 복합, 값 규칙 적용 후 양성/명시 음성)",
+  "A_unmapped_ratio": "1 − used/input",
+  "A_gap_true": "환자 그래프 내 양성 근거 중 정답 질환으로 가는 SUGGESTS 경로(자신·IS_A 상위 포함)가 없는 비율(양성 0 이면 NA)",
+  "B_wd_support_paths": "WD SUPPORTS 경로 수(모든 경로에 출처 문자열 있음 → '출처 있는 경로')",
+  "B_wd_groups": "WD 독립 지지 묶음 수 · 임상 소견 묶음 수",
+  "B_unexplained": "설명 부족 분류 근거 수(4분류 합)",
+  "B_undetermined": "WD 판단 불가 근거 수",
+  "C_recover": "조건 B: 정답 질환이 WD 추가 검토 후보(review_candidates)에 있음",
+  "C_rank": "정답 질환 순위(비관적: 같은 정렬 키 동점은 모두 앞에 둠, 낙관적 병기). 정렬 graded=(−임상 묶음, −전체 묶음), support=(−전체 묶음)",
+  "C_pe_miss": "정답 PE 인 조건 B 에서 PE 가 추가 검토 후보에 없음 / 비관적 top3 밖",
+  "D_warn": "조건 A: 설명 부족 ≥1(전체·EXPLAINED_BY_OTHER 만) 비율, 추가 검토 후보 ≥1 비율",
+  "D_withhold": "조건 A·B: WD 지지 묶음 0(근거 부족으로 지지 판단 불가) 비율 · 충돌 지식 NO_KNOWLEDGE 비율",
+  "E_variants": "지식원 변형 ['ALL', 'CLINICAL_ONLY', 'HSDN_ONLY'] 별 C·D 지표, graded·support 정렬"
+ },
+ "variants": {
+  "ALL": [],
+  "CLINICAL_ONLY": [
+   "HSDN_LITERATURE_COOCCURRENCE"
+  ],
+  "HSDN_ONLY": [
+   "DISMECH_QUOTE_IN_ABSTRACT",
+   "DISMECH_PMID_QUOTE_UNVERIFIED",
+   "DISMECH_NO_REF"
+  ]
+ },
+ "primary_ranking": "graded(비관적 동점)",
+ "limitations": [
+  "DDXPlus = 합성 환자, 정답·WD 일치 ≠ 의학적 적절성",
+  "설명 부족의 의학적 정확성은 이 자료로 검증 불가",
+  "반박 관계·AND/OR 진단 규칙 없음",
+  "4질환 폐쇄 집합(정답이 항상 4개 중 하나)"
+ ]
+}

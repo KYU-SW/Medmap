@@ -13,11 +13,16 @@ export default function NextInformationSection({ info, patientSaid, onAnswer, pe
   }, [info])
   if (info.status === 'LOCKED') return null
   return (
-    <section className="sheet doctor-section" aria-labelledby="doctor-next-title" data-testid="doctor-next">
-      <h2 id="doctor-next-title">{COPY.nextTitle}</h2>
-      {info.max_questions != null && info.questions_used != null && (
-        <p className="hint" data-testid="doctor-next-counter">{COPY.nextCounter(info.questions_used, info.max_questions)}</p>
-      )}
+    <section className="sheet doctor-section doctor-next" aria-labelledby="doctor-next-title" data-testid="doctor-next">
+      <div className="doctor-section__head">
+        <div>
+          <h2 id="doctor-next-title">{COPY.nextTitle}</h2>
+          <p className="doctor-section__sub">{COPY.nextSub}</p>
+        </div>
+        {info.max_questions != null && info.questions_used != null && (
+          <p className="doctor-chip doctor-chip--accent" data-testid="doctor-next-counter">{COPY.nextCounter(info.questions_used, info.max_questions)}</p>
+        )}
+      </div>
       {info.status === 'QUESTION' ? (
         <>
           {patientSaid && (
@@ -29,7 +34,7 @@ export default function NextInformationSection({ info, patientSaid, onAnswer, pe
               </button>
             </div>
           )}
-          <QuestionPanel question={info.question} onAnswer={onAnswer} pending={pending} />
+          <QuestionPanel question={info.question} onAnswer={onAnswer} pending={pending} searchable />
           {pending && <p className="hint" role="status">{COPY.answering}</p>}
         </>
       ) : (

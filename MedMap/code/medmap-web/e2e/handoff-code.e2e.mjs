@@ -6,7 +6,7 @@ import { createRequire } from 'node:module'
 import { writeFileSync } from 'node:fs'
 
 const require = createRequire(import.meta.url)
-const { chromium } = require(process.env.PLAYWRIGHT_PATH ?? 'playwright')
+const { chromium } = require(process.env.PLAYWRIGHT_PATH ?? '/home/<user>/.npm/_npx/9833c18b2d85bc59/node_modules/playwright')
 const BASE = process.env.MEDMAP_WEB ?? 'http://127.0.0.1:8014'
 const OUT = process.env.OUT_DIR ?? '../logs'
 const HIT_TEXT = '다리가 붓고 숨이 차고 기침이 나고 가슴이 아프고 피를 토했어요'
@@ -57,7 +57,7 @@ try {
   await d.getByText('번호를 다시 확인해 주세요', { exact: false }).waitFor()
   await d.getByLabel('환자 번호').fill(shown)
   await d.getByRole('button', { name: '번호로 불러오기' }).click()
-  await d.getByText('환자 요약').waitFor()
+  await d.getByText('환자 증상 요약').waitFor()
   check(await d.getByTestId('doctor-candidates').count() === 0, 'candidates before WD (blind broken)')
   await d.getByRole('button', { name: '건너뛰기' }).click()
   const cands = d.getByTestId('doctor-candidates')
@@ -80,7 +80,7 @@ try {
   await o.getByLabel('환자 번호').fill(shown)
   await o.getByRole('button', { name: '번호로 불러오기' }).click()
   await o.getByText('번호를 다시 확인해 주세요', { exact: false }).waitFor()
-  check(await o.getByText('환자 요약').count() === 0, 'reused code opened a session')
+  check(await o.getByText('환자 증상 요약').count() === 0, 'reused code opened a session')
 
   check(result.phone_english.length === 0 && result.pc_english.length === 0, `English on screen ${result.phone_english} ${result.pc_english}`)
   check(!result.phone_overflow && !result.pc_overflow, 'horizontal overflow')

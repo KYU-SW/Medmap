@@ -1,0 +1,111 @@
+{
+ "per_disease": {
+  "심낭염": {
+   "relations": 3,
+   "applied": 3,
+   "by_type": {
+    "DIAGNOSTIC_CRITERION": 1,
+    "DISCRIMINATING_FEATURE": 2
+   },
+   "observable_any_leaf": 1,
+   "observable_all_leaves": 1,
+   "needs_test_or_exam": 2
+  },
+  "심근염": {
+   "relations": 2,
+   "applied": 2,
+   "by_type": {
+    "DIAGNOSTIC_CRITERION": 1,
+    "DIAGNOSTIC_SUPPORT": 1
+   },
+   "observable_any_leaf": 0,
+   "observable_all_leaves": 0,
+   "needs_test_or_exam": 2
+  },
+  "폐색전증": {
+   "relations": 2,
+   "applied": 1,
+   "by_type": {
+    "CONFIRMATORY_TEST": 1,
+    "EXCLUSION_RULE": 1
+   },
+   "observable_any_leaf": 0,
+   "observable_all_leaves": 0,
+   "needs_test_or_exam": 2
+  },
+  "결핵": {
+   "relations": 3,
+   "applied": 3,
+   "by_type": {
+    "SCREENING_CRITERION": 2,
+    "CONFIRMATORY_TEST": 1
+   },
+   "observable_any_leaf": 1,
+   "observable_all_leaves": 0,
+   "needs_test_or_exam": 1
+  }
+ },
+ "relations_total": 10,
+ "applied": 9,
+ "not_applied": [
+  "PE-DDIMER-EXCLUDE"
+ ],
+ "common_findings_dismech_ge3": {
+  "HP:0002094": {
+   "label": "Dyspnea",
+   "diseases": [
+    "결핵",
+    "심근염",
+    "심낭염",
+    "폐색전증"
+   ],
+   "ddx_observable": true
+  },
+  "HP:0100749": {
+   "label": "Chest pain",
+   "diseases": [
+    "결핵",
+    "심근염",
+    "심낭염"
+   ],
+   "ddx_observable": true
+  }
+ },
+ "mapping_summary": {
+  "total": 223,
+  "symptoms": 110,
+  "antecedents": 113,
+  "EXACT": 37,
+  "EXACT_BROADER": 16,
+  "EXACT_COMPOSITE": 5,
+  "REVIEW": 45,
+  "NO_CONCEPT": 14,
+  "NO_KB_RELATION": 7,
+  "NOT_ASSESSED": 99,
+  "used_in_inference": 58,
+  "negative_answer_usable": 38
+ },
+ "graph_counts": {
+  "nodes_by_kind": {
+   "DISEASE": 4,
+   "FINDING": 106,
+   "HISTORY": 1,
+   "RISK_FACTOR": 9,
+   "RULE": 4,
+   "TEST": 11
+  },
+  "edges_by_rel_class": {
+   "DIFFERENTIAL_OF|DISMECH_AI_CURATED": 2,
+   "EVALUATES|DISMECH_AI_CURATED": 11,
+   "IS_A|HPO_ONTOLOGY": 24,
+   "RISK_FACTOR_FOR|DISMECH_QUOTE_IN_ABSTRACT": 9,
+   "SUGGESTS|DISMECH_NO_REF": 11,
+   "SUGGESTS|DISMECH_QUOTE_IN_ABSTRACT": 34,
+   "SUGGESTS|HSDN_LITERATURE_COOCCURRENCE": 39
+  }
+ },
+ "ddx_codes_feeding_new_nodes": [
+  "E_2",
+  "E_33"
+ ]
+}

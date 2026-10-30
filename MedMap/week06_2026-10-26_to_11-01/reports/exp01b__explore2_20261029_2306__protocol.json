@@ -1,0 +1,50 @@
+{
+ "created": "2026-10-29 23:06:48",
+ "type": "EXPLORATORY",
+ "code_sha256": {
+  "graph_engine.py": "0673561c3e6cc1c6cd4246df4fe3e36e7a180195e9e2da118156f906eb0c0b9a",
+  "knowledge_real_kg.py": "166ca978b3b69d079e6fe27238a64303df5443618b05023e1609ef7d7f6e9845",
+  "ddxplus_adapter.py": "f5bfd2519ecd777512ad7928f5c0ac1373eeb6f59ae35a6400302f34e67270e8",
+  "discrimination.py": "2885fe5a1eb56e8d4da21990876c3e7a82c54525f3b1fdf227ec91e33d7fbae3",
+  "report_ko.py": "52fa03117697d9948f1a4fc50ddd343810623a80224a4b416a45d87afad325bb",
+  "explore2.py": "db9df7746ce4d081084d9738547cdb1a69ca8630479c3aa697608276c79bf389",
+  "OLD/compare_runs.py": "07baee1a5f1501c352730ac218f4de75fa7e722cdfdbaca6f2aaf7b3154b9cda",
+  "OLD/ddxplus_adapter.py": "ad38eeca0485f1e2c6eff7389c26cf653523bfc772fe508ed5c5ba1f211f5991",
+  "OLD/demo.py": "bf1ec64ffcfde5cb46fe4f6282ff03cbe6ffe674a8110f559eba0b599de418f3",
+  "OLD/demo_real.py": "56486fa7fd6280979fb1f229aca30dbe855fde372b9c7427aa5a5c34f540957f",
+  "OLD/explore1.py": "801519399adfe6eba2859bc006dcf987244efd76f7e4a17ea9f068f6999b9964",
+  "OLD/explore1_posthoc.py": "89d520c2791f35fd6bf3ea308aad76d9112bf409e697b431ac198499730db669",
+  "OLD/extract_dev_cases.py": "e1e652a35ea195404b63ce15452ab81938ff6017ea146399c976e712991a081e",
+  "OLD/graph_engine.py": "0673561c3e6cc1c6cd4246df4fe3e36e7a180195e9e2da118156f906eb0c0b9a",
+  "OLD/knowledge_real_hsdn.py": "44bf96945cd1b0831cd803f68f1ec9de49ce5501b435ed1402ed418e06cd5e12",
+  "OLD/knowledge_real_kg.py": "166ca978b3b69d079e6fe27238a64303df5443618b05023e1609ef7d7f6e9845",
+  "OLD/knowledge_toy.py": "8e15d79ed9442ee1cff6d377663362291ae729812dff23c9e4af7182f4222313",
+  "OLD/report_ko.py": "1bdd8243446e34be54f9d105647d7ededf9f1b409e4b257b1ed1641004d57236"
+ },
+ "arms": [
+  "OLD_GRADED",
+  "NEW_GRADED",
+  "NEW_SPEC"
+ ],
+ "metrics": {
+  "top1/top3": "정답 질환 순위(4질환 중) ≤ 1 / ≤ 3, 비관적·낙관적 동점",
+  "alt_first": "조건 B: WD 를 뺀 3질환 중 정답이 1위(비관적·낙관적) — 정렬 기반 대안 후보",
+  "review_incl": "조건 B: 정답 ∈ 엔진 추가 검토 후보(review_candidates, 정렬과 무관한 규칙) + 크기 맞춘 무작위 기대(s/3)",
+  "pe_miss": "정답 PE·조건 B: (a) 비관적 top3 밖 (b) WD 제외 1위 아님(비관적) (c) 추가 검토 후보에 없음",
+  "tie_rate": "환자별 최고 정렬 키를 2개 이상 질환이 공유하는 비율",
+  "concentration": "환자별 단독 1위 질환 분포 · 최대 점유율(100명 중)",
+  "linked": "그래프 HP 기록을 만든 코드 수(사용 코드)·그래프 내 양성 근거 수 평균",
+  "gap": "WD 비교에서 C(관계 없음 + 하위 개념만) 근거 수 평균(조건 A·B)",
+  "A_warn": "조건 A: 재검토 신호(B 다른 질환만 연결 ≥1 또는 검증 반박 ≥1) 비율 · 지식 부족 표시(C ≥1) 비율 · 이전 정의 '설명 부족 ≥1' 비율",
+  "kb_richness": "질환별 DisMech·HSDN SUGGESTS 간선 수와 단독 1위 횟수(지식원 풍부 질환 유리 여부 확인)"
+ },
+ "excluded_rows": 108,
+ "candidates": {
+  "Pulmonary embolism": 22027,
+  "Pericarditis": 18211,
+  "Myocarditis": 8818,
+  "Tuberculosis": 12937
+ },
+ "spec_formula": "discrimination.py 머리 주석",
+ "doc": "EXP-01b 판별력 개선 1차 평가(EXPLORATORY — 임상 성능 아님, RG 사전등록 없음: 사용자 지시).\n\n새 사례(이전 explore1 100명·개발 8명 제외) 100명 = 4질환 × 25, sha256(\"EXP01B_EXPLORE2|\"+row) 앞 25.\n조건 A: WD = 정답 / B: WD = OTHERS[정답][k % 3](explore1 과 같은 규칙). 정답은 평가만.\n세 팔(같은 사례·같은 입력):\n  OLD_GRADED : explore1 시점 모듈(~/medmap-worktrees/main-ai/archive/exp01b_explore1_modules, 별도 프로세스) + graded 정렬\n  NEW_GRADED : 37회차 매핑 + graded 정렬(−임상 묶음, −전체 묶음)         → OLD 대비 = 매핑 효과\n  NEW_SPEC   : 37회차 매핑 + spec 정렬(discrimination.spec_key)           → NEW_GRADED 대비 = 정렬 효과\n순위: 같은 정렬 키 동점은 비관적(정답 뒤로)·낙관적 둘 다. 무작위 기준: top1 25%·top3 75%·WD 제외 1위 33.3%.\n지표는 protocol.json(METRICS)에 고정. 결과를 보고 점수식·매핑을 바꾸거나 재평가하지 않는다.\n실행: ~/ai_env/bin/python -B explore2.py select --out outputs/explore2_<시각>\n      ~/ai_env/bin/python -B explore2.py run --dir outputs/explore2_<시각>\n"
+}

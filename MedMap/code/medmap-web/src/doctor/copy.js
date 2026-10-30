@@ -13,7 +13,13 @@ export const COPY = {
   loading: '상담 정보를 불러오는 중입니다.',
   restart: '다른 상담 불러오기',
 
-  summaryTitle: '환자 요약',
+  summaryTitle: '환자 증상 요약',
+  summaryMain: '주요 증상',
+  summaryNegativeTags: '없다고 확인된 증상',
+  summaryValueTags: '확인된 정보',
+  recordTitle: '확인한 내용',
+  recordMore: (n) => `전체 보기 (${n}개)`,
+  recordLess: '접기',
   sex: { M: '남성', F: '여성' },
   chiefComplaint: '주 증상',
   positive: '있다고 확인한 증상',
@@ -30,8 +36,8 @@ export const COPY = {
   unknownTitle: '확인되지 않은 정보',
   answeredCount: (n) => `답한 질문 ${n}개`,
 
-  wdTitle: '현재 생각하는 진단',
-  wdHint: '현재 생각하는 진단을 먼저 입력하거나 건너뛰면, 독립 모델의 감별 후보와 추가로 확인할 정보가 열립니다.',
+  wdTitle: '의사가 현재 의심하는 진단',
+  wdHint: '의심하는 진단을 먼저 입력하거나 건너뛰면 질환 후보와 다음 핵심 질문이 열립니다.',
   wdSearchLabel: '진단 검색(모델이 아는 49개 질환)',
   wdNoMatch: '일치하는 질환이 없습니다. 아래에 직접 입력할 수 있습니다.',
   wdFreeLabel: '목록에 없는 진단 직접 입력',
@@ -41,13 +47,15 @@ export const COPY = {
   wdSkipped: '입력하지 않음',
   wdOutOfScope: '모델 지원 범위 밖이라 비교하지 않습니다.',
 
-  candidatesTitle: '현재 정보에서 독립 모델이 고려한 감별 후보',
+  candidatesTitle: '함께 확인할 질환 후보',
+  candidatesSub: '의사의 판단과 별도로, 현재 증상만으로 계산한 모델 후보',
   candidatesNotExcluded: '목록에 없는 질환이 배제됐다는 뜻이 아닙니다.',
-  candidatesNoCompare: '현재 생각하는 진단과의 일치 여부는 판단하지 않습니다.',
+  candidatesNoCompare: '의사가 입력한 진단과의 일치 여부는 판단하지 않습니다.',
   more: '더 보기',
   less: '접기',
 
-  nextTitle: '후보를 구분하기 위해 추가로 확인할 정보',
+  nextTitle: '다음으로 확인할 핵심 질문',
+  nextSub: '질환 후보를 가장 잘 구분하는 질문입니다.',
   nextCounter: (used, max) => `질문 ${used} / ${max}`,
   patientSaid: '환자가 이미 말한 내용',
   confirmPatient: '이 답으로 확인',
@@ -57,7 +65,8 @@ export const COPY = {
   unsupported: '이 상담 형태에서는 추가 질문을 고르지 않습니다.',
   answering: '답을 반영하는 중입니다.',
 
-  comingSoonTitle: '준비 중인 기능',
+  comingSoonTitle: '향후 확장',
+  futureStt: '실시간 진료 대화 받아쓰기 · 향후 연동',
   comingSoonReason: '아직 지원하지 않습니다(근거 데이터 준비 중).',
   comingSoon: {
     timeline: '증상 타임라인',
@@ -67,6 +76,8 @@ export const COPY = {
     visit: '진료 정보',
     recovery: '회복 경과',
   },
+
+  header: { PENDING: '진단 입력 전', ENTERED: '진단 입력됨', SKIPPED: '진단 입력 건너뜀' },
 
   errorTitle: '요청을 처리하지 못했습니다.',
   retry: '다시 시도',

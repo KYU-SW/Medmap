@@ -1,0 +1,77 @@
+{
+ "type": "POST_HOC(결과 확인 후 추가)",
+ "baseline": {
+  "ALL": {
+   "review_size_mean": 1.97,
+   "review_size_dist": {
+    "3": 47,
+    "1": 16,
+    "2": 20,
+    "0": 17
+   },
+   "observed_truth_in_review": 0.82,
+   "size_matched_random_expected": 0.6567,
+   "random_top1": 0.25,
+   "random_top3": 0.75
+  },
+  "CLINICAL_ONLY": {
+   "review_size_mean": 1.96,
+   "review_size_dist": {
+    "3": 45,
+    "1": 15,
+    "2": 23,
+    "0": 17
+   },
+   "observed_truth_in_review": 0.83,
+   "size_matched_random_expected": 0.6533,
+   "random_top1": 0.25,
+   "random_top3": 0.75
+  },
+  "HSDN_ONLY": {
+   "review_size_mean": 2.1,
+   "review_size_dist": {
+    "2": 30,
+    "3": 40,
+    "1": 30
+   },
+   "observed_truth_in_review": 0.87,
+   "size_matched_random_expected": 0.7,
+   "random_top1": 0.25,
+   "random_top3": 0.75
+  }
+ },
+ "top1": {
+  "ALL": {
+   "Myocarditis|TIE3:Myocarditis+Pericarditis+Tuberculosis": 25,
+   "Pericarditis|TIE3:Myocarditis+Pericarditis+Tuberculosis": 25,
+   "Pulmonary embolism|TIE3:Myocarditis+Pericarditis+Tuberculosis": 7,
+   "Pulmonary embolism|UNIQUE:Tuberculosis": 18,
+   "Tuberculosis|TIE2:Pulmonary embolism+Tuberculosis": 2,
+   "Tuberculosis|UNIQUE:Tuberculosis": 23
+  },
+  "CLINICAL_ONLY": {
+   "Myocarditis|TIE3:Myocarditis+Pericarditis+Tuberculosis": 25,
+   "Pericarditis|TIE3:Myocarditis+Pericarditis+Tuberculosis": 25,
+   "Pulmonary embolism|TIE3:Myocarditis+Pericarditis+Tuberculosis": 7,
+   "Pulmonary embolism|UNIQUE:Tuberculosis": 18,
+   "Tuberculosis|TIE2:Pericarditis+Tuberculosis": 1,
+   "Tuberculosis|TIE2:Pulmonary embolism+Tuberculosis": 2,
+   "Tuberculosis|UNIQUE:Tuberculosis": 22
+  },
+  "HSDN_ONLY": {
+   "Myocarditis|TIE3:Myocarditis+Pericarditis+Pulmonary embolism": 25,
+   "Pericarditis|TIE3:Myocarditis+Pericarditis+Pulmonary embolism": 25,
+   "Pulmonary embolism|TIE3:Myocarditis+Pericarditis+Pulmonary embolism": 7,
+   "Pulmonary embolism|UNIQUE:Pulmonary embolism": 18,
+   "Tuberculosis|TIE2:Pulmonary embolism+Tuberculosis": 7,
+   "Tuberculosis|UNIQUE:Pulmonary embolism": 16,
+   "Tuberculosis|UNIQUE:Tuberculosis": 2
+  }
+ },
+ "pe_miss_contributing_mapping": {
+  "E_151": 6,
+  "E_220": 4
+ },
+ "pe_miss_with_mapping_loss": 7,
+ "pe_miss_n": 8
+}
