@@ -8,7 +8,7 @@ import { createRequire } from 'node:module'
 import { writeFileSync } from 'node:fs'
 
 const require = createRequire(import.meta.url)
-const { chromium } = require(process.env.PLAYWRIGHT_PATH ?? 'playwright')
+const { chromium } = require(process.env.PLAYWRIGHT_PATH ?? '/home/<user>/.npm/_npx/9833c18b2d85bc59/node_modules/playwright')
 const BASE = process.env.MEDMAP_WEB ?? 'http://127.0.0.1:8010'
 const OUT = process.env.OUT_DIR ?? '../logs'
 const RUNS = Number(process.env.RUNS ?? 20)
@@ -60,7 +60,7 @@ async function runOnce(width) {
   await page.getByRole('button', { name: '메스꺼움·구역질', exact: true }).click()
   await page.getByTestId('handoff-done').waitFor()
   await page.getByRole('link', { name: '의사 화면 열기' }).click()
-  await page.getByText('환자 요약').waitFor()
+  await page.getByText('환자 증상 요약').waitFor()
   await page.getByRole('button', { name: '건너뛰기' }).click()
   await page.getByTestId('doctor-candidates').waitFor()
   await page.evaluate(() => { window.__medmapPerf?.reset(); performance.clearResourceTimings() })

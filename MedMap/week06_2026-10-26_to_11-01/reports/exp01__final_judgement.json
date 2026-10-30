@@ -1,0 +1,323 @@
+{
+ "composite": {
+  "H1": 9.999000099990002e-05,
+  "H2a": 0.0010998900109989002,
+  "H2b": 9.999000099990002e-05,
+  "H3a": 1.0,
+  "H3b": 1.0,
+  "H3c": 1.0
+ },
+ "holm": {
+  "H1": {
+   "p": 9.999000099990002e-05,
+   "p_adj": 0.0005999400059994001,
+   "rank": 1,
+   "alpha_star": 0.004166666666666667,
+   "rejected": true
+  },
+  "H2b": {
+   "p": 9.999000099990002e-05,
+   "p_adj": 0.0005999400059994001,
+   "rank": 1,
+   "alpha_star": 0.004166666666666667,
+   "rejected": true
+  },
+  "H2a": {
+   "p": 0.0010998900109989002,
+   "p_adj": 0.004399560043995601,
+   "rank": 3,
+   "alpha_star": 0.00625,
+   "rejected": true
+  },
+  "H3a": {
+   "p": 1.0,
+   "p_adj": 1.0,
+   "rank": 4,
+   "alpha_star": 0.008333333333333333,
+   "rejected": false
+  },
+  "H3b": {
+   "p": 1.0,
+   "p_adj": 1.0,
+   "rank": 4,
+   "alpha_star": 0.008333333333333333,
+   "rejected": false
+  },
+  "H3c": {
+   "p": 1.0,
+   "p_adj": 1.0,
+   "rank": 4,
+   "alpha_star": 0.008333333333333333,
+   "rejected": false
+  }
+ },
+ "H1": "SAFETY_HOLD",
+ "stages": {
+  "PB_REL": {
+   "label": "NOT_ELIGIBLE",
+   "safety_state": "SAFETY_HOLD",
+   "tau_fail": false,
+   "conditional_label": "SAFETY_HOLD"
+  },
+  "PB": {
+   "label": "NOT_ELIGIBLE",
+   "safety_state": "PASS",
+   "tau_fail": false,
+   "conditional_label": "ADOPTED"
+  },
+  "PC": {
+   "label": "NOT_ELIGIBLE",
+   "safety_state": "SAFETY_FAIL",
+   "tau_fail": false,
+   "conditional_label": "SAFETY_FAIL"
+  }
+ },
+ "prespecified_model": "C",
+ "descriptive": {
+  "H1:top5": {
+   "point": 0.12137608485073825,
+   "one_sided_limit_at_alpha_star": 0.11814721681359648,
+   "alpha_star": 0.004166666666666667,
+   "ci95_two_sided": [
+    0.11900824829016765,
+    0.12378305920569843
+   ],
+   "empty_resamples": 0,
+   "p_star_ge_mid": 1.0,
+   "one_sided_lower_ge_mid": true
+  },
+  "H1:severe_miss": {
+   "point": -0.1501759324419423,
+   "one_sided_limit_at_alpha_star": -0.1442567315795938,
+   "alpha_star": 0.004166666666666667,
+   "ci95_two_sided": [
+    -0.15458434245122094,
+    -0.14578157091868132
+   ],
+   "empty_resamples": 0
+  },
+  "H2a:top5_ni": {
+   "point": 0.00587066915843959,
+   "one_sided_limit_at_alpha_star": 0.004275804037063513,
+   "alpha_star": 0.00625,
+   "ci95_two_sided": [
+    0.004598690840777575,
+    0.007142892087316424
+   ],
+   "empty_resamples": 0
+  },
+  "H2a:severe_miss": {
+   "point": 0.0019000703729767782,
+   "one_sided_limit_at_alpha_star": 0.0044365817787623465,
+   "alpha_star": 0.00625,
+   "ci95_two_sided": [
+    -6.949446366764749e-05,
+    0.003920464027654294
+   ],
+   "empty_resamples": 0
+  },
+  "H2b:efficiency": {
+   "point": 0.601617777875533,
+   "one_sided_limit_at_alpha_star": 0.6047242402366416,
+   "alpha_star": 0.004166666666666667,
+   "ci95_two_sided": [
+    0.5994213546024036,
+    0.6038830432001242
+   ],
+   "empty_resamples": 0
+  },
+  "H2b:severe_miss": {
+   "point": 0.0,
+   "one_sided_limit_at_alpha_star": 0.0,
+   "alpha_star": 0.004166666666666667,
+   "ci95_two_sided": [
+    0.0,
+    0.0
+   ],
+   "empty_resamples": 0
+  },
+  "H2b:wrong_term": {
+   "point": 0.0,
+   "one_sided_limit_at_alpha_star": 0.0,
+   "alpha_star": 0.004166666666666667,
+   "ci95_two_sided": [
+    0.0,
+    0.0
+   ],
+   "empty_resamples": 0
+  },
+  "H3a:severe_miss": {
+   "point": 0.043947923997185084,
+   "one_sided_limit_at_alpha_star": 0.04805822696275574,
+   "alpha_star": 0.008333333333333333,
+   "ci95_two_sided": [
+    0.0406158597404775,
+    0.047434732095094446
+   ],
+   "empty_resamples": 0
+  },
+  "H3a:wrong_term": {
+   "point": 0.0,
+   "one_sided_limit_at_alpha_star": 0.0,
+   "alpha_star": 0.008333333333333333,
+   "ci95_two_sided": [
+    0.0,
+    0.0
+   ],
+   "empty_resamples": 0
+  },
+  "H3b:severe_miss@42": {
+   "point": 0.03824771287825475,
+   "one_sided_limit_at_alpha_star": 0.04184085158233677,
+   "alpha_star": 0.008333333333333333,
+   "ci95_two_sided": [
+    0.03539879115477455,
+    0.041127226624275585
+   ],
+   "empty_resamples": 0
+  },
+  "H3b:wrong_term@42": {
+   "point": 0.0,
+   "one_sided_limit_at_alpha_star": 0.0,
+   "alpha_star": 0.008333333333333333,
+   "ci95_two_sided": [
+    0.0,
+    0.0
+   ],
+   "empty_resamples": 0
+  },
+  "H3b:severe_miss@43": {
+   "point": 0.03757916959887403,
+   "one_sided_limit_at_alpha_star": 0.04114129978335101,
+   "alpha_star": 0.008333333333333333,
+   "ci95_two_sided": [
+    0.034705900234519,
+    0.04051984079519783
+   ],
+   "empty_resamples": 0
+  },
+  "H3b:wrong_term@43": {
+   "point": 0.0,
+   "one_sided_limit_at_alpha_star": 0.0,
+   "alpha_star": 0.008333333333333333,
+   "ci95_two_sided": [
+    0.0,
+    0.0
+   ],
+   "empty_resamples": 0
+  },
+  "H3b:severe_miss@44": {
+   "point": 0.037192118226600984,
+   "one_sided_limit_at_alpha_star": 0.040688311808345465,
+   "alpha_star": 0.008333333333333333,
+   "ci95_two_sided": [
+    0.03436978583756699,
+    0.04009120813027275
+   ],
+   "empty_resamples": 0
+  },
+  "H3b:wrong_term@44": {
+   "point": 0.0,
+   "one_sided_limit_at_alpha_star": 0.0,
+   "alpha_star": 0.008333333333333333,
+   "ci95_two_sided": [
+    0.0,
+    0.0
+   ],
+   "empty_resamples": 0
+  },
+  "H3c:top5_ni": {
+   "point": -0.03641771767952018,
+   "one_sided_limit_at_alpha_star": -0.038635607565335676,
+   "alpha_star": 0.008333333333333333,
+   "ci95_two_sided": [
+    -0.0382180562214417,
+    -0.03460759468900132
+   ],
+   "empty_resamples": 0
+  },
+  "H3c:severe_miss": {
+   "point": 0.043947923997185084,
+   "one_sided_limit_at_alpha_star": 0.04805822696275574,
+   "alpha_star": 0.008333333333333333,
+   "ci95_two_sided": [
+    0.0406158597404775,
+    0.047434732095094446
+   ],
+   "empty_resamples": 0
+  },
+  "H3c:wrong_term": {
+   "point": 0.0,
+   "one_sided_limit_at_alpha_star": 0.0,
+   "alpha_star": 0.008333333333333333,
+   "ci95_two_sided": [
+    0.0,
+    0.0
+   ],
+   "empty_resamples": 0
+  }
+ },
+ "components": {
+  "H1": {
+   "top5": 9.999000099990002e-05,
+   "severe_miss": 9.999000099990002e-05
+  },
+  "H2a": {
+   "top5_ni": 9.999000099990002e-05,
+   "severe_miss": 0.0010998900109989002
+  },
+  "H2b": {
+   "severe_miss": 9.999000099990002e-05,
+   "wrong_term": 9.999000099990002e-05,
+   "efficiency": 9.999000099990002e-05
+  },
+  "H3a": {
+   "severe_miss": 1.0,
+   "wrong_term": 9.999000099990002e-05
+  },
+  "H3b": {
+   "severe_miss@42": 1.0,
+   "wrong_term@42": 9.999000099990002e-05,
+   "severe_miss@43": 1.0,
+   "wrong_term@43": 9.999000099990002e-05,
+   "severe_miss@44": 1.0,
+   "wrong_term@44": 9.999000099990002e-05
+  },
+  "H3c": {
+   "top5_ni": 1.0,
+   "severe_miss": 1.0,
+   "wrong_term": 9.999000099990002e-05
+  }
+ },
+ "effect": {
+  "H1_delta": 0.12137608485073824,
+  "H1_mid_met": true
+ },
+ "disease_fired": {
+  "PA": [
+   "Pulmonary embolism"
+  ],
+  "PB_REL": [
+   "Acute pulmonary edema",
+   "Croup",
+   "PSVT",
+   "Spontaneous pneumothorax"
+  ],
+  "PB": [],
+  "PC": [
+   "Anaphylaxis",
+   "Boerhaave",
+   "Croup",
+   "Epiglottitis",
+   "Myocarditis",
+   "PSVT",
+   "Possible NSTEMI / STEMI",
+   "Pulmonary embolism",
+   "Spontaneous pneumothorax",
+   "Stable angina",
+   "Unstable angina"
+  ]
+ },
+ "tau": 0.0001,
+ "tau_status": "SELECTED"
+}

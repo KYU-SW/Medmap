@@ -9,7 +9,7 @@ import { createRequire } from 'node:module'
 import { writeFileSync } from 'node:fs'
 
 const require = createRequire(import.meta.url)
-const { chromium } = require(process.env.PLAYWRIGHT_PATH ?? 'playwright')
+const { chromium } = require(process.env.PLAYWRIGHT_PATH ?? '/home/<user>/.npm/_npx/9833c18b2d85bc59/node_modules/playwright')
 const BASE = process.env.MEDMAP_WEB ?? 'http://127.0.0.1:8010'
 const OUT = process.env.OUT_DIR ?? '../logs'
 const HIT_TEXT = '다리가 붓고 숨이 차고 기침이 나고 가슴이 아프고 피를 토했어요'
@@ -85,7 +85,7 @@ async function scenarioHit(page, log) {
   check(log.filter((r) => r.url.endsWith('/v1/session/answer')).length === 0, 'handoff auto-applied an answer')
 
   await page.getByRole('link', { name: '의사 화면 열기' }).click()
-  await page.getByText('환자 요약').waitFor()
+  await page.getByText('환자 증상 요약').waitFor()
   const firstView = log.find((r) => r.url.endsWith('/v1/doctor/view'))
   check(firstView && JSON.parse(firstView.response).independent_assessment.status === 'LOCKED', 'first view not LOCKED')
   check(await page.getByTestId('doctor-candidates').count() === 0, 'candidates visible before WD')

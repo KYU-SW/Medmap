@@ -19,10 +19,14 @@ export default function WorkingDiagnosisSection({ wd, diagnoses, onChoose, pendi
   if (!editing && wd.state !== 'PENDING') {
     const value = wd.value
     return (
-      <section className="sheet doctor-section" aria-labelledby="doctor-wd-title">
-        <h2 id="doctor-wd-title">{COPY.wdTitle}</h2>
-        <p className="doctor-wd__value" data-testid="doctor-wd-value">{value ? value.label : COPY.wdSkipped}</p>
-        {value?.kind === 'OUT_OF_SCOPE' && <p className="hint">{COPY.wdOutOfScope}</p>}
+      <section className="sheet doctor-section doctor-wd doctor-wd--set" aria-labelledby="doctor-wd-title">
+        <div className="doctor-wd__body">
+          <h2 id="doctor-wd-title" className="doctor-section__eyebrow">{COPY.wdTitle}</h2>
+          <p className="doctor-wd__value" data-testid="doctor-wd-value" data-empty={value ? 'false' : 'true'}>
+            {value ? value.label : COPY.wdSkipped}
+          </p>
+          {value?.kind === 'OUT_OF_SCOPE' && <p className="hint">{COPY.wdOutOfScope}</p>}
+        </div>
         <button type="button" className="button" onClick={() => setEditing(true)} disabled={pending}>{COPY.wdChange}</button>
       </section>
     )
@@ -33,18 +37,18 @@ export default function WorkingDiagnosisSection({ wd, diagnoses, onChoose, pendi
   const freeLabel = free.trim()
 
   return (
-    <section className="sheet doctor-section" aria-labelledby="doctor-wd-title">
+    <section className="sheet doctor-section doctor-wd" aria-labelledby="doctor-wd-title">
       <h2 id="doctor-wd-title">{COPY.wdTitle}</h2>
       {wd.state === 'PENDING' && <p className="hint">{COPY.wdHint}</p>}
-      <label className="field">
+      <label className="field doctor-wd__search">
         <span>{COPY.wdSearchLabel}</span>
         <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} disabled={pending} />
       </label>
       {matches.length > 0 && (
-        <ul className="list doctor-wd__matches">
+        <ul className="doctor-wd__matches">
           {matches.map((d) => (
             <li key={d.code}>
-              <button type="button" className="button" disabled={pending}
+              <button type="button" className="button doctor-wd__match" disabled={pending}
                 onClick={() => choose({ state: 'ENTERED', value: { kind: 'CATALOG', code: d.code } })}>
                 {d.label_ko}
               </button>
@@ -53,11 +57,11 @@ export default function WorkingDiagnosisSection({ wd, diagnoses, onChoose, pendi
         </ul>
       )}
       {needle && matches.length === 0 && <p className="hint">{COPY.wdNoMatch}</p>}
-      <label className="field">
+      <label className="field doctor-wd__free">
         <span>{COPY.wdFreeLabel}</span>
         <input type="text" maxLength={80} value={free} onChange={(e) => setFree(e.target.value)} disabled={pending} />
       </label>
-      <div className="row">
+      <div className="row doctor-wd__actions">
         <button type="button" className="button" disabled={pending || !freeLabel}
           onClick={() => choose({ state: 'ENTERED', value: { kind: 'OUT_OF_SCOPE', label: freeLabel } })}>
           {COPY.wdFreeSubmit}

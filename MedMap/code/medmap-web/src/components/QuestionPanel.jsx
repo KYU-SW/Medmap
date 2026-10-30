@@ -4,19 +4,26 @@ import { evidenceShortLabel } from '../terminology/labels.js'
 
 const VISIBLE_CHOICE_LIMIT = 12
 
-export default function QuestionPanel({ question, onAnswer, pending = false }) {
+// searchable(Doctor 화면만): 보기가 많을 때 표시 목록을 글자로 좁히는 검색칸. 표시만 좁히고 답 의미·선택값은 그대로다.
+export default function QuestionPanel({ question, onAnswer, pending = false, searchable = false }) {
   const [selected, setSelected] = useState([])
   const [expanded, setExpanded] = useState(false)
+  const [filter, setFilter] = useState('')
 
   useEffect(() => {
     setSelected([])
     setExpanded(false)
+    setFilter('')
   }, [question.question_id])
 
   const isMulti = question.answer_type === 'MULTI_CHOICE'
   // 질문 전문이 아직 영문 fallback 이면 한국어 짧은 표시명을 제목으로 함께 보여준다(backlog QUESTION_KO_COMPLETION).
   const shortLabel = question.is_fallback ? evidenceShortLabel(question.question_id) : null
-  const choices = expanded ? question.choices : question.choices.slice(0, VISIBLE_CHOICE_LIMIT)
+  const canSearch = searchable && question.choices.length > VISIBLE_CHOICE_LIMIT
+  const needle = canSearch ? filter.trim() : ''
+  const choices = needle
+    ? question.choices.filter((choice) => choice.value === null || String(choice.label).includes(needle))
+    : expanded ? question.choices : question.choices.slice(0, VISIBLE_CHOICE_LIMIT)
 
   function answerFromChoice(choice) {
     if (choice.value === null) return { kind: 'UNKNOWN', value: null }
@@ -44,7 +51,13 @@ export default function QuestionPanel({ question, onAnswer, pending = false }) {
         <p className="question__text">{question.question_ko}</p>
         {question.is_fallback && <p className="question__fallback">영문 원문</p>}
       </div>
-      <div className="question__choices">
+      {canSearch && (
+        <label className="field question__search">
+          <span>{`보기 검색 (${question.choices.length}개 중)`}</span>
+          <input type="search" value={filter} onChange={(e) => setFilter(e.target.value)} disabled={pending} />
+        </label>
+      )}
+      <div className="question__choices" data-many={canSearch ? 'true' : undefined}>
         {choices.map((choice) => (
           <ChoiceButton
             key={String(choice.value)}
@@ -55,7 +68,11 @@ export default function QuestionPanel({ question, onAnswer, pending = false }) {
           />
         ))}
       </div>
-      {!expanded && question.choices.length > VISIBLE_CHOICE_LIMIT && (
+      {needle && choices.every((choice) => choice.value === null) && <p className="hint">일치하는 보기가 없습니다.</p>}
+      {isMulti && selected.length > 0 && canSearch && (
+        <p className="hint question__selected" data-testid="question-selected">{`고른 보기 ${selected.length}개`}</p>
+      )}
+      {!needle && !expanded && question.choices.length > VISIBLE_CHOICE_LIMIT && (
         <button type="button" className="question__more" onClick={() => setExpanded(true)}>
           전체 보기 ({question.choices.length}개)
         </button>

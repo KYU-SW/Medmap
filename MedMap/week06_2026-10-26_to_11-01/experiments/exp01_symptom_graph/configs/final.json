@@ -1,0 +1,51 @@
+{
+ "experiment_id": "EXP-MAI-001",
+ "budgets": [
+  3,
+  5,
+  10
+ ],
+ "seeds": [
+  42,
+  43,
+  44
+ ],
+ "taus": [
+  0.01,
+  0.001,
+  0.0001
+ ],
+ "leak_check": true,
+ "noise": {
+  "budget": 5,
+  "models": [
+   "C",
+   "PA"
+  ],
+  "modes": [
+   [
+    "flip",
+    0.05
+   ],
+   [
+    "flip",
+    0.1
+   ],
+   [
+    "uncertain",
+    0.05
+   ],
+   [
+    "uncertain",
+    0.1
+   ]
+  ]
+ },
+ "split": "FINAL",
+ "tau_selected": 0.0001,
+ "tau_selection_run": "/home/<user>/medmap-worktrees/main-ai/exp/main_ai/exp01_symptom_graph/outputs/select_20261028_1803",
+ "parallel": {
+  "workers": 6,
+  "chunk_cases": 50
+ }
+}

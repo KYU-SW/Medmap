@@ -1,0 +1,224 @@
+evidence,is_antecedent,data_type,status,used_in_inference,negative_answer_usable,value_rule,hp_ids,candidate_hp_ids,reason,question
+E_0,True,B,NO_KB_RELATION,False,False,,,,"최근 바이러스 감염 — 심근염 아형(viral myocarditis)·심낭염 원인 서술, 위험인자 관계 없음",Have you recently had a viral infection?
+E_1,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Are you currently being treated or have you recently been treated with an oral antibiotic for an ear infection?
+E_2,True,B,NO_KB_RELATION,False,False,,,,"HIV — 심낭염 결핵형 서술에만 언급, 결핵 항목에 위험인자 관계 없음",Are you infected with the human immunodeficiency virus (HIV)?
+E_3,True,B,NO_KB_RELATION,False,False,,,,"심낭염 과거력 — 재발형 서술만, 구조화 관계 없음",Have you ever had a pericarditis?
+E_4,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you or any member of your family ever had croup?
+E_5,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you ever had fluid in your lungs?
+E_6,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have chronic pancreatitis?
+E_7,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have a poor diet?
+E_8,True,B,REVIEW,False,False,,,,후보 RF:Pericarditis:1: 투석 중 vs 'End-stage renal disease and uraemia' — 투석 ≠ 요독증,Do you currently undergo dialysis?
+E_9,False,B,REVIEW,False,False,,,HP:0002716;HP:0025804,"OR 복합 질문 — 단일 HPO 개념(['HP:0002716', 'HP:0025804'])이 모든 경우를 포함하는지 미확인 (Swollen OR painful lymph nodes)",Do you have swollen or painful lymph nodes?
+E_10,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Are you currently taking or have you recently taken anti-inflammatory drugs (NSAIDs)?
+E_11,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you breastfed one of your children for more than 9 months?
+E_12,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have a known severe food allergy?
+E_13,False,B,REVIEW,False,False,,,HP:0003676,수식어 질문(Crescendo pattern: worse over 2 weeks with less effort) — STEP20 PARTIAL,Do you find that your symptoms have worsened over the last 2 weeks and that progressively less effort is required to cause the symptoms?
+E_14,False,B,EXACT_BROADER,True,False,,HP:0100749,HP:0100749,STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): Chest pain; 'at rest' lost,Do you have chest pain even at rest?
+E_15,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you started or taken any antipsychotic medication within the last 7 days?
+E_16,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you feel anxious?
+E_17,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Are you of Asian descent?
+E_18,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have cystic fibrosis?
+E_19,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you been diagnosed with hyperthyroidism?
+E_20,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have Rheumatoid Arthritis?
+E_21,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you ever had a spontaneous pneumothorax?
+E_22,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have a known issue with one of your heart valves?
+E_23,False,B,EXACT,True,True,,HP:0010535,HP:0010535,STEP20 EXACT: Sleep apnea (phenotype),Do you ever temporarily stop breathing while you’re asleep?
+E_24,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you ever had a diagnosis of anemia?
+E_25,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have any of your family members been diagnosed with cluster headaches?
+E_26,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have any family members who have been diagnosed with anemia?
+E_27,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you ever had a sexually transmitted infection?
+E_28,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Are there any members of your family who have been diagnosed myasthenia gravis?
+E_29,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do any members of your immediate family have a psychiatric illness?
+E_30,False,B,REVIEW,False,False,,,HP:0003270;HP:6000319,여러 개념 중 하나만 있어도 '예'인 질문 — 어느 개념인지 모름 (Abdominal distension / bloating),Do you feel your abdomen is bloated or distended (swollen due to pressure from inside)?
+E_31,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have severe Chronic Obstructive Pulmonary Disease (COPD)?
+E_32,False,B,EXACT,True,True,,HP:0004396,HP:0004396,STEP20 EXACT: Poor appetite,Do you have a decrease in appetite?
+E_33,False,B,NO_CONCEPT,False,False,,,,STEP20 NO_MATCH (MODIFIER): only generic 'Ameliorated by' HP:0025254,Do you have pain that improves when you lean forward?
+E_34,True,B,NO_KB_RELATION,False,False,,,,"활동성 암 — DisMech 폐색전증·심낭염 설명 문장에만 언급, 구조화 관계 없음",Do you have an active cancer?
+E_35,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you regularly drink coffee or tea?
+E_37,True,B,NO_KB_RELATION,False,False,,,,전이암 — 위와 같음,Do you have metastatic cancer?
+E_38,False,B,REVIEW,False,False,,,HP:0040264,OR 복합 질문 — 단일 HPO 개념(['HP:0040264'])이 모든 경우를 포함하는지 미확인 (Jaw pain OR jaw weakness),Do you have pain or weakness in your jaw?
+E_39,False,B,REVIEW,False,False,,,HP:0001289,OR 복합 질문 — 단일 HPO 개념(['HP:0001289'])이 모든 경우를 포함하는지 미확인 (Confusion OR disorientation),Have you felt confused or disorientated lately?
+E_40,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you been in contact with someone who has had pertussis (whoooping cough)?
+E_41,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you been in contact with a person with similar symptoms in the past 2 weeks?
+E_42,False,B,NO_CONCEPT,False,False,,,,"STEP20 NOT_APPLICABLE (EXPOSURE): exposure, not a phenotype",Have you been in contact with or ate something that you have an allergy to?
+E_43,False,B,EXACT_BROADER,True,False,,HP:0001250,HP:0001250,STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): Seizure; subtype (tonic-clonic/absence) lost,Have you lost consciousness associated with violent and sustained muscle contractions or had an absence episode?
+E_44,True,B,NO_KB_RELATION,False,False,,,,"코르티코스테로이드 — 심낭염 재발 기전 서술, 위험인자 관계 없음",Do you take corticosteroids?
+E_45,False,B,EXACT,True,True,,HP:0002105,HP:0002105,STEP20 EXACT: coughing up blood,Have you been coughing up blood?
+E_46,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you had 2 or more asthma attacks in the past year?
+E_47,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you suffer from Crohn’s disease or ulcerative colitis (UC)?
+E_48,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you live with 4 or more people?
+E_49,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you attend or work in a daycare?
+E_50,False,B,EXACT,True,True,,HP:0000975,HP:0000975,STEP20 EXACT: Hyperhidrosis,Have you had significantly increased sweating?
+E_51,False,B,REVIEW,False,False,,,,35회차 재판정: 설사 OR 배변 횟수 증가 — 횟수 증가만으로는 설사(HPO 정의: 묽은 변) 아님,Have you had diarrhea or an increase in stool frequency?
+E_52,False,B,EXACT,True,True,,HP:0000651,HP:0000651,STEP20 EXACT: double vision,Do you have the perception of seeing two images of a single object seen overlapping or adjacent to each other (double vision)?
+E_53,False,B,EXACT,True,True,,HP:0012531,HP:0012531,STEP20 EXACT: pain somewhere related to consult = Pain,"Do you have pain somewhere, related to your reason for consulting?"
+E_54,False,M,NO_CONCEPT,False,False,,,,STEP20 NOT_APPLICABLE (ATTRIBUTE): quality attribute; only grouping modifier HP:0025280,Characterize your pain:
+E_55,False,M,EXACT_COMPOSITE,True,False,,HP:0100749,,"E_53 양성 + E_55 ∈ ['V_29', 'V_55', 'V_56', 'V_101', 'V_170', 'V_171'] → 흉통(HP:0100749). 유방·견갑골·흉추·늑하부 제외. 통증 성질(E_54)은 쓰지 않음. 검토 권장",Do you feel pain somewhere?
+E_56,False,C,NO_CONCEPT,False,False,NUMERIC_SCALE,,,STEP20 NOT_APPLICABLE (ATTRIBUTE): severity attribute scale,How intense is the pain?
+E_57,False,M,EXACT_BROADER,True,False,SITE_OR_NOWHERE,HP:6000684,HP:6000684,"STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): HPO term (Pain characteristic modifier) captures presence of radiation; radiation site lost · 값 V_123('nowhere') = 방사 없음(명시적 음성), 그 외 부위 = 방사통 양성",Does the pain radiate to another location?
+E_58,False,C,NO_CONCEPT,False,False,NUMERIC_SCALE,,,STEP20 NOT_APPLICABLE (ATTRIBUTE): no HPO concept for localization precision,How precisely is the pain located?
+E_59,False,C,NO_CONCEPT,False,False,NUMERIC_SCALE,,,STEP20 NOT_APPLICABLE (ATTRIBUTE): onset attribute scale,How fast did the pain appear?
+E_60,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you consume energy drinks regularly?
+E_61,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Are you currently using intravenous drugs?
+E_62,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you regularly take stimulant drugs?
+E_63,False,B,REVIEW,False,False,,,,"35회차 재판정: 발음 곤란 OR 말하기 곤란 — 실어증 등 포함 가능, 구음장애보다 넓음",Do you have difficulty articulating words/speaking?
+E_64,False,B,EXACT_BROADER,True,False,,HP:0002875,HP:0002875,STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): Exertional dyspnea; 'minimal effort' grade lost,Do you feel out of breath with minimal physical effort?
+E_65,False,B,REVIEW,False,False,,,,35회차 재판정: 삼킴 곤란 OR 삼킬 때 불편(연하통 포함) — 혼합,"Do you have difficulty swallowing, or have a feeling of discomfort/blockage when swallowing?"
+E_66,False,B,EXACT,True,True,,HP:0002094,HP:0002094,STEP20 EXACT: shortness of breath / difficulty breathing,Are you experiencing shortness of breath or difficulty breathing in a significant way?
+E_67,False,B,EXACT,True,True,,HP:0034807,HP:0034807,STEP20 EXACT: choking/SOB waking at night,Do you have bouts of choking or shortness of breath that wake you up at night?
+E_69,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have diabetes?
+E_70,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Are you significantly overweight compared to people of the same height as you?
+E_71,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have high cholesterol or do you take medications to treat high cholesterol?
+E_72,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you had one or several flare ups of chronic obstructive pulmonary disease (COPD) in the past year?
+E_73,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),"In the last month, have you been in contact with anyone infected with the Ebola virus?"
+E_74,False,B,EXACT,True,True,,HP:0025337,HP:0025337,STEP20 EXACT: Red eye; 'diffuse' lost,Have you noticed a diffuse (widespread) redness in one or both eyes?
+E_75,False,B,NO_CONCEPT,False,False,,,,STEP20 NO_MATCH (SYMPTOM): HPO only has Choking episodes HP:0030842 (feeding behaviour) - different meaning,Do you feel like you are (or were) choking or suffocating?
+E_76,False,B,REVIEW,False,False,,,HP:0002321,OR 복합 질문 — 단일 HPO 개념(['HP:0002321'])이 모든 경우를 포함하는지 미확인 (Dizziness OR lightheadedness (mild)),Do you feel slightly dizzy or lightheaded?
+E_77,False,B,REVIEW,False,False,,,HP:0033709;HP:0034777,여러 개념 중 하나만 있어도 '예'인 질문 — 어느 개념인지 모름 (Productive cough with colored/increased sputum),Do you have a cough that produces colored or more abundant sputum than usual?
+E_78,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you drink alcohol excessively or do you have an addiction to alcohol?
+E_79,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you smoke cigarettes?
+E_80,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you ever been diagnosed with depression?
+E_81,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you suffer from chronic anxiety?
+E_82,False,B,EXACT,True,True,,HP:0031972,HP:0031972,STEP20 EXACT: question describes presyncope,Do you feel lightheaded and dizzy or do you feel like you are about to faint?
+E_83,False,B,REVIEW,False,False,,,HP:0030319;HP:0000597,"OR 복합 질문 — 단일 HPO 개념(['HP:0030319', 'HP:0000597'])이 모든 경우를 포함하는지 미확인 (Facial OR ocular muscle weakness)",Have you noticed weakness in your facial muscles and/or eyes?
+E_84,False,B,EXACT_BROADER,True,False,,HP:0003690,HP:0003690,STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): Limb muscle weakness; bilaterality lost,Do you feel weakness in both arms and/or both legs?
+E_86,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),"Do you have any close family members who suffer from allergies (any type), hay fever or eczema?"
+E_87,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have any family members who have asthma?
+E_88,False,B,EXACT_BROADER,True,False,,HP:0012378,HP:0012378,STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): Fatigue; functional severity lost,Do you feel so tired that you are unable to do your usual activities or are you stuck in your bed all day long?
+E_89,False,B,REVIEW,False,False,,,HP:0012378;HP:5200292,"OR 복합 질문 — 단일 HPO 개념(['HP:0012378', 'HP:5200292'])이 모든 경우를 포함하는지 미확인 (Fatigue OR non-restorative sleep)",Do you constantly feel fatigued or do you have non-restful sleep?
+E_90,False,B,EXACT,True,True,,HP:0003473,HP:0003473,STEP20 EXACT: weakness increasing with fatigue,Do your symptoms of muscle weakness increase with fatigue and/or stress?
+E_91,False,B,EXACT,True,True,,HP:0001945,HP:0001945,STEP20 EXACT: felt or measured fever = Fever,Do you have a fever (either felt or measured with a thermometer)?
+E_92,False,B,EXACT_BROADER,True,False,,HP:0031284,HP:0031284,STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): Flushing; facial site lost,Did your cheeks suddenly turn red?
+E_93,False,B,REVIEW,False,False,,,,35회차 재판정: 감각 저하 OR 감각 소실 OR 저림 — 감각저하(HP:0033748)와 이상감각(HP:0003401) 혼합,"Do you have numbness, loss of sensation or tingling in the feet?"
+E_94,False,B,EXACT,True,True,,HP:0025143,HP:0025143,STEP20 EXACT: chills or shivers,Have you had chills or shivers?
+E_95,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have Parkinson’s disease?
+E_96,False,B,REVIEW,False,False,,,,35회차 재판정: 최근 체중 증가(변화) ≠ Increased body weight(상태),Have you gained weight recently?
+E_97,False,B,EXACT,True,True,,HP:0033050,HP:0033050,STEP20 EXACT: Pharyngalgia,Do you have a sore throat?
+E_98,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have a hiatal hernia?
+E_99,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you ever had a migraine or is a member of your family known to have migraines?
+E_100,True,B,REVIEW,False,False,,,,후보 RF:ECTO:9000010: 현재 호르몬 복용(종류 불명) vs 'Oestrogen exposure' — 범위 다름,Do you currently take hormones?
+E_101,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you been hospitalized for an asthma attack in the past year?
+E_102,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Are you consulting because you have high blood pressure?
+E_103,False,B,EXACT,True,True,,HP:0000458,HP:0000458,STEP20 EXACT: lost sense of smell,Have you lost your sense of smell?
+E_104,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have high blood pressure or do you take medications to treat high blood pressure?
+E_105,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you ever had a heart attack or do you have angina (chest pain)?
+E_106,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have heart failure?
+E_107,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you ever had a stroke?
+E_108,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have a problem with poor circulation?
+E_109,True,B,REVIEW,False,False,,,,후보 HP:0002625: DVT 과거력 vs 현재 소견 'Deep venous thrombosis' — 시점 다름,Have you ever had deep vein thrombosis (DVT)?
+E_110,True,B,REVIEW,False,False,,,,후보 RF:Pulmonary_Embolism:1: 3일 이상 거동 불가(4주 내) vs 'Prolonged immobilisation' — 기간 정의 미확인,Have you been unable to move or get up for more than 3 consecutive days within the last 4 weeks?
+E_111,False,B,EXACT,True,True,,HP:0033845,HP:0033845,STEP20 EXACT: Sense of impending doom,Do you feel like you are dying or were you afraid that you were about do die?
+E_112,False,B,REVIEW,False,False,,,HP:0030828;HP:0031247,여러 개념 중 하나만 있어도 '예'인 질문 — 어느 개념인지 모름 (Inspiratory wheeze OR noisy breathing after cough spells (whoop)),Do you wheeze while inhaling or is your breathing noisy after coughing spells?
+E_113,True,B,REVIEW,False,False,,,,후보 RF:Pericarditis:1: 만성 신부전 vs 'End-stage renal disease and uraemia' — 병기 범위 다름,Do you have chronic kidney failure?
+E_114,False,B,REVIEW,False,False,,,HP:0000737;HP:0000712,"OR 복합 질문 — 단일 HPO 개념(['HP:0000737', 'HP:0000712'])이 모든 경우를 포함하는지 미확인 (Irritability OR mood instability)",Are you more irritable or has your mood been very unstable recently?
+E_115,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you had unprotected sex with more than one partner in the last 6 months?
+E_116,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you had a cold in the last 2 weeks?
+E_118,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you ever had pneumonia?
+E_119,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you been diagnosed with chronic sinusitis?
+E_120,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have polyps in your nose?
+E_121,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have a deviated nasal septum?
+E_123,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have a chronic obstructive pulmonary disease (COPD)?
+E_124,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have asthma or have you ever had to use a bronchodilator in the past?
+E_125,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you ever been diagnosed with gastroesophageal reflux?
+E_126,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have liver cirrhosis?
+E_127,False,B,EXACT,True,True,,HP:0009926,HP:0009926,STEP20 EXACT: Epiphora (watery eye); production vs overflow nuance,Do you feel that your eyes produce excessive tears?
+E_128,False,B,REVIEW,False,False,,,HP:0025425,STEP20 PARTIAL: Laryngospasm is a mechanism-level label for the episode,Have you ever felt like you were suffocating for a very short time associated with inability to breathe or speak?
+E_129,False,B,EXACT_BROADER,True,False,,HP:0000951,HP:0000951,"STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): question is itself broad (lesions, redness or problems on skin); grouping term","Do you have any lesions, redness or problems on your skin that you believe are related to the condition you are consulting for?"
+E_130,False,C,NO_CONCEPT,False,False,,,,STEP20 NOT_APPLICABLE (ATTRIBUTE): color attribute,What color is the rash?
+E_131,False,C,EXACT_BROADER,True,False,YN,HP:0040189,HP:0040189,STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): Scaling skin ~ peeling; HPO has no 'peeling' term name,Do your lesions peel off?
+E_132,False,C,NO_CONCEPT,False,False,NUMERIC_SCALE,,,STEP20 NOT_APPLICABLE (ATTRIBUTE): severity attribute,Is the rash swollen?
+E_133,False,M,NO_CONCEPT,False,False,,,,STEP20 NOT_APPLICABLE (ATTRIBUTE): site attribute,Where is the affected region located?
+E_134,False,C,NO_CONCEPT,False,False,NUMERIC_SCALE,,,STEP20 NOT_APPLICABLE (ATTRIBUTE): severity attribute of lesion pain,How intense is the pain caused by the rash?
+E_135,False,C,NO_CONCEPT,False,False,YN,,,STEP20 NOT_APPLICABLE (ATTRIBUTE): size attribute,Is the lesion (or are the lesions) larger than 1cm?
+E_136,False,C,EXACT_BROADER,True,False,NUMERIC_SCALE,HP:0000989,HP:0000989,STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): presence of itch = Pruritus; severity carried by value,How severe is the itching?
+E_137,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you ever had surgery to remove lymph nodes?
+E_138,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you suffer from fibromyalgia?
+E_139,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have a known heart defect?
+E_140,False,B,EXACT,True,True,,HP:0002249,HP:0002249,STEP20 EXACT: black (coal) stool ~ melena; iron/bismuth black stool not excluded,Have you recently had stools that were black (like coal)?
+E_141,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Did you have your first menstrual period before the age of 12?
+E_142,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Does your mother suffer from asthma?
+E_143,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),"Do you exercise regularly, 4 times per week or more?"
+E_144,False,B,EXACT_BROADER,True,False,,HP:0003326,HP:0003326,STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): Myalgia; 'diffuse' lost,Do you have diffuse (widespread) muscle pain?
+E_145,False,B,EXACT,True,True,,HP:0000132,HP:0000132,STEP20 EXACT: Menorrhagia (heavy or prolonged),Do you have very abundant or very long menstruation periods?
+E_146,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Are you taking any new oral anticoagulants ((NOACs)?
+E_147,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),"Have you been treated in hospital recently for nausea, agitation, intoxication or aggressive behavior and received medication via an intravenous or intramuscular route?"
+E_148,False,B,EXACT,True,True,,HP:0002018,HP:0002018,STEP20 EXACT: nauseous or feel like vomiting = Nausea,Are you feeling nauseous or do you feel like vomiting?
+E_149,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you take a calcium channel blockers (medication)?
+E_150,False,B,REVIEW,False,False,,,HP:0034782,STEP20 PARTIAL: polarity inverted: YES = able; concept = inability (Obstipation),Have you been able to pass stools or gas since your symptoms increased?
+E_151,False,B,REVIEW,False,False,,,HP:0000969,STEP20 ACCEPTABLE_NARROWER: Edema is narrower than 'swelling',Do you have swelling in one or more areas of your body?
+E_152,False,M,NO_CONCEPT,False,False,,,,STEP20 NOT_APPLICABLE (ATTRIBUTE): site attribute,Where is the swelling located?
+E_153,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Are you being treated for osteoporosis?
+E_154,False,B,EXACT,True,True,,HP:0000980,HP:0000980,STEP20 EXACT: skin much paler than usual = Pallor,Is your skin much paler than usual?
+E_155,False,B,EXACT,True,True,,HP:0001962,HP:0001962,"STEP20 EXACT: fast, irregular or palpitations = Palpitations","Do you feel your heart is beating fast (racing), irregularly (missing a beat) or do you feel palpitations?"
+E_156,False,B,REVIEW,False,False,,,,35회차 재판정: 현재 또는 과거(회복된) 안면 마비 — 시점 혼합,"Have you had weakness or paralysis on one side of the face, which may still be present or completely resolved?"
+E_157,False,B,REVIEW,False,False,,,,35회차 재판정: 감각 저하 OR 감각 소실 OR 저림 — 혼합 질문,"Have you recently had numbness, loss of sensation or tingling, in both arms and legs and around your mouth?"
+E_158,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Were you diagnosed with endocrine disease or a hormone dysfunction?
+E_159,False,B,EXACT,True,True,,HP:0007185,HP:0007185,STEP20 EXACT: Loss of consciousness,Did you lose consciousness?
+E_160,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Were you born prematurely or did you suffer any complication at birth?
+E_161,False,B,REVIEW,False,False,,,HP:0004396;HP:0033842,"OR 복합 질문 — 단일 HPO 개념(['HP:0004396', 'HP:0033842'])이 모든 경우를 포함하는지 미확인 (Loss of appetite OR early satiety)",Have you recently had a loss of appetite or do you get full more quickly then usually?
+E_162,False,B,EXACT_BROADER,True,False,,HP:0001824,HP:0001824,STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): Weight loss; 'involuntary' and 3-month window lost,Have you had an involuntary weight loss over the last 3 months?
+E_163,False,B,REVIEW,False,False,,,HP:0034269,STEP20 ACCEPTABLE_NARROWER: HPO term is 'Abnormal' vaginal discharge; evidence does not say abnormal,Have you had any vaginal discharge?
+E_164,False,B,EXACT_BROADER,True,False,,HP:0001962,HP:0001962,35회차 재판정: 불규칙한 박동 '느낌' ⊂ 두근거림(Palpitations). 부정맥(HP:0011675)은 진단 개념이라 연결 안 함. STEP20 이 E_155(빠름·불규칙·쿵쾅)를 Palpitations EXACT 로 둔 것과 일관,Do you feel your heart is beating very irregularly or in a disorganized pattern?
+E_165,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have any of your family members ever had a pneumothorax?
+E_166,False,B,NO_CONCEPT,False,False,,,,STEP20 NO_MATCH (SYMPTOM): no HPO term,Did you vomit after coughing?
+E_167,True,B,NO_KB_RELATION,False,False,,,,"임신 — DisMech 폐색전증 설명 문장(유발 인자 나열)에만 언급, 근거 붙은 구조화 관계 없음",Do you think you are pregnant or are you currently pregnant?
+E_168,False,B,REVIEW,False,False,,,HP:0010808,STEP20 PARTIAL: Protruding tongue is a morphology term; evidence is involuntary movement,Do you have trouble keeping your tongue in your mouth?
+E_169,False,B,NO_CONCEPT,False,False,,,,STEP20 NO_MATCH (COMPOSITE): HPO Pruritus is a skin phenotype; no nasal/pharyngeal itch term,Is your nose or the back of your throat itchy?
+E_170,False,B,EXACT_BROADER,True,False,,HP:0033841,HP:0033841,STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): Ocular pruritus; severity lost,Do you have severe itching in one or both eyes?
+E_171,False,B,REVIEW,False,False,,,HP:5200217;HP:5200218,"OR 복합 질문 — 단일 HPO 개념(['HP:5200217', 'HP:5200218'])이 모든 경우를 포함하는지 미확인 (Depersonalization OR derealization)",Do you feel like you are detached from your own body or your surroundings?
+E_172,False,B,EXACT,True,True,,HP:0000508,HP:0000508,STEP20 EXACT: difficulty opening/raising eyelid(s),Do you have a hard time opening/raising one or both eyelids?
+E_173,False,B,REVIEW,False,False,,,,35회차 재판정: 속쓰림(작열감 상행) ≠ 위식도역류(HP:0002020 = 역류 현상). HPO 에 속쓰림 용어 없음,"Do you have a burning sensation that starts in your stomach then goes up into your throat, and can be associated with a bitter taste in your mouth?"
+E_174,False,B,REVIEW,False,False,,,HP:0001824;HP:0004396,여러 개념 중 하나만 있어도 '예'인 질문 — 어느 개념인지 모름 (Unintentional weight loss OR loss of appetite),Have you been unintentionally losing weight or have you lost your appetite?
+E_175,False,B,REVIEW,False,False,,,HP:0033834;HP:0012378;HP:0003326,여러 개념 중 하나만 있어도 '예'인 질문 — 어느 개념인지 모름 (New fatigue / malaise / diffuse aches),"Have you noticed any new fatigue, generalized and vague discomfort, diffuse (widespread) muscle aches or a change in your general well-being related to your consultation today?"
+E_176,False,B,REVIEW,False,False,,,HP:0003690;HP:0030319,"OR 복합 질문 — 단일 HPO 개념(['HP:0003690', 'HP:0030319'])이 모든 경우를 포함하는지 미확인 (Limb OR facial weakness/paralysis (current or past))","Did you previously, or do you currently, have any weakness/paralysis in one or more of your limbs or in your face?"
+E_177,False,B,REVIEW,False,False,,,HP:0003401;HP:0033748,"OR 복합 질문 — 단일 HPO 개념(['HP:0003401', 'HP:0033748'])이 모든 경우를 포함하는지 미확인 (Numbness OR hypoesthesia OR tingling (any site))","Do you currently, or did you ever, have numbness, loss of sensitivity or tingling anywhere on your body?"
+E_178,False,B,REVIEW,False,False,,,HP:0001892;HP:0000978,"OR 복합 질문 — 단일 HPO 개념(['HP:0001892', 'HP:0000978'])이 모든 경우를 포함하는지 미확인 (Abnormal bleeding OR bruising)",Have you noticed any unusual bleeding or bruising related to your consultation today?
+E_179,False,B,EXACT,True,True,,HP:0002573,HP:0002573,STEP20 EXACT: light red blood/clots in stool,Have you noticed light red blood or blood clots in your stool?
+E_180,False,B,REVIEW,False,False,,,HP:0010553,STEP20 ACCEPTABLE_NARROWER: Oculogyric crisis; lay wording ambiguous,Are you unable to control the direction of your eyes?
+E_181,False,B,REVIEW,False,False,,,HP:0001742;HP:0031417,여러 개념 중 하나만 있어도 '예'인 질문 — 어느 개념인지 모름 (Nasal congestion OR clear rhinorrhea),Do you have nasal congestion or a clear runny nose?
+E_182,False,B,EXACT_BROADER,True,False,,HP:0031417,HP:0031417,STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): Rhinorrhea; green/yellow (purulent) colour lost. HP:0040334 'Purulent rhinitis' is an inflammatory label,Do you have greenish or yellowish nasal discharge?
+E_183,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you live in a rural area?
+E_184,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you take medication that dilates your blood vessels?
+E_185,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you ever had a head trauma?
+E_186,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you ever been diagnosed with obstructive sleep apnea (OSA)?
+E_187,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Did you eat dark-fleshed fish (such as tuna) or Swiss cheese before the reaction occurred?
+E_188,False,B,EXACT,True,False,,HP:0011985;HP:0040319,HP:0011985;HP:0040319,STEP20 EXACT: Acholic stools + Dark urine,Do you have pale stools and dark urine?
+E_189,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you had sexual intercourse with an HIV-positive partner in the past 12 months?
+E_190,False,B,EXACT,True,True,,HP:0003781,HP:0003781,STEP20 EXACT: Excessive salivation,Have you noticed that you produce more saliva than usual?
+E_191,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Are you a former smoker?
+E_192,False,B,EXACT,True,True,,HP:0000473,HP:0000473,STEP20 EXACT: Torticollis,Do you feel that muscle spasms or soreness in your neck are keeping you from turning your head to one side?
+E_193,False,B,EXACT,True,True,,HP:0003394,HP:0003394,STEP20 EXACT: Muscle spasm,"Do you have annoying muscle spasms in your face, neck or any other part of your body?"
+E_194,False,B,EXACT,True,True,,HP:0005348,HP:0005348,STEP20 EXACT: high-pitched sound breathing in,Have you noticed a high pitched sound when breathing in?
+E_195,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you live in the suburbs?
+E_196,True,B,REVIEW,False,False,,,,후보 RF:ECTO:2000054: 최근 1개월 내 '모든' 수술 vs DisMech 'Major surgery'(대수술) — 범위 다름,Have you had surgery within the last month?
+E_197,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have a known kidney problem resulting in an inability to retain proteins?
+E_198,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you work in agriculture?
+E_199,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you work in construction?
+E_200,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you work in the mining sector?
+E_201,False,B,EXACT,True,True,,HP:0012735,HP:0012735,STEP20 EXACT: Cough,Do you have a cough?
+E_202,False,B,EXACT,True,True,,HP:0031247,HP:0031247,STEP20 EXACT: Whooping cough is an HPO cough phenotype,Does the person have a whooping cough?
+E_203,False,B,EXACT_BROADER,True,False,,HP:0012735,HP:0012735,STEP20 ACCEPTABLE_BROADER(HPO 가 더 넓음 → 양성만 함의): no paroxysmal cough term in HPO,Do you have intense coughing fits?
+E_204,True,C,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you traveled out of the country in the last 4 weeks?
+E_205,False,B,REVIEW,False,False,,,HP:0000211;HP:0040264,"OR 복합 질문 — 단일 HPO 개념(['HP:0000211', 'HP:0040264'])이 모든 경우를 포함하는지 미확인 (Trismus OR jaw pain on opening)",Do you suddenly have difficulty or an inability to open your mouth or have jaw pain when opening it?
+E_206,False,B,EXACT,True,True,,HP:0000155,HP:0000155,STEP20 EXACT: Oral ulcer; pain lost,Do you have painful mouth ulcers or sores?
+E_207,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you live in in a big city?
+E_208,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),"Is your BMI less than 18.5, or are you underweight?"
+E_209,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Are your vaccinations up to date?
+E_210,False,B,EXACT,True,True,,HP:0002248,HP:0002248,STEP20 EXACT: vomited blood or coffee-ground = Hematemesis,Have you recently thrown up blood or something resembling coffee beans?
+E_211,False,B,REVIEW,False,False,,,,35회차 재판정: 여러 번 구토 OR 구역 노력(헛구역질 HP:6001526 별도 개념) — 혼합 질문,Have you vomited several times or have you made several efforts to vomit?
+E_212,False,B,EXACT,True,True,,HP:0001618,HP:0001618,STEP20 EXACT: Dysphonia,"Have you noticed that the tone of your voice has become deeper, softer or hoarse?"
+E_213,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Have you recently taken decongestants or other substances that may have stimulant effects?
+E_214,False,B,EXACT,True,True,,HP:0030828,HP:0030828,STEP20 EXACT: Wheezing (typically expiratory),Have you noticed a wheezing sound when you exhale?
+E_215,False,B,REVIEW,False,False,,,,35회차 재판정: 수식어(식후 악화)만 — 어떤 증상인지 없음,Do you have symptoms that get worse after eating?
+E_216,False,B,REVIEW,False,False,,,,35회차 재판정: 수식어(움직이면 악화)만 — 소견 단독 개념 아님,Do you have pain that is increased with movement?
+E_217,False,B,REVIEW,False,False,,,HP:0012764,"수식어 질문(Symptom worse lying, relieved sitting (orthopnea-type)) — STEP20 ACCEPTABLE_NARROWER",Are your symptoms worse when lying down and alleviated while sitting up?
+E_218,False,B,REVIEW,False,False,,,HP:0025377,"수식어 질문(Symptom aggravated by exertion, relieved by rest) — STEP20 PARTIAL",Do you have symptoms that are increased with physical exertion but alleviated with rest?
+E_219,False,B,REVIEW,False,False,,,,35회차 재판정: 수식어(야간 악화)만 — 소견 단독 개념 아님,Are your symptoms more prominent at night?
+E_220,False,B,REVIEW,False,False,,,HP:0033771,수식어 질문(Pain aggravated by deep inspiration (pleuritic)) — STEP20 ACCEPTABLE_NARROWER,Do you have pain that is increased when you breathe in deeply?
+E_221,False,B,NO_CONCEPT,False,False,,,,STEP20 NO_MATCH (MODIFIER): only generic Aggravated by,"Are the symptoms or pain increased with coughing, with an effort like lifting a weight or from forcing a bowel movement?"
+E_222,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Are you exposed to secondhand cigarette smoke on a daily basis?
+E_223,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Are there members of your family who have been diagnosed with pancreatic cancer?
+E_224,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have family members who have had lung cancer?
+E_225,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Do you have close family members who had a cardiovascular disease problem before the age of 50?
+E_226,True,B,NOT_ASSESSED,False,False,,,,병력 문항 — 미조사(4질환 직접 관련 항목만 조사함),Are you more likely to develop common allergies than the general population?
+E_227,True,B,NO_KB_RELATION,False,False,,,,면역억제 — 4질환 구조화 위험인자 없음,Are you immunosuppressed?

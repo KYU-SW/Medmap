@@ -1,0 +1,1733 @@
+{
+ "ALL|ALL": {
+  "n_patients": 100,
+  "coverage": {
+   "input_codes_mean": 12.2,
+   "exact_codes_mean": 3.52,
+   "used_codes_mean": 4.58,
+   "unmapped_ratio_mean": 0.614,
+   "pos_in_graph_mean": 4.33,
+   "gap_true_mean": 0.2803,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 100,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 4.59,
+   "support_paths_with_source_mean": 4.59,
+   "groups_mean": 2.47,
+   "clinical_groups_mean": 1.97,
+   "unexplained_mean": 1.0,
+   "undetermined_mean": 18.66,
+   "warn_any_unexplained": {
+    "k": 65,
+    "n": 100,
+    "rate": 0.65
+   },
+   "warn_explained_by_other": {
+    "k": 0,
+    "n": 100,
+    "rate": 0.0
+   },
+   "warn_review_nonempty": {
+    "k": 75,
+    "n": 100,
+    "rate": 0.75
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 100,
+    "rate": 0.0
+   },
+   "conflict_no_knowledge": {
+    "k": 100,
+    "n": 100,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 23,
+    "n": 100,
+    "rate": 0.23
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 3.24,
+   "groups_mean": 1.89,
+   "unexplained_mean": 1.58,
+   "undetermined_mean": 20.24,
+   "warn_any_unexplained": {
+    "k": 88,
+    "n": 100,
+    "rate": 0.88
+   },
+   "truth_in_review": {
+    "k": 82,
+    "n": 100,
+    "rate": 0.82
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 100,
+    "rate": 0.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 23,
+    "n": 100,
+    "rate": 0.23
+   },
+   "truth_top1_graded_opt": {
+    "k": 75,
+    "n": 100,
+    "rate": 0.75
+   },
+   "truth_top1_support_pess": {
+    "k": 16,
+    "n": 100,
+    "rate": 0.16
+   },
+   "truth_top1_support_opt": {
+    "k": 100,
+    "n": 100,
+    "rate": 1.0
+   },
+   "truth_top3_graded_pess": {
+    "k": 93,
+    "n": 100,
+    "rate": 0.93
+   },
+   "truth_top3_graded_opt": {
+    "k": 93,
+    "n": 100,
+    "rate": 0.93
+   },
+   "truth_top3_support_pess": {
+    "k": 43,
+    "n": 100,
+    "rate": 0.43
+   },
+   "truth_top3_support_opt": {
+    "k": 100,
+    "n": 100,
+    "rate": 1.0
+   }
+  }
+ },
+ "ALL|Pulmonary embolism": {
+  "n_patients": 25,
+  "coverage": {
+   "input_codes_mean": 15.96,
+   "exact_codes_mean": 4.28,
+   "used_codes_mean": 5.28,
+   "unmapped_ratio_mean": 0.6686,
+   "pos_in_graph_mean": 5.28,
+   "gap_true_mean": 0.342,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 4.96,
+   "support_paths_with_source_mean": 4.96,
+   "groups_mean": 2.48,
+   "clinical_groups_mean": 1.48,
+   "unexplained_mean": 1.8,
+   "undetermined_mean": 27.04,
+   "warn_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "warn_explained_by_other": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "warn_review_nonempty": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "conflict_no_knowledge": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 3.48,
+   "groups_mean": 1.96,
+   "unexplained_mean": 2.32,
+   "undetermined_mean": 16.84,
+   "warn_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_in_review": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_graded_opt": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_support_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_pess": {
+    "k": 18,
+    "n": 25,
+    "rate": 0.72
+   },
+   "truth_top3_graded_opt": {
+    "k": 18,
+    "n": 25,
+    "rate": 0.72
+   },
+   "truth_top3_support_pess": {
+    "k": 18,
+    "n": 25,
+    "rate": 0.72
+   },
+   "truth_top3_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   }
+  }
+ },
+ "ALL|Pericarditis": {
+  "n_patients": 25,
+  "coverage": {
+   "input_codes_mean": 12.08,
+   "exact_codes_mean": 3.32,
+   "used_codes_mean": 4.32,
+   "unmapped_ratio_mean": 0.6424,
+   "pos_in_graph_mean": 4.32,
+   "gap_true_mean": 0.366,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 4.44,
+   "support_paths_with_source_mean": 4.44,
+   "groups_mean": 1.72,
+   "clinical_groups_mean": 1.72,
+   "unexplained_mean": 1.6,
+   "undetermined_mean": 15.56,
+   "warn_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "warn_explained_by_other": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "warn_review_nonempty": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "conflict_no_knowledge": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 2.88,
+   "groups_mean": 1.72,
+   "unexplained_mean": 1.6,
+   "undetermined_mean": 21.76,
+   "warn_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_in_review": {
+    "k": 17,
+    "n": 25,
+    "rate": 0.68
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_support_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top3_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   }
+  }
+ },
+ "ALL|Myocarditis": {
+  "n_patients": 25,
+  "coverage": {
+   "input_codes_mean": 12.48,
+   "exact_codes_mean": 3.32,
+   "used_codes_mean": 4.92,
+   "unmapped_ratio_mean": 0.6058,
+   "pos_in_graph_mean": 3.92,
+   "gap_true_mean": 0.4133,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 3.76,
+   "support_paths_with_source_mean": 3.76,
+   "groups_mean": 1.88,
+   "clinical_groups_mean": 1.88,
+   "unexplained_mean": 0.6,
+   "undetermined_mean": 19.24,
+   "warn_any_unexplained": {
+    "k": 15,
+    "n": 25,
+    "rate": 0.6
+   },
+   "warn_explained_by_other": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "warn_review_nonempty": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "conflict_no_knowledge": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 3.44,
+   "groups_mean": 1.88,
+   "unexplained_mean": 0.6,
+   "undetermined_mean": 20.24,
+   "warn_any_unexplained": {
+    "k": 15,
+    "n": 25,
+    "rate": 0.6
+   },
+   "truth_in_review": {
+    "k": 17,
+    "n": 25,
+    "rate": 0.68
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_support_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top3_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   }
+  }
+ },
+ "ALL|Tuberculosis": {
+  "n_patients": 25,
+  "coverage": {
+   "input_codes_mean": 8.28,
+   "exact_codes_mean": 3.16,
+   "used_codes_mean": 3.8,
+   "unmapped_ratio_mean": 0.5391,
+   "pos_in_graph_mean": 3.8,
+   "gap_true_mean": 0.0,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 5.2,
+   "support_paths_with_source_mean": 5.2,
+   "groups_mean": 3.8,
+   "clinical_groups_mean": 2.8,
+   "unexplained_mean": 0.0,
+   "undetermined_mean": 12.8,
+   "warn_any_unexplained": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "warn_explained_by_other": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "warn_review_nonempty": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "conflict_no_knowledge": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 23,
+    "n": 25,
+    "rate": 0.92
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 3.16,
+   "groups_mean": 2.0,
+   "unexplained_mean": 1.8,
+   "undetermined_mean": 22.12,
+   "warn_any_unexplained": {
+    "k": 23,
+    "n": 25,
+    "rate": 0.92
+   },
+   "truth_in_review": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 23,
+    "n": 25,
+    "rate": 0.92
+   },
+   "truth_top1_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_support_pess": {
+    "k": 16,
+    "n": 25,
+    "rate": 0.64
+   },
+   "truth_top1_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   }
+  }
+ },
+ "CLINICAL_ONLY|ALL": {
+  "n_patients": 100,
+  "coverage": {
+   "input_codes_mean": 12.2,
+   "exact_codes_mean": 3.52,
+   "used_codes_mean": 4.58,
+   "unmapped_ratio_mean": 0.614,
+   "pos_in_graph_mean": 4.33,
+   "gap_true_mean": 0.505,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 100,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 1.97,
+   "support_paths_with_source_mean": 1.97,
+   "groups_mean": 1.97,
+   "clinical_groups_mean": 1.97,
+   "unexplained_mean": 1.75,
+   "undetermined_mean": 11.53,
+   "warn_any_unexplained": {
+    "k": 90,
+    "n": 100,
+    "rate": 0.9
+   },
+   "warn_explained_by_other": {
+    "k": 25,
+    "n": 100,
+    "rate": 0.25
+   },
+   "warn_review_nonempty": {
+    "k": 75,
+    "n": 100,
+    "rate": 0.75
+   },
+   "withhold_wd_support0": {
+    "k": 1,
+    "n": 100,
+    "rate": 0.01
+   },
+   "conflict_no_knowledge": {
+    "k": 100,
+    "n": 100,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 22,
+    "n": 100,
+    "rate": 0.22
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 1.5,
+   "groups_mean": 1.5,
+   "unexplained_mean": 2.15,
+   "undetermined_mean": 12.05,
+   "warn_any_unexplained": {
+    "k": 93,
+    "n": 100,
+    "rate": 0.93
+   },
+   "truth_in_review": {
+    "k": 83,
+    "n": 100,
+    "rate": 0.83
+   },
+   "withhold_wd_support0": {
+    "k": 9,
+    "n": 100,
+    "rate": 0.09
+   },
+   "truth_top1_graded_pess": {
+    "k": 22,
+    "n": 100,
+    "rate": 0.22
+   },
+   "truth_top1_graded_opt": {
+    "k": 75,
+    "n": 100,
+    "rate": 0.75
+   },
+   "truth_top1_support_pess": {
+    "k": 22,
+    "n": 100,
+    "rate": 0.22
+   },
+   "truth_top1_support_opt": {
+    "k": 75,
+    "n": 100,
+    "rate": 0.75
+   },
+   "truth_top3_graded_pess": {
+    "k": 75,
+    "n": 100,
+    "rate": 0.75
+   },
+   "truth_top3_graded_opt": {
+    "k": 93,
+    "n": 100,
+    "rate": 0.93
+   },
+   "truth_top3_support_pess": {
+    "k": 75,
+    "n": 100,
+    "rate": 0.75
+   },
+   "truth_top3_support_opt": {
+    "k": 93,
+    "n": 100,
+    "rate": 0.93
+   }
+  }
+ },
+ "CLINICAL_ONLY|Pulmonary embolism": {
+  "n_patients": 25,
+  "coverage": {
+   "input_codes_mean": 15.96,
+   "exact_codes_mean": 4.28,
+   "used_codes_mean": 5.28,
+   "unmapped_ratio_mean": 0.6686,
+   "pos_in_graph_mean": 5.28,
+   "gap_true_mean": 0.726,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 1.48,
+   "support_paths_with_source_mean": 1.48,
+   "groups_mean": 1.48,
+   "clinical_groups_mean": 1.48,
+   "unexplained_mean": 3.8,
+   "undetermined_mean": 13.52,
+   "warn_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "warn_explained_by_other": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "warn_review_nonempty": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "withhold_wd_support0": {
+    "k": 1,
+    "n": 25,
+    "rate": 0.04
+   },
+   "conflict_no_knowledge": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 1.96,
+   "groups_mean": 1.96,
+   "unexplained_mean": 2.32,
+   "undetermined_mean": 11.08,
+   "warn_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_in_review": {
+    "k": 24,
+    "n": 25,
+    "rate": 0.96
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_graded_opt": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_support_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_support_opt": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top3_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top3_graded_opt": {
+    "k": 18,
+    "n": 25,
+    "rate": 0.72
+   },
+   "truth_top3_support_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top3_support_opt": {
+    "k": 18,
+    "n": 25,
+    "rate": 0.72
+   }
+  }
+ },
+ "CLINICAL_ONLY|Pericarditis": {
+  "n_patients": 25,
+  "coverage": {
+   "input_codes_mean": 12.08,
+   "exact_codes_mean": 3.32,
+   "used_codes_mean": 4.32,
+   "unmapped_ratio_mean": 0.6424,
+   "pos_in_graph_mean": 4.32,
+   "gap_true_mean": 0.604,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 1.72,
+   "support_paths_with_source_mean": 1.72,
+   "groups_mean": 1.72,
+   "clinical_groups_mean": 1.72,
+   "unexplained_mean": 1.6,
+   "undetermined_mean": 12.28,
+   "warn_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "warn_explained_by_other": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "warn_review_nonempty": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "conflict_no_knowledge": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 1.36,
+   "groups_mean": 1.36,
+   "unexplained_mean": 2.32,
+   "undetermined_mean": 12.04,
+   "warn_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_in_review": {
+    "k": 17,
+    "n": 25,
+    "rate": 0.68
+   },
+   "withhold_wd_support0": {
+    "k": 3,
+    "n": 25,
+    "rate": 0.12
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_support_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   }
+  }
+ },
+ "CLINICAL_ONLY|Myocarditis": {
+  "n_patients": 25,
+  "coverage": {
+   "input_codes_mean": 12.48,
+   "exact_codes_mean": 3.32,
+   "used_codes_mean": 4.92,
+   "unmapped_ratio_mean": 0.6058,
+   "pos_in_graph_mean": 3.92,
+   "gap_true_mean": 0.4133,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 1.88,
+   "support_paths_with_source_mean": 1.88,
+   "groups_mean": 1.88,
+   "clinical_groups_mean": 1.88,
+   "unexplained_mean": 0.6,
+   "undetermined_mean": 13.12,
+   "warn_any_unexplained": {
+    "k": 15,
+    "n": 25,
+    "rate": 0.6
+   },
+   "warn_explained_by_other": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "warn_review_nonempty": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "conflict_no_knowledge": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 1.52,
+   "groups_mean": 1.52,
+   "unexplained_mean": 1.32,
+   "undetermined_mean": 11.56,
+   "warn_any_unexplained": {
+    "k": 18,
+    "n": 25,
+    "rate": 0.72
+   },
+   "truth_in_review": {
+    "k": 17,
+    "n": 25,
+    "rate": 0.68
+   },
+   "withhold_wd_support0": {
+    "k": 1,
+    "n": 25,
+    "rate": 0.04
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_support_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   }
+  }
+ },
+ "CLINICAL_ONLY|Tuberculosis": {
+  "n_patients": 25,
+  "coverage": {
+   "input_codes_mean": 8.28,
+   "exact_codes_mean": 3.16,
+   "used_codes_mean": 3.8,
+   "unmapped_ratio_mean": 0.5391,
+   "pos_in_graph_mean": 3.8,
+   "gap_true_mean": 0.2767,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 2.8,
+   "support_paths_with_source_mean": 2.8,
+   "groups_mean": 2.8,
+   "clinical_groups_mean": 2.8,
+   "unexplained_mean": 1.0,
+   "undetermined_mean": 7.2,
+   "warn_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "warn_explained_by_other": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "warn_review_nonempty": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "conflict_no_knowledge": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 22,
+    "n": 25,
+    "rate": 0.88
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 1.16,
+   "groups_mean": 1.16,
+   "unexplained_mean": 2.64,
+   "undetermined_mean": 13.52,
+   "warn_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_in_review": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "withhold_wd_support0": {
+    "k": 5,
+    "n": 25,
+    "rate": 0.2
+   },
+   "truth_top1_graded_pess": {
+    "k": 22,
+    "n": 25,
+    "rate": 0.88
+   },
+   "truth_top1_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_support_pess": {
+    "k": 22,
+    "n": 25,
+    "rate": 0.88
+   },
+   "truth_top1_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   }
+  }
+ },
+ "HSDN_ONLY|ALL": {
+  "n_patients": 100,
+  "coverage": {
+   "input_codes_mean": 12.2,
+   "exact_codes_mean": 3.52,
+   "used_codes_mean": 4.58,
+   "unmapped_ratio_mean": 0.614,
+   "pos_in_graph_mean": 4.33,
+   "gap_true_mean": 0.3695,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 100,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 2.62,
+   "support_paths_with_source_mean": 2.62,
+   "groups_mean": 2.12,
+   "clinical_groups_mean": 0.0,
+   "unexplained_mean": 1.35,
+   "undetermined_mean": 7.13,
+   "warn_any_unexplained": {
+    "k": 87,
+    "n": 100,
+    "rate": 0.87
+   },
+   "warn_explained_by_other": {
+    "k": 22,
+    "n": 100,
+    "rate": 0.22
+   },
+   "warn_review_nonempty": {
+    "k": 97,
+    "n": 100,
+    "rate": 0.97
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 100,
+    "rate": 0.0
+   },
+   "conflict_no_knowledge": {
+    "k": 100,
+    "n": 100,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 20,
+    "n": 100,
+    "rate": 0.2
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 1.74,
+   "groups_mean": 1.39,
+   "unexplained_mean": 2.38,
+   "undetermined_mean": 8.19,
+   "warn_any_unexplained": {
+    "k": 92,
+    "n": 100,
+    "rate": 0.92
+   },
+   "truth_in_review": {
+    "k": 87,
+    "n": 100,
+    "rate": 0.87
+   },
+   "withhold_wd_support0": {
+    "k": 24,
+    "n": 100,
+    "rate": 0.24
+   },
+   "truth_top1_graded_pess": {
+    "k": 20,
+    "n": 100,
+    "rate": 0.2
+   },
+   "truth_top1_graded_opt": {
+    "k": 84,
+    "n": 100,
+    "rate": 0.84
+   },
+   "truth_top1_support_pess": {
+    "k": 20,
+    "n": 100,
+    "rate": 0.2
+   },
+   "truth_top1_support_opt": {
+    "k": 84,
+    "n": 100,
+    "rate": 0.84
+   },
+   "truth_top3_graded_pess": {
+    "k": 95,
+    "n": 100,
+    "rate": 0.95
+   },
+   "truth_top3_graded_opt": {
+    "k": 100,
+    "n": 100,
+    "rate": 1.0
+   },
+   "truth_top3_support_pess": {
+    "k": 95,
+    "n": 100,
+    "rate": 0.95
+   },
+   "truth_top3_support_opt": {
+    "k": 100,
+    "n": 100,
+    "rate": 1.0
+   }
+  }
+ },
+ "HSDN_ONLY|Pulmonary embolism": {
+  "n_patients": 25,
+  "coverage": {
+   "input_codes_mean": 15.96,
+   "exact_codes_mean": 4.28,
+   "used_codes_mean": 5.28,
+   "unmapped_ratio_mean": 0.6686,
+   "pos_in_graph_mean": 5.28,
+   "gap_true_mean": 0.342,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 3.48,
+   "support_paths_with_source_mean": 3.48,
+   "groups_mean": 2.48,
+   "clinical_groups_mean": 0.0,
+   "unexplained_mean": 1.8,
+   "undetermined_mean": 13.52,
+   "warn_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "warn_explained_by_other": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "warn_review_nonempty": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "conflict_no_knowledge": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 18,
+    "n": 25,
+    "rate": 0.72
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 1.52,
+   "groups_mean": 1.16,
+   "unexplained_mean": 3.44,
+   "undetermined_mean": 5.76,
+   "warn_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_in_review": {
+    "k": 23,
+    "n": 25,
+    "rate": 0.92
+   },
+   "withhold_wd_support0": {
+    "k": 8,
+    "n": 25,
+    "rate": 0.32
+   },
+   "truth_top1_graded_pess": {
+    "k": 18,
+    "n": 25,
+    "rate": 0.72
+   },
+   "truth_top1_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_support_pess": {
+    "k": 18,
+    "n": 25,
+    "rate": 0.72
+   },
+   "truth_top1_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   }
+  }
+ },
+ "HSDN_ONLY|Pericarditis": {
+  "n_patients": 25,
+  "coverage": {
+   "input_codes_mean": 12.08,
+   "exact_codes_mean": 3.32,
+   "used_codes_mean": 4.32,
+   "unmapped_ratio_mean": 0.6424,
+   "pos_in_graph_mean": 4.32,
+   "gap_true_mean": 0.366,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 2.72,
+   "support_paths_with_source_mean": 2.72,
+   "groups_mean": 1.72,
+   "clinical_groups_mean": 0.0,
+   "unexplained_mean": 1.6,
+   "undetermined_mean": 3.28,
+   "warn_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "warn_explained_by_other": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "warn_review_nonempty": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "conflict_no_knowledge": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 1.52,
+   "groups_mean": 1.16,
+   "unexplained_mean": 2.48,
+   "undetermined_mean": 9.72,
+   "warn_any_unexplained": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_in_review": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "withhold_wd_support0": {
+    "k": 8,
+    "n": 25,
+    "rate": 0.32
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_support_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   }
+  }
+ },
+ "HSDN_ONLY|Myocarditis": {
+  "n_patients": 25,
+  "coverage": {
+   "input_codes_mean": 12.48,
+   "exact_codes_mean": 3.32,
+   "used_codes_mean": 4.92,
+   "unmapped_ratio_mean": 0.6058,
+   "pos_in_graph_mean": 3.92,
+   "gap_true_mean": 0.4133,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 1.88,
+   "support_paths_with_source_mean": 1.88,
+   "groups_mean": 1.88,
+   "clinical_groups_mean": 0.0,
+   "unexplained_mean": 0.6,
+   "undetermined_mean": 6.12,
+   "warn_any_unexplained": {
+    "k": 15,
+    "n": 25,
+    "rate": 0.6
+   },
+   "warn_explained_by_other": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "warn_review_nonempty": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "conflict_no_knowledge": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 1.92,
+   "groups_mean": 1.24,
+   "unexplained_mean": 1.8,
+   "undetermined_mean": 8.68,
+   "warn_any_unexplained": {
+    "k": 19,
+    "n": 25,
+    "rate": 0.76
+   },
+   "truth_in_review": {
+    "k": 16,
+    "n": 25,
+    "rate": 0.64
+   },
+   "withhold_wd_support0": {
+    "k": 8,
+    "n": 25,
+    "rate": 0.32
+   },
+   "truth_top1_graded_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_support_pess": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_pess": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   }
+  }
+ },
+ "HSDN_ONLY|Tuberculosis": {
+  "n_patients": 25,
+  "coverage": {
+   "input_codes_mean": 8.28,
+   "exact_codes_mean": 3.16,
+   "used_codes_mean": 3.8,
+   "unmapped_ratio_mean": 0.5391,
+   "pos_in_graph_mean": 3.8,
+   "gap_true_mean": 0.3567,
+   "no_pos_in_graph": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   }
+  },
+  "A_truth_wd": {
+   "support_paths_mean": 2.4,
+   "support_paths_with_source_mean": 2.4,
+   "groups_mean": 2.4,
+   "clinical_groups_mean": 0.0,
+   "unexplained_mean": 1.4,
+   "undetermined_mean": 5.6,
+   "warn_any_unexplained": {
+    "k": 22,
+    "n": 25,
+    "rate": 0.88
+   },
+   "warn_explained_by_other": {
+    "k": 22,
+    "n": 25,
+    "rate": 0.88
+   },
+   "warn_review_nonempty": {
+    "k": 22,
+    "n": 25,
+    "rate": 0.88
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "conflict_no_knowledge": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 2,
+    "n": 25,
+    "rate": 0.08
+   }
+  },
+  "B_wrong_wd": {
+   "support_paths_mean": 2.0,
+   "groups_mean": 2.0,
+   "unexplained_mean": 1.8,
+   "undetermined_mean": 8.6,
+   "warn_any_unexplained": {
+    "k": 23,
+    "n": 25,
+    "rate": 0.92
+   },
+   "truth_in_review": {
+    "k": 23,
+    "n": 25,
+    "rate": 0.92
+   },
+   "withhold_wd_support0": {
+    "k": 0,
+    "n": 25,
+    "rate": 0.0
+   },
+   "truth_top1_graded_pess": {
+    "k": 2,
+    "n": 25,
+    "rate": 0.08
+   },
+   "truth_top1_graded_opt": {
+    "k": 9,
+    "n": 25,
+    "rate": 0.36
+   },
+   "truth_top1_support_pess": {
+    "k": 2,
+    "n": 25,
+    "rate": 0.08
+   },
+   "truth_top1_support_opt": {
+    "k": 9,
+    "n": 25,
+    "rate": 0.36
+   },
+   "truth_top3_graded_pess": {
+    "k": 20,
+    "n": 25,
+    "rate": 0.8
+   },
+   "truth_top3_graded_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   },
+   "truth_top3_support_pess": {
+    "k": 20,
+    "n": 25,
+    "rate": 0.8
+   },
+   "truth_top3_support_opt": {
+    "k": 25,
+    "n": 25,
+    "rate": 1.0
+   }
+  }
+ },
+ "pe_miss_ALL_condB": {
+  "n": 8,
+  "by_cause": {
+   "RANKING_PUSHED_DOWN": 8
+  }
+ }
+}
