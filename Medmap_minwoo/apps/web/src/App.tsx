@@ -30,6 +30,8 @@ import { buildSymptomHistories, buildTimeline, type SymptomHistoryPoint } from "
 import { dayKey, monthGrid } from "./calendar";
 import { DeviceStt, deviceSttReady, pcm16Base64, usesPhoneStt, Whisper } from "./phoneStt";
 import { extractIntake } from "./intake/extractor";
+import { outsideSymptoms, symptomSites, type OutsideSymptom } from "./intake/outsideSymptoms";
+import { loadSpanModel } from "./intake/spanModel";
 import { applyListChanges, describeChanges, factChanges, spokenNumbersToDigits, type FactChange } from "./transcriptCheck";
 import type { PluginListenerHandle } from "@capacitor/core";
 import { hasSpeech, joinChunks, tidyCaption, trimSilence } from "./speechAudio";
@@ -62,6 +64,12 @@ function go(view: View) {
 }
 
 const STATUS_LABEL = { present: "있음", absent: "없음", uncertain: "확실하지 않음" } as const;
+// "10월 16일 오전 10:10": short enough for the summary period to fit one line.
+const summaryDate = new Intl.DateTimeFormat("ko-KR", { month: "long", day: "numeric", hour: "numeric", minute: "2-digit" });
+const VIEW_TITLE: Record<View, string> = {
+  home: "MedMap", record: "증상 기록", review: "정리된 내용 확인", summary: "진료 전 요약",
+  history: "지난 기록", trends: "지난 기록", profile: "기본 정보",
+};
 const TREND_BADGE = {
   improving: { tone: "better", label: "↓ 호전 중" },
   worsening: { tone: "worse", label: "↑ 악화 중" },
@@ -108,11 +116,24 @@ const ACTION_ICONS = {
   copy: <><rect x="9" y="9" width="12" height="12" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></>,
   pdf: <><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5" /><path d="M9 14h6M9 17h4" /></>,
   qr: <><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><path d="M14 14h3v3h-3zM21 14v3M14 21h3M20 21h1" /></>,
+  // Lucide shapes (ISC), drawn the same way as the three above.
+  mic: <><rect x="9" y="2" width="6" height="12" rx="3" /><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4" /></>,
+  keyboard: <><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M7 15h10" /></>,
+  back: <path d="m15 18-6-6 6-6" />,
+  next: <path d="m9 18 6-6-6-6" />,
+  summary: <><rect x="5" y="3" width="14" height="18" rx="2" /><path d="M9 8h6M9 12h6M9 16h4" /></>,
+  calendar: <><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M16 3v4M8 3v4M3 11h18" /></>,
+  user: <><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></>,
+  plus: <path d="M12 5v14M5 12h14" />,
+  edit: <><path d="M12 20h9" /><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z" /></>,
+  sparkles: <><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" /><path d="M19 15v4M17 17h4" /></>,
+  check: <path d="M20 6 9 17l-5-5" />,
+  folder: <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />,
 };
 
-function ActionIcon({ name }: { name: keyof typeof ACTION_ICONS }) {
+function ActionIcon({ name, size = 26 }: { name: keyof typeof ACTION_ICONS; size?: number }) {
   return (
-    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.8"
+    <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.8"
       strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       {ACTION_ICONS[name]}
     </svg>
@@ -246,6 +267,9 @@ export default function App() {
   // On the phone with an on-device Korean recognizer: its caption listener while a recording is live, and the
   // turbo check of the transcript it produced (compared when the patient asks to organize the symptoms).
   const deviceSessionRef = useRef<PluginListenerHandle | null>(null);
+  // Symptoms the on-device model found that the rules do not know (HANDOFF 7-1-1), offered to add on the review screen.
+  const [outsideFound, setOutsideFound] = useState<OutsideSymptom[]>([]);
+  const outsideRunRef = useRef(0);
   const turboCheckRef = useRef<{ deviceText: string; turbo: Promise<string | null>; done: boolean } | null>(null);
   const [verification, setVerification] = useState<{ quickText: string; turboText: string; changes: FactChange<SymptomObservation>[] } | null>(null);
   const verificationRef = useRef<HTMLDivElement | null>(null);
@@ -637,12 +661,57 @@ export default function App() {
       });
       go("review");
       void checkAgainstTurbo(text);
+      void findOutsideSymptoms(text);
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "의료정보를 정리하지 못했습니다.");
     } finally {
       setExtracting(false);
     }
+  }
+
+  // Runs after the review screen opens: the model's parts the rules missed are offered to add, and where a symptom the
+  // rules found is ("관자놀이도 욱신거려" → 두통) fills its body site when the rules left it empty.
+  async function findOutsideSymptoms(text: string) {
+    const run = ++outsideRunRef.current;
+    setOutsideFound([]);
+    try {
+      const findSpans = await loadSpanModel();
+      if (!findSpans) return;
+      const spans = await findSpans(text);
+      if (run !== outsideRunRef.current) return;
+      const rules = extractIntake(text, localDateString());
+      const found = outsideSymptoms(text, rules, spans);
+      const sites = symptomSites(text, rules, spans, found);
+      setIntake((current) => current && ({
+        ...current,
+        symptoms: current.symptoms.map((symptom) =>
+          symptom.body_site ? symptom : { ...symptom, body_site: sites.get(symptom.name)?.[0] ?? null }),
+      }));
+      setOutsideFound(found.filter((part) => !part.known));
+    } catch {
+      // The model is a helper; without it the rules' result stands.
+    }
+  }
+
+  function addOutsideSymptom(part: OutsideSymptom) {
+    const [kind, site] = part.name.split("/");
+    setIntake((current) => current && ({
+      ...current,
+      symptoms: [...current.symptoms, {
+        name: part.name === "기타" ? part.text : kind,
+        status: part.status,
+        body_site: site ?? part.site,
+        onset: null,
+        onset_date: null,
+        severity: null,
+        frequency: null,
+        trend: null,
+        source_text: part.text,
+      }],
+    }));
+    setOutsideFound((current) => current.filter((item) => item !== part));
+    setConfirmed(false);
   }
 
   async function answerFollowUp(question: FollowUpQuestion, answer: string) {
@@ -794,7 +863,7 @@ export default function App() {
       ) as PatientProfile;
       if (Object.keys(said).length > 0) updateProfile(said);
       go("summary");
-      setRecordMessage("이 브라우저에 기록을 저장했습니다.");
+      setRecordMessage("이 휴대폰에 기록을 저장했습니다.");
     } catch {
       setConfirmed(false);
       setRecordMessage("기록을 저장하지 못했습니다. 브라우저 저장 권한을 확인해 주세요.");
@@ -859,7 +928,7 @@ export default function App() {
     </details>
   );
   const verificationBox = verification && (verification.changes.length === 0 ? (
-    <div className="verification-done">정밀 인식으로 확인했어요 {turboTextLink}</div>
+    <div className="verification-done"><ActionIcon name="check" size={18} />정밀 인식으로 확인했어요{turboTextLink}</div>
   ) : (
     <div className="review-warning verification" role="status" ref={verificationRef}>
       <div className="verification__row">
@@ -998,19 +1067,24 @@ export default function App() {
     <main className="page">
       <section className="card" aria-live="polite">
         {view === "home" ? (
-          <>
-            <p className="eyebrow">MedMap 진료 전 기록</p>
-            <h1>증상을 기록하고 진료 때 보여 주세요</h1>
-          </>
+          <header className="home-header">
+            <p className="eyebrow">MedMap</p>
+            <h1>증상을 기록하고<br />진료 때 보여 주세요</h1>
+          </header>
         ) : (
-          <button className="back-link" type="button" onClick={() => go("home")}>← 처음 화면</button>
+          <header className="topbar">
+            <button className="icon-button" type="button" onClick={() => go("home")} aria-label="처음 화면으로">
+              <ActionIcon name="back" size={24} />
+            </button>
+            <h1 className="topbar__title">{VIEW_TITLE[view]}</h1>
+          </header>
         )}
         {step > 0 && (
         <ol className="steps" aria-label="사용 순서">
-          {["증상 말하기", "정리된 내용 확인", "진료 전 요약 보여 주기"].map((label, index) => (
+          {["말하기", "확인", "요약"].map((label, index) => (
             <li
               key={label}
-              className={index + 1 === step ? "steps__item steps__item--current" : "steps__item"}
+              className={`steps__item${index + 1 === step ? " steps__item--current" : ""}${index + 1 < step ? " steps__item--done" : ""}`}
               aria-current={index + 1 === step ? "step" : undefined}
             >
               <span>{index + 1}</span>{label}
@@ -1019,62 +1093,71 @@ export default function App() {
         </ol>
         )}
         {view === "home" && (
-        <details className="record-group-picker">
-          <summary>기록 묶음: {currentGroupName ?? "불러오는 중"}</summary>
-          <label htmlFor="record-group">기록 묶음 바꾸기</label>
-          <select
-            id="record-group"
-            value={currentRecordGroupId}
-            onChange={(event) => selectRecordGroup(event.target.value)}
-          >
-            {recordGroups.map((group) => (
-              <option key={group.id} value={group.id}>{group.name}</option>
-            ))}
-          </select>
-          <button className="button--secondary" type="button" onClick={startNewRecordGroup}>
-            새 증상 기록 시작
-          </button>
-          <button className="button--delete" type="button" onClick={() => void removeCurrentRecordGroup()}>
-            현재 증상 기록 묶음 삭제
-          </button>
-          <p>아픈 기간마다 기록 묶음을 나누면, 요약·타임라인·PDF·QR이 그 묶음 안에서만 만들어집니다.</p>
-        </details>
-        )}
-        {view === "home" && latestEntry && (
           <section className="home-status" aria-label="지금 기록 상태">
-            <h2>진행 중인 증상</h2>
+            <div className="home-status__head">
+              <h2>진행 중인 증상</h2>
+              {latestEntry && (
+                <span className="home-status__last">
+                  마지막 기록 {new Intl.DateTimeFormat("ko-KR", { month: "long", day: "numeric", weekday: "short" }).format(new Date(latestEntry.createdAt))}
+                </span>
+              )}
+            </div>
             {activeEpisodes.length > 0 ? (
               <ul className="chips">
                 {activeEpisodes.map((episode) => (
-                  <li key={episode.id}>{episode.name} · {episodePeriod(episode)}</li>
+                  <li key={episode.id}><strong>{episode.name}</strong> {episodePeriod(episode)}</li>
                 ))}
               </ul>
             ) : (
-              <p>진행 중인 증상이 없습니다.</p>
+              <p className="muted">{latestEntry ? "진행 중인 증상이 없습니다." : "아직 기록이 없어요. 아래 버튼으로 시작해 보세요."}</p>
             )}
-            <p className="home-status__last">
-              마지막 기록: {new Intl.DateTimeFormat("ko-KR", { month: "long", day: "numeric", weekday: "short" }).format(new Date(latestEntry.createdAt))}
-            </p>
           </section>
         )}
         {view === "home" && (
-          <div className="home-menu">
-            <button className="home-menu__primary" type="button" onClick={startNewEntry}>새 증상 기록하기</button>
-            <button className="button--secondary" type="button" onClick={() => go("summary")} disabled={!visitSummary}>
-              진료 전 요약 보기
+          <>
+            <button className="cta" type="button" onClick={startNewEntry}>
+              <ActionIcon name="mic" size={24} />
+              새 증상 기록하기
             </button>
-            <button className="button--secondary" type="button" onClick={() => go("history")}>
-              지난 기록 보기 ({visibleRecords.length}개)
-            </button>
-            <button className="button--secondary" type="button" onClick={() => go("profile")}>
-              기본 정보 {profileText(profile) ? `(${profileText(profile)})` : "입력"}
-            </button>
-          </div>
+            <nav className="menu-list" aria-label="메뉴">
+              {([
+                ["summary", "summary", "진료 전 요약", visitSummary ? "의사에게 보여 줄 요약" : "기록을 저장하면 만들어져요", !visitSummary],
+                ["history", "calendar", "지난 기록", `${visibleRecords.length}개 · 달력과 증상별 변화`, false],
+                ["profile", "user", "기본 정보", profileText(profile) || "나이·성별·흡연·음주 (선택)", false],
+              ] as const).map(([target, icon, label, hint, disabled]) => (
+                <button className="menu-list__item" type="button" key={target} onClick={() => go(target)} disabled={disabled}>
+                  <span className="menu-list__icon"><ActionIcon name={icon} size={22} /></span>
+                  <span className="menu-list__text"><strong>{label}</strong><span>{hint}</span></span>
+                  <ActionIcon name="next" size={20} />
+                </button>
+              ))}
+            </nav>
+            <details className="record-group-picker">
+              <summary>
+                <ActionIcon name="folder" size={18} />
+                <span>기록 묶음 · {currentGroupName ?? "불러오는 중"}</span>
+              </summary>
+              <p>아픈 기간마다 기록 묶음을 나누면 요약·달력·PDF·QR이 그 묶음 안에서만 만들어집니다.</p>
+              <label htmlFor="record-group">기록 묶음 바꾸기</label>
+              <select
+                id="record-group"
+                value={currentRecordGroupId}
+                onChange={(event) => selectRecordGroup(event.target.value)}
+              >
+                {recordGroups.map((group) => (
+                  <option key={group.id} value={group.id}>{group.name}</option>
+                ))}
+              </select>
+              <div className="button-row">
+                <button className="button--secondary" type="button" onClick={startNewRecordGroup}>새 묶음 시작</button>
+                <button className="button--delete" type="button" onClick={() => void removeCurrentRecordGroup()}>이 묶음 삭제</button>
+              </div>
+            </details>
+          </>
         )}
         {view === "profile" && (
         <section className="patient-profile">
-          <h2 className="step-title">기본 정보 (선택)</h2>
-          <p>진료 전 요약에 함께 적힙니다. 이 브라우저에만 저장됩니다.</p>
+          <p className="lead">진료 전 요약에 함께 적힙니다. 모두 선택 사항이며 이 휴대폰에만 저장됩니다.</p>
           <label>
             나이
             <input
@@ -1140,19 +1223,21 @@ export default function App() {
         )}
         {view === "record" && (
         <>
-        <h2 className="step-title">1. 증상을 말하거나 적어 주세요</h2>
+        <h2 className="step-title">어디가 어떻게 불편하세요?</h2>
         <p className={`status status--${status}`}>{message}</p>
         {status === "transcribing" && <progress className="stt-progress" aria-label="음성 변환 중" />}
 
         <div className="controls">
           {status === "recording" ? (
             <button className="button--stop" type="button" onClick={stopRecording}>
+              <span className="rec-dot" aria-hidden="true" />
               녹음 종료
             </button>
           ) : (
             <>
               <button type="button" onClick={startRecording} disabled={busy}>
-                {status === "transcribing" ? "변환 중…" : "음성으로 기록"}
+                <ActionIcon name="mic" size={22} />
+                {status === "transcribing" ? "변환 중…" : "말로 기록"}
               </button>
               <button
                 className="button--secondary"
@@ -1160,13 +1245,14 @@ export default function App() {
                 onClick={startTextEntry}
                 disabled={busy}
               >
-                텍스트로 기록
+                <ActionIcon name="keyboard" size={22} />
+                글로 적기
               </button>
             </>
           )}
         </div>
 
-        <label htmlFor="transcript">변환된 문장</label>
+        <label htmlFor="transcript">말한 내용</label>
         <textarea
           ref={transcriptRef}
           id="transcript"
@@ -1176,17 +1262,18 @@ export default function App() {
             setIntake(null);
             setConfirmed(false);
           }}
-          placeholder="음성 변환 결과가 여기에 표시됩니다."
-          rows={6}
+          placeholder="예: 어제부터 머리가 아프고 열이 38도까지 났어요."
+          rows={5}
           disabled={status === "transcribing"}
         />
 
         <button
+          className="primary-wide"
           type="button"
           onClick={() => void extractMedicalInformation()}
           disabled={!transcript.trim() || extracting || busy}
         >
-          {extracting ? "정리 중…" : "다음: 증상 정리하기"}
+          {extracting ? "정리 중…" : "증상 정리하기"}
         </button>
         </>
         )}
@@ -1199,7 +1286,7 @@ export default function App() {
         )}
         {view === "review" && intake && (
           <section className="intake" aria-label="정리된 의료정보">
-            <h2 className="step-title">2. 정리된 내용을 확인해 주세요</h2>
+            <p className="lead">말씀하신 내용을 이렇게 정리했어요. 틀린 곳은 고쳐 주세요.</p>
             {urgentSymptoms(intake.symptoms).length > 0 && (
               <div className="urgent-notice" role="alert">
                 <strong>{urgentSymptoms(intake.symptoms).join(", ")}</strong>
@@ -1209,100 +1296,13 @@ export default function App() {
             {severeSymptoms(intake.symptoms).length > 0 && (
               <p className="severe-notice" role="status">{severeNotice(severeSymptoms(intake.symptoms))}</p>
             )}
-            {intake.unrecognized_fragments.length > 0 && (
-              <div className="review-warning" role="alert">
-                <strong>자동으로 정리하지 못한 표현</strong>
-                {intake.unrecognized_fragments.map((fragment, index) => (
-                  <p key={`${fragment}-${index}`}>“{fragment}”</p>
-                ))}
-                <p>원문을 확인하고 필요하면 아래 ‘증상 직접 추가’로 넣어 주세요.</p>
-              </div>
+            {verificationBox}
+
+            <h2 className="section-title">증상 <span className="count">{intake.symptoms.length}</span></h2>
+            {intake.symptoms.length === 0 && (
+              <p className="empty-result">찾은 증상이 없습니다. 아래에서 직접 추가할 수 있어요.</p>
             )}
-            {followUpQuestions(intake.symptoms).filter((question) => !skippedQuestions.has(question.key)).length
-              + medicineQuestions.length > 0 && (
-              <div className="follow-up">
-                <strong>추가로 알려 주세요</strong>
-                {followUpQuestions(intake.symptoms)
-                  .filter((question) => !skippedQuestions.has(question.key))
-                  .map((question) => (
-                    <div className="follow-up-item" key={question.key}>
-                      <p>{question.question}</p>
-                      {question.choices && (
-                        <div className="follow-up-choices">
-                          {question.choices.map((choice) => (
-                            <button
-                              className="button--secondary"
-                              type="button"
-                              key={choice}
-                              onClick={() => void answerFollowUp(question, choice)}
-                            >
-                              {choice}
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                      <div className="follow-up-answer">
-                        <input
-                          value={answerDrafts[question.key] ?? ""}
-                          placeholder={question.field === "onset" ? "예: 어제부터, 3일 전부터" : "직접 입력"}
-                          aria-label={question.question}
-                          onChange={(event) => setAnswerDrafts((current) => ({ ...current, [question.key]: event.target.value }))}
-                        />
-                        <button
-                          className="button--secondary"
-                          type="button"
-                          onClick={() => void answerFollowUp(question, answerDrafts[question.key] ?? "")}
-                        >
-                          입력
-                        </button>
-                        <button
-                          className="button--secondary"
-                          type="button"
-                          onClick={() => setSkippedQuestions((current) => new Set(current).add(question.key))}
-                        >
-                          건너뛰기
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                {medicineQuestions.map(({ key, question, placeholder, choices, apply }) => (
-                  <div className="follow-up-item" key={key}>
-                    <p>{question}</p>
-                    {choices && (
-                      <div className="follow-up-choices">
-                        {choices.map((choice) => (
-                          <button className="button--secondary" type="button" key={choice} onClick={() => apply(choice)}>
-                            {choice}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                    <div className="follow-up-answer">
-                      <input
-                        value={answerDrafts[key] ?? ""}
-                        placeholder={placeholder}
-                        aria-label={question}
-                        onChange={(event) => setAnswerDrafts((current) => ({ ...current, [key]: event.target.value }))}
-                      />
-                      <button className="button--secondary" type="button" onClick={() => apply(answerDrafts[key] ?? "")}>
-                        입력
-                      </button>
-                      <button
-                        className="button--secondary"
-                        type="button"
-                        onClick={() => setSkippedQuestions((current) => new Set(current).add(key))}
-                      >
-                        건너뛰기
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-            <p>잘못 정리된 내용은 직접 고친 뒤 확인해 주세요.</p>
-            {intake.symptoms.length === 0 ? (
-              <p className="empty-result">현재 규칙에서 찾은 증상이 없습니다.</p>
-            ) : intake.symptoms.map((symptom, index) => (
+            {intake.symptoms.map((symptom, index) => (
               <div
                 className={urgentSymptoms([symptom]).length > 0 ? "observation observation--urgent" : "observation"}
                 key={index}
@@ -1317,15 +1317,17 @@ export default function App() {
                 </div>
                 {symptom.status === "present" && (
                   <dl className="facts">
-                    <div><dt>시작</dt><dd>{formatOnset(symptom.onset, symptom.onset_date) || "확인되지 않음"}</dd></div>
-                    <div><dt>정도</dt><dd>{symptom.severity || "확인되지 않음"}</dd></div>
-                    {tracksFrequency(symptom.name) && <div><dt>횟수</dt><dd>{symptom.frequency || "확인되지 않음"}</dd></div>}
+                    <div><dt>시작</dt><dd>{formatOnset(symptom.onset, symptom.onset_date) || "—"}</dd></div>
+                    <div><dt>정도</dt><dd>{symptom.severity || "—"}</dd></div>
+                    {tracksFrequency(symptom.name) && <div><dt>횟수</dt><dd>{symptom.frequency || "—"}</dd></div>}
                   </dl>
                 )}
-                <p className="source-text">원문 근거: “{symptom.source_text}”</p>
                 {/* Details stay folded until the patient wants to correct them; a hand-added symptom opens ready to fill. */}
                 <details className="observation-edit" open={symptom.source_text === "사용자가 직접 추가" || undefined}>
-                <summary>고치기</summary>
+                <summary>
+                  <span className="source-text">“{symptom.source_text}”</span>
+                  <span className="observation-edit__toggle"><ActionIcon name="edit" size={16} />고치기</span>
+                </summary>
                 <div className="observation-fields">
                 <label>
                   증상
@@ -1412,15 +1414,103 @@ export default function App() {
             <datalist id="supported-symptoms">
               {SUPPORTED_SYMPTOMS.map((name) => <option key={name} value={name} />)}
             </datalist>
-            <button className="button--secondary" type="button" onClick={addSymptom}>
+            <button className="add-button" type="button" onClick={addSymptom}>
+              <ActionIcon name="plus" size={20} />
               증상 직접 추가
             </button>
-            <div className="intake-lists">
+
+            {outsideFound.length > 0 && (
+              <section className="panel panel--ai" aria-label="AI가 찾은 다른 증상">
+                <h2 className="panel__title"><ActionIcon name="sparkles" size={20} />AI가 찾은 다른 증상</h2>
+                <p className="panel__hint">맞으면 추가해 주세요.</p>
+                <ul className="suggestions">
+                  {outsideFound.map((part) => (
+                    <li key={`${part.start}-${part.end}`}>
+                      <div>
+                        <strong>
+                          {part.name === "기타" ? "이름 없는 증상" : part.name.replace("/", " · ")}
+                          <span className={`badge badge--${part.status}`}>{STATUS_LABEL[part.status]}</span>
+                        </strong>
+                        <span className="source-text">“{part.text}”</span>
+                      </div>
+                      <button className="chip-button" type="button" onClick={() => addOutsideSymptom(part)}>
+                        <ActionIcon name="plus" size={18} />추가
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {intake.unrecognized_fragments.length > 0 && (
+              <div className="review-warning" role="alert">
+                <strong>자동으로 정리하지 못한 표현</strong>
+                {intake.unrecognized_fragments.map((fragment, index) => (
+                  <p key={`${fragment}-${index}`}>“{fragment}”</p>
+                ))}
+                <p>필요하면 위 ‘증상 직접 추가’로 넣어 주세요.</p>
+              </div>
+            )}
+
+            {followUpQuestions(intake.symptoms).filter((question) => !skippedQuestions.has(question.key)).length
+              + medicineQuestions.length > 0 && (
+              <section className="panel" aria-label="추가 질문">
+                <h2 className="panel__title">더 알려 주시면 좋아요</h2>
+                {[
+                  ...followUpQuestions(intake.symptoms)
+                    .filter((question) => !skippedQuestions.has(question.key))
+                    .map((question) => ({
+                      key: question.key,
+                      question: question.question,
+                      placeholder: question.field === "onset" ? "예: 어제부터, 3일 전부터" : "직접 입력",
+                      choices: question.choices,
+                      apply: (answer: string) => void answerFollowUp(question, answer),
+                    })),
+                  ...medicineQuestions,
+                ].map(({ key, question, placeholder, choices, apply }) => (
+                  <div className="follow-up-item" key={key}>
+                    <div className="follow-up-item__head">
+                      <p>{question}</p>
+                      <button
+                        className="text-button"
+                        type="button"
+                        onClick={() => setSkippedQuestions((current) => new Set(current).add(key))}
+                      >
+                        건너뛰기
+                      </button>
+                    </div>
+                    {choices && (
+                      <div className="follow-up-choices">
+                        {choices.map((choice) => (
+                          <button className="chip-button" type="button" key={choice} onClick={() => apply(choice)}>
+                            {choice}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    <div className="follow-up-answer">
+                      <input
+                        value={answerDrafts[key] ?? ""}
+                        placeholder={placeholder}
+                        aria-label={question}
+                        onChange={(event) => setAnswerDrafts((current) => ({ ...current, [key]: event.target.value }))}
+                      />
+                      <button className="chip-button" type="button" onClick={() => apply(answerDrafts[key] ?? "")}>
+                        입력
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </section>
+            )}
+
+            <section className="panel intake-lists" aria-label="약·알레르기·과거력">
+              <h2 className="panel__title">약 · 알레르기 · 과거력</h2>
               <label>
                 복용약
                 <input
                   value={listDrafts.medications}
-                  placeholder="확인되지 않음 (쉼표로 구분)"
+                  placeholder="없으면 비워 두세요 (쉼표로 구분)"
                   onChange={(event) => updateListDraft("medications", event.target.value)}
                 />
               </label>
@@ -1428,7 +1518,7 @@ export default function App() {
                 알레르기
                 <input
                   value={listDrafts.allergies}
-                  placeholder="확인되지 않음 (쉼표로 구분)"
+                  placeholder="없으면 비워 두세요 (쉼표로 구분)"
                   onChange={(event) => updateListDraft("allergies", event.target.value)}
                 />
               </label>
@@ -1436,18 +1526,17 @@ export default function App() {
                 과거력 (앓고 있는 병, 수술)
                 <input
                   value={listDrafts.medical_history}
-                  placeholder="확인되지 않음 (쉼표로 구분)"
+                  placeholder="없으면 비워 두세요 (쉼표로 구분)"
                   onChange={(event) => updateListDraft("medical_history", event.target.value)}
                 />
               </label>
-            </div>
+            </section>
             {profileText(intake.profile) && (
               <div className="others-review">
                 <strong>말에서 찾은 기본 정보</strong>
-                <p>{profileText(intake.profile)}</p>
-                <p>저장하면 기본 정보 칸에 반영됩니다.</p>
+                <p>{profileText(intake.profile)} · 저장하면 기본 정보에 반영됩니다.</p>
                 <button
-                  className="button--secondary"
+                  className="text-button"
                   type="button"
                   onClick={() => setIntake((current) => current && { ...current, profile: {} })}
                 >
@@ -1457,35 +1546,35 @@ export default function App() {
             )}
             {intake.others_symptoms.length > 0 && (
               <div className="others-review">
-                <strong>다른 사람에 대한 내용으로 보이는 표현</strong>
+                <strong>다른 사람에 대한 내용</strong>
                 <p>환자 본인의 증상이 아니어서 따로 모았습니다. 본인 증상이면 옮겨 주세요.</p>
                 {intake.others_symptoms.map((item, index) => (
                   <div className="others-item" key={`${item.person}-${item.symptom}-${index}`}>
                     <span>{item.person}: {item.symptom} (“{item.source_text}”)</span>
-                    <button className="button--secondary" type="button" onClick={() => moveOtherToPatient(index)}>
-                      본인 증상으로 옮기기
+                    <button className="chip-button" type="button" onClick={() => moveOtherToPatient(index)}>
+                      본인 증상으로
                     </button>
-                    <button className="button--delete" type="button" onClick={() => removeOther(index)}>
+                    <button className="text-button text-button--danger" type="button" onClick={() => removeOther(index)}>
                       삭제
                     </button>
                   </div>
                 ))}
               </div>
             )}
-            {verificationBox}
-            <button type="button" onClick={() => void confirmAndSave()} disabled={savingRecord || confirmed || !currentRecordGroupId || turboChecking}>
-              {savingRecord ? "저장 중…" : turboChecking ? "정밀 인식 확인 중…" : verification?.changes.length ? "위 정밀 인식 결과를 먼저 확인해 주세요" : "확인하고 기록 저장"}
-            </button>
-            {turboChecking && <p className="record-message">말씀하신 내용을 정밀 인식으로 한 번 더 확인하고 있습니다. 그동안 내용을 확인하고 고칠 수 있습니다.</p>}
-            {confirmed && <p className="confirmed">확인한 내용을 현재 브라우저에 저장했습니다.</p>}
+            {turboChecking && <p className="record-message">정밀 인식으로 한 번 더 확인하고 있어요. 그동안 내용을 고칠 수 있습니다.</p>}
+            {confirmed && <p className="confirmed">확인한 내용을 이 휴대폰에 저장했습니다.</p>}
+            <div className="sticky-actions">
+              <button type="button" onClick={() => void confirmAndSave()} disabled={savingRecord || confirmed || !currentRecordGroupId || turboChecking}>
+                {savingRecord ? "저장 중…" : turboChecking ? "정밀 인식 확인 중…" : verification?.changes.length ? "위 정밀 인식 결과를 먼저 확인해 주세요" : confirmed ? "저장했어요" : "확인하고 저장"}
+              </button>
+            </div>
           </section>
         )}
         {recordMessage && <p className="record-message">{recordMessage}</p>}
         {view === "summary" && (
         <>
         <section className="visit-summary" aria-label="진료 전 요약">
-          <h2 className="step-title">3. 진료 전 요약</h2>
-          <p>병원에서 보여줄 수 있도록 확인한 기록을 짧게 정리합니다.</p>
+          <p className="lead">확인한 기록을 진료 때 보여 주기 좋게 정리했어요.</p>
           {!visitSummary ? (
             <p className="empty-result">요약할 기록이 없습니다.</p>
           ) : (
@@ -1493,15 +1582,9 @@ export default function App() {
               <p className="summary-meta">
                 <span className="summary-meta__label">기록 기간</span>
                 <span>
-                  {new Intl.DateTimeFormat("ko-KR", {
-                    dateStyle: "medium",
-                    timeStyle: "short",
-                  }).format(new Date(visitSummary.firstRecordedAt))}
+                  {summaryDate.format(new Date(visitSummary.firstRecordedAt))}
                   {" ~ "}
-                  {new Intl.DateTimeFormat("ko-KR", {
-                    dateStyle: "medium",
-                    timeStyle: "short",
-                  }).format(new Date(visitSummary.lastRecordedAt))}
+                  {summaryDate.format(new Date(visitSummary.lastRecordedAt))}
                 </span>
               </p>
               {visitSummary.profile && (
@@ -1611,7 +1694,6 @@ export default function App() {
         )}
         {view === "trends" && (
         <>
-        <h2 className="step-title">지난 기록</h2>
         {historySwitch}
         {!shownHistory ? (
           <p className="empty-result">아직 저장된 기록이 없습니다.</p>
@@ -1685,13 +1767,12 @@ export default function App() {
 
         {view === "history" && (
         <>
-        <h2 className="step-title">지난 기록</h2>
         {historySwitch}
         <section className="calendar" aria-label="증상 기록 달력">
           <div className="calendar__head">
-            <button className="button--secondary" type="button" onClick={() => moveMonth(-1)} aria-label="이전 달">‹</button>
+            <button className="icon-button" type="button" onClick={() => moveMonth(-1)} aria-label="이전 달"><ActionIcon name="back" size={22} /></button>
             <h2>{shownMonth.getFullYear()}년 {shownMonth.getMonth() + 1}월</h2>
-            <button className="button--secondary" type="button" onClick={() => moveMonth(1)} aria-label="다음 달">›</button>
+            <button className="icon-button" type="button" onClick={() => moveMonth(1)} aria-label="다음 달"><ActionIcon name="next" size={22} /></button>
           </div>
           <div className="calendar__grid">
             {["일", "월", "화", "수", "목", "금", "토"].map((weekday) => (
@@ -1776,7 +1857,7 @@ export default function App() {
         </section>
         <details className="history">
           <summary>저장된 기록 관리·백업 ({visibleRecords.length}개)</summary>
-          <p>이 기기의 현재 브라우저에만 보관됩니다.</p>
+          <p className="muted">기록은 이 휴대폰에만 보관됩니다.</p>
           <div className="backup-actions">
             <button className="button--secondary" type="button" onClick={exportBackup}>
               전체 기록 백업 파일로 내보내기
@@ -1844,10 +1925,11 @@ export default function App() {
         </details>
         </>
         )}
-        <p className="privacy-note">
-          음성은 글자로 바꾸는 동안만 사용합니다. 확인한 기록은 이 브라우저 안에만
-          저장되며 서버에는 보관하지 않습니다.
-        </p>
+        {view === "home" && (
+          <p className="privacy-note">
+            음성은 이 휴대폰 안에서 글자로 바꾸고, 확인한 기록도 이 휴대폰에만 저장합니다. 서버로 보내지 않습니다.
+          </p>
+        )}
       </section>
     </main>
   );

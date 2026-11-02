@@ -12,14 +12,19 @@ const patterns = new Map<string, RegExp>();
 const pattern = (word: string) =>
   patterns.get(word) ?? patterns.set(word, new RegExp(word.trim().split(/\s+/).map(squash).join(".{0,6}"))).get(word)!;
 
-/** The entry whose longest word is in the text (the longer word wins: "손목" over "목"), or null. */
-function longest(entries: Word[], text: string): Word | null {
+// A one-syllable word ("질", "입", "배") counts only on its own, maybe with a particle: not in 딸꾹질, 입원 or 배고파.
+const alone = (word: string) => patterns.get(`1:${word}`) ?? patterns.set(`1:${word}`,
+  new RegExp(`(?<![가-힣])${word}(?=$|[^가-힣]|이|가|은|는|을|를|에|도|과|와|랑|쪽|만|까지|부터|의)`)).get(`1:${word}`)!;
+
+/** The entry whose longest word is in the part (the longer word wins: "손목" over "목"), or null. */
+function longest(entries: Word[], part: string): Word | null {
+  const text = squash(part);
   let best: Word | null = null;
   let size = 0;
   for (const entry of entries) {
     for (const word of entry.words) {
       const wanted = squash(word);
-      if (wanted.length > size && pattern(word).test(text)) {
+      if (wanted.length > size && (/^[가-힣]$/.test(word) ? alone(word).test(part) : pattern(word).test(text))) {
         best = entry;
         size = wanted.length;
       }
@@ -38,11 +43,10 @@ const LISTED_PAIN: Record<string, string> = {
 };
 
 export function nameSymptom(part: string): string {
-  const text = squash(part);
-  const named = longest(vocabulary.symptoms, text);
+  const named = longest(vocabulary.symptoms, part);
   if (named) return named.name;
-  const kind = longest(vocabulary.kinds, text);
-  const site = longest(vocabulary.sites, text);
+  const kind = longest(vocabulary.kinds, part);
+  const site = longest(vocabulary.sites, part);
   if (!kind || !site) return "기타";
   return LISTED_KIND[kind.name] ?? (kind.name === "통증" ? LISTED_PAIN[site.name] : undefined) ?? `${kind.name}/${site.name}`;
 }
@@ -50,4 +54,4 @@ export function nameSymptom(part: string): string {
 export const isListed = (name: string) => name in vocabulary.listed;
 
 /** The body site said in the part ("관자놀이도 욱신거려" → 관자놀이), or null. */
-export const siteOf = (part: string) => longest(vocabulary.sites, squash(part))?.name ?? null;
+export const siteOf = (part: string) => longest(vocabulary.sites, part)?.name ?? null;

@@ -40,3 +40,6 @@ coverage/
 
 # graphify code-graph output (regenerate with /graphify .)
 /graphify-out/
+
+# The span model is built by apps/web/train/export_onnx.py from local-cache (about 15MB per retrain)
+/apps/web/public/models/spans.onnx

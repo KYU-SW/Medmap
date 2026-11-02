@@ -1,0 +1,3 @@
+allowBuilds:
+  # Its install script only checks the Node version; onnxruntime-web needs none of it.
+  protobufjs: false
