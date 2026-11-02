@@ -58,9 +58,15 @@
 "B008": [
 {
 "start": 0,
+"end": 2,
+"status": "present",
+"text": "계단"
+},
+{
+"start": 8,
 "end": 17,
 "status": "present",
-"text": "계단 오를 때 숨쉬기가 힘들어요"
+"text": "숨쉬기가 힘들어요"
 }
 ],
 "B009": [
@@ -131,9 +137,9 @@
 "B018": [
 {
 "start": 0,
-"end": 13,
+"end": 1,
 "status": "present",
-"text": "침 삼킬 때 목이 아파요"
+"text": "침"
 }
 ],
 "B019": [
@@ -192,14 +198,7 @@
 "text": "몸이 으슬으슬 추워요"
 }
 ],
-"B026": [
-{
-"start": 0,
-"end": 7,
-"status": "present",
-"text": "오한이 들어요"
-}
-],
+"B026": [],
 "B027": [
 {
 "start": 0,
@@ -387,9 +386,9 @@
 "B050": [
 {
 "start": 0,
-"end": 3,
+"end": 14,
 "status": "present",
-"text": "명치가"
+"text": "명치가 타는 것처럼 쓰려요"
 }
 ],
 "B051": [
@@ -408,7 +407,14 @@
 "text": "밥을 통 못 먹겠어요"
 }
 ],
-"B053": [],
+"B053": [
+{
+"start": 0,
+"end": 7,
+"status": "present",
+"text": "잠을 못 자요"
+}
+],
 "B054": [
 {
 "start": 0,
@@ -508,9 +514,15 @@
 "B066": [
 {
 "start": 0,
+"end": 2,
+"status": "present",
+"text": "등이"
+},
+{
+"start": 3,
 "end": 12,
 "status": "present",
-"text": "등이 근질근질 가려워요"
+"text": "근질근질 가려워요"
 }
 ],
 "B067": [
@@ -641,7 +653,14 @@
 "text": "소변 색이 빨개요"
 }
 ],
-"B083": [],
+"B083": [
+{
+"start": 0,
+"end": 2,
+"status": "present",
+"text": "소변"
+}
+],
 "B084": [
 {
 "start": 0,
@@ -666,8 +685,34 @@
 "text": "밤에 소변 때문에 몇 번씩 깨요"
 }
 ],
-"B087": [],
-"B088": [],
+"B087": [
+{
+"start": 0,
+"end": 2,
+"status": "present",
+"text": "어제"
+},
+{
+"start": 3,
+"end": 12,
+"status": "present",
+"text": "갑자기 쓰러졌어요"
+}
+],
+"B088": [
+{
+"start": 0,
+"end": 2,
+"status": "present",
+"text": "잠깐"
+},
+{
+"start": 3,
+"end": 11,
+"status": "present",
+"text": "정신을 잃었어요"
+}
+],
 "B089": [
 {
 "start": 0,
@@ -724,7 +769,14 @@
 "text": "살이 많이 빠졌어요"
 }
 ],
-"B096": [],
+"B096": [
+{
+"start": 0,
+"end": 16,
+"status": "present",
+"text": "한 달 만에 5킬로가 빠졌어요"
+}
+],
 "B097": [
 {
 "start": 0,
@@ -792,9 +844,9 @@
 "B105": [
 {
 "start": 0,
-"end": 1,
+"end": 15,
 "status": "present",
-"text": "숨"
+"text": "숨 쉴 때 쌕쌕 소리가 나요"
 }
 ],
 "B106": [
@@ -949,13 +1001,26 @@
 "text": "기분이 계속 가라앉아요"
 }
 ],
-"B125": [],
+"B125": [
+{
+"start": 0,
+"end": 4,
+"status": "present",
+"text": "불안해요"
+}
+],
 "B126": [
 {
 "start": 0,
+"end": 2,
+"status": "present",
+"text": "자꾸"
+},
+{
+"start": 3,
 "end": 12,
 "status": "present",
-"text": "자꾸 초조하고 불안해요"
+"text": "초조하고 불안해요"
 }
 ],
 "B127": [
@@ -990,14 +1055,7 @@
 "text": "자꾸 목이 말라서 물을 많이 마셔요"
 }
 ],
-"N001": [
-{
-"start": 0,
-"end": 6,
-"status": "present",
-"text": "열은 없어요"
-}
-],
+"N001": [],
 "N002": [
 {
 "start": 0,
@@ -1022,20 +1080,13 @@
 "text": "배가 아프지는 않아요"
 }
 ],
-"N005": [
-{
-"start": 0,
-"end": 1,
-"status": "uncertain",
-"text": "숨"
-}
-],
+"N005": [],
 "N006": [
 {
 "start": 0,
-"end": 13,
+"end": 2,
 "status": "present",
-"text": "콧물이나 코막힘은 없어요"
+"text": "콧물"
 }
 ],
 "N007": [
@@ -1066,7 +1117,7 @@
 {
 "start": 0,
 "end": 10,
-"status": "present",
+"status": "absent",
 "text": "가슴 통증은 없어요"
 }
 ],
@@ -1089,19 +1140,12 @@
 "N013": [
 {
 "start": 0,
-"end": 10,
+"end": 2,
 "status": "present",
-"text": "두통은 이제 없어요"
+"text": "두통"
 }
 ],
-"N014": [
-{
-"start": 0,
-"end": 12,
-"status": "present",
-"text": "배는 이제 괜찮아졌어요"
-}
-],
+"N014": [],
 "N015": [
 {
 "start": 0,
@@ -1130,19 +1174,12 @@
 "N019": [
 {
 "start": 0,
-"end": 2,
+"end": 1,
 "status": "present",
-"text": "잠은"
+"text": "잠"
 }
 ],
-"N020": [
-{
-"start": 0,
-"end": 8,
-"status": "present",
-"text": "입맛은 괜찮아요"
-}
-],
+"N020": [],
 "N021": [
 {
 "start": 0,
@@ -1170,19 +1207,12 @@
 "N024": [
 {
 "start": 0,
-"end": 1,
-"status": "present",
-"text": "숨"
+"end": 11,
+"status": "absent",
+"text": "숨 쉬는 건 괜찮아요"
 }
 ],
-"N025": [
-{
-"start": 0,
-"end": 10,
-"status": "present",
-"text": "두근거림은 없었어요"
-}
-],
+"N025": [],
 "U001": [
 {
 "start": 0,
@@ -1194,16 +1224,16 @@
 "U002": [
 {
 "start": 0,
-"end": 2,
-"status": "present",
-"text": "열이"
+"end": 15,
+"status": "uncertain",
+"text": "열이 있는지 없는지 헷갈려요"
 }
 ],
 "U003": [
 {
 "start": 9,
 "end": 22,
-"status": "present",
+"status": "uncertain",
 "text": "손이 좀 저린 것 같아요"
 }
 ],
@@ -1226,9 +1256,9 @@
 "U006": [
 {
 "start": 0,
-"end": 11,
-"status": "present",
-"text": "기침은 잘 모르겠어요"
+"end": 2,
+"status": "uncertain",
+"text": "기침"
 }
 ],
 "U007": [
@@ -1248,9 +1278,9 @@
 },
 {
 "start": 9,
-"end": 10,
-"status": "present",
-"text": "열"
+"end": 21,
+"status": "uncertain",
+"text": "열은 있는지 모르겠어요"
 }
 ],
 "U009": [
@@ -1287,39 +1317,39 @@
 {
 "start": 15,
 "end": 25,
-"status": "present",
+"status": "uncertain",
 "text": "열은 잘 모르겠어요"
 }
 ],
 "U013": [
 {
 "start": 0,
-"end": 12,
-"status": "present",
-"text": "소변을 자주 보는 건지"
+"end": 17,
+"status": "uncertain",
+"text": "소변을 자주 보는 건지 헷갈려요"
 }
 ],
 "U014": [
 {
 "start": 0,
-"end": 28,
+"end": 11,
 "status": "present",
-"text": "열이 좀 있는 거 같기도 하고 아닌 거 같기도 해요"
+"text": "열이 좀 있는 거 같"
 }
 ],
 "U015": [
 {
 "start": 0,
-"end": 6,
-"status": "present",
-"text": "다리가 부은"
+"end": 24,
+"status": "uncertain",
+"text": "다리가 부은 건지 원래 그런 건지 모르겠어요"
 }
 ],
 "U016": [
 {
 "start": 0,
 "end": 5,
-"status": "present",
+"status": "uncertain",
 "text": "숨이 차요"
 }
 ],
@@ -1334,19 +1364,12 @@
 "U018": [
 {
 "start": 0,
-"end": 21,
+"end": 5,
 "status": "present",
-"text": "머리 아픈 게 약 때문인지는 모르겠어요"
+"text": "머리 아픈"
 }
 ],
-"U019": [
-{
-"start": 0,
-"end": 2,
-"status": "present",
-"text": "오한"
-}
-],
+"U019": [],
 "U020": [],
 "T001": [
 {
@@ -1356,8 +1379,22 @@
 "text": "배가 아파요"
 }
 ],
-"T002": [],
-"T003": [],
+"T002": [
+{
+"start": 5,
+"end": 11,
+"status": "present",
+"text": "기침이 나요"
+}
+],
+"T003": [
+{
+"start": 6,
+"end": 11,
+"status": "present",
+"text": "열이 나요"
+}
+],
 "T004": [
 {
 "start": 7,
@@ -1366,7 +1403,14 @@
 "text": "머리가 아파요"
 }
 ],
-"T005": [],
+"T005": [
+{
+"start": 0,
+"end": 13,
+"status": "present",
+"text": "사흘 전부터 설사를 해요"
+}
+],
 "T006": [
 {
 "start": 0,
@@ -1383,10 +1427,37 @@
 "text": "5일째 콧물이 나요"
 }
 ],
-"T008": [],
+"T008": [
+{
+"start": 0,
+"end": 3,
+"status": "present",
+"text": "일주일"
+},
+{
+"start": 8,
+"end": 15,
+"status": "present",
+"text": "허리가 아파요"
+}
+],
 "T009": [],
-"T010": [],
-"T011": [],
+"T010": [
+{
+"start": 8,
+"end": 12,
+"status": "present",
+"text": "피곤해요"
+}
+],
+"T011": [
+{
+"start": 0,
+"end": 14,
+"status": "present",
+"text": "10월 1일부터 어지러워요"
+}
+],
 "T012": [
 {
 "start": 0,
@@ -1413,10 +1484,10 @@
 ],
 "T015": [
 {
-"start": 6,
-"end": 12,
+"start": 0,
+"end": 3,
 "status": "present",
-"text": "콧물이 나요"
+"text": "엊그제"
 }
 ],
 "T016": [
@@ -1435,8 +1506,22 @@
 "text": "가슴이 답답하고 아파요"
 }
 ],
-"T018": [],
-"T019": [],
+"T018": [
+{
+"start": 8,
+"end": 15,
+"status": "present",
+"text": "무릎이 아파요"
+}
+],
+"T019": [
+{
+"start": 5,
+"end": 11,
+"status": "present",
+"text": "설사를 해요"
+}
+],
 "T020": [
 {
 "start": 10,
@@ -1445,7 +1530,14 @@
 "text": "배가 아팠어요"
 }
 ],
-"T021": [],
+"T021": [
+{
+"start": 0,
+"end": 11,
+"status": "present",
+"text": "어제 저녁에 토했어요"
+}
+],
 "T022": [
 {
 "start": 0,
@@ -1463,6 +1555,12 @@
 }
 ],
 "T024": [
+{
+"start": 0,
+"end": 9,
+"status": "present",
+"text": "10월 20일부터"
+},
 {
 "start": 10,
 "end": 17,
@@ -1488,10 +1586,10 @@
 ],
 "T027": [
 {
-"start": 0,
+"start": 5,
 "end": 11,
 "status": "present",
-"text": "어제부터 기침이 나요"
+"text": "기침이 나요"
 },
 {
 "start": 13,
@@ -1502,10 +1600,10 @@
 ],
 "T028": [
 {
-"start": 0,
-"end": 3,
+"start": 6,
+"end": 12,
 "status": "present",
-"text": "수요일"
+"text": "배가 아파요"
 }
 ],
 "T029": [
@@ -1566,10 +1664,10 @@
 ],
 "S006": [
 {
-"start": 0,
+"start": 3,
 "end": 13,
 "status": "present",
-"text": "오늘 토를 세 번 했어요"
+"text": "토를 세 번 했어요"
 }
 ],
 "S007": [
@@ -1790,9 +1888,9 @@
 "O004": [
 {
 "start": 0,
-"end": 21,
+"end": 10,
 "status": "present",
-"text": "저는 머리가 아프고 남편은 배가 아파요"
+"text": "저는 머리가 아프고"
 }
 ],
 "O005": [],
@@ -1804,30 +1902,23 @@
 "text": "아들이 콧물이 나고 기침해요"
 }
 ],
-"O007": [
-{
-"start": 0,
-"end": 2,
-"status": "present",
-"text": "동생"
-}
-],
+"O007": [],
 "O008": [],
 "O009": [],
 "O010": [
 {
-"start": 14,
+"start": 17,
 "end": 23,
 "status": "present",
-"text": "저는 목이 아파요"
+"text": "목이 아파요"
 }
 ],
 "O011": [
 {
-"start": 0,
+"start": 4,
 "end": 15,
 "status": "present",
-"text": "친구가 열이 나서 걱정이에요"
+"text": "열이 나서 걱정이에요"
 }
 ],
 "O012": [
@@ -1841,9 +1932,9 @@
 "O013": [
 {
 "start": 0,
-"end": 13,
+"end": 3,
 "status": "present",
-"text": "할머니가 천식이 있으세요"
+"text": "할머니"
 }
 ],
 "O014": [],
@@ -1856,30 +1947,9 @@
 }
 ],
 "M001": [],
-"M002": [
-{
-"start": 0,
-"end": 23,
-"status": "present",
-"text": "타이레놀 500mg 하루 2번 먹고 있어요"
-}
-],
-"M003": [
-{
-"start": 0,
-"end": 12,
-"status": "present",
-"text": "아스피린을 매일 먹어요"
-}
-],
-"M004": [
-{
-"start": 0,
-"end": 14,
-"status": "present",
-"text": "페니실린 알레르기가 있어요"
-}
-],
+"M002": [],
+"M003": [],
+"M004": [],
 "M005": [
 {
 "start": 0,
@@ -1889,49 +1959,21 @@
 }
 ],
 "M006": [],
-"M007": [
-{
-"start": 0,
-"end": 7,
-"status": "present",
-"text": "천식은 없어요"
-}
-],
+"M007": [],
 "M008": [],
-"M009": [
-{
-"start": 0,
-"end": 2,
-"status": "present",
-"text": "위염"
-}
-],
+"M009": [],
 "M010": [],
 "M011": [],
 "M012": [
 {
 "start": 0,
-"end": 16,
+"end": 2,
 "status": "present",
-"text": "새우를 먹으면 두드러기가 나요"
+"text": "새우"
 }
 ],
-"M013": [
-{
-"start": 0,
-"end": 7,
-"status": "present",
-"text": "혈압이 높아요"
-}
-],
-"M014": [
-{
-"start": 0,
-"end": 14,
-"status": "present",
-"text": "작년에 폐렴으로 입원했어요"
-}
-],
+"M013": [],
+"M014": [],
 "M015": [
 {
 "start": 0,
@@ -1941,14 +1983,7 @@
 }
 ],
 "M016": [],
-"M017": [
-{
-"start": 0,
-"end": 9,
-"status": "present",
-"text": "두통약을 먹었어요"
-}
-],
+"M017": [],
 "M018": [
 {
 "start": 0,
@@ -1966,14 +2001,7 @@
 }
 ],
 "M020": [],
-"M021": [
-{
-"start": 0,
-"end": 8,
-"status": "present",
-"text": "연고를 발랐어요"
-}
-],
+"M021": [],
 "M022": [
 {
 "start": 0,
@@ -1984,14 +2012,7 @@
 ],
 "M023": [],
 "M024": [],
-"M025": [
-{
-"start": 0,
-"end": 2,
-"status": "present",
-"text": "아스"
-}
-],
+"M025": [],
 "M026": [],
 "M027": [
 {
@@ -2028,23 +2049,16 @@
 "P008": [],
 "P009": [],
 "P010": [],
-"P011": [
+"P011": [],
+"P012": [
 {
 "start": 0,
-"end": 2,
+"end": 1,
 "status": "present",
-"text": "여자"
+"text": "3"
 }
 ],
-"P012": [],
-"P013": [
-{
-"start": 0,
-"end": 3,
-"status": "present",
-"text": "스물다"
-}
-],
+"P013": [],
 "P014": [],
 "P015": [],
 "C001": [
@@ -2063,7 +2077,14 @@
 "text": "배 아픔"
 }
 ],
-"C003": [],
+"C003": [
+{
+"start": 5,
+"end": 8,
+"status": "present",
+"text": "열 남"
+}
+],
 "C004": [
 {
 "start": 0,
@@ -2217,14 +2238,7 @@
 "text": "허리 쑤심"
 }
 ],
-"C024": [
-{
-"start": 0,
-"end": 3,
-"status": "present",
-"text": "숨 차"
-}
-],
+"C024": [],
 "C025": [
 {
 "start": 0,
@@ -2236,9 +2250,9 @@
 "C026": [
 {
 "start": 0,
-"end": 15,
+"end": 8,
 "status": "present",
-"text": "머리가 아프고요 열은 없고요"
+"text": "머리가 아프고요"
 }
 ],
 "C027": [
@@ -2281,22 +2295,10 @@
 "text": "배가 아프기 시작했는데요"
 },
 {
-"start": 23,
-"end": 38,
-"status": "present",
-"text": "오늘 아침에 두 번 토했어요"
-},
-{
 "start": 40,
-"end": 45,
+"end": 41,
 "status": "present",
-"text": "열은 없고"
-},
-{
-"start": 46,
-"end": 58,
-"status": "present",
-"text": "설사는 아직 안 했어요"
+"text": "열"
 }
 ],
 "X002": [
@@ -2308,15 +2310,15 @@
 },
 {
 "start": 22,
-"end": 32,
+"end": 31,
 "status": "present",
-"text": "가래도 좀 있고요."
+"text": "가래도 좀 있고요"
 },
 {
 "start": 33,
-"end": 56,
+"end": 45,
 "status": "present",
-"text": "열은 38도 정도 나요. 타이레놀 먹었어요"
+"text": "열은 38도 정도 나요"
 }
 ],
 "X003": [
@@ -2330,15 +2332,9 @@
 "X004": [
 {
 "start": 0,
-"end": 13,
-"status": "present",
-"text": "가슴이 쥐어짜듯이 아프고"
-},
-{
-"start": 14,
 "end": 21,
 "status": "present",
-"text": "식은땀이 나요"
+"text": "가슴이 쥐어짜듯이 아프고 식은땀이 나요"
 },
 {
 "start": 23,
@@ -2362,20 +2358,7 @@
 "text": "숨 쉴 때 쌕쌕 소리도 나고 천식이 있어요"
 }
 ],
-"X007": [
-{
-"start": 0,
-"end": 2,
-"status": "present",
-"text": "소변"
-},
-{
-"start": 20,
-"end": 26,
-"status": "present",
-"text": "열은 없어요"
-}
-],
+"X007": [],
 "X008": [
 {
 "start": 0,
@@ -2446,12 +2429,6 @@
 "end": 25,
 "status": "present",
 "text": "눈도 가렵고요"
-},
-{
-"start": 27,
-"end": 31,
-"status": "present",
-"text": "열은 없"
 }
 ],
 "X014": [
@@ -2490,14 +2467,20 @@
 "end": 25,
 "status": "present",
 "text": "배가 살살 아파요"
+},
+{
+"start": 27,
+"end": 28,
+"status": "present",
+"text": "물"
 }
 ],
 "X018": [
 {
-"start": 22,
+"start": 25,
 "end": 34,
 "status": "present",
-"text": "자꾸 불안하고 우울해요"
+"text": "불안하고 우울해요"
 }
 ],
 "X019": [
@@ -2542,15 +2525,16 @@
 "end": 18,
 "status": "present",
 "text": "기침할 때 피가 나오고 숨이 차요"
-},
-{
-"start": 20,
-"end": 26,
-"status": "present",
-"text": "열은 없어요"
 }
 ],
-"X023": [],
+"X023": [
+{
+"start": 23,
+"end": 33,
+"status": "present",
+"text": "가슴이 두근거렸어요"
+}
+],
 "X024": [
 {
 "start": 0,
@@ -2568,9 +2552,15 @@
 "X025": [
 {
 "start": 17,
+"end": 23,
+"status": "present",
+"text": "발이 저리고"
+},
+{
+"start": 24,
 "end": 32,
 "status": "present",
-"text": "발이 저리고 손발이 차가워요"
+"text": "손발이 차가워요"
 }
 ],
 "L001": [
@@ -2653,13 +2643,26 @@
 "text": "발뒤꿈치가 아파요"
 }
 ],
-"Z001": [],
+"Z001": [
+{
+"start": 3,
+"end": 15,
+"status": "present",
+"text": "음식이 잘 안 넘어가요"
+}
+],
 "Z002": [
 {
 "start": 0,
+"end": 3,
+"status": "present",
+"text": "밥 먹"
+},
+{
+"start": 7,
 "end": 16,
 "status": "present",
-"text": "밥 먹을 때 삼키기가 힘들어요"
+"text": "삼키기가 힘들어요"
 }
 ],
 "Z003": [
@@ -2688,10 +2691,10 @@
 ],
 "Z006": [
 {
-"start": 0,
+"start": 3,
 "end": 14,
 "status": "present",
-"text": "요즘 핏기가 하나도 없대요"
+"text": "핏기가 하나도 없대요"
 }
 ],
 "Z007": [
@@ -2704,10 +2707,10 @@
 ],
 "Z008": [
 {
-"start": 0,
+"start": 3,
 "end": 14,
 "status": "present",
-"text": "요즘 짜증이 너무 늘었어요"
+"text": "짜증이 너무 늘었어요"
 }
 ],
 "Z009": [
@@ -2766,7 +2769,14 @@
 "text": "석 달 사이에 살이 많이 쪘어요"
 }
 ],
-"Z016": [],
+"Z016": [
+{
+"start": 8,
+"end": 18,
+"status": "present",
+"text": "땀이 비 오듯 나요"
+}
+],
 "Z017": [
 {
 "start": 0,
@@ -2823,7 +2833,14 @@
 "text": "냄새를 못 맡아요"
 }
 ],
-"Z024": [],
+"Z024": [
+{
+"start": 12,
+"end": 24,
+"status": "present",
+"text": "자다가 숨을 안 쉰대요"
+}
+],
 "Z025": [
 {
 "start": 0,
@@ -2874,10 +2891,10 @@
 ],
 "Z031": [
 {
-"start": 0,
+"start": 3,
 "end": 18,
 "status": "present",
-"text": "요즘 음식 맛을 잘 못 느끼겠어요"
+"text": "음식 맛을 잘 못 느끼겠어요"
 }
 ],
 "Z032": [
@@ -2899,15 +2916,9 @@
 "Z034": [
 {
 "start": 0,
-"end": 3,
-"status": "present",
-"text": "갑자기"
-},
-{
-"start": 6,
 "end": 23,
 "status": "present",
-"text": "죽을 것 같은 공포가 밀려왔어요"
+"text": "갑자기 곧 죽을 것 같은 공포가 밀려왔어요"
 }
 ],
 "Z035": [
@@ -3057,9 +3068,9 @@
 "Z053": [
 {
 "start": 0,
-"end": 2,
+"end": 18,
 "status": "present",
-"text": "양치"
+"text": "양치할 때마다 잇몸이 피가 비쳐요"
 }
 ],
 "Z054": [
@@ -3073,9 +3084,9 @@
 "Z055": [
 {
 "start": 0,
-"end": 12,
+"end": 4,
 "status": "present",
-"text": "허벅지에 멍이 들었는데"
+"text": "허벅지에"
 }
 ],
 "Z056": [
@@ -3358,22 +3369,8 @@
 "text": "추위를 너무 많이 타요"
 }
 ],
-"Z091": [
-{
-"start": 0,
-"end": 16,
-"status": "present",
-"text": "트림이 아니라 신물이 넘어와요"
-}
-],
-"Z092": [
-{
-"start": 5,
-"end": 16,
-"status": "present",
-"text": "자꾸 한쪽으로 쏠려요"
-}
-],
+"Z091": [],
+"Z092": [],
 "Z093": [
 {
 "start": 0,
@@ -3384,10 +3381,10 @@
 ],
 "Z094": [
 {
-"start": 0,
-"end": 1,
+"start": 6,
+"end": 20,
 "status": "present",
-"text": "빛"
+"text": "눈이 부셔서 못 견디겠어요"
 }
 ],
 "Z095": [
@@ -3398,20 +3395,13 @@
 "text": "목소리가 떨려서 말하기 힘들어요"
 }
 ],
-"Z096": [
-{
-"start": 0,
-"end": 10,
-"status": "present",
-"text": "삼키는 건 괜찮아요"
-}
-],
+"Z096": [],
 "Z097": [
 {
 "start": 0,
-"end": 14,
+"end": 1,
 "status": "present",
-"text": "멍울 같은 건 안 만져져요"
+"text": "멍"
 }
 ],
 "Z098": [
@@ -3441,9 +3431,9 @@
 "Z101": [
 {
 "start": 0,
-"end": 3,
-"status": "present",
-"text": "종아리"
+"end": 18,
+"status": "uncertain",
+"text": "종아리가 부은 건지 잘 모르겠어요"
 }
 ],
 "Z102": [
@@ -3457,39 +3447,33 @@
 "Z103": [
 {
 "start": 0,
-"end": 5,
-"status": "present",
-"text": "자다가 숨"
+"end": 18,
+"status": "uncertain",
+"text": "자다가 숨을 멈추는지는 모르겠어요"
 }
 ],
 "Z104": [
 {
 "start": 0,
-"end": 10,
-"status": "present",
-"text": "땀이 많이 나는 편"
+"end": 1,
+"status": "uncertain",
+"text": "땀"
 }
 ],
 "Z105": [
 {
 "start": 0,
 "end": 18,
-"status": "present",
+"status": "uncertain",
 "text": "살이 찐 건지 부은 건지 헷갈려요"
 }
 ],
 "Z106": [
 {
 "start": 0,
-"end": 7,
-"status": "present",
-"text": "머리가 아프고"
-},
-{
-"start": 8,
 "end": 19,
 "status": "present",
-"text": "관자놀이도 욱신거려요"
+"text": "머리가 아프고 관자놀이도 욱신거려요"
 }
 ],
 "Z107": [
@@ -3552,12 +3536,6 @@
 "end": 14,
 "status": "present",
 "text": "콧물이 나고 눈이 가려워요"
-},
-{
-"start": 16,
-"end": 22,
-"status": "present",
-"text": "열은 없어요"
 }
 ],
 "Z114": [
@@ -3584,38 +3562,18 @@
 "text": "아이가 딸꾹질을 계속해요"
 }
 ],
-"Z117": [
-{
-"start": 0,
-"end": 14,
-"status": "present",
-"text": "남편이 코를 심하게 골아요"
-},
-{
-"start": 16,
-"end": 29,
-"status": "present",
-"text": "저는 잇몸에서 피가 나요"
-}
-],
+"Z117": [],
 "Z118": [
 {
-"start": 0,
-"end": 2,
+"start": 4,
+"end": 13,
 "status": "present",
-"text": "엄마"
+"text": "허벅지가 아프대요"
 }
 ],
 "Z119": [],
 "Z120": [],
-"Z121": [
-{
-"start": 0,
-"end": 12,
-"status": "present",
-"text": "겨드랑이 제모를 했어요"
-}
-],
+"Z121": [],
 "Z122": [
 {
 "start": 0,
