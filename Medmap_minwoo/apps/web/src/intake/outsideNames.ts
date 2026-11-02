@@ -48,3 +48,6 @@ export function nameSymptom(part: string): string {
 }
 
 export const isListed = (name: string) => name in vocabulary.listed;
+
+/** The body site said in the part ("관자놀이도 욱신거려" → 관자놀이), or null. */
+export const siteOf = (part: string) => longest(vocabulary.sites, squash(part))?.name ?? null;
