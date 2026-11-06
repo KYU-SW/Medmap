@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { extractIntake } from "./extractor";
 import { nameSymptom } from "./outsideNames";
-import { outsideSymptoms, sourcePhrase } from "./outsideSymptoms";
+import { namePart, outsideSymptoms, sourcePhrase } from "./outsideSymptoms";
 
 describe("outsideSymptoms", () => {
   it("keeps a symptom said in the same part as one the rules found", () => {
@@ -25,6 +25,20 @@ describe("outsideSymptoms", () => {
     const text = "어제부터 머리가 아파요.";
     const part = { start: 0, end: text.length - 1, status: "present" as const, text: text.slice(0, -1) };
     expect(outsideSymptoms(text, extractIntake(text, "2026-11-06"), [part])).toEqual([]);
+  });
+});
+
+describe("namePart", () => {
+  it("names a part as a listed symptom the rules missed, not as one they already reported", () => {
+    expect(namePart("기침할 때마다 피가 섞여 나와요", new Set(["기침"]))).toBe("객혈");
+    expect(namePart("귀에서 이상한 소리가 계속 들려요", new Set())).toBe("이명");
+    expect(namePart("손발이 자꾸 차가워져서", new Set())).toBe("손발 차가움");
+    expect(namePart("코에서 조금씩 피가 나는 것 같아요", new Set())).toBe("코피");
+  });
+
+  it("does not name by color alone, nor across words", () => {
+    expect(namePart("변에 붉은색이 섞여 나오긴 하는데", new Set())).not.toBe("혈변");
+    expect(namePart("가슴이 가끔씩 아프기도 하구요", new Set(["흉통"]))).not.toBe("치통");
   });
 });
 

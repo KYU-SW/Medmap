@@ -46,14 +46,22 @@ const LISTED_PAIN: Record<string, string> = {
   귀: "귀 통증", 눈: "눈 통증", 이: "치통", 아랫니: "치통", 윗니: "치통", 목구멍: "인후통", 가슴: "흉통",
   입: "입안 통증", 혀: "입안 통증",
 };
+// The same for other kinds at a site the 65 name: 출혈/코 is 코피, 시림·차가움/손 is 손발 차가움.
+const LISTED_AT_SITE: Record<string, string> = {
+  "출혈/코": "코피", "분비물/눈": "눈 분비물", "통증/온몸": "근육통", "경련·떨림/손": "떨림",
+  "시림·차가움/손": "손발 차가움", "시림·차가움/발": "손발 차가움", "시림·차가움/손가락": "손발 차가움",
+  "시림·차가움/발가락": "손발 차가움", "결림·뻐근함/목": "목 결림", "결림·뻐근함/뒷목": "목 결림",
+};
 
 export function nameSymptom(part: string): string {
-  const named = longest(vocabulary.symptoms, part);
+  // Named symptoms beyond the list and the list's own words for what its rules missed (listedWords), longest first.
+  const named = longest([...vocabulary.symptoms, ...vocabulary.listedWords], part);
   if (named) return named.name;
   const kind = longest(vocabulary.kinds, part);
   const site = longest(vocabulary.sites, part);
   if (!kind || !site) return "기타";
-  return LISTED_KIND[kind.name] ?? (kind.name === "통증" ? LISTED_PAIN[site.name] : undefined) ?? `${kind.name}/${site.name}`;
+  return LISTED_KIND[kind.name] ?? (kind.name === "통증" ? LISTED_PAIN[site.name] : undefined)
+    ?? LISTED_AT_SITE[`${kind.name}/${site.name}`] ?? `${kind.name}/${site.name}`;
 }
 
 export const isListed = (name: string) => name in vocabulary.listed;

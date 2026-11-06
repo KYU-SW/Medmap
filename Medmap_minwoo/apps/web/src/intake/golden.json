@@ -23000,5 +23000,47 @@
    "unrecognized_fragments": [],
    "needs_user_confirmation": true
   }
+ },
+ {
+  "text": "코는 정말 괜찮은 것 같아요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "머리가 정말 이상해요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [
+    "머리가 정말 이상해요."
+   ],
+   "needs_user_confirmation": true
+  }
  }
 ]

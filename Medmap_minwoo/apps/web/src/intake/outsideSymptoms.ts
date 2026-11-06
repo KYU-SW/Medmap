@@ -55,7 +55,21 @@ function outsideEvidence(text: string, span: ModelSpan, taken: Array<[number, nu
   return pieces;
 }
 
+/**
+ * The name for a part: what the rules read in it that they have not already reported for the whole text, else the
+ * vocabulary's name, else what the rules read there anyway (a symptom already reported: the part then only adds where
+ * it is). "기침할 때마다 피가 섞여 나와요" with 기침 already reported is 객혈, not 기침 again.
+ */
+export function namePart(part: string, reported: Set<string>): string {
+  const read = extractIntake(part).symptoms.map((symptom) => symptom.name);
+  const fresh = read.find((name) => !reported.has(name));
+  if (fresh) return fresh;
+  const fromWords = nameSymptom(part);
+  return fromWords !== "기타" ? fromWords : read[0] ?? "기타";
+}
+
 export function outsideSymptoms(text: string, rules: IntakeExtraction, spans: ModelSpan[]): OutsideSymptom[] {
+  const reported = new Set(rules.symptoms.map((symptom) => symptom.name));
   const taken = [...rules.symptoms, ...rules.others_symptoms]
     .map((found) => locate(text, found.source_text)).filter((at): at is [number, number] => at !== null);
   // The rules name these in their own words ("폐렴(입원)", "갑상선 질환"), so the first word is what the patient said.
@@ -72,7 +86,7 @@ export function outsideSymptoms(text: string, rules: IntakeExtraction, spans: Mo
     .filter((span) => otherPersonFor(text, span.end) === null) // the person may be inside the span ("남편이 코를 골아요")
     .filter((span) => !notSymptoms.some((word) => squash(span.text).includes(word)))
     .map((span) => {
-      const name = extractIntake(span.text).symptoms[0]?.name ?? nameSymptom(span.text);
+      const name = namePart(span.text, reported);
       // known: the rules already report this symptom, so the part only adds where it is (두통 + 관자놀이). This also
       // catches parts the overlap check misses, as the rules read a rewritten copy ("배 아픔" as "배 아파").
       return { ...span, name, site: siteOf(span.text), listed: isListed(name),
