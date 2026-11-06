@@ -24,15 +24,35 @@ iOS는 Mac이 있어야 빌드할 수 있어 아직 만들지 않았다.
 ## 설치와 실행
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_android_app.ps1   # 빌드 → 설치 → 모델 복사
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_android_app.ps1             # 개발용: 빌드 → 설치 → 음성 모델 복사
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_android_app.ps1 -Release    # AI 모델 파일·SHA-256을 확인한 뒤에만 진행
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_android_app.ps1 -CheckOnly  # AI 모델 파일만 확인(폰 불필요)
 ```
 
-- 앱을 열고 `음성으로 기록` → 마이크 권한 허용 → 말하기 → `녹음 종료`. (변환 시간 화면 표시는 측정이 끝나 2026-10-15에 없앴다.
+- 앱을 열고 `말로 기록` → 마이크 권한 허용 → 말하기 → `녹음 종료`. (변환 시간 화면 표시는 측정이 끝나 2026-10-15에 없앴다.
   시간은 `apps/api/scripts/run_recordings.py` 측정 결과나 logcat `whisper_print_timings`로 본다.)
 - 첫 변환은 모델을 불러오느라 더 걸린다.
 - (기기 내장 인식이 없을 때) 녹음 중 자막: 1.5초마다 작은 모델(`ggml-base-q8_0.bin`, 약 80MB, 같은 폴더)로 지금까지의 녹음을 대략 변환해 보여 준다.
   녹음 종료 후 결과는 turbo로 전체를 다시 변환한 것이다. 자막 모델이 없으면 자막 없이 녹음만 한다.
 - 녹음 앞뒤의 조용한 부분은 잘라서 변환한다. 조용한 부분을 넣으면 모델이 없는 말을 지어낸다(`감사합니다.`, `맨날 그러냐`).
+
+## 목록 밖 증상 AI 모델 (2026-11-06 기준)
+
+- 파일: `apps/web/public/models/spans.onnx`(KoELECTRA-small을 학습한 뒤 int8로 줄인 것, 14.6MB). 웹 빌드에 들어가 APK 안에 포함된다.
+  어휘 `spans-vocab.json`과 해시 `spans.onnx.sha256`은 Git에 있지만 **모델 파일은 Git에 없다**.
+- 만드는 법: 로컬에서 학습한 모델(`local-cache/intake-model/…`)이 있어야 한다.
+  `local-cache\train-venv\Scripts\python.exe apps/web/train/export_onnx.py`가 `spans.onnx`, `spans.onnx.sha256`, 어휘를 쓴다.
+  학습 문장과 학습된 모델도 `local-cache`에만 있어, 새 컴퓨터에서 받은 저장소만으로는 같은 모델을 만들 수 없다.
+- 모델이 없을 때: 설치 스크립트가 경고하고 그대로 설치한다. 앱은 규칙만으로 정리하고 확인 화면에
+  "AI 도우미를 사용할 수 없어 기본 규칙으로만 정리했어요. 입력한 문장과 결과를 직접 확인해 주세요."를 보여 준다.
+  모델 불러오기나 실행에 실패해도 같은 안내를 보여 주고 규칙 결과는 그대로 저장할 수 있다.
+- 확인 화면의 AI 상태: `AI 도우미를 준비하고 있어요…` → `AI가 다른 증상을 찾고 있어요…` → 찾은 증상 상자 또는
+  `AI가 추가로 찾은 증상은 없어요.` 말이 아주 길면(1,024토큰, 약 2,000자 넘음) 앞부분만 읽고 몇 자까지 읽었는지 알린다.
+- `-Release`·`-CheckOnly`: 모델 파일이 없거나, 해시 파일(`spans.onnx.sha256`)이 없거나, SHA-256이 다르면 오류로 멈춘다(exit 1).
+  `-CheckOnly`는 확인만 하고 끝난다. 다른 모델을 내보내면 `export_onnx.py`가 해시 파일도 함께 바꾼다.
+- **라이선스 주의**: 학습 문장을 만든 EXAONE 3.x(EXAONE AI Model License Agreement 1.1 - NC)는 3.1조에서
+  "Model, Derivatives 또는 Output을 다른 모델 개발·개선에 쓰지 말 것"을 정한다. EXAONE 3.x 출력물을 다른 모델 학습에 사용한 것은
+  라이선스 충돌 가능성이 있다. LG 문의는 진행하지 않으며, 해당 모델·학습 자료는 공개·Release 배포하지 않는다. 추후 허용된 자료로 교체할 예정이다.
 
 ## 속도 (2026-10-06, 갤럭시 노트20 · 스냅드래곤 865, 같은 문장으로 측정)
 

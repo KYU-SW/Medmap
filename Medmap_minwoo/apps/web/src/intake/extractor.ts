@@ -1394,9 +1394,9 @@ function extractMedications(text: string): [string[], string[]] {
   return [lines, names];
 }
 
-function firstSymptomMatch(pattern: Pat, text: string): Match | null {
+function firstSymptomMatch(pattern: Pat, text: string, keep: (found: Match) => boolean = () => true): Match | null {
   // "두통약", "기침약", "설사약" name a medicine, not a symptom the patient has now.
-  return pattern.finditer(text).find((found) => !MEDICINE_SUFFIX_PATTERN.match(text, found.end)) ?? null;
+  return pattern.finditer(text).find((found) => !MEDICINE_SUFFIX_PATTERN.match(text, found.end) && keep(found)) ?? null;
 }
 
 const SINO_DIGITS: Record<string, number> = { 일: 1, 이: 2, 삼: 3, 사: 4, 오: 5, 육: 6, 칠: 7, 팔: 8, 구: 9 };
@@ -1493,9 +1493,15 @@ export function extractIntake(input: string, referenceDate: string | null = null
     input.split(/\s+/).filter(Boolean).join(" "),
   ))));
   let matches: Found[] = [];
+  // The patient's own words come first: in "아이는 열이 없어요. 저는 열이 나요." the child's "없어요" must not settle
+  // the patient's fever. Someone else's words are used only when the patient said nothing of that symptom.
+  const own = (found: Match) => otherPersonFor(normalized, found.start) === null;
   for (const symptomRule of RULES) {
-    const mention = firstSymptomMatch(symptomRule.mention, normalized);
-    const absent = firstSymptomMatch(symptomRule.absent, normalized);
+    const ownMention = firstSymptomMatch(symptomRule.mention, normalized, own);
+    const ownAbsent = firstSymptomMatch(symptomRule.absent, normalized, own);
+    const [mention, absent] = ownMention || ownAbsent
+      ? [ownMention, ownAbsent]
+      : [firstSymptomMatch(symptomRule.mention, normalized), firstSymptomMatch(symptomRule.absent, normalized)];
     const evidence = absent ?? mention;
     if (evidence) matches.push({ rule: symptomRule, evidence: evidenceOf(evidence), absent: absent !== null });
   }
@@ -1584,6 +1590,17 @@ export function extractIntake(input: string, referenceDate: string | null = null
     const person = otherPersonFor(normalized, start);
     if (person === null) symptoms.push(item);
     else if (item.status !== "absent") othersSymptoms.push({ person, symptom: item.name, source_text: item.source_text });
+  }
+  // One evidence is chosen per symptom, so "기침은 없어요. 아내도 기침을 해요." settled 기침 on the patient's words
+  // and lost the wife's. Another mention said of someone else, and not in a negation, is kept for them too.
+  for (const { rule: symptomRule } of matches) {
+    const negated = symptomRule.absent.finditer(normalized).map((found): Span => [found.start, found.end]);
+    for (const found of symptomRule.mention.finditer(normalized)) {
+      const person = otherPersonFor(normalized, found.start);
+      if (person === null || negated.some(([start, end]) => start < found.end && found.start < end)) continue;
+      if (othersSymptoms.some((other) => other.person === person && other.symptom === symptomRule.name)) continue;
+      othersSymptoms.push({ person, symptom: symptomRule.name, source_text: found.text });
+    }
   }
 
   const [extractedMedications, medicationNames] = extractMedications(normalized);

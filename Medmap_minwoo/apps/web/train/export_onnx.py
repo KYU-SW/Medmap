@@ -1,12 +1,14 @@
 """Export the trained span model for the phone (HANDOFF 7-1-1): ONNX with int8 weights, plus the WordPiece vocabulary.
 
-Writes apps/web/public/models/spans.onnx and spans-vocab.json (not in Git: run this after train_spans.py), and
+Writes apps/web/public/models/spans.onnx (not in Git: run this after train_spans.py), its SHA-256 in
+spans.onnx.sha256 (checked by scripts/install_android_app.ps1 -Release), spans-vocab.json, and
 apps/web/eval/predictions/tokens.json, the Python tokenizer's ids and offsets that src/intake/tokenizer.test.ts
 compares the TypeScript tokenizer with.
 
 Run from the repo root:
   local-cache\\train-venv\\Scripts\\python.exe apps/web/train/export_onnx.py [model dir]
 """
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -60,6 +62,7 @@ def main():
         same += int((outputs[1] == expected).sum())
         total += expected.size
     full.unlink()
+    (OUT / "spans.onnx.sha256").write_text(f"{hashlib.sha256(small.read_bytes()).hexdigest()}  spans.onnx\n", encoding="utf-8")
     (WEB / "eval" / "predictions" / "tokens.json").write_text(json.dumps(tokens, ensure_ascii=False), encoding="utf-8")
     print(f"int8 tags match the model on {same / total:.2%} of {total} tokens; {small} {small.stat().st_size / 1e6:.1f} MB")
 

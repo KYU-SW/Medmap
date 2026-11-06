@@ -38,6 +38,23 @@ export function sourcePhrase(text: string, words: string): string {
 }
 const squash = (text: string) => text.replace(/\s+/g, "");
 
+/** The pieces of a span outside the given ranges, trimmed of spaces. */
+function outsideEvidence(text: string, span: ModelSpan, taken: Array<[number, number]>): ModelSpan[] {
+  const cuts = taken.filter((at) => overlaps(at, [span.start, span.end])).sort((a, b) => a[0] - b[0]);
+  const pieces: ModelSpan[] = [];
+  let from = span.start;
+  for (const [start, end] of [...cuts, [span.end, span.end] as [number, number]]) {
+    let [left, right] = [from, Math.min(start, span.end)];
+    // Evidence can end inside a word ("머리가 아프|고"): what is left starts at the next whole word.
+    if (left > span.start) while (left < right && !/\s/.test(text[left - 1])) left += 1;
+    while (left < right && /\s/.test(text[left])) left += 1;
+    while (right > left && /\s/.test(text[right - 1])) right -= 1;
+    if (right > left) pieces.push({ ...span, start: left, end: right, text: text.slice(left, right) });
+    from = Math.max(from, end);
+  }
+  return pieces;
+}
+
 export function outsideSymptoms(text: string, rules: IntakeExtraction, spans: ModelSpan[]): OutsideSymptom[] {
   const taken = [...rules.symptoms, ...rules.others_symptoms]
     .map((found) => locate(text, found.source_text)).filter((at): at is [number, number] => at !== null);
@@ -47,7 +64,11 @@ export function outsideSymptoms(text: string, rules: IntakeExtraction, spans: Mo
     .concat(rules.profile.smoking ? ["담배", "흡연"] : [], rules.profile.drinking ? ["음주", "소주", "맥주", "술을"] : []);
   return spans
     .filter((span) => (span.text.match(/[가-힣]/g) ?? []).length >= 2) // stray endings like "요", "8도"
-    .filter((span) => !taken.some((at) => overlaps(at, [span.start, span.end])))
+    // A part over the rules' evidence keeps only what lies outside it, and only where that names a symptom of its own:
+    // "딸꾹질이 계속 나서 잠을 잘 못 잤어요" over the rules' 불면 still offers 딸꾹질.
+    .flatMap((span) => (taken.some((at) => overlaps(at, [span.start, span.end]))
+      ? outsideEvidence(text, span, taken).filter((part) => nameSymptom(part.text) !== "기타")
+      : [span]))
     .filter((span) => otherPersonFor(text, span.end) === null) // the person may be inside the span ("남편이 코를 골아요")
     .filter((span) => !notSymptoms.some((word) => squash(span.text).includes(word)))
     .map((span) => {

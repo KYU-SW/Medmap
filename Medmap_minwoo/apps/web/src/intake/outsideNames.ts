@@ -19,12 +19,17 @@ const alone = (word: string) => patterns.get(`1:${word}`) ?? patterns.set(`1:${w
 /** The entry whose longest word is in the part (the longer word wins: "손목" over "목"), or null. */
 function longest(entries: Word[], part: string): Word | null {
   const text = squash(part);
+  // A word with no space in it is looked for within the words as written, not across a space: "색이 빨개요" has no
+  // "이빨" (teeth) in it, though "색이빨개요" does.
+  const spaced = part.normalize("NFD");
+  const found = (word: string) => (/^[가-힣]$/.test(word) ? alone(word).test(part)
+    : /\s/.test(word.trim()) ? pattern(word).test(text) : spaced.includes(squash(word)));
   let best: Word | null = null;
   let size = 0;
   for (const entry of entries) {
     for (const word of entry.words) {
       const wanted = squash(word);
-      if (wanted.length > size && (/^[가-힣]$/.test(word) ? alone(word).test(part) : pattern(word).test(text))) {
+      if (wanted.length > size && found(word)) {
         best = entry;
         size = wanted.length;
       }

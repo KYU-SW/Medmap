@@ -793,6 +793,21 @@ textarea::placeholder {
   position: static;
 }
 
+/* What the on-device model is doing: quiet while it works or finds nothing, amber when it could not run. */
+.ai-status p {
+  margin: 12px 0 0;
+  color: var(--color-muted-foreground);
+  font-size: 14px;
+}
+
+.ai-status .ai-status__warn {
+  padding: 10px 14px;
+  border: 1px solid #f0d7a8;
+  border-radius: var(--radius-sm);
+  color: var(--color-warning);
+  background: var(--color-warning-soft);
+}
+
 /* A suggestion just added as a symptom card: marked in the AI green so the patient sees where it went. */
 .observation--added {
   border-color: #7cc9a6;

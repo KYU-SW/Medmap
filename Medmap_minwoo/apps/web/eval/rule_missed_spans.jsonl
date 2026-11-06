@@ -1,0 +1,36 @@
+{"id":"B001","name":"두통","status":"present","span":"머리가 깨질 것처럼 아파"}
+{"id":"B010","name":"가슴 답답함","status":"present","span":"가슴이 꽉 막힌 것처럼 답답해"}
+{"id":"B014","name":"구토","status":"present","span":"다 게워냈"}
+{"id":"B022","name":"코막힘","status":"present","span":"양쪽 코가 다 막혔"}
+{"id":"B030","name":"요통","status":"present","span":"허리가 끊어질 것 같아"}
+{"id":"B040","name":"발진","status":"present","span":"빨간 반점이 올라왔"}
+{"id":"B052","name":"식욕부진","status":"present","span":"밥을 통 못 먹겠"}
+{"id":"B058","name":"귀 통증","status":"present","span":"귀 안쪽이 욱신거려"}
+{"id":"B082","name":"혈뇨","status":"present","span":"소변 색이 빨개"}
+{"id":"B083","name":"배뇨통","status":"present","span":"소변 볼 때 따가워"}
+{"id":"B086","name":"빈뇨","status":"present","span":"소변 때문에 몇 번씩 깨"}
+{"id":"N014","name":"복통","status":"absent","span":"배는 이제 괜찮아졌"}
+{"id":"S006","name":"구토","status":"present","span":"토를 세 번 했"}
+{"id":"S015","name":"호흡곤란","status":"present","span":"숨찬 게 잠을 못 잘 정도"}
+{"id":"S020","name":"구토","status":"present","span":"토는 두 번 했"}
+{"id":"S029","name":"복통","status":"present","span":"배가 보통 정도로 아파"}
+{"id":"C001","name":"두통","status":"present","span":"머리 아퍼"}
+{"id":"C010","name":"메스꺼움","status":"present","span":"속이 니글거려"}
+{"id":"C011","name":"복통","status":"present","span":"배가 싸르르 아파"}
+{"id":"C014","name":"오한","status":"present","span":"오슬오슬 떨려"}
+{"id":"X003","name":"두통","status":"present","span":"머리가 자주 아프"}
+{"id":"X007","name":"배뇨통","status":"present","span":"소변 볼 때 따갑"}
+{"id":"X007","name":"빈뇨","status":"present","span":"자주 마려워"}
+{"id":"X012","name":"체중 감소","status":"present","span":"살이 빠지"}
+{"id":"X020","name":"눈 통증","status":"absent","span":"아프지는 않아"}
+{"id":"Z045","name":"부종","status":"present","span":"종아리가 퉁퉁 부었"}
+{"id":"Z046","name":"부종","status":"present","span":"발등이 부어서"}
+{"id":"Z047","name":"부종","status":"present","span":"오금이 부어올랐"}
+{"id":"Z059","name":"부종","status":"present","span":"엄지발가락이 빨갛게 부었"}
+{"id":"Z064","name":"저림","status":"present","span":"허벅지 바깥쪽이 남의 살 같아"}
+{"id":"Z077","name":"부종","status":"present","span":"목젖이 부은 것 같아"}
+{"id":"Z078","name":"부종","status":"present","span":"턱 밑이 부어서"}
+{"id":"Z079","name":"발진","status":"present","span":"손등에 물집이 잡혔"}
+{"id":"Z085","name":"발진","status":"present","span":"이마에 뾰루지가 잔뜩 났"}
+{"id":"Z101","name":"부종","status":"uncertain","span":"종아리가 부은 건지 잘 모르겠"}
+{"id":"Z115","name":"부종","status":"present","span":"종아리가 부었"}

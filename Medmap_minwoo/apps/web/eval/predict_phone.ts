@@ -11,7 +11,7 @@ const predictions: Record<string, unknown> = {};
 for (const file of ["./intake_eval_set.jsonl", "./outside_eval_set.jsonl"]) {
   for (const line of read(file).toString("utf8").split("\n").filter((row) => row.trim())) {
     const item = JSON.parse(line);
-    predictions[item.id] = await findSpans(item.text);
+    predictions[item.id] = (await findSpans(item.text)).spans;
   }
 }
 writeFileSync(new URL("./predictions/spans-phone.json", import.meta.url), JSON.stringify(predictions, null, 0));

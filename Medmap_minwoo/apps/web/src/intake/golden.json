@@ -22822,5 +22822,183 @@
    ],
    "needs_user_confirmation": true
   }
+ },
+ {
+  "text": "기침은 없어요. 아내도 기침을 해요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "기침",
+     "status": "absent",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "기침은 없"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [
+    {
+     "person": "아내",
+     "symptom": "기침",
+     "source_text": "기침을 해"
+    }
+   ],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "아내도 기침을 해요. 저는 기침은 없어요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "기침",
+     "status": "absent",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "기침은 없"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [
+    {
+     "person": "아내",
+     "symptom": "기침",
+     "source_text": "기침을 해"
+    }
+   ],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "저는 기침해요. 아내도 기침해요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "기침",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "기침해"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [
+    {
+     "person": "아내",
+     "symptom": "기침",
+     "source_text": "기침해"
+    }
+   ],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "아내는 기침 안 해요. 저는 기침해요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "기침",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "기침해"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "아이는 열이 없어요. 저는 열이 나요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "발열",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "열이 나"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
  }
 ]

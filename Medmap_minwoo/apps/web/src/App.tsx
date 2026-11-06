@@ -30,8 +30,9 @@ import { buildSymptomHistories, buildTimeline, type SymptomHistoryPoint } from "
 import { dayKey, monthGrid } from "./calendar";
 import { DeviceStt, deviceSttReady, pcm16Base64, usesPhoneStt, Whisper } from "./phoneStt";
 import { extractIntake } from "./intake/extractor";
-import { outsideSymptoms, sourcePhrase, symptomSites, type OutsideSymptom } from "./intake/outsideSymptoms";
+import { sourcePhrase, type OutsideSymptom } from "./intake/outsideSymptoms";
 import { loadSpanModel } from "./intake/spanModel";
+import { AI_MESSAGES, runAiAssist, type AiState } from "./intake/aiAssist";
 import { applyListChanges, describeChanges, factChanges, spokenNumbersToDigits, type FactChange } from "./transcriptCheck";
 import type { PluginListenerHandle } from "@capacitor/core";
 import { hasSpeech, joinChunks, tidyCaption, trimSilence } from "./speechAudio";
@@ -272,6 +273,8 @@ export default function App() {
   const deviceSessionRef = useRef<PluginListenerHandle | null>(null);
   // Symptoms the on-device model found that the rules do not know (HANDOFF 7-1-1), offered to add on the review screen.
   const [outsideFound, setOutsideFound] = useState<OutsideSymptom[]>([]);
+  // What the model is doing for this review, shown so "could not run" never reads as "found nothing".
+  const [aiState, setAiState] = useState<AiState | null>(null);
   // The card a suggestion was just added as: briefly marked and scrolled to, as it lands above the suggestions.
   const [addedIndex, setAddedIndex] = useState<number | null>(null);
   const outsideRunRef = useRef(0);
@@ -681,23 +684,16 @@ export default function App() {
     const run = ++outsideRunRef.current;
     setOutsideFound([]);
     setAddedIndex(null);
-    try {
-      const findSpans = await loadSpanModel();
-      if (!findSpans) return;
-      const spans = await findSpans(text);
-      if (run !== outsideRunRef.current) return;
-      const rules = extractIntake(text, localDateString());
-      const found = outsideSymptoms(text, rules, spans);
-      const sites = symptomSites(text, rules, spans, found);
-      setIntake((current) => current && ({
-        ...current,
-        symptoms: current.symptoms.map((symptom) =>
-          symptom.body_site ? symptom : { ...symptom, body_site: sites.get(symptom.name)?.[0] ?? null }),
-      }));
-      setOutsideFound(found.filter((part) => !part.known));
-    } catch {
-      // The model is a helper; without it the rules' result stands.
-    }
+    // A newer reading (or an edited transcript) bumps the run; this one's states and results are then dropped.
+    const last = await runAiAssist(text, extractIntake(text, localDateString()), loadSpanModel,
+      (state) => { if (run === outsideRunRef.current) setAiState(state); });
+    if (run !== outsideRunRef.current || last.kind !== "done") return;
+    setIntake((current) => current && ({
+      ...current,
+      symptoms: current.symptoms.map((symptom) =>
+        symptom.body_site ? symptom : { ...symptom, body_site: last.sites.get(symptom.name)?.[0] ?? null }),
+    }));
+    setOutsideFound(last.found.filter((part) => !part.known));
   }
 
   function addOutsideSymptom(part: OutsideSymptom) {
@@ -1280,6 +1276,8 @@ export default function App() {
           value={transcript}
           onChange={(event) => {
             setTranscript(event.target.value);
+            outsideRunRef.current += 1; // a model reading of the old text must not land on the new one
+            setAiState(null);
             setIntake(null);
             setConfirmed(false);
           }}
@@ -1344,8 +1342,9 @@ export default function App() {
                     {tracksFrequency(symptom.name) && <div><dt>횟수</dt><dd>{symptom.frequency || "—"}</dd></div>}
                   </dl>
                 )}
-                {/* Details stay folded until the patient wants to correct them; a hand-added symptom opens ready to fill. */}
-                <details className="observation-edit" open={symptom.source_text === "사용자가 직접 추가" || undefined}>
+                {/* Details stay folded until the patient wants to correct them; a hand-added symptom, or an unnamed one added from
+                    the AI (named with the patient's own words for now), opens ready to name. */}
+                <details className="observation-edit" open={symptom.source_text === "사용자가 직접 추가" || symptom.name === symptom.source_text || undefined}>
                 <summary>
                   <span className="source-text">
                     {symptom.source_text === "사용자가 직접 추가" ? "직접 추가한 증상" : `“${sourcePhrase(transcript, symptom.source_text)}”`}
@@ -1443,6 +1442,15 @@ export default function App() {
               증상 직접 추가
             </button>
 
+            <div className="ai-status" aria-live="polite">
+              {aiState?.kind === "loading" && <p>{AI_MESSAGES.loading}</p>}
+              {aiState?.kind === "running" && <p>{AI_MESSAGES.running}</p>}
+              {aiState?.kind === "done" && aiState.found.every((part) => part.known) && <p>{AI_MESSAGES.none}</p>}
+              {aiState?.kind === "unavailable" && <p className="ai-status__warn">{AI_MESSAGES.unavailable}</p>}
+              {aiState?.kind === "done" && aiState.readUpTo !== null && (
+                <p className="ai-status__warn">{AI_MESSAGES.truncated(aiState.readUpTo)}</p>
+              )}
+            </div>
             {outsideFound.length > 0 && (
               <section className="panel panel--ai" aria-label="AI가 찾은 다른 증상">
                 <h2 className="panel__title"><ActionIcon name="sparkles" size={20} />AI가 찾은 다른 증상</h2>
@@ -1450,13 +1458,25 @@ export default function App() {
                 <ul className="suggestions">
                   {outsideFound.map((part) => (
                     <li key={`${part.start}-${part.end}`}>
-                      <div>
-                        <strong>
-                          {part.name === "기타" ? "이름 없는 증상" : part.name.replace("/", " · ")}
-                          <span className={`badge badge--${part.status}`}>{STATUS_LABEL[part.status]}</span>
-                        </strong>
-                        <span className="source-text">“{part.text}”</span>
-                      </div>
+                      {/* No name the app can stand behind ("소변 색이 빨개요" is not decided as 혈뇨): the patient's words
+                          are kept as they are, and the patient names it. */}
+                      {part.name === "기타" ? (
+                        <div>
+                          <strong>
+                            추가로 확인할 표현: “{part.text}”
+                            <span className={`badge badge--${part.status}`}>{STATUS_LABEL[part.status]}</span>
+                          </strong>
+                          <span className="source-text">증상 이름: 사용자가 직접 입력 또는 수정</span>
+                        </div>
+                      ) : (
+                        <div>
+                          <strong>
+                            {part.name.replace("/", " · ")}
+                            <span className={`badge badge--${part.status}`}>{STATUS_LABEL[part.status]}</span>
+                          </strong>
+                          <span className="source-text">“{part.text}”</span>
+                        </div>
+                      )}
                       <button className="chip-button" type="button" onClick={() => addOutsideSymptom(part)}>
                         <ActionIcon name="plus" size={18} />추가
                       </button>
