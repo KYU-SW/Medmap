@@ -780,6 +780,72 @@ textarea::placeholder {
   box-shadow: 0 6px 16px rgb(14 116 144 / 25%);
 }
 
+.sticky-actions .button-row {
+  margin: 0;
+}
+
+.sticky-actions .button--secondary {
+  box-shadow: none;
+}
+
+/* While the patient types, the phone keyboard takes the bottom; the fixed button would cover the field. */
+.intake:focus-within .sticky-actions {
+  position: static;
+}
+
+/* A suggestion just added as a symptom card: marked in the AI green so the patient sees where it went. */
+.observation--added {
+  border-color: #7cc9a6;
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+.added-note {
+  margin: 0 0 6px;
+  color: var(--color-accent);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* First run: the three steps, in place of the empty symptom list. */
+.how-to {
+  display: grid;
+  gap: 12px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: how-to;
+}
+
+.how-to li {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 2px 12px;
+  counter-increment: how-to;
+}
+
+.how-to li::before {
+  content: counter(how-to);
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: var(--color-primary-strong);
+  background: var(--color-primary-soft);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.how-to strong {
+  font-size: 15px;
+}
+
+.how-to span {
+  color: var(--color-muted-foreground);
+  font-size: 14px;
+}
+
 /* Callouts share one shape; colour carries the meaning, and every callout also has a text title. */
 .others-review,
 .review-warning,

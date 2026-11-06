@@ -22768,5 +22768,59 @@
    "unrecognized_fragments": [],
    "needs_user_confirmation": true
   }
+ },
+ {
+  "text": "열이 받쳐서 잠을 못 잤어요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "불면",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "잠을 못 잤"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "가슴 쪽이 이상해요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [
+    "가슴 쪽이 이상해요."
+   ],
+   "needs_user_confirmation": true
+  }
  }
 ]

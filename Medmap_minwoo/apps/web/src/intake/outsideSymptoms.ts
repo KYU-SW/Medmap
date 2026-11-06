@@ -16,6 +16,26 @@ export function locate(text: string, words: string): [number, number] | null {
   return at < 0 ? null : [kept[at], kept[at + wanted.length - 1] + 1];
 }
 const overlaps = (a: [number, number], b: [number, number]) => a[0] < b[1] && b[0] < a[1];
+
+/**
+ * The rules' evidence as the patient said it, in whole words ("머리가 아프" → "머리가 아프고"); a very short one takes
+ * the next word too ("열이" → "열이 38도까지"). Evidence not found in the text is returned as it is.
+ */
+export function sourcePhrase(text: string, words: string): string {
+  const at = locate(text, words);
+  if (!at) return words.trim();
+  let [start, end] = at;
+  while (start > 0 && !/\s/.test(text[start - 1])) start -= 1;
+  const wordEnd = (from: number) => {
+    while (from < text.length && !/[\s.,!?]/.test(text[from])) from += 1;
+    return from;
+  };
+  end = wordEnd(end);
+  if ((text.slice(start, end).match(/[가-힣]/g) ?? []).length <= 2 && /^\s+[^\s.,!?]/.test(text.slice(end))) {
+    end = wordEnd(end + (text.slice(end).match(/^\s+/)?.[0].length ?? 0));
+  }
+  return text.slice(start, end);
+}
 const squash = (text: string) => text.replace(/\s+/g, "");
 
 export function outsideSymptoms(text: string, rules: IntakeExtraction, spans: ModelSpan[]): OutsideSymptom[] {

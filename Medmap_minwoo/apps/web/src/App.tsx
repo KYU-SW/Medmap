@@ -30,7 +30,7 @@ import { buildSymptomHistories, buildTimeline, type SymptomHistoryPoint } from "
 import { dayKey, monthGrid } from "./calendar";
 import { DeviceStt, deviceSttReady, pcm16Base64, usesPhoneStt, Whisper } from "./phoneStt";
 import { extractIntake } from "./intake/extractor";
-import { outsideSymptoms, symptomSites, type OutsideSymptom } from "./intake/outsideSymptoms";
+import { outsideSymptoms, sourcePhrase, symptomSites, type OutsideSymptom } from "./intake/outsideSymptoms";
 import { loadSpanModel } from "./intake/spanModel";
 import { applyListChanges, describeChanges, factChanges, spokenNumbersToDigits, type FactChange } from "./transcriptCheck";
 import type { PluginListenerHandle } from "@capacitor/core";
@@ -229,7 +229,10 @@ export default function App() {
 
   useEffect(() => {
     const onHashChange = () => {
-      setView(readView());
+      const next = readView();
+      setView(next);
+      // A message belongs to the screen it came with; the save message comes with the summary that saving opens.
+      if (next !== "summary") setRecordMessage("");
       window.scrollTo(0, 0);
     };
     window.addEventListener("hashchange", onHashChange);
@@ -269,6 +272,8 @@ export default function App() {
   const deviceSessionRef = useRef<PluginListenerHandle | null>(null);
   // Symptoms the on-device model found that the rules do not know (HANDOFF 7-1-1), offered to add on the review screen.
   const [outsideFound, setOutsideFound] = useState<OutsideSymptom[]>([]);
+  // The card a suggestion was just added as: briefly marked and scrolled to, as it lands above the suggestions.
+  const [addedIndex, setAddedIndex] = useState<number | null>(null);
   const outsideRunRef = useRef(0);
   const turboCheckRef = useRef<{ deviceText: string; turbo: Promise<string | null>; done: boolean } | null>(null);
   const [verification, setVerification] = useState<{ quickText: string; turboText: string; changes: FactChange<SymptomObservation>[] } | null>(null);
@@ -675,6 +680,7 @@ export default function App() {
   async function findOutsideSymptoms(text: string) {
     const run = ++outsideRunRef.current;
     setOutsideFound([]);
+    setAddedIndex(null);
     try {
       const findSpans = await loadSpanModel();
       if (!findSpans) return;
@@ -712,6 +718,10 @@ export default function App() {
     }));
     setOutsideFound((current) => current.filter((item) => item !== part));
     setConfirmed(false);
+    const index = intake?.symptoms.length ?? 0;
+    setAddedIndex(index);
+    setTimeout(() => document.querySelectorAll(".observation")[index]
+      ?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
   }
 
   async function answerFollowUp(question: FollowUpQuestion, answer: string) {
@@ -757,6 +767,7 @@ export default function App() {
   }
 
   function removeSymptom(index: number) {
+    setAddedIndex(null);
     setIntake((current) => current && ({
       ...current,
       symptoms: current.symptoms.filter((_, itemIndex) => itemIndex !== index),
@@ -947,6 +958,10 @@ export default function App() {
       {turboTextLink}
     </div>
   ));
+  // Parts the rules could not read, minus those the model already offers or the patient added from its offers.
+  const unexplainedFragments = (intake?.unrecognized_fragments ?? []).filter((fragment) =>
+    ![...outsideFound.map((part) => part.text), ...(intake?.symptoms ?? []).map((symptom) => symptom.source_text)]
+      .some((said) => fragment.replace(/\s+/g, "").includes(said.replace(/\s+/g, ""))));
   const visibleRecords = records.filter(
     (record) => (record.recordGroupId || LEGACY_RECORD_GROUP_ID) === currentRecordGroupId,
   );
@@ -1095,7 +1110,7 @@ export default function App() {
         {view === "home" && (
           <section className="home-status" aria-label="지금 기록 상태">
             <div className="home-status__head">
-              <h2>진행 중인 증상</h2>
+              <h2>{latestEntry ? "진행 중인 증상" : "이렇게 써요"}</h2>
               {latestEntry && (
                 <span className="home-status__last">
                   마지막 기록 {new Intl.DateTimeFormat("ko-KR", { month: "long", day: "numeric", weekday: "short" }).format(new Date(latestEntry.createdAt))}
@@ -1109,7 +1124,13 @@ export default function App() {
                 ))}
               </ul>
             ) : (
-              <p className="muted">{latestEntry ? "진행 중인 증상이 없습니다." : "아직 기록이 없어요. 아래 버튼으로 시작해 보세요."}</p>
+              latestEntry ? <p className="muted">진행 중인 증상이 없습니다.</p> : (
+                <ol className="how-to">
+                  <li><strong>말하거나 적기</strong><span>어디가 언제부터 어떻게 아픈지 편하게 말해 주세요.</span></li>
+                  <li><strong>정리된 내용 확인</strong><span>증상·약·알레르기를 자동으로 정리해요. 틀린 곳만 고치면 돼요.</span></li>
+                  <li><strong>진료 때 보여 주기</strong><span>쌓인 기록을 요약해 의사에게 보여 주거나 QR로 넘겨요.</span></li>
+                </ol>
+              )
             )}
           </section>
         )}
@@ -1304,9 +1325,10 @@ export default function App() {
             )}
             {intake.symptoms.map((symptom, index) => (
               <div
-                className={urgentSymptoms([symptom]).length > 0 ? "observation observation--urgent" : "observation"}
+                className={`observation${urgentSymptoms([symptom]).length > 0 ? " observation--urgent" : ""}${index === addedIndex ? " observation--added" : ""}`}
                 key={index}
               >
+                {index === addedIndex && <p className="added-note" role="status">AI 제안에서 추가했어요</p>}
                 <div className="observation-header">
                   <strong className="observation-name">{symptom.name || "새 증상"}</strong>
                   <span className={`badge badge--${symptom.status}`}>{STATUS_LABEL[symptom.status]}</span>
@@ -1325,7 +1347,9 @@ export default function App() {
                 {/* Details stay folded until the patient wants to correct them; a hand-added symptom opens ready to fill. */}
                 <details className="observation-edit" open={symptom.source_text === "사용자가 직접 추가" || undefined}>
                 <summary>
-                  <span className="source-text">“{symptom.source_text}”</span>
+                  <span className="source-text">
+                    {symptom.source_text === "사용자가 직접 추가" ? "직접 추가한 증상" : `“${sourcePhrase(transcript, symptom.source_text)}”`}
+                  </span>
                   <span className="observation-edit__toggle"><ActionIcon name="edit" size={16} />고치기</span>
                 </summary>
                 <div className="observation-fields">
@@ -1442,10 +1466,10 @@ export default function App() {
               </section>
             )}
 
-            {intake.unrecognized_fragments.length > 0 && (
+            {unexplainedFragments.length > 0 && (
               <div className="review-warning" role="alert">
                 <strong>자동으로 정리하지 못한 표현</strong>
-                {intake.unrecognized_fragments.map((fragment, index) => (
+                {unexplainedFragments.map((fragment, index) => (
                   <p key={`${fragment}-${index}`}>“{fragment}”</p>
                 ))}
                 <p>필요하면 위 ‘증상 직접 추가’로 넣어 주세요.</p>
@@ -1564,9 +1588,16 @@ export default function App() {
             {turboChecking && <p className="record-message">정밀 인식으로 한 번 더 확인하고 있어요. 그동안 내용을 고칠 수 있습니다.</p>}
             {confirmed && <p className="confirmed">확인한 내용을 이 휴대폰에 저장했습니다.</p>}
             <div className="sticky-actions">
-              <button type="button" onClick={() => void confirmAndSave()} disabled={savingRecord || confirmed || !currentRecordGroupId || turboChecking}>
-                {savingRecord ? "저장 중…" : turboChecking ? "정밀 인식 확인 중…" : verification?.changes.length ? "위 정밀 인식 결과를 먼저 확인해 주세요" : confirmed ? "저장했어요" : "확인하고 저장"}
-              </button>
+              {confirmed ? (
+                <div className="button-row">
+                  <button type="button" onClick={() => go("summary")}>진료 전 요약 보기</button>
+                  <button className="button--secondary" type="button" onClick={() => go("home")}>처음으로</button>
+                </div>
+              ) : (
+                <button type="button" onClick={() => void confirmAndSave()} disabled={savingRecord || !currentRecordGroupId || turboChecking}>
+                  {savingRecord ? "저장 중…" : turboChecking ? "정밀 인식 확인 중…" : verification?.changes.length ? "위 정밀 인식 결과를 먼저 확인해 주세요" : "확인하고 저장"}
+                </button>
+              )}
             </div>
           </section>
         )}
