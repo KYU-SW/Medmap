@@ -52,7 +52,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install_android_ap
   `-CheckOnly`는 확인만 하고 끝난다. 다른 모델을 내보내면 `export_onnx.py`가 해시 파일도 함께 바꾼다.
 - **라이선스 주의**: 학습 문장을 만든 EXAONE 3.x(EXAONE AI Model License Agreement 1.1 - NC)는 3.1조에서
   "Model, Derivatives 또는 Output을 다른 모델 개발·개선에 쓰지 말 것"을 정한다. EXAONE 3.x 출력물을 다른 모델 학습에 사용한 것은
-  라이선스 충돌 가능성이 있다. LG 문의는 진행하지 않으며, 해당 모델·학습 자료는 공개·Release 배포하지 않는다. 추후 허용된 자료로 교체할 예정이다.
+  라이선스 충돌 가능성이 있다. LG 문의는 진행하지 않으며, 해당 모델·학습 자료는 공개·Release 배포하지 않는다.
+  캡스톤 프로젝트로 시장에 배포하지 않으므로 지금 모델을 교체하지 않고 그대로 쓴다(사용자 결정, 2026-11-06). 3.1조는 상업적 사용 금지와 별개 문장이라 비상업적 사용에서도 문구상 충돌 가능성은 남는다.
 
 ## 속도 (2026-10-06, 갤럭시 노트20 · 스냅드래곤 865, 같은 문장으로 측정)
 
