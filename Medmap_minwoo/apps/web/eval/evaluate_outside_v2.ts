@@ -3,7 +3,8 @@
 // without looking at where the part was. v2 pairs parts with answers only by where they are (match.ts):
 //   - answers: the outside set's symptoms beyond the list (outside_eval_set.jsonl "outside"), and the listed symptoms
 //     the rules miss in both sets, each with a hand-picked span (rule_missed_spans.jsonl, written 2026-11-06 from the
-//     sentences and the rules' output only, before any model output was looked at)
+//     sentences and the rules' output only, before any model output was looked at). Which of them the rules miss is
+//     decided when scoring, by the rules as they are then: one the rules have since learned to read drops out.
 //   - words the 360-sentence set marks as beyond the list ("unlisted") are not answers with a name, but a part over
 //     one is not a false alarm either
 // Run from apps/web:
@@ -48,6 +49,7 @@ function partsOf(item: Item): Part[] {
 }
 
 function answersOf(item: Item): Answer[] {
+  const ruled = new Set(extractIntake(item.text, "2026-10-17").symptoms.map((symptom) => symptom.name));
   const place = (span: string) => {
     const at = locate(item.text, span);
     if (!at) throw new Error(`[${item.id}] answer span not in the sentence: "${span}"`);
@@ -55,7 +57,8 @@ function answersOf(item: Item): Answer[] {
   };
   return [
     ...(item.outside ?? []).map((want) => ({ ...place(want.span), kind: "outside" as const, name: want.name, status: want.status })),
-    ...missedSpans.filter((want) => want.id === item.id)
+    // Only those the rules still miss today: one the rules now find is theirs, not the model's to fill in.
+    ...missedSpans.filter((want) => want.id === item.id && !ruled.has(want.name))
       .map((want) => ({ ...place(want.span), kind: "listed" as const, name: want.name, status: want.status })),
     ...(item.unlisted ?? []).flatMap((word) => {
       const at = locate(item.text, word);

@@ -192,6 +192,9 @@ function rule(name: string, mention: Pat, absent: Pat, bodySite: string | null =
 
 const INTENSITY_WORD = (
     String.raw`(?:아주|매우|너무|많이|조금|약간|심하게|살짝|계속|자꾸|되게|엄청|진짜|정말|좀|막|` +
+    // How often or how much, said between the body part and the verb: "머리가 꽤 아프네요", "배가 은근히 아파요" (2026-11-06).
+    String.raw`꽤|은근히|상당히|무척|몹시|굉장히|엄청나게|너무나|진짜로|정말로|조금씩|약간씩|살짝살짝|` +
+    String.raw`가끔씩|가끔|자주|종종|때때로|간혹|이따금|갑자기|점점|여전히|아직도|계속해서|하루\s*종일|항상|늘|부쩍|확|` +
     String.raw`살살|콕콕|쿡쿡|꾹꾹|구구|찌릿찌릿|찌릿|욱신욱신|욱신|지끈지끈|지끈|따끔따끔|뻐근하게|찌르듯이?|` +
     // How bad it is, said between the body part and the verb: "배가 참을 만하게 아파요".
     String.raw`데굴데굴|참을\s*만하게|견딜\s*만하게|죽을\s*(?:것\s*)?같이|미칠\s*(?:것\s*)?같이|` +
@@ -215,7 +218,8 @@ const NOW_ADVERB = String.raw`(?:(?:이제는?|이젠|지금은|현재는)\s*)?`
 const PARTICLE = String.raw`(?:은|는|이|가|도|을|를)?`;
 const JOINT_PART = String.raw`무릎|어깨|발목|손목|팔꿈치|고관절|골반|손가락\s*관절|손가락|발가락|턱관절|턱|관절`;
 const ABSENT_ENDING = String.raw`${NOW_ADVERB}(?:없|${RESOLVED_STATE})`;
-const NOT_PAINFUL = String.raw`(?:(?:더\s*이상\s*)?안\s*(?:아프|아파|아픈)|아프지(?:는|도)?\s*않|아프진\s*않)`;
+// "전혀 아프지 않아요", "하나도 안 아파요": none at all is still "not painful" (2026-11-06).
+const NOT_PAINFUL = String.raw`(?:(?:전혀|하나도|조금도)\s*)?(?:(?:더\s*이상\s*)?안\s*(?:아프|아파|아픈)|아프지(?:는|도)?\s*않|아프진\s*않)`;
 const INLINE_ONSET = (
     String.raw`(?<![가-힣A-Za-z0-9])(?:어젯밤(?:부터)?|처음(?:엔|에는|에)|` +
     String.raw`(?:오늘|어제|그제|그저께|엊그제)\s*` +
@@ -241,7 +245,7 @@ const RULES: Rule[] = [
         ),
         pat(
             String.raw`(?:두통|머리\s*통증)(?:은|이|도)?\s*${NOW_ADVERB}(?:없|아니)|` +
-            String.raw`머리(?:가|는|도)?\s*${NOW_ADVERB}(?:(?:더\s*이상\s*)?안\s*(?:아프|아파|아픈)|아프지\s*않)|` +
+            String.raw`머리(?:가|는|도)?\s*${NOW_ADVERB}${NOT_PAINFUL}|` +
             String.raw`(?:두통|머리\s*통증)(?:은|이|가|는|도)?\s*${NOW_ADVERB}${RESOLVED_STATE}`
         ),
         "머리",
@@ -274,6 +278,8 @@ const RULES: Rule[] = [
             String.raw`숨(?:이|은|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}(?:차|가빠|가쁘|가쁜|막혀|막히)|` +
             String.raw`숨(?:을)?\s*헐떡|` +
             String.raw`숨(?:을)?\s*쉬기(?:가)?\s*(?:힘들|어렵|어려|${IMPROVEMENT_PHRASE})|` +
+            // "숨 쉬는 게 좀 힘들어졌어", "숨 쉴 때 좀 힘들어요" (2026-11-06)
+            String.raw`숨\s*(?:쉬는\s*(?:게|것이?|것도)|쉴\s*때(?:마다)?)\s*${INTENSITY_PHRASE}(?:힘들|어렵|어려|불편|답답)|` +
             String.raw`숨쉬기가\s*(?:전보다\s*)?편해졌|` +
             String.raw`호흡곤란(?:이|은|도)?\s*(?:${IMPROVEMENT_PHRASE})?|` +
             String.raw`숨찬\s*증상(?:이|은|도)?\s*${IMPROVEMENT_PHRASE}`
@@ -310,7 +316,7 @@ const RULES: Rule[] = [
             String.raw`복통|폭통|(?:배|복부|명치|옆구리)\s*통증|배탈|위경련|위통`
         ),
         pat(
-            String.raw`(?:배|복부|속)(?:이|가|는|도)?\s*${NOW_ADVERB}(?:(?:더\s*이상\s*)?안\s*(?:아프|아파|아픈)|아프지\s*않)|` +
+            String.raw`(?:배|복부|속)(?:이|가|는|도)?\s*${NOW_ADVERB}${NOT_PAINFUL}|` +
             String.raw`복통(?:은|이|도)?\s*${NOW_ADVERB}(?:없|${RESOLVED_STATE})|` +
             String.raw`(?:배|복부|속)\s*통증(?:은|이|도)?\s*${NOW_ADVERB}(?:없|${RESOLVED_STATE})`
         ),
@@ -344,14 +350,15 @@ const RULES: Rule[] = [
     rule(
         "인후통",
         pat(
-            String.raw`인후통|목\s*통증|목감기|목(?:이|은|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}` +
+            // 목 as a word of its own (2026-11-06): 뒷목·손목 are not the throat. 목구멍 is.
+            String.raw`인후통|(?<![가-힣])목\s*통증|목감기|(?<![가-힣])(?:목구멍|목)(?:이|은|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}` +
             String.raw`(?:아프|아파|아팠|아픈|따끔|따끈|따가|따갑|칼칼|부었|부어|붓)|` +
-            String.raw`(?:인후통|목)(?:이|은|도)?\s*${CHANGE_PHRASE}|` +
+            String.raw`(?:인후통|(?<![가-힣])목)(?:이|은|도)?\s*${CHANGE_PHRASE}|` +
             String.raw`침(?:을)?\s*삼키기(?:가)?\s*(?:힘들|어렵|아프)|침(?:을)?\s*삼킬\s*때(?:마다)?\s*(?:아프|아파|따끔)`
         ),
         pat(
             String.raw`인후통${PARTICLE}\s*${ABSENT_ENDING}|` +
-            String.raw`목(?:은|이|도)?\s*${NOW_ADVERB}${NOT_PAINFUL}`
+            String.raw`(?<![가-힣])(?:목구멍|목)(?:은|이|도)?\s*${NOW_ADVERB}${NOT_PAINFUL}`
         ),
         "목",
     ),
@@ -388,12 +395,13 @@ const RULES: Rule[] = [
     rule(
         "근육통",
         pat(
-            String.raw`근육통|몸살|(?:온몸|몸|근육|팔다리)(?:이|가|은|도)?\s*${INTENSITY_PHRASE}` +
+            // 몸 as a word of its own (2026-11-06): 잇몸 is the gums.
+            String.raw`근육통|몸살|(?<![가-힣])(?:온몸|몸|근육|팔다리)(?:이|가|은|도)?\s*${INTENSITY_PHRASE}` +
             String.raw`(?:쑤시|쑤셔|쑤신|결리|결려|아프|아파|아픈)`
         ),
         pat(
             String.raw`(?:근육통|몸살)${PARTICLE}\s*${ABSENT_ENDING}|` +
-            String.raw`(?:온몸|몸|근육)(?:은|이|도)?\s*${NOW_ADVERB}(?:${NOT_PAINFUL}|안\s*쑤|쑤시지\s*않)`
+            String.raw`(?<![가-힣])(?:온몸|몸|근육)(?:은|이|도)?\s*${NOW_ADVERB}(?:${NOT_PAINFUL}|안\s*쑤|쑤시지\s*않)`
         ),
     ),
     rule(
@@ -435,7 +443,11 @@ const RULES: Rule[] = [
     ),
     rule(
         "변비",
-        pat(String.raw`변비|(?<!소)(?:대변|변)(?:을|이|도)?\s*(?:잘\s*)?(?:못\s*(?:봤|봐|보|본)|안\s*나와|안\s*나오)`),
+        pat(String.raw`변비|(?<!소)(?:대변|변)(?:을|이|도)?\s*(?:잘\s*)?(?:못\s*(?:봤|봐|보|본)|안\s*나와|안\s*나오)|` +
+          // "대변도 전혀 안 나오고", "대변은 전혀 못 보는", "변 보는 게 진짜 어렵고" (2026-11-06)
+          String.raw`(?<![가-힣])(?:대변|배변|변)(?:을|이|도|은)?\s*(?:(?:${INTENSITY_WORD}|전혀|아예|딱히)\s*)*` +
+          String.raw`(?:못\s*(?:봤|봐|보|본)|안\s*나와|안\s*나오|나오지\s*않)|` +
+          String.raw`(?<![가-힣])(?:대변|배변|변)(?:을)?\s*보(?:는\s*(?:게|것이?)|기(?:가)?)\s*${INTENSITY_PHRASE}(?:어렵|어려|힘들|안\s*되)`),
         pat(String.raw`변비${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
     rule(
@@ -461,7 +473,7 @@ const RULES: Rule[] = [
     rule(
         "두근거림",
         pat(
-            String.raw`두근|벌렁|심계항진|심장(?:이)?\s*(?:너무\s*)?(?:빨리|빠르게|불규칙하게|쿵쾅)`
+            String.raw`두근|벌렁|심계항진|심장(?:이|도|은)?\s*${INTENSITY_PHRASE}(?:빨리|빠르게|불규칙하게|쿵쾅|펄떡)`
         ),
         pat(
             String.raw`(?:두근거림|심계항진)${PARTICLE}\s*${ABSENT_ENDING}|안\s*두근|두근거리지\s*않`
@@ -487,7 +499,9 @@ const RULES: Rule[] = [
     rule(
         "속쓰림",
         pat(
-            String.raw`속쓰림|(?:속|가슴|명치|윗배|위)(?:이|가)?\s*${INTENSITY_PHRASE}(?:쓰려|쓰리|쓰린|쓰림|타는)|` +
+            String.raw`속쓰림|(?:속|가슴|명치|윗배|위)(?:이|가|도|까지)?\s*${INTENSITY_PHRASE}(?:쓰려|쓰리|쓰린|쓰림|쓰라|타는)|` +
+            // "속이 따갑고", "속이 화끈거려요", "속에서 불이 나는 것 같아요" (2026-11-06)
+            String.raw`(?<![가-힣])속(?:이|도)?\s*${INTENSITY_PHRASE}(?:따갑|따가|화끈)|(?<![가-힣])속에서\s*불|` +
             String.raw`신물(?:이)?\s*(?:올라|넘어)|위산\s*역류`
         ),
         pat(
@@ -498,7 +512,9 @@ const RULES: Rule[] = [
     rule(
         "식욕부진",
         pat(
-            String.raw`식욕부진|식욕(?:이|도)?\s*(?:없|떨어|뚝)|입맛(?:이|도)?\s*(?:없|떨어|뚝|통\s*없)|` +
+            // "입맛이 전혀 없어요", "식욕도 확 줄었어요", "밥맛이 아예 없다", "밥 생각이 없어요" (2026-11-06)
+            String.raw`식욕부진|(?:식욕|입맛|밥\s*맛)(?:이|도)?\s*(?:(?:${INTENSITY_WORD}|전혀|아예|완전히|통|별로)\s*)*(?:없|떨어|뚝|줄었|제로)|` +
+            String.raw`밥\s*생각(?:이|도)?\s*(?:(?:전혀|별로|통)\s*)?없|` +
             String.raw`밥(?:을|이)?\s*(?:잘\s*)?(?:못\s*먹|안\s*넘어가|먹기\s*싫)`
         ),
         pat(
@@ -509,6 +525,9 @@ const RULES: Rule[] = [
         "불면",
         pat(
             String.raw`불면|잠(?:을|이)?\s*(?:잘\s*)?(?:못\s*(?:자|잤|잔|들)|안\s*(?:와|온|오)|설쳐|설쳤)|` +
+            // "잠이 제대로 오지 않아요", "잠 못 이루고", "잠을 설치고" (2026-11-06)
+            String.raw`(?<![가-힣])잠(?:을|이|도)?\s*(?:(?:${INTENSITY_WORD}|전혀|제대로|잘)\s*)*` +
+            String.raw`(?:못\s*(?:자|잤|잔|들|이루)|안\s*(?:와|온|오)|오지\s*않|이루지\s*못|설치|설쳐|설쳤)|` +
             String.raw`자다가\s*(?:자꾸\s*|계속\s*)?깨`
         ),
         pat(String.raw`잠(?:은|을|도)?\s*${NOW_ADVERB}잘\s*(?:자|잤|자요)|불면${PARTICLE}\s*${ABSENT_ENDING}`),
@@ -580,14 +599,16 @@ const RULES: Rule[] = [
     rule(
         "떨림",
         pat(
-            String.raw`수전증|(?:손|팔|다리|손발|입술|턱|몸)(?:이|가|도)?\s*(?:덜덜\s*|부들부들\s*|계속\s*|자꾸\s*)?` +
+            String.raw`수전증|(?:손|팔|다리|손발|입술|턱|몸)(?:이|가|도)?\s*(?:덜덜\s*|부들부들\s*|${INTENSITY_WORD}\s*)*` +
             String.raw`(?:떨려|떨리|떨림|떨린)`
         ),
         pat(String.raw`떨림${PARTICLE}\s*${ABSENT_ENDING}|(?:안\s*떨|떨리지\s*않)`),
     ),
     rule(
         "이명",
-        pat(String.raw`이명|귀(?:에서)?\s*(?:삐|윙|웅웅|소리(?:가)?\s*(?:나|들려))|귀(?:가)?\s*울려|귀(?:가)?\s*울리`),
+        // "귀에서 가끔 이상한 소리도 들리네요", "귀에서 계속 잡음이 들려요" (2026-11-06)
+        pat(String.raw`이명|귀(?:에서)?\s*(?:삐|윙|웅웅|소리(?:가)?\s*(?:나|들려))|귀(?:가)?\s*울려|귀(?:가)?\s*울리|` +
+          String.raw`귀(?:에서|에)(?:는|도)?\s*${INTENSITY_PHRASE}(?:뭔가\s*)?(?:이상한\s*)?(?:소리|잡음)(?:가|도|이)?\s*${INTENSITY_PHRASE}(?:나|들려|들리)`),
         pat(String.raw`이명${PARTICLE}\s*${ABSENT_ENDING}`),
         "귀",
     ),
@@ -601,19 +622,25 @@ const RULES: Rule[] = [
         "객혈",
         pat(
             String.raw`객혈|각혈|(?:기침|가래)(?:할\s*때|하면|에|에서)?\s*(?:피|핏덩이)(?:가|도)?\s*(?:섞|나|묻)|` +
+            // "기침할 때마다 피가 나와", "기침할 때 가끔씩 피가 섞여", "기침하면서 피가 나오긴" (2026-11-06)
+            String.raw`기침(?:할\s*때(?:마다)?|하면(?:서)?|하면서)\s*${INTENSITY_PHRASE}(?:피|핏덩이|핏방울)(?:가|도|이)?\s*${INTENSITY_PHRASE}(?:섞|나|묻)|` +
             String.raw`피(?:가)?\s*섞인\s*(?:가래|기침)`
         ),
         pat(String.raw`(?:객혈|각혈)${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
     rule(
         "토혈",
-        pat(String.raw`토혈|피(?:를)?\s*토했|피(?:를)?\s*토해|토(?:에|한\s*것에)\s*피|피가\s*섞인\s*구토|토할\s*때\s*피`),
+        pat(String.raw`토혈|피(?:를)?\s*토했|피(?:를)?\s*토해|토(?:에|한\s*것에)\s*피|피가\s*섞인\s*구토|토할\s*때\s*피|` +
+          // "구토할 때마다 피가 섞여", "피 섞인 구토" (2026-11-06)
+          String.raw`구토(?:할\s*때(?:마다)?|하면서)\s*${INTENSITY_PHRASE}피|피\s*섞인\s*구토`),
         pat(String.raw`토혈${PARTICLE}\s*${ABSENT_ENDING}|피(?:는|를|도)?\s*(?:안\s*토(?:했|해)|토하지\s*않)`),
     ),
     rule(
         "혈변",
         pat(
             String.raw`혈변|(?:대변|(?<!소)변)(?:에|에서)\s*피|피(?:가)?\s*섞인\s*(?:대변|(?<!소)변)|` +
+            // "변에 약간의 피 같은 것이", "변에 까만 색 피가" — blood said, not only a color (2026-11-06)
+            String.raw`(?:대변|(?<![가-힣])변)(?:에|에서)\s*(?:약간의?\s*|조금\s*|까만\s*색?\s*|검은\s*색?\s*|빨간\s*색?\s*)?피|` +
             String.raw`(?:검은|까만|짜장\s*같은)\s*(?:대변|변)|(?:대변|변)(?:이)?\s*(?:검게|까맣게)`
         ),
         pat(String.raw`혈변${PARTICLE}\s*${ABSENT_ENDING}`),
@@ -626,13 +653,18 @@ const RULES: Rule[] = [
     rule(
         "배뇨통",
         pat(
-            String.raw`배뇨통|(?:소변|오줌)(?:을)?\s*(?:볼|눌)\s*때\s*(?:마다\s*)?(?:아프|아파|따끔|찌릿|화끈|쓰라)`
+            // "소변 볼 때마다 통증이 있어요", "소변 볼 때도 조금 아프네요" (2026-11-06)
+            String.raw`배뇨통|(?:소변|오줌)(?:을)?\s*(?:볼|눌)\s*때\s*(?:마다|도)?\s*${INTENSITY_PHRASE}` +
+            String.raw`(?:아프|아파|아픔|통증|따끔|찌릿|화끈|쓰라)`
         ),
         pat(String.raw`배뇨통${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
     rule(
         "빈뇨",
-        pat(String.raw`빈뇨|(?:소변|오줌)(?:을|이|도)?\s*(?:너무\s*)?자주|화장실(?:을|에)?\s*(?:너무\s*)?자주\s*가`),
+        pat(String.raw`빈뇨|(?:소변|오줌)(?:을|이|도)?\s*(?:너무\s*)?자주|화장실(?:을|에)?\s*(?:너무\s*)?자주\s*가|` +
+          // "소변 보는 횟수가 부쩍 늘었어요", "소변 보는 게 너무 자주 돼요", "자주 마려운데" (2026-11-06)
+          String.raw`(?:소변|오줌)\s*(?:보는\s*)?(?:횟수|빈도)(?:가|도)?\s*${INTENSITY_PHRASE}(?:늘|많아|잦)|` +
+          String.raw`(?:소변|오줌)\s*보는\s*(?:게|거)\s*${INTENSITY_PHRASE}자주|자주\s*마려`),
         pat(String.raw`빈뇨${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
     rule(
@@ -657,7 +689,8 @@ const RULES: Rule[] = [
     rule(
         "쉰 목소리",
         pat(
-            String.raw`쉰\s*목소리|목(?:이)?\s*쉬었|목(?:이)?\s*쉬어|목(?:이)?\s*잠겼|목소리(?:가)?\s*(?:쉬|변했|안\s*나|갈라)`
+            String.raw`쉰\s*목소리|쉬는\s*목소리|목(?:이)?\s*쉬었|목(?:이)?\s*쉬어|목(?:이)?\s*잠겼|` +
+            String.raw`목소리(?:가|도)?\s*${INTENSITY_PHRASE}(?:쉬|변했|변해|안\s*나|잘\s*안\s*나|갈라|거칠|잠겼)`
         ),
         pat(String.raw`목소리(?:는|도)?\s*(?:괜찮|정상)`),
         "목",
@@ -691,11 +724,12 @@ const RULES: Rule[] = [
     rule(
         "입안 통증",
         pat(
-            String.raw`구내염|입병|(?:입안|입\s*안|혀|입천장)(?:이|가|은|는|도|에)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}` +
+            // 입·혀 as words of their own (2026-11-06): the 혀 in 전혀 is not the tongue.
+            String.raw`구내염|입병|(?<![가-힣])(?:입안|입\s*안|혀|입천장)(?:이|가|은|는|도|에)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}` +
             String.raw`(?:아프|아파|아팠|아픈|따가|따갑|쓰라|헐었|헐어|헌\s|헐|뭐가\s*났)`
         ),
         pat(
-            String.raw`(?:구내염|입병)${PARTICLE}\s*${ABSENT_ENDING}|(?:입안|혀)(?:은|는|도|이|가)?\s*${NOW_ADVERB}${NOT_PAINFUL}`
+            String.raw`(?:구내염|입병)${PARTICLE}\s*${ABSENT_ENDING}|(?<![가-힣])(?:입안|혀)(?:은|는|도|이|가)?\s*${NOW_ADVERB}${NOT_PAINFUL}`
         ),
         "입안",
     ),
@@ -714,7 +748,10 @@ const RULES: Rule[] = [
         "배뇨 곤란",
         pat(
             String.raw`(?:소변|오줌)(?:이|을|도)?\s*(?:잘\s*)?(?:안\s*나와|안\s*나오|안\s*나온|못\s*(?:봤|봐|보|본)|` +
-            String.raw`보기(?:가)?\s*(?:힘들|어렵)|찔끔|시원하게\s*안)`
+            String.raw`보기(?:가)?\s*(?:힘들|어렵)|찔끔|시원하게\s*안)|` +
+            // "소변이 잘 나오지 않고", "소변 보는 게 정말 힘들어요" (2026-11-06)
+            String.raw`(?:소변|오줌)(?:이|도)?\s*${INTENSITY_PHRASE}잘\s*(?:안\s*나|나오지\s*않)|` +
+            String.raw`(?:소변|오줌)(?:을)?\s*보는\s*(?:게|것도?)\s*${INTENSITY_PHRASE}(?:힘들|어렵|어려)`
         ),
         pat(String.raw`(?:소변|오줌)(?:은|도)?\s*(?:잘\s*)?(?:나와|나오고|봐요|보고)`),
     ),
@@ -726,7 +763,9 @@ const RULES: Rule[] = [
     ),
     rule(
         "생리통",
-        pat(String.raw`생리통|(?:생리|월경)(?:할\s*때|\s*중에?|\s*때문에)?\s*(?:배가\s*)?(?:너무\s*|많이\s*|심하게\s*)?(?:아프|아파|아팠)`),
+        // "생리할 때마다 배랑 허리가 좀 아파요", "생리 아픔도 계속 있어요" (2026-11-06)
+        pat(String.raw`생리통|(?:생리|월경)\s*(?:할\s*때(?:마다)?|때(?:마다)?|기간\s*동안|중에?|때문에)?\s*` +
+          String.raw`(?:(?:배|허리|아랫배)(?:가|랑|도|와|하고)?\s*){0,2}${INTENSITY_PHRASE}(?:아프|아파|아팠|아픔|통증)`),
         pat(String.raw`생리통${PARTICLE}\s*${ABSENT_ENDING}`),
         "아랫배",
     ),
@@ -744,7 +783,9 @@ const RULES: Rule[] = [
     ),
     rule(
         "눈 분비물",
-        pat(String.raw`눈곱|눈물(?:이)?\s*(?:계속|자꾸|많이)\s*(?:나|흘러|흘)`),
+        pat(String.raw`눈곱|눈물(?:이)?\s*(?:계속|자꾸|많이)\s*(?:나|흘러|흘)|` +
+          // "눈물이 줄줄 흐를 때가", "눈물도 자꾸 나서" (2026-11-06)
+          String.raw`눈물(?:이|도)?\s*(?:(?:${INTENSITY_WORD}|줄줄)\s*)+(?:나|흘러|흘|흐르|나와|나오)|눈(?:가|에)?\s*분비물`),
         pat(String.raw`눈곱${PARTICLE}\s*${ABSENT_ENDING}`),
         "눈",
     ),
@@ -756,7 +797,7 @@ const RULES: Rule[] = [
     ),
     rule(
         "손발 차가움",
-        pat(String.raw`수족냉증|(?:손발|손|발)(?:이|가|도)?\s*(?:너무\s*|많이\s*|자주\s*)?(?:차가워|차가운|차요|차서|시려|시리|얼음)`),
+        pat(String.raw`수족냉증|(?<![가-힣])(?:오른|왼|양)?(?:손발|손|발)(?:이|가|도|은|는)?\s*${INTENSITY_PHRASE}(?:차가워|차가운|차갑|차요|차서|시려|시리|얼음|냉)`),
         pat(String.raw`수족냉증${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
     rule(
@@ -771,13 +812,15 @@ const RULES: Rule[] = [
     ),
     rule(
         "청력 저하",
-        pat(String.raw`청력|난청|(?<![가-힣])잘\s*안\s*들(?:려|리)|(?:귀|소리|말)(?:가|이|도)?\s*(?:잘\s*)?안\s*들려|(?:귀|소리|말)(?:가|이|도)?\s*잘\s*안\s*들리`),
+        pat(String.raw`청력|난청|(?<![가-힣])잘\s*안\s*들(?:려|리)|(?:귀|소리|말)(?:가|이|도)?\s*(?:잘\s*)?안\s*들려|(?:귀|소리|말)(?:가|이|도)?\s*잘\s*안\s*들리|` +
+          // "귀가 좀 안 들리고", "소리가 분명하게 안 들리는 것 같아" (2026-11-06)
+          String.raw`(?:귀|소리)(?:가|이|도)?\s*(?:${INTENSITY_PHRASE}|분명하게\s*|잘\s*)+안\s*들(?:려|리)`),
         pat(String.raw`(?:청력\s*저하|난청)${PARTICLE}\s*${ABSENT_ENDING}|(?:귀|소리)(?:는|도)?\s*잘\s*들려`),
         "귀",
     ),
     rule(
         "입마름",
-        pat(String.raw`입마름|구갈|갈증|(?:입|입안|목)(?:이|가|도)?\s*(?:자주\s*|계속\s*|바짝\s*|너무\s*)*(?:말라|마르|마른|건조)`),
+        pat(String.raw`입마름|구갈|갈증|(?<![가-힣])(?:입|입안|목)(?:이|가|도)?\s*(?:${INTENSITY_WORD}\s*|바짝\s*|너무나\s*)*(?:말라|마르|마른|건조)`),
         pat(String.raw`(?:입마름|갈증)${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
 ];

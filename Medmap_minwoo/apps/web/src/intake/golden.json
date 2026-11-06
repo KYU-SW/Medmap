@@ -23042,5 +23042,667 @@
    ],
    "needs_user_confirmation": true
   }
+ },
+ {
+  "text": "머리가 꽤 아프네요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "두통",
+     "status": "present",
+     "body_site": "머리",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "머리가 꽤 아프"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "배가 은근히 아파요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "복통",
+     "status": "present",
+     "body_site": "복부",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "배가 은근히 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "가슴이 가끔씩 아파요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "흉통",
+     "status": "present",
+     "body_site": "가슴",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "가슴이 가끔씩 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "뒷목이 아파요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "목 결림",
+     "status": "present",
+     "body_site": "뒷목",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "뒷목"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "손목이 아파요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "관절 통증",
+     "status": "present",
+     "body_site": "손목",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "손목이 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "잇몸이 아파요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "치통",
+     "status": "present",
+     "body_site": "치아",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "잇몸이 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "목구멍이 좀 아파요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "인후통",
+     "status": "present",
+     "body_site": "목",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "목구멍이 좀 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "입맛이 전혀 없어요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "식욕부진",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "입맛이 전혀 없"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "귀에서 이상한 소리가 계속 들려요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "이명",
+     "status": "present",
+     "body_site": "귀",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "귀에서 이상한 소리가 계속 들려"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "소변 보는 횟수가 부쩍 늘었어요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "빈뇨",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": "worsening",
+     "source_text": "소변 보는 횟수가 부쩍 늘"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "소변 볼 때마다 통증이 있어요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "배뇨통",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "소변 볼 때마다 통증"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "잠이 제대로 오지 않아요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "불면",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "잠이 제대로 오지 않"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "숨 쉬는 게 좀 힘들어요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "호흡곤란",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "숨 쉬는 게 좀 힘들"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "속이 따갑고 화끈거려요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "속쓰림",
+     "status": "present",
+     "body_site": "복부",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "속이 따갑"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "생리할 때마다 배가 아파요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "생리통",
+     "status": "present",
+     "body_site": "아랫배",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "생리할 때마다 배가 아파"
+    },
+    {
+     "name": "복통",
+     "status": "present",
+     "body_site": "복부",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "배가 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "기침할 때마다 피가 섞여 나와요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "기침",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "기침"
+    },
+    {
+     "name": "객혈",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "기침할 때마다 피가 섞"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "대변이 전혀 안 나와요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "변비",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "대변이 전혀 안 나와"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "손발이 차가워요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "손발 차가움",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "손발이 차가워"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "머리가 전혀 아프지 않아요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "두통",
+     "status": "absent",
+     "body_site": "머리",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "머리가 전혀 아프지 않"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "입맛은 괜찮아요.",
+  "reference_date": "2026-11-06",
+  "result": {
+   "symptoms": [
+    {
+     "name": "식욕부진",
+     "status": "absent",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "입맛은 괜찮"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
  }
 ]
