@@ -5,20 +5,20 @@ import { namePart, outsideSymptoms, sourcePhrase } from "./outsideSymptoms";
 
 describe("outsideSymptoms", () => {
   it("keeps a symptom said in the same part as one the rules found", () => {
-    // The model's part covers 딸꾹질 and the rules' 불면 ("잠을 잘 못 잤"); 딸꾹질 used to be dropped with it.
-    const text = "딸꾹질이 계속 나서 잠을 잘 못 잤어요.";
+    // The model's part covers 창백함 and the rules' 불면 ("잠을 잘 못 잤"); 창백함 used to be dropped with it.
+    const text = "얼굴이 창백해져서 잠을 잘 못 잤어요.";
     const part = { start: 0, end: text.length - 1, status: "present" as const, text: text.slice(0, -1) };
     const found = outsideSymptoms(text, extractIntake(text, "2026-11-06"), [part]);
-    expect(found.map((symptom) => [symptom.name, symptom.text])).toEqual([["딸꾹질", "딸꾹질이 계속 나서"]]);
+    expect(found.map((symptom) => [symptom.name, symptom.text])).toEqual([["창백함", "얼굴이 창백해져서"]]);
   });
 
   it("starts what is left at a whole word when the rules' evidence ends inside one", () => {
     // The rules' 두통 evidence is "머리가 아프", which ends before the "고" of "아프고".
-    const text = "어제부터 머리가 아프고 딸꾹질이 안 멈춰요.";
+    const text = "어제부터 머리가 아프고 얼굴이 창백해졌어요.";
     const start = text.indexOf("머리");
     const part = { start, end: text.length - 1, status: "present" as const, text: text.slice(start, -1) };
     const found = outsideSymptoms(text, extractIntake(text, "2026-11-06"), [part]);
-    expect(found.map((symptom) => symptom.text)).toEqual(["딸꾹질이 안 멈춰요"]);
+    expect(found.map((symptom) => symptom.text)).toEqual(["얼굴이 창백해졌어요"]);
   });
 
   it("drops what is left of such a part when it names no symptom", () => {

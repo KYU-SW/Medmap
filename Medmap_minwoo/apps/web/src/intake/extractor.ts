@@ -482,7 +482,7 @@ const RULES: Rule[] = [
     ),
     rule(
         "저림",
-        pat(String.raw`저려|저리|저림|저린|저릿|쥐(?:가)?\s*(?:나|났)|감각(?:이)?\s*(?:없|둔하|둔해|무뎌)`),
+        pat(String.raw`저려|저리|저림|저린|저릿|감각(?:이)?\s*(?:없|둔하|둔해|무뎌)`),
         pat(String.raw`저림${PARTICLE}\s*${ABSENT_ENDING}|저리지\s*않|안\s*저려|안\s*저리`),
     ),
     rule(
@@ -573,7 +573,7 @@ const RULES: Rule[] = [
     ),
     rule(
         "식은땀",
-        pat(String.raw`식은땀|(?<![가-힣])땀(?:이|을|도)?\s*(?:많이\s*|비\s*오듯\s*|줄줄\s*)?(?:나|났|흘|흐르)`),
+        pat(String.raw`식은땀|(?<![가-힣])땀(?:이|을|도)?\s*(?:나|났|흘|흐르)`),
         pat(
             String.raw`식은땀${PARTICLE}\s*${ABSENT_ENDING}|(?<![가-힣])땀(?:은|이|도)?\s*${NOW_ADVERB}(?:안\s*나|나지\s*않)`
         ),
@@ -705,7 +705,7 @@ const RULES: Rule[] = [
     ),
     rule(
         "경련",
-        pat(String.raw`(?<!위)경련|발작|(?:몸|팔|다리)(?:이|가)?\s*(?:뻣뻣해지|뒤틀리)`),
+        pat(String.raw`(?<!위|근육\s*)경련|발작|(?:몸|팔|다리)(?:이|가)?\s*(?:뻣뻣해지|뒤틀리)`),
         pat(String.raw`(?:경련|발작)${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
     rule(
@@ -822,6 +822,113 @@ const RULES: Rule[] = [
         "입마름",
         pat(String.raw`입마름|구갈|갈증|(?<![가-힣])(?:입|입안|목)(?:이|가|도)?\s*(?:${INTENSITY_WORD}\s*|바짝\s*|너무나\s*)*(?:말라|마르|마른|건조)`),
         pat(String.raw`(?:입마름|갈증)${PARTICLE}\s*${ABSENT_ENDING}`),
+    ),
+    // 2026-11-08: symptoms the span model used to name from outside the list, now read by the rules themselves.
+    rule(
+        "삼킴 곤란",
+        // "침 삼키기가 힘들어요" is a sore throat (인후통), not trouble swallowing food.
+        pat(String.raw`삼킴\s*곤란|연하\s*곤란|음식이\s*(?:잘\s*)?안\s*넘어|` +
+          String.raw`(?<!침(?:을)?\s*)(?:삼키|넘기)(?:기(?:가|도|는)?|는\s*(?:게|것이?|것도|거|데|건))\s*` +
+          String.raw`(?:${INTENSITY_WORD}\s*|전보다\s*|예전보다\s*|요즘\s*|더\s*|훨씬\s*)*(?:힘들|힘든|어렵|어려|불편|곤란)`),
+        pat(String.raw`삼킴\s*곤란${PARTICLE}\s*${ABSENT_ENDING}|(?:삼키|넘기)(?:는\s*(?:건|것은|거|것도)|기(?:는|도))\s*${NOW_ADVERB}(?:괜찮|문제\s*없|편하)`),
+    ),
+    rule(
+        "혼란",
+        // Not "마음이 혼란스러워요" (feelings), "혼란스러워 보일까 봐" (how one seems) or "정신이 없어요" (busy).
+        pat(String.raw`(?<!(?:마음|생각|기분)(?:이|가)?\s*)혼란스(?:러|럽)(?!워?\s*보)|의식(?:이)?\s*혼미|` +
+          String.raw`정신(?:이)?\s*${INTENSITY_PHRASE}(?:오락가락|왔다\s*갔다|흐릿|흐려)|사람(?:을|도)?\s*(?:잘\s*)?못\s*알아|` +
+          String.raw`(?:여기가|지금이)\s*(?:어디|언제)인지\s*(?:잘\s*)?모르`),
+        pat(String.raw`혼란${PARTICLE}\s*${ABSENT_ENDING}|정신(?:은|도)?\s*(?:멀쩡|또렷|맑)`),
+    ),
+    rule(
+        "림프절 부음",
+        // Only where lymph nodes are: a lump in the breast, on the lip or on the gums is something else.
+        pat(String.raw`(?:림프절|림프샘|임파선)(?:이|가|도)?\s*${INTENSITY_PHRASE}(?:부었|부어|붓|부은|커졌|커진|만져)|` +
+          String.raw`(?<![가-힣])(?:목|턱\s*밑|귀\s*뒤|겨드랑이|사타구니)\s*(?:옆|주변|양옆|쪽)?(?:에|이|가)?\s*${INTENSITY_PHRASE}(?:멍울|몽우리|혹|볼록)|` +
+          String.raw`(?<![가-힣])목\s*(?:옆|주변|양옆)(?:이|에|가)?\s*${INTENSITY_PHRASE}(?:부어|부었|붓)`),
+        pat(String.raw`(?:멍울|몽우리)(?:\s*같은\s*(?:건|것은|거))?(?:은|는|도)?\s*(?:안\s*만져|만져지지\s*않|${ABSENT_ENDING})|` +
+          String.raw`(?:림프절|임파선)${PARTICLE}\s*(?:${ABSENT_ENDING}|안\s*부)`),
+    ),
+    rule(
+        "황달",
+        pat(String.raw`황달|(?:눈\s*흰자위?|흰자위?|눈|피부|얼굴|몸)(?:이|가|도|색이)?\s*${INTENSITY_PHRASE}(?:노랗|노래|누렇|누래)`),
+        pat(String.raw`황달${PARTICLE}\s*${ABSENT_ENDING}`),
+    ),
+    rule(
+        "체중 증가",
+        pat(String.raw`체중(?:이|도)?\s*${INTENSITY_PHRASE}(?:확실히\s*)?(?:늘|증가|불었)|몸무게(?:가|도)?\s*${INTENSITY_PHRASE}(?:늘|불었)|` +
+          String.raw`(?<![가-힣])살(?:이|도)?\s*${INTENSITY_PHRASE}(?:쪘|찌|찐|붙)|\d+\s*(?:킬로|kg)(?:가|나|이)?\s*(?:늘었|쪘|불었)`),
+        pat(String.raw`(?:체중|몸무게|살)(?:은|는|도)?\s*안\s*(?:늘|쪘|불)|(?:늘|찌)지\s*않`),
+    ),
+    rule(
+        "땀 과다",
+        // How much ("땀이 비 오듯 나요"); 식은땀 and a plain "땀이 나요" stay 식은땀.
+        pat(String.raw`다한증|(?<![가-힣])땀(?:이|을|도)?\s*` +
+          String.raw`(?:${INTENSITY_WORD}\s*|평소보다\s*|평상시보다\s*|훨씬\s*|비\s*오듯\s*|줄줄\s*|폭포처럼\s*|뻘뻘\s*|지나치게\s*|끊임없이\s*)+(?:나|났|흘|흐르|많)|` +
+          String.raw`(?<![가-힣])땀(?:이)?\s*많(?:아|이|은|다)`),
+        pat(String.raw`(?<![가-힣])땀(?:이|은|도)?\s*많이\s*나는\s*편(?:은|이)?\s*아니|다한증${PARTICLE}\s*${ABSENT_ENDING}`),
+    ),
+    rule(
+        "근육 경련",
+        // 쥐 is a cramp, not numbness (저림); a cramp is not a seizure (경련).
+        pat(String.raw`근육\s*경련|(?<![가-힣])쥐(?:가|도)?\s*${INTENSITY_PHRASE}(?:잘\s*)?(?:나|났|난)|` +
+          String.raw`(?:눈\s*밑|눈꺼풀|근육)(?:이|가|도)?\s*${INTENSITY_PHRASE}(?:떨려|떨리|떨린|파르르|씰룩)`),
+        pat(String.raw`(?:근육\s*경련|(?<![가-힣])쥐)${PARTICLE}\s*(?:${ABSENT_ENDING}|안\s*나)`),
+    ),
+    rule(
+        "후각 상실",
+        // "입 냄새가 안 나요", "몸에서 냄새가 안 나요" are about a smell, not about smelling.
+        pat(String.raw`후각|(?<!(?:에서|입|몸|발)\s*)(?<![가-힣])냄새(?:를|가|도)?\s*(?:${INTENSITY_WORD}\s*|전혀\s*|잘\s*|거의\s*|아예\s*)*` +
+          String.raw`(?:못\s*맡|맡지\s*못|안\s*(?:나|맡)|모르겠|사라)|` +
+          String.raw`냄새(?:를)?\s*맡는\s*(?:게|거|것이?)\s*(?:${INTENSITY_WORD}\s*|전혀\s*|거의\s*|요즘은?\s*|완전히\s*)*(?:안\s*되|힘들|어렵|없)|` +
+          String.raw`냄새\s*(?:감지|감각)(?:이|가|도)?\s*(?:${INTENSITY_WORD}\s*|전혀\s*|완전히\s*)*(?:안\s*되|사라|없)|(?<![가-힣])냄새(?:가)?\s*싹\s*사라`),
+        pat(String.raw`냄새(?:는|도)?\s*잘\s*맡|후각${PARTICLE}\s*(?:${ABSENT_ENDING}|정상|괜찮)`),
+    ),
+    rule(
+        "미각 이상",
+        // 입맛이 없어요 and 밥맛이 없어요 are 식욕부진.
+        pat(String.raw`미각|(?<![가-힣]|밥\s*)맛(?:을|이|도|에)?\s*(?:${INTENSITY_WORD}\s*|전혀\s*|잘\s*|거의\s*|아예\s*|제대로\s*|완전히\s*)*` +
+          String.raw`(?:못\s*느끼|느끼지\s*못|안\s*느껴|느껴지지\s*않|안\s*나|이상|모르겠|달라)|` +
+          String.raw`(?<![가-힣]|밥\s*)맛(?:이|도)?\s*(?:전혀|아예|하나도)\s*없`),
+        pat(String.raw`(?<![가-힣])맛(?:은|도)?\s*잘\s*느껴|미각${PARTICLE}\s*(?:${ABSENT_ENDING}|정상|괜찮)`),
+    ),
+    rule(
+        "멍",
+        // 멍 as a word of its own: 멍울 is a lump.
+        pat(String.raw`(?<![가-힣])멍(?:이|도)?\s*(?:${INTENSITY_WORD}\s*|잘\s*|쉽게\s*|바로\s*)*(?:들|든|생|잡)`),
+        pat(String.raw`(?<![가-힣])멍${PARTICLE}\s*(?:잘\s*)?(?:안\s*(?:들|생)|${ABSENT_ENDING})`),
+    ),
+    rule(
+        "잇몸 출혈",
+        pat(String.raw`잇몸\s*출혈|잇몸(?:에서|이|에|도)?\s*${INTENSITY_PHRASE}피(?:가|도)?\s*${INTENSITY_PHRASE}(?:나|났|비쳐|비치|묻어)`),
+        pat(String.raw`잇몸(?:에서|이|에|도)?\s*피(?:는|가|도)?\s*(?:안\s*나|나지\s*않)`),
+    ),
+    rule(
+        "코골이",
+        pat(String.raw`코골이|코\s*(?:골이|골음)|코\s*고는|코(?:를|도)?\s*(?:${INTENSITY_WORD}\s*|심히\s*|시끄럽게\s*)*(?:골아|골았|골고|곤다|곤대|골더)`),
+        pat(String.raw`코(?:는|를|도)?\s*안\s*골|코골이${PARTICLE}\s*${ABSENT_ENDING}`),
+    ),
+    rule(
+        "수면 무호흡",
+        pat(String.raw`무호흡|(?:자다가|잘\s*때|자는\s*동안|잠자는\s*동안|잠자다가|밤에)\s*숨(?:이|을)?\s*${INTENSITY_PHRASE}(?:멈|멎|안\s*쉬|끊)|` +
+          String.raw`숨\s*(?:쉬는\s*(?:게|걸|것이?)|쉴\s*때)\s*(?:${INTENSITY_WORD}\s*|잠깐\s*|간헐적으로\s*)*(?:멈|끊|스톱)`),
+        pat(String.raw`무호흡${PARTICLE}\s*${ABSENT_ENDING}`),
+    ),
+    rule(
+        "딸꾹질",
+        pat(String.raw`딸꾹`),
+        pat(String.raw`딸꾹질${PARTICLE}\s*(?:전혀\s*)?${ABSENT_ENDING}`),
+    ),
+    rule(
+        "입냄새",
+        pat(String.raw`입\s*냄새|구취|입(?:에서|안에서)\s*${INTENSITY_PHRASE}(?:냄새|악취)`),
+        pat(String.raw`(?:입\s*냄새|구취)${PARTICLE}\s*(?:${ABSENT_ENDING}|안\s*나)`),
+    ),
+    rule(
+        "탈모",
+        // Not "머리가 빠개질 것 같아요" (a headache).
+        pat(String.raw`탈모|(?:머리카락|머리털|머리)(?:이|가|도)?\s*(?:${INTENSITY_WORD}\s*|한\s*움큼씩\s*|뭉텅뭉텅\s*|요즘\s*|허전하게\s*)*(?:빠져|빠지|빠진|빠졌)`),
+        pat(String.raw`(?:머리카락|머리)(?:은|는|도)?\s*안\s*빠|탈모${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
 ];
 const FREQUENCY_SYMPTOMS = new Set(["구토", "설사"]);

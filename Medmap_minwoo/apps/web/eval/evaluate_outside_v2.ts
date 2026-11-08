@@ -49,14 +49,21 @@ function partsOf(item: Item): Part[] {
 }
 
 function answersOf(item: Item): Answer[] {
-  const ruled = new Set(extractIntake(item.text, "2026-10-17").symptoms.map((symptom) => symptom.name));
+  const rules = extractIntake(item.text, "2026-10-17").symptoms;
+  const ruled = new Set(rules.map((symptom) => symptom.name));
+  // A symptom once beyond the list that the rules now read (16 added 2026-11-08) is theirs too: dropped by place.
+  const ruledAt = rules.map((symptom) => locate(item.text, symptom.source_text)).filter((range) => range !== null);
+  const readByRules = (span: string) => {
+    const at = locate(item.text, span);
+    return at !== null && ruledAt.some((range) => range[0] < at[1] && at[0] < range[1]);
+  };
   const place = (span: string) => {
     const at = locate(item.text, span);
     if (!at) throw new Error(`[${item.id}] answer span not in the sentence: "${span}"`);
     return { start: at[0], end: at[1], span };
   };
   return [
-    ...(item.outside ?? []).map((want) => ({ ...place(want.span), kind: "outside" as const, name: want.name, status: want.status })),
+    ...(item.outside ?? []).filter((want) => !readByRules(want.span)).map((want) => ({ ...place(want.span), kind: "outside" as const, name: want.name, status: want.status })),
     // Only those the rules still miss today: one the rules now find is theirs, not the model's to fill in.
     ...missedSpans.filter((want) => want.id === item.id && !ruled.has(want.name))
       .map((want) => ({ ...place(want.span), kind: "listed" as const, name: want.name, status: want.status })),

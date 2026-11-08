@@ -39,7 +39,7 @@ function longest(entries: Word[], part: string): Word | null {
 }
 
 // A kind at a site the rules' 65 already name ("65 + body site = on the list", HANDOFF 7-1-1): 부종/종아리 is 부종.
-const LISTED_KIND: Record<string, string> = { 부종: "부종", "저림·감각 이상": "저림", 가려움: "가려움", "발진·붉어짐": "발진" };
+const LISTED_KIND: Record<string, string> = { 부종: "부종", 멍: "멍", "저림·감각 이상": "저림", 가려움: "가려움", "발진·붉어짐": "발진" };
 const LISTED_PAIN: Record<string, string> = {
   머리: "두통", 뒷머리: "두통", 정수리: "두통", 관자놀이: "두통", 이마: "두통", 배: "복통", 명치: "복통", 허리뼈: "요통",
   무릎: "관절 통증", 어깨: "관절 통증", 발목: "관절 통증", 팔꿈치: "관절 통증", 고관절: "관절 통증", 턱: "관절 통증",
@@ -48,7 +48,7 @@ const LISTED_PAIN: Record<string, string> = {
 };
 // The same for other kinds at a site the 65 name: 출혈/코 is 코피, 시림·차가움/손 is 손발 차가움.
 const LISTED_AT_SITE: Record<string, string> = {
-  "출혈/코": "코피", "분비물/눈": "눈 분비물", "통증/온몸": "근육통", "경련·떨림/손": "떨림",
+  "출혈/코": "코피", "출혈/잇몸": "잇몸 출혈", "분비물/눈": "눈 분비물", "통증/온몸": "근육통", "경련·떨림/손": "떨림",
   "시림·차가움/손": "손발 차가움", "시림·차가움/발": "손발 차가움", "시림·차가움/손가락": "손발 차가움",
   "시림·차가움/발가락": "손발 차가움", "결림·뻐근함/목": "목 결림", "결림·뻐근함/뒷목": "목 결림",
 };

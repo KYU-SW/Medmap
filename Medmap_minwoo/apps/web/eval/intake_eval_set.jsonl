@@ -351,10 +351,10 @@
 {"id":"L001","category":"목록 밖","text":"겨드랑이가 아파요.","unlisted":["겨드랑이"]}
 {"id":"L002","category":"목록 밖","text":"엉덩이가 아파요.","unlisted":["엉덩이"]}
 {"id":"L003","category":"목록 밖","text":"옆구리가 결려요.","unlisted":["옆구리"]}
-{"id":"L004","category":"목록 밖","text":"잇몸에서 피가 나요.","unlisted":["잇몸"]}
-{"id":"L005","category":"목록 밖","text":"멍이 잘 들어요.","unlisted":["멍"]}
-{"id":"L006","category":"목록 밖","text":"머리카락이 많이 빠져요.","unlisted":["머리카락"]}
+{"id":"L004","category":"목록 밖→규칙(2026-11-08)","text":"잇몸에서 피가 나요.","symptoms":[{"name":"잇몸 출혈","status":"present"}]}
+{"id":"L005","category":"목록 밖→규칙(2026-11-08)","text":"멍이 잘 들어요.","symptoms":[{"name":"멍","status":"present"}]}
+{"id":"L006","category":"목록 밖→규칙(2026-11-08)","text":"머리카락이 많이 빠져요.","symptoms":[{"name":"탈모","status":"present"}]}
 {"id":"L007","category":"목록 밖","text":"손톱이 갈라져요.","unlisted":["손톱"]}
-{"id":"L008","category":"목록 밖","text":"입냄새가 심해요.","unlisted":["입냄새"]}
-{"id":"L009","category":"목록 밖","text":"딸꾹질이 안 멈춰요.","unlisted":["딸꾹질"]}
+{"id":"L008","category":"목록 밖→규칙(2026-11-08)","text":"입냄새가 심해요.","symptoms":[{"name":"입냄새","status":"present"}]}
+{"id":"L009","category":"목록 밖→규칙(2026-11-08)","text":"딸꾹질이 안 멈춰요.","symptoms":[{"name":"딸꾹질","status":"present"}]}
 {"id":"L010","category":"목록 밖","text":"발뒤꿈치가 아파요.","unlisted":["발뒤꿈치"]}
