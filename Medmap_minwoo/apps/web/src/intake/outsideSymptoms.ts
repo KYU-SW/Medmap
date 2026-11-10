@@ -87,6 +87,10 @@ export function outsideSymptoms(text: string, rules: IntakeExtraction, spans: Mo
     .filter((span) => !notSymptoms.some((word) => squash(span.text).includes(word)))
     .map((span) => {
       const name = namePart(span.text, reported);
+      // A part with no name that runs on past its first clause ("답답한데 기지개를 펴면 편해져요", 2026-11-11 phone
+      // test) is shown only up to that clause: the rest is what helps or when, not the symptom itself.
+      const clause = name === "기타" ? /(?<=[가-힣])(?:는데|은데|한데|운데|던데|지만|면서|면)(?=\s)/.exec(span.text) : null;
+      if (clause) span = { ...span, end: span.start + clause.index + clause[0].length, text: span.text.slice(0, clause.index + clause[0].length) };
       // known: the rules already report this symptom, so the part only adds where it is (두통 + 관자놀이). This also
       // catches parts the overlap check misses, as the rules read a rewritten copy ("배 아픔" as "배 아파").
       return { ...span, name, site: siteOf(span.text), listed: isListed(name),

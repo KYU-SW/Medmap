@@ -9,6 +9,7 @@ import {
 } from "./recordStorage";
 import { createBackup, parseBackup } from "./backup";
 import {
+  asksSite,
   detailedSite,
   followUpQuestions,
   formatOnset,
@@ -65,6 +66,12 @@ function go(view: View) {
 }
 
 const STATUS_LABEL = { present: "있음", absent: "없음", uncertain: "확실하지 않음" } as const;
+// Shown in this order, so what the patient has comes first and "열은 없어요" sits last (2026-11-10 user request).
+// Keeps each symptom's own index, which the edit buttons use.
+const STATUS_ORDER = { present: 0, uncertain: 1, absent: 2 } as const;
+const presentFirst = <T extends { status: keyof typeof STATUS_ORDER }>(symptoms: T[]) =>
+  symptoms.map((symptom, index) => [symptom, index] as const)
+    .sort(([left], [right]) => STATUS_ORDER[left.status] - STATUS_ORDER[right.status]);
 // "10월 16일 오전 10:10": short enough for the summary period to fit one line.
 const summaryDate = new Intl.DateTimeFormat("ko-KR", { month: "long", day: "numeric", hour: "numeric", minute: "2-digit" });
 const VIEW_TITLE: Record<View, string> = {
@@ -240,6 +247,10 @@ export default function App() {
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
   const [skippedQuestions, setSkippedQuestions] = useState<Set<string>>(new Set());
+  // Two questions at a time; the rest behind "더 보기", so the review screen does not run long (2026-11-11).
+  const [showAllQuestions, setShowAllQuestions] = useState(false);
+  // The medicine fields: open when the words gave some, otherwise folded behind a button.
+  const [listsOpen, setListsOpen] = useState(false);
   const [answerDrafts, setAnswerDrafts] = useState<Record<string, string>>({});
   const [extracting, setExtracting] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
@@ -277,6 +288,8 @@ export default function App() {
   const [aiState, setAiState] = useState<AiState | null>(null);
   // The card a suggestion was just added as: briefly marked and scrolled to, as it lands above the suggestions.
   const [addedIndex, setAddedIndex] = useState<number | null>(null);
+  // The card being filled in (a hand-added symptom, or an AI part with no name): open until "이 증상으로 추가하기".
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const outsideRunRef = useRef(0);
   const turboCheckRef = useRef<{ deviceText: string; turbo: Promise<string | null>; done: boolean } | null>(null);
   const [verification, setVerification] = useState<{ quickText: string; turboText: string; changes: FactChange<SymptomObservation>[] } | null>(null);
@@ -661,6 +674,9 @@ export default function App() {
       const result = readIntake(text);
       setIntake(result);
       setSkippedQuestions(new Set());
+      setShowAllQuestions(false);
+      setEditingIndex(null);
+      setListsOpen(result.medications.length + result.allergies.length + result.medical_history.length > 0);
       setAnswerDrafts({});
       setListDrafts({
         medications: result.medications.join(", "),
@@ -716,7 +732,13 @@ export default function App() {
     setConfirmed(false);
     const index = intake?.symptoms.length ?? 0;
     setAddedIndex(index);
-    setTimeout(() => document.querySelectorAll(".observation")[index]
+    if (part.name === "기타") setEditingIndex(index);
+    scrollToSymptom(index);
+  }
+
+  // By the card's own index: the cards are shown present-first, not in list order.
+  function scrollToSymptom(index: number) {
+    setTimeout(() => document.querySelector(`.observation[data-index="${index}"]`)
       ?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
   }
 
@@ -760,10 +782,21 @@ export default function App() {
       }],
     }));
     setConfirmed(false);
+    const index = intake?.symptoms.length ?? 0;
+    setAddedIndex(null);
+    setEditingIndex(index);
+    scrollToSymptom(index);
+  }
+
+  function finishSymptom(index: number) {
+    setEditingIndex(null);
+    setAddedIndex(index);
+    scrollToSymptom(index);
   }
 
   function removeSymptom(index: number) {
     setAddedIndex(null);
+    setEditingIndex(null);
     setIntake((current) => current && ({
       ...current,
       symptoms: current.symptoms.filter((_, itemIndex) => itemIndex !== index),
@@ -1321,12 +1354,17 @@ export default function App() {
             {intake.symptoms.length === 0 && (
               <p className="empty-result">찾은 증상이 없습니다. 아래에서 직접 추가할 수 있어요.</p>
             )}
-            {intake.symptoms.map((symptom, index) => (
+            {presentFirst(intake.symptoms).map(([symptom, index]) => (
               <div
                 className={`observation${urgentSymptoms([symptom]).length > 0 ? " observation--urgent" : ""}${index === addedIndex ? " observation--added" : ""}`}
                 key={index}
+                data-index={index}
               >
-                {index === addedIndex && <p className="added-note" role="status">AI 제안에서 추가했어요</p>}
+                {index === addedIndex && (
+                  <p className="added-note" role="status">
+                    {symptom.source_text === "사용자가 직접 추가" ? "증상을 추가했어요" : "AI 제안에서 추가했어요"}
+                  </p>
+                )}
                 <div className="observation-header">
                   <strong className="observation-name">{symptom.name || "새 증상"}</strong>
                   <span className={`badge badge--${symptom.status}`}>{STATUS_LABEL[symptom.status]}</span>
@@ -1344,7 +1382,7 @@ export default function App() {
                 )}
                 {/* Details stay folded until the patient wants to correct them; a hand-added symptom, or an unnamed one added from
                     the AI (named with the patient's own words for now), opens ready to name. */}
-                <details className="observation-edit" open={symptom.source_text === "사용자가 직접 추가" || symptom.name === symptom.source_text || undefined}>
+                <details className="observation-edit" open={index === editingIndex || undefined}>
                 <summary>
                   <span className="source-text">
                     {symptom.source_text === "사용자가 직접 추가" ? "직접 추가한 증상" : `“${sourcePhrase(transcript, symptom.source_text)}”`}
@@ -1361,14 +1399,16 @@ export default function App() {
                     onChange={(event) => updateSymptom(index, { name: event.target.value })}
                   />
                 </label>
-                <label>
-                  부위
-                  <input
-                    value={symptom.body_site ?? ""}
-                    placeholder="확인되지 않음"
-                    onChange={(event) => updateSymptom(index, { body_site: event.target.value || null })}
-                  />
-                </label>
+                {asksSite(symptom.name, symptom.body_site) && (
+                  <label>
+                    부위
+                    <input
+                      value={symptom.body_site ?? ""}
+                      placeholder="확인되지 않음"
+                      onChange={(event) => updateSymptom(index, { body_site: event.target.value || null })}
+                    />
+                  </label>
+                )}
                 <label>
                   상태
                   <select
@@ -1426,6 +1466,11 @@ export default function App() {
                       <option value="unchanged">변화 없음</option>
                     </select>
                   </label>
+                )}
+                {index === editingIndex && (
+                  <button type="button" disabled={!symptom.name.trim()} onClick={() => finishSymptom(index)}>
+                    {symptom.name.trim() ? "이 증상으로 추가하기" : "증상 이름을 먼저 적어 주세요"}
+                  </button>
                 )}
                 <button className="button--delete" type="button" onClick={() => removeSymptom(index)}>
                   이 증상 삭제
@@ -1511,7 +1556,14 @@ export default function App() {
                       apply: (answer: string) => void answerFollowUp(question, answer),
                     })),
                   ...medicineQuestions,
-                ].map(({ key, question, placeholder, choices, apply }) => (
+                ].map((item, position, all) => ({ ...item, hidden: !showAllQuestions && position >= 2, more: all.length - 2 }))
+                  .map(({ key, question, placeholder, choices, apply, hidden, more }, position) => hidden ? (
+                  position === 2 && (
+                    <button className="button--secondary fold-button" type="button" key="more" onClick={() => setShowAllQuestions(true)}>
+                      질문 {more}개 더 보기
+                    </button>
+                  )
+                ) : (
                   <div className="follow-up-item" key={key}>
                     <div className="follow-up-item__head">
                       <p>{question}</p>
@@ -1545,35 +1597,58 @@ export default function App() {
                     </div>
                   </div>
                 ))}
+                {showAllQuestions && followUpQuestions(intake.symptoms).filter((question) => !skippedQuestions.has(question.key)).length
+                  + medicineQuestions.length > 2 && (
+                  <button className="button--secondary fold-button" type="button" onClick={() => setShowAllQuestions(false)}>
+                    질문 접기
+                  </button>
+                )}
               </section>
             )}
 
+            {/* Folded by default (most visits say none); folded, it still shows what was said. Opened and closed by
+                visible buttons, not a bare summary line (2026-11-11 user feedback: "눌러서 추가" was not seen as a button). */}
             <section className="panel intake-lists" aria-label="약·알레르기·과거력">
               <h2 className="panel__title">약 · 알레르기 · 과거력</h2>
-              <label>
-                복용약
-                <input
-                  value={listDrafts.medications}
-                  placeholder="없으면 비워 두세요 (쉼표로 구분)"
-                  onChange={(event) => updateListDraft("medications", event.target.value)}
-                />
-              </label>
-              <label>
-                알레르기
-                <input
-                  value={listDrafts.allergies}
-                  placeholder="없으면 비워 두세요 (쉼표로 구분)"
-                  onChange={(event) => updateListDraft("allergies", event.target.value)}
-                />
-              </label>
-              <label>
-                과거력 (앓고 있는 병, 수술)
-                <input
-                  value={listDrafts.medical_history}
-                  placeholder="없으면 비워 두세요 (쉼표로 구분)"
-                  onChange={(event) => updateListDraft("medical_history", event.target.value)}
-                />
-              </label>
+              {listsOpen ? (
+                <>
+                <label>
+                  복용약
+                  <input
+                    value={listDrafts.medications}
+                    placeholder="없으면 비워 두세요 (쉼표로 구분)"
+                    onChange={(event) => updateListDraft("medications", event.target.value)}
+                  />
+                </label>
+                <label>
+                  알레르기
+                  <input
+                    value={listDrafts.allergies}
+                    placeholder="없으면 비워 두세요 (쉼표로 구분)"
+                    onChange={(event) => updateListDraft("allergies", event.target.value)}
+                  />
+                </label>
+                <label>
+                  과거력 (앓고 있는 병, 수술)
+                  <input
+                    value={listDrafts.medical_history}
+                    placeholder="없으면 비워 두세요 (쉼표로 구분)"
+                    onChange={(event) => updateListDraft("medical_history", event.target.value)}
+                  />
+                </label>
+                  <button className="button--secondary fold-button" type="button" onClick={() => setListsOpen(false)}>
+                    닫기
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p className="panel__hint">{[["복용약", listDrafts.medications], ["알레르기", listDrafts.allergies], ["과거력", listDrafts.medical_history]]
+                .filter(([, value]) => value.trim()).map(([label, value]) => `${label}: ${value}`).join(" · ") || "말한 것 없음"}</p>
+                  <button className="button--secondary fold-button" type="button" onClick={() => setListsOpen(true)}>
+                    약 · 알레르기 · 과거력 입력하기
+                  </button>
+                </>
+              )}
             </section>
             {profileText(intake.profile) && (
               <div className="others-review">
@@ -1883,7 +1958,7 @@ export default function App() {
                 <p>확인된 증상이 없습니다.</p>
               ) : (
                 <ul className="symptom-list">
-                  {entry.symptoms.map((symptom, index) => (
+                  {presentFirst(entry.symptoms).map(([symptom, index]) => (
                     <li key={`${entry.id}-${symptom.name}-${index}`} className="symptom-row">
                       <div className="symptom-row__head">
                         <strong>{symptom.name}</strong>
@@ -1945,7 +2020,7 @@ export default function App() {
                   <p>확인되지 않음</p>
                 ) : (
                   <ul>
-                    {record.intake.symptoms.map((symptom, index) => (
+                    {presentFirst(record.intake.symptoms).map(([symptom, index]) => (
                       <li key={`${record.id}-${symptom.name}-${index}`}>
                         <strong>{symptom.name}</strong>
                         {` · ${symptom.status === "present" ? "있음" : symptom.status === "absent" ? "없음" : "확실하지 않음"}`}

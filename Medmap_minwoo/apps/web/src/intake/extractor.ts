@@ -195,6 +195,8 @@ const INTENSITY_WORD = (
     // How often or how much, said between the body part and the verb: "머리가 꽤 아프네요", "배가 은근히 아파요" (2026-11-06).
     String.raw`꽤|은근히|상당히|무척|몹시|굉장히|엄청나게|너무나|진짜로|정말로|조금씩|약간씩|살짝살짝|` +
     String.raw`가끔씩|가끔|자주|종종|때때로|간혹|이따금|갑자기|점점|여전히|아직도|계속해서|하루\s*종일|항상|늘|부쩍|확|` +
+    // How long it has been there: "배는 원래 아파요", "허리가 평소에 좀 아파요" (2026-11-11 user request).
+    String.raw`원래(?:는|부터)?|평소(?:에도|에는|에)?|예전부터|옛날부터|전부터|오래전부터|` +
     String.raw`살살|콕콕|쿡쿡|꾹꾹|구구|찌릿찌릿|찌릿|욱신욱신|욱신|지끈지끈|지끈|따끔따끔|뻐근하게|찌르듯이?|` +
     // How bad it is, said between the body part and the verb: "배가 참을 만하게 아파요".
     String.raw`데굴데굴|참을\s*만하게|견딜\s*만하게|죽을\s*(?:것\s*)?같이|미칠\s*(?:것\s*)?같이|` +
@@ -294,7 +296,11 @@ const RULES: Rule[] = [
         "가슴 답답함",
         pat(
             String.raw`가슴(?:이|은|만|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}` +
-            String.raw`(?:답답|조이|조여|눌리)|흉부(?:가|는|만|도)?\s*(?:답답|압박)`
+            String.raw`(?:답답|조이|조여|눌리)|흉부(?:가|는|만|도)?\s*(?:답답|압박)|` +
+            // "답답해요" with no part of its own, after the chest was named a sentence or so before: "기지개를 펴면 가슴에서
+            // 소리가 나요. 원래는 답답한데..." (2026-11-11 phone test). Not 속·코·마음·숨 답답, or 답답해서 (frustrated).
+            String.raw`(?<=가슴[^가-힣]?[가-힣\s.,]{0,60})(?<![가-힣])(?<!(?:속|코|마음|맘|숨|배|목|명치|가슴)(?:이|가|은|는|도|만)?\s*)` +
+            String.raw`답답(?:하|해|한|함)(?!서)`
         ),
         pat(
             String.raw`가슴(?:이|은)?\s*${NOW_ADVERB}(?:안\s*답답|답답하지\s*않)|` +
@@ -515,7 +521,9 @@ const RULES: Rule[] = [
             // "입맛이 전혀 없어요", "식욕도 확 줄었어요", "밥맛이 아예 없다", "밥 생각이 없어요" (2026-11-06)
             String.raw`식욕부진|(?:식욕|입맛|밥\s*맛)(?:이|도)?\s*(?:(?:${INTENSITY_WORD}|전혀|아예|완전히|통|별로)\s*)*(?:없|떨어|뚝|줄었|제로)|` +
             String.raw`밥\s*생각(?:이|도)?\s*(?:(?:전혀|별로|통)\s*)?없|` +
-            String.raw`밥(?:을|이)?\s*(?:잘\s*)?(?:못\s*먹|안\s*넘어가|먹기\s*싫)`
+            // "목이 막힌 것처럼 밥이 안 넘어가요" is trouble swallowing (삼킴 곤란), not appetite (2026-11-09 phone test).
+            String.raw`밥(?:을|이)?\s*(?:잘\s*)?(?:못\s*먹|먹기\s*싫)|` +
+            String.raw`(?<!목[가-힣\s]{0,6}(?:막|걸)[가-힣\s]{0,12})밥(?:을|이)?\s*(?:잘\s*)?안\s*넘어가`
         ),
         pat(
             String.raw`(?:식욕|입맛)(?:은|이|도)?\s*${NOW_ADVERB}(?:괜찮|있|좋|돌아)|식욕부진${PARTICLE}\s*${ABSENT_ENDING}`
@@ -828,6 +836,9 @@ const RULES: Rule[] = [
         "삼킴 곤란",
         // "침 삼키기가 힘들어요" is a sore throat (인후통), not trouble swallowing food.
         pat(String.raw`삼킴\s*곤란|연하\s*곤란|음식이\s*(?:잘\s*)?안\s*넘어|` +
+          // "목이 막힌 것처럼 밥이 안 넘어가요", "밥이 목에 걸려요" (2026-11-09 phone test)
+          String.raw`목[가-힣\s]{0,6}(?:막|걸)[가-힣\s]{0,12}(?:밥|음식|물)(?:을|이)?\s*(?:잘\s*)?안\s*넘어|` +
+          String.raw`(?:밥|음식)(?:이|을|도)?\s*(?:자꾸\s*)?목에\s*(?:걸|막)|` +
           String.raw`(?<!침(?:을)?\s*)(?:삼키|넘기)(?:기(?:가|도|는)?|는\s*(?:게|것이?|것도|거|데|건))\s*` +
           String.raw`(?:${INTENSITY_WORD}\s*|전보다\s*|예전보다\s*|요즘\s*|더\s*|훨씬\s*)*(?:힘들|힘든|어렵|어려|불편|곤란)`),
         pat(String.raw`삼킴\s*곤란${PARTICLE}\s*${ABSENT_ENDING}|(?:삼키|넘기)(?:는\s*(?:건|것은|거|것도)|기(?:는|도))\s*${NOW_ADVERB}(?:괜찮|문제\s*없|편하)`),
@@ -1689,6 +1700,10 @@ export function extractIntake(input: string, referenceDate: string | null = null
       const subjectStart = evidence.end - evidence.text.length;
       onset = onsetSpans.find(([start, end]) => start <= subjectStart && subjectStart < end)?.[2] ?? null;
     }
+    // "배는 원래 아파요": long-standing, said in the evidence itself. That is its onset, so another symptom's
+    // "어제부터" is not carried over to it.
+    const longStanding = onset === null ? search(String.raw`원래|평소|예전부터|옛날부터|오래전부터|(?<![가-힣])전부터`, evidence.text) : null;
+    if (longStanding) onset = longStanding.text === "원래" ? "원래부터" : longStanding.text === "평소" ? "평소에도" : longStanding.text;
     onsetSpans.push([evidence.start, evidence.end, onset]);
     const spans = mentions.get(symptomRule.name)!;
     let severity = spans.map(([start, end]) => severityForSymptom(normalized, start, end, mentionPositions)).find(Boolean) ?? null;
@@ -1730,7 +1745,10 @@ export function extractIntake(input: string, referenceDate: string | null = null
     const [start, item] = ordered[index];
     const joined = normalized.slice(beforeStart + before.source_text.length, start);
     if (item.onset === null && item.status === "present" && before.onset && before.status === "present"
-        && fullmatch(String.raw`(?:(?!요\s)[가-힣 ]){0,8}?고\s+(?:[가-힣]+(?:이|가|은|는|도)\s+)?`, joined)) {
+        // "어제부터 기침을 하고(,| 그리고)? 복통이", "하고요", "하구" and "기침이랑 복통이" share the onset too
+        // (2026-11-11 phone test: the comma STT put in cut it off). A new sentence ("해요. 복통도") does not.
+        && fullmatch(String.raw`(?:(?:(?!요\s)[가-힣 ]){0,8}?(?:고요?|구요?|며|면서)|이?랑|하고|과|와)\s*,?\s*(?:그리고\s+)?` +
+          String.raw`(?:[가-힣]+(?:이|가|은|는|도)\s+)?`, joined)) {
       ordered[index] = [start, { ...item, onset: before.onset, onset_date: before.onset_date }];
     }
   }

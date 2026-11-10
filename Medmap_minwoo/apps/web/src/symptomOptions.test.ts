@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatOnset, localDateString, parseList, SUPPORTED_SYMPTOMS, tracksFrequency } from "./symptomOptions";
+import { asksSite, formatOnset, localDateString, parseList, SUPPORTED_SYMPTOMS, tracksFrequency } from "./symptomOptions";
 
 describe("symptomOptions", () => {
   it("lists 50 unique supported symptoms", () => {
@@ -25,5 +25,13 @@ describe("onset dates", () => {
 
   it("uses the local calendar date", () => {
     expect(localDateString(new Date(2026, 9, 2, 23, 30))).toBe("2026-10-02");
+  });
+
+  it("asks for a body site only where one says something", () => {
+    expect(asksSite("식은땀", null)).toBe(false);
+    expect(asksSite("발열", "복부")).toBe(false);
+    expect(asksSite("기침", "왼쪽 가슴")).toBe(true);
+    expect(asksSite("발진", null)).toBe(true);
+    expect(asksSite("창백함", null)).toBe(true);
   });
 });

@@ -600,8 +600,8 @@ textarea::placeholder {
 }
 
 .observation {
-  margin-top: 10px;
-  padding: 14px 16px 4px;
+  margin-top: 8px;
+  padding: 12px 14px 0;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-card);
@@ -626,7 +626,7 @@ textarea::placeholder {
 }
 
 .observation-edit {
-  margin-top: 10px;
+  margin-top: 8px;
   border-top: 1px solid var(--color-border);
 }
 
@@ -740,6 +740,13 @@ textarea::placeholder {
 .suggestions .badge {
   padding: 1px 8px;
   font-size: 12px;
+}
+
+/* Show more / close buttons on the review screen: full-width outlined buttons, plainly tappable. */
+.fold-button {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 12px;
 }
 
 .intake-lists label {
@@ -1075,11 +1082,18 @@ textarea::placeholder {
   font-size: 18px;
 }
 
+/* One line ("시작 어제부터 · 정도 심함") instead of a label row over a value row (2026-11-11, shorter cards). */
 .facts {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
-  gap: 6px 14px;
-  margin: 10px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 6px 0 0;
+}
+
+.facts > div {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
 }
 
 .facts dt {

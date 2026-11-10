@@ -155,8 +155,15 @@ export function describeChanges<S extends Symptom>(quickText: string, turboText:
       lines.set(note, []);
       continue;
     }
-    const [before, after] = words ?? ["", change.kind === "symptom" ? "" : change.value];
-    const line = `${before ? `"${before}"` : "(못 들음)"} → ${after ? `"${after}"` : "(없음)"}`;
+    // The differing words could not be found in either text: say only what changes ("발열 없음"), not
+    // "(못 들음) → (없음)", which read as nonsense on the phone (2026-11-11).
+    if (!words || words[0] === words[1]) {
+      const line = change.kind === "symptom" ? note : `${change.add ? "추가" : "빼기"}: ${change.value}`;
+      lines.set(line, lines.get(line) ?? []);
+      continue;
+    }
+    const [before, after] = words;
+    const line = `${before ? `"${before}"` : "(처음엔 못 들음)"} → ${after ? `"${after}"` : "(다시 들으니 없음)"}`;
     lines.set(line, [...(lines.get(line) ?? []), ...(note ? [note] : [])]);
   }
   return [...lines].map(([line, notes]) => (notes.length ? `${line} (${notes.join(", ")})` : line));

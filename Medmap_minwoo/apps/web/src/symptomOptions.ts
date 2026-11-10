@@ -32,6 +32,20 @@ export function formatOnset(onset: string | null | undefined, onsetDate?: string
   return date ? `${onset} (${Number(date[1])}월 ${Number(date[2])}일)` : onset;
 }
 
+// Whole-body symptoms or ones whose name already says where: no 부위 field on the review card (2026-11-11 user request,
+// "식은땀 같은 건 부위가 필요 없지"). A site found anyway (AI, patient) is still shown.
+const NO_SITE_SYMPTOMS = new Set([
+  "발열", "오한", "식은땀", "땀 과다", "피로", "어지러움", "메스꺼움", "구토", "설사", "변비", "소화불량", "속쓰림",
+  "식욕부진", "불면", "체중 감소", "체중 증가", "우울감", "불안감", "혼란", "기절", "말 어눌함", "쉰 목소리",
+  "기침", "가래", "콧물", "코막힘", "재채기", "쌕쌕거림", "호흡곤란", "두근거림", "코피", "객혈", "토혈", "혈변", "혈뇨",
+  "배뇨통", "빈뇨", "배뇨 곤란", "생리통", "복부 팽만", "입마름", "이명", "청력 저하", "후각 상실", "미각 이상",
+  "삼킴 곤란", "황달", "잇몸 출혈", "코골이", "수면 무호흡", "딸꾹질", "입냄새",
+]);
+
+export function asksSite(name: string, site: string | null | undefined): boolean {
+  return Boolean(detailedSite(site)) || !NO_SITE_SYMPTOMS.has(name);
+}
+
 const FREQUENCY_SYMPTOMS = new Set(["구토", "설사"]);
 
 // Where exactly it hurts, offered when the record only has the default site (복통 → 복부).

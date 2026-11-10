@@ -59,6 +59,13 @@ describe("sourcePhrase", () => {
   it("takes the next word after a very short one", () => {
     expect(sourcePhrase(text, "열이 ")).toBe("열이 38도까지");
   });
+  it("shows a part with no name only up to its first clause", () => {
+    // 2026-11-11 phone test: the model marked the whole sentence; "에서" is a particle, not a clause end.
+    const show = (text: string) => outsideSymptoms(text, extractIntake(text, "2026-11-11"),
+      [{ start: 0, end: text.length, status: "present", text }]).map((part) => part.text);
+    expect(show("답답한데 기지개를 펴면 편해져요")).toEqual(["답답한데"]);
+    expect(show("몸에서 이상한 냄새가 나요")).toEqual(["몸에서 이상한 냄새가 나요"]);
+  });
   it("keeps evidence it cannot find, such as the rules' rewritten copy", () => {
     expect(sourcePhrase("배 아픔", "배 아파")).toBe("배 아파");
   });

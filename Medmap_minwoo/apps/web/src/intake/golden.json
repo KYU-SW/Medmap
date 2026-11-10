@@ -24622,5 +24622,586 @@
    "unrecognized_fragments": [],
    "needs_user_confirmation": true
   }
+ },
+ {
+  "text": "목이 막힌 것처럼 밥이 잘 안 넘어가요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "삼킴 곤란",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "목이 막힌 것처럼 밥이 잘 안 넘어"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "밥이 목에 걸려요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "삼킴 곤란",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "밥이 목에 걸"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "목에 뭐가 걸린 것 같아서 밥이 안 넘어가요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "목 이물감",
+     "status": "present",
+     "body_site": "목",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "목에 뭐가 걸린 것 같"
+    },
+    {
+     "name": "삼킴 곤란",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "목에 뭐가 걸린 것 같아서 밥이 안 넘어"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "기지개를 펴면 가슴에서 두두둑하고 소리가 나요. 원래는 답답한데 기지개를 펴면 오히려 편해지는 것 같아요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "가슴 답답함",
+     "status": "present",
+     "body_site": "가슴",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "답답한"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "가슴이 아파요. 속이 답답해요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "흉통",
+     "status": "present",
+     "body_site": "가슴",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "가슴이 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [
+    "속이 답답해요"
+   ],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "가슴이 아프고 일이 안 풀려서 답답해서 미치겠어요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "흉통",
+     "status": "present",
+     "body_site": "가슴",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "가슴이 아프"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [
+    "일이 안 풀려서 답답해서 미치겠어요"
+   ],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "어제부터 기침을 하고, 복통이 있어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "기침",
+     "status": "present",
+     "body_site": null,
+     "onset": "어제부터",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "기침을 하"
+    },
+    {
+     "name": "복통",
+     "status": "present",
+     "body_site": "복부",
+     "onset": "어제부터",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "복통"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "어제부터 기침을 하고요 복통이 있어요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "기침",
+     "status": "present",
+     "body_site": null,
+     "onset": "어제부터",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "기침을 하"
+    },
+    {
+     "name": "복통",
+     "status": "present",
+     "body_site": "복부",
+     "onset": "어제부터",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "복통"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "어제부터 기침을 하구 복통이 있어요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "기침",
+     "status": "present",
+     "body_site": null,
+     "onset": "어제부터",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "기침을 하"
+    },
+    {
+     "name": "복통",
+     "status": "present",
+     "body_site": "복부",
+     "onset": "어제부터",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "복통"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "어제부터 기침이랑 복통이 있어요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "기침",
+     "status": "present",
+     "body_site": null,
+     "onset": "어제부터",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "기침이"
+    },
+    {
+     "name": "복통",
+     "status": "present",
+     "body_site": "복부",
+     "onset": "어제부터",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "복통"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "어제부터 기침을 해요. 복통도 있어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "기침",
+     "status": "present",
+     "body_site": null,
+     "onset": "어제부터",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "기침을 해"
+    },
+    {
+     "name": "복통",
+     "status": "present",
+     "body_site": "복부",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "복통"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "배는 원래 아파요",
+  "reference_date": "2026-11-11",
+  "result": {
+   "symptoms": [
+    {
+     "name": "복통",
+     "status": "present",
+     "body_site": "복부",
+     "onset": "원래부터",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "배는 원래 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "허리가 평소에 좀 아파요",
+  "reference_date": "2026-11-11",
+  "result": {
+   "symptoms": [
+    {
+     "name": "요통",
+     "status": "present",
+     "body_site": "허리",
+     "onset": "평소에도",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "허리가 평소에 좀 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "무릎이 예전부터 아파요",
+  "reference_date": "2026-11-11",
+  "result": {
+   "symptoms": [
+    {
+     "name": "관절 통증",
+     "status": "present",
+     "body_site": "무릎",
+     "onset": "예전부터",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "무릎이 예전부터 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "어제부터 기침을 하고, 배는 원래 아파요",
+  "reference_date": "2026-11-11",
+  "result": {
+   "symptoms": [
+    {
+     "name": "기침",
+     "status": "present",
+     "body_site": null,
+     "onset": "어제부터",
+     "onset_date": "2026-11-10",
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "기침을 하"
+    },
+    {
+     "name": "복통",
+     "status": "present",
+     "body_site": "복부",
+     "onset": "원래부터",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "배는 원래 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "머리가 원래 좋아요",
+  "reference_date": "2026-11-11",
+  "result": {
+   "symptoms": [],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
  }
 ]

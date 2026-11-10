@@ -144,6 +144,18 @@ describe("factChanges for how bad, how often and which way", () => {
     );
     expect(describeChanges(text, text, changes)).toEqual(["복통 정도: 경미함 → 심함, 추세: 없음 → 좋아지는 중"]);
   });
+
+  it("says only the change when no differing words are found, not \"(못 들음) → (없음)\"", () => {
+    const text = "열은 없고 기침만 나요";
+    const fever = (status: string) => ({ name: "발열", status, onset: null, source_text: "열은 없", severity: null, trend: null });
+    const lines = describeChanges(text, text, factChanges(
+      { symptoms: [fever("present")], medications: [], allergies: [] },
+      { symptoms: [fever("absent")], medications: [], allergies: [] },
+    ));
+    expect(lines).toHaveLength(1);
+    expect(lines[0]).not.toContain("→");
+    expect(lines[0]).toContain("발열");
+  });
 });
 
 describe("applyListChanges", () => {
