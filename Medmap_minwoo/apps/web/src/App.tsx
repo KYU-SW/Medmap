@@ -11,6 +11,8 @@ import { createBackup, parseBackup } from "./backup";
 import {
   asksSite,
   detailedSite,
+  TIGHTNESS_CHOICES,
+  vagueTightness,
   followUpQuestions,
   formatOnset,
   localDateString,
@@ -836,7 +838,25 @@ export default function App() {
   }
 
   // Questions about the medicine list: a pill taken without a name, a medicine named without how much.
+  const tightness = intake ? vagueTightness(transcript, intake.symptoms) : null;
   const medicineQuestions = [
+    ...(tightness ? [{
+      key: `tightness:${tightness}`,
+      question: `“${tightness}”: 어디가 답답한가요?`,
+      placeholder: "직접 입력 (증상 이름)",
+      choices: Object.keys(TIGHTNESS_CHOICES),
+      apply: (answer: string) => {
+        const name = TIGHTNESS_CHOICES[answer] ?? answer.trim();
+        if (!name) return;
+        setIntake((current) => current && ({ ...current, symptoms: [...current.symptoms, {
+          name, status: "present", body_site: null, onset: null, onset_date: null,
+          severity: null, frequency: null, trend: null, source_text: tightness,
+        }] }));
+        // The AI's "추가로 확인할 표현: 답답한데" asks the same thing: answered here, it goes.
+        setOutsideFound((current) => current.filter((part) => !part.text.includes(tightness) && !tightness.includes(part.text)));
+        setConfirmed(false);
+      },
+    }] : []),
     ...unnamedMedicines(listDrafts.medications).map((line) => ({
       key: `medicine:${line}`,
       question: `먹은 약 이름이 뭔가요? (${line.replace("이름 모르는 약", "").trim() || "약"})`,

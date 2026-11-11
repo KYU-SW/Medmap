@@ -46,6 +46,17 @@ export function asksSite(name: string, site: string | null | undefined): boolean
   return Boolean(detailedSite(site)) || !NO_SITE_SYMPTOMS.has(name);
 }
 
+// "답답해요" with no part named could be the chest, the stomach, the nose or breathing: the patient picks, nothing is
+// guessed (2026-11-11 user decision). 속·코·마음 답답 and "답답해서"(frustrated) are not asked about.
+const VAGUE_TIGHTNESS = /(?<![가-힣])(?<!(?:가슴|흉부|속|코|마음|맘|숨|배|목|명치)(?:이|가|은|는|도|만|까지)?\s*(?:[가-힣]+\s+){0,2})답답(?:하|해|한|함)(?!서)[가-힣]*/;
+export const TIGHTNESS_CHOICES: Record<string, string> = { 가슴: "가슴 답답함", "속(명치)": "소화불량", 코: "코막힘", 숨: "호흡곤란" };
+
+/** The "답답해요" said with no part, when no symptom was read from it yet: ask where. */
+export function vagueTightness(text: string, symptoms: Array<{ source_text: string }>): string | null {
+  if (symptoms.some((symptom) => symptom.source_text.includes("답답"))) return null;
+  return VAGUE_TIGHTNESS.exec(text)?.[0] ?? null;
+}
+
 const FREQUENCY_SYMPTOMS = new Set(["구토", "설사"]);
 
 // Where exactly it hurts, offered when the record only has the default site (복통 → 복부).

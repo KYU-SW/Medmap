@@ -197,6 +197,7 @@ const INTENSITY_WORD = (
     String.raw`가끔씩|가끔|자주|종종|때때로|간혹|이따금|갑자기|점점|여전히|아직도|계속해서|하루\s*종일|항상|늘|부쩍|확|` +
     // How long it has been there: "배는 원래 아파요", "허리가 평소에 좀 아파요" (2026-11-11 user request).
     String.raw`원래(?:는|부터)?|평소(?:에도|에는|에)?|예전부터|옛날부터|전부터|오래전부터|` +
+    String.raw`요즘(?:은|에는|에)?|최근(?:에는|에|엔)?|아직(?:은|까지)?|지금(?:은|도)?|이제(?:는)?|현재(?:는)?|` +
     String.raw`살살|콕콕|쿡쿡|꾹꾹|구구|찌릿찌릿|찌릿|욱신욱신|욱신|지끈지끈|지끈|따끔따끔|뻐근하게|찌르듯이?|` +
     // How bad it is, said between the body part and the verb: "배가 참을 만하게 아파요".
     String.raw`데굴데굴|참을\s*만하게|견딜\s*만하게|죽을\s*(?:것\s*)?같이|미칠\s*(?:것\s*)?같이|` +
@@ -216,14 +217,19 @@ const RESOLVED_STATE = (
     String.raw`(?:(?:완전히\s*)?(?:사라졌|없어졌|멈췄|가라앉았)|` +
     String.raw`(?:다|완전히)\s*(?:나았|괜찮아졌|좋아졌))`
 );
-const NOW_ADVERB = String.raw`(?:(?:이제는?|이젠|지금은|현재는)\s*)?`;
+// Said between the part and "없어요 / 안 아파요": "배는 원래 안 아파요", "머리는 요즘 별로 안 아파요" (2026-11-11, matrix of
+// parts × modifiers × endings; before this only 이제는·지금은 fitted there).
+const NOW_ADVERB = (
+    String.raw`(?:(?:이제는?|이젠|지금은|현재는|요즘(?:은|에는)?|최근(?:에는|엔)?|아직(?:은|까지는?)?|원래(?:는)?|` +
+    String.raw`평소(?:에는|에도|에)?|별로|딱히|그렇게|그다지|크게|많이|좀|자주|가끔|전혀|하나도|조금도)\s*)*`
+);
 const PARTICLE = String.raw`(?:은|는|이|가|도|을|를)?`;
 const JOINT_PART = String.raw`무릎|어깨|발목|손목|팔꿈치|고관절|골반|손가락\s*관절|손가락|발가락|턱관절|턱|관절`;
 const ABSENT_ENDING = String.raw`${NOW_ADVERB}(?:없|${RESOLVED_STATE})`;
 // "전혀 아프지 않아요", "하나도 안 아파요": none at all is still "not painful" (2026-11-06).
 const NOT_PAINFUL = String.raw`(?:(?:전혀|하나도|조금도)\s*)?(?:(?:더\s*이상\s*)?안\s*(?:아프|아파|아픈)|아프지(?:는|도)?\s*않|아프진\s*않)`;
 const INLINE_ONSET = (
-    String.raw`(?<![가-힣A-Za-z0-9])(?:어젯밤(?:부터)?|처음(?:엔|에는|에)|` +
+    String.raw`(?<![가-힣A-Za-z0-9])(?:어젯밤(?:부터)?|처음(?:엔|에는|에)|(?:지난|저번|이번)\s*(?:주말|주|달)(?:부터|쯤)?|며칠\s*(?:전부터|전|째)|` +
     String.raw`(?:오늘|어제|그제|그저께|엊그제)\s*` +
     String.raw`(?:아침|점심|저녁|밤|새벽)(?:부터)?|` +
     String.raw`(?:오늘|어제|그제|그저께|엊그제)(?:부터)?|` +
@@ -287,7 +293,7 @@ const RULES: Rule[] = [
             String.raw`숨찬\s*증상(?:이|은|도)?\s*${IMPROVEMENT_PHRASE}`
         ),
         pat(
-            String.raw`숨(?:은|이)?\s*${NOW_ADVERB}(?:안\s*차|차지\s*않)|` +
+            String.raw`숨(?:은|이|도)?\s*${NOW_ADVERB}(?:안\s*차|차지\s*않)|` +
             String.raw`숨\s*(?:쉬는\s*(?:것|건|거|데)|쉬기)(?:은|는|도|가|에)?\s*${NOW_ADVERB}(?:괜찮(?!아졌)|문제\s*없|불편하지\s*않)|` +
             String.raw`(?:호흡곤란|숨찬\s*증상)(?:은|이|도)?\s*${NOW_ADVERB}(?:없|${RESOLVED_STATE})`
         ),
@@ -322,7 +328,7 @@ const RULES: Rule[] = [
             String.raw`복통|폭통|(?:배|복부|명치|옆구리)\s*통증|배탈|위경련|위통`
         ),
         pat(
-            String.raw`(?:배|복부|속)(?:이|가|는|도)?\s*${NOW_ADVERB}${NOT_PAINFUL}|` +
+            String.raw`(?:배|복부|속|명치|옆구리)(?:이|가|은|는|도)?\s*${NOW_ADVERB}${NOT_PAINFUL}|` +
             String.raw`복통(?:은|이|도)?\s*${NOW_ADVERB}(?:없|${RESOLVED_STATE})|` +
             String.raw`(?:배|복부|속)\s*통증(?:은|이|도)?\s*${NOW_ADVERB}(?:없|${RESOLVED_STATE})`
         ),
@@ -335,8 +341,8 @@ const RULES: Rule[] = [
             String.raw`구토|토(?:를|가)?\s*(?:했|해|하|했었)`
         ),
         pat(
-            String.raw`구토(?:는|가|도)?\s*${NOW_ADVERB}(?:없|${RESOLVED_STATE})|` +
-            String.raw`토(?:는|를)?\s*${NOW_ADVERB}(?:안\s*했|하지\s*않)|` +
+            String.raw`구토(?:는|가|도|를)?\s*${NOW_ADVERB}(?:없|안\s*(?:했|해|하)|하지\s*않|${RESOLVED_STATE})|` +
+            String.raw`토(?:는|를|도)?\s*${NOW_ADVERB}(?:안\s*했|하지\s*않)|` +
             String.raw`토한\s*적(?:은|도|이)?\s*없|` +
             String.raw`구토\s*증상(?:은|이|도)?\s*${NOW_ADVERB}${RESOLVED_STATE}`
         ),
@@ -379,7 +385,7 @@ const RULES: Rule[] = [
     rule(
         "코막힘",
         // "콧막힘", "코마킹", "코마킨드": STT spellings of "코막힘".
-        pat(String.raw`코\s*막힘|콧\s*막힘|코마킹|코마킨|코(?:가|도)?\s*(?:꽉\s*)?[막박](?:혀|히|혔|힌)`),
+        pat(String.raw`코\s*막힘|콧\s*막힘|코마킹|코마킨|코(?:가|는|도)?\s*${INTENSITY_PHRASE}(?:꽉\s*)?[막박](?:혀|히|혔|힌)`),
         pat(
             String.raw`코\s*막힘${PARTICLE}\s*${ABSENT_ENDING}|` +
             String.raw`코(?:는|가|도)?\s*${NOW_ADVERB}(?:안\s*막|막히지\s*않)`
@@ -427,7 +433,7 @@ const RULES: Rule[] = [
         "어지러움",
         pat(String.raw`어지러|어지럽|어지럼|현기증|핑\s*(?:돌|돈)|빙빙\s*(?:돌|돈)`),
         pat(
-            String.raw`(?:어지럼증?|현기증)${PARTICLE}\s*${ABSENT_ENDING}|` +
+            String.raw`(?:어지럼증?|어지러움|현기증)${PARTICLE}\s*${ABSENT_ENDING}|` +
             String.raw`${NOW_ADVERB}안\s*어지러|어지럽지\s*않`
         ),
     ),
@@ -532,9 +538,9 @@ const RULES: Rule[] = [
     rule(
         "불면",
         pat(
-            String.raw`불면|잠(?:을|이)?\s*(?:잘\s*)?(?:못\s*(?:자|잤|잔|들)|안\s*(?:와|온|오)|설쳐|설쳤)|` +
+            String.raw`불면|잠(?:을|이|은|도)?\s*(?:잘\s*)?(?:못\s*(?:자|잤|잔|들)|안\s*(?:와|온|오)|설쳐|설쳤)|` +
             // "잠이 제대로 오지 않아요", "잠 못 이루고", "잠을 설치고" (2026-11-06)
-            String.raw`(?<![가-힣])잠(?:을|이|도)?\s*(?:(?:${INTENSITY_WORD}|전혀|제대로|잘)\s*)*` +
+            String.raw`(?<![가-힣])잠(?:을|이|은|도)?\s*(?:(?:${INTENSITY_WORD}|전혀|제대로|잘)\s*)*` +
             String.raw`(?:못\s*(?:자|잤|잔|들|이루)|안\s*(?:와|온|오)|오지\s*않|이루지\s*못|설치|설쳐|설쳤)|` +
             String.raw`자다가\s*(?:자꾸\s*|계속\s*)?깨`
         ),
@@ -543,10 +549,11 @@ const RULES: Rule[] = [
     rule(
         "부종",
         pat(
-            String.raw`부종|붓기|부기(?=가|는|도|\s|$)|(?:다리|발|발목|얼굴|손|손가락|눈두덩|눈|입술|몸)(?:이|가|도)?\s*(?:퉁퉁\s*|많이\s*)?` +
+            String.raw`부종|붓기|부기(?=가|는|도|\s|$)|(?<![가-힣])(?:다리|발|발목|얼굴|손|손가락|눈두덩|눈|입술|몸)(?:이|가|은|는|도)?\s*${INTENSITY_PHRASE}(?:퉁퉁\s*)?` +
             String.raw`(?:부었|부어|붓|부은)`
         ),
-        pat(String.raw`(?:부종|붓기|부기)${PARTICLE}\s*${NOW_ADVERB}(?:없|빠졌|가라앉았|${RESOLVED_STATE})`),
+        pat(String.raw`(?:부종|붓기|부기)${PARTICLE}\s*${NOW_ADVERB}(?:없|빠졌|가라앉았|${RESOLVED_STATE})|` +
+            String.raw`(?<![가-힣])(?:다리|발|발목|얼굴|손|손가락|눈두덩|눈|입술|몸)(?:이|가|은|는|도)?\s*${NOW_ADVERB}(?:안\s*(?:부었|부어|붓)|붓지\s*않)`),
     ),
     rule(
         "귀 통증",
@@ -575,7 +582,7 @@ const RULES: Rule[] = [
             String.raw`(?:아프|아파|아팠|아픈|시려|시리|욱신|쑤셔)`
         ),
         pat(
-            String.raw`치통${PARTICLE}\s*${ABSENT_ENDING}|(?:이빨|치아|잇몸)(?:은|이|는|도)?\s*${NOW_ADVERB}${NOT_PAINFUL}`
+            String.raw`치통${PARTICLE}\s*${ABSENT_ENDING}|(?:(?<![가-힣])이|이빨|치아|잇몸)(?:가|은|이|는|도)?\s*${NOW_ADVERB}${NOT_PAINFUL}`
         ),
         "치아",
     ),
@@ -725,7 +732,7 @@ const RULES: Rule[] = [
             String.raw`(?:${JOINT_PART})\s*통증`
         ),
         pat(
-            String.raw`관절통${PARTICLE}\s*${ABSENT_ENDING}|(?:${JOINT_PART})(?:은|는|도)?\s*${NOW_ADVERB}${NOT_PAINFUL}`
+            String.raw`관절통${PARTICLE}\s*${ABSENT_ENDING}|(?:${JOINT_PART})(?:이|가|은|는|도)?\s*${NOW_ADVERB}${NOT_PAINFUL}`
         ),
         "관절",
     ),
@@ -959,6 +966,9 @@ const ONSET_PATTERN = pat(
     String.raw`\d{1,2}\s*월\s*\d{1,2}\s*일(?:\s*(?:쯤|경))?(?:\s*부터)?|` +
     String.raw`(?:지난\s*주|저번\s*주|이번\s*주)\s*[월화수목금토일]요일(?:부터|쯤)?|` +
     String.raw`[월화수목금토일]요일(?:부터|쯤)?|` +
+    // "지난주부터", "지난달 말부터", "며칠 전부터", "세 시간 전부터" (2026-11-11 onset matrix).
+    String.raw`(?:지난|저번|이번)\s*(?:주말|주|달)(?:\s*(?:초|중순|말))?(?:부터|쯤)?|며칠\s*(?:전부터|전|째|동안)|` +
+    String.raw`(?:한|두|세|네|다섯|여섯|일곱|여덟|아홉|열|몇)\s*(?:시간|주|달)\s*(?:전부터|전|째|동안)|` +
     String.raw`어젯밤(?:부터)?|` +
     String.raw`(?:오늘|어제|그제|그저께|엊그제)\s*` +
     String.raw`(?:아침|점심|저녁|밤|새벽)(?:부터)?|` +
@@ -1747,7 +1757,7 @@ export function extractIntake(input: string, referenceDate: string | null = null
     if (item.onset === null && item.status === "present" && before.onset && before.status === "present"
         // "어제부터 기침을 하고(,| 그리고)? 복통이", "하고요", "하구" and "기침이랑 복통이" share the onset too
         // (2026-11-11 phone test: the comma STT put in cut it off). A new sentence ("해요. 복통도") does not.
-        && fullmatch(String.raw`(?:(?:(?!요\s)[가-힣 ]){0,8}?(?:고요?|구요?|며|면서)|이?랑|하고|과|와)\s*,?\s*(?:그리고\s+)?` +
+        && fullmatch(String.raw`(?:(?:(?!요\s)[가-힣 ]){0,8}?(?:고요?|구요?|며|면서|데)|이?랑|하고|과|와)\s*,?\s*(?:(?:그리고|또|또한|게다가|그리고\s*또)\s+)?` +
           String.raw`(?:[가-힣]+(?:이|가|은|는|도)\s+)?`, joined)) {
       ordered[index] = [start, { ...item, onset: before.onset, onset_date: before.onset_date }];
     }
