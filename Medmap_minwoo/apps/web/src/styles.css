@@ -1365,6 +1365,153 @@ textarea::placeholder {
   cursor: pointer;
 }
 
+/* Opened summary for the doctor: warnings, symptom cards with tags, lists (2026-11-11). */
+.doc-summary {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-card);
+}
+
+.doc-summary__field {
+  display: flex;
+  gap: 10px;
+  margin: 0 0 4px;
+  font-size: 15px;
+}
+
+.doc-summary__field span,
+.doc-lists dt {
+  flex: none;
+  min-width: 72px;
+  color: var(--color-muted-foreground);
+  font-size: 14px;
+}
+
+.doc-alert {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--color-warning);
+  background: var(--color-warning-soft);
+  font-size: 15px;
+}
+
+.doc-alert--urgent {
+  color: var(--color-destructive);
+  background: var(--color-destructive-soft);
+}
+
+.doc-summary__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 8px;
+  font-size: 16px;
+}
+
+.doc-cards {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.doc-card {
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+}
+
+.doc-card--urgent {
+  border-left-color: var(--color-destructive);
+}
+
+.doc-card--faded {
+  border-left-color: var(--color-border-strong);
+  opacity: 0.75;
+}
+
+.doc-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.doc-card__head strong {
+  font-size: 18px;
+}
+
+.doc-card__site {
+  color: var(--color-muted-foreground);
+  font-size: 14px;
+}
+
+.doc-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.tag {
+  display: inline-flex;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--color-muted);
+  font-size: 14px;
+}
+
+.tag em {
+  color: var(--color-muted-foreground);
+  font-style: normal;
+}
+
+.tag--worse,
+.tag--severe,
+.tag--urgent {
+  color: var(--color-destructive);
+  background: var(--color-destructive-soft);
+}
+
+.tag--better {
+  color: var(--color-accent);
+  background: var(--color-primary-soft);
+}
+
+.doc-lists {
+  display: grid;
+  gap: 6px;
+  margin: 18px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+}
+
+.doc-lists > div {
+  display: flex;
+  gap: 10px;
+}
+
+.doc-lists dd {
+  margin: 0;
+  font-size: 15px;
+}
+
+.doc-lists__allergy dd {
+  color: var(--color-destructive);
+  font-weight: 700;
+}
+
+.doc-summary__note {
+  margin: 14px 0 0;
+  font-size: 13px;
+}
+
 .doctor-open__summary {
   margin-top: 16px;
   padding: 14px;

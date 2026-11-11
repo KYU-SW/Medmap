@@ -10,7 +10,7 @@ const read = (text: string, name: string) =>
   extractIntake(text, "2026-11-11").symptoms.find((symptom) => symptom.name === name);
 const PARTICLES = ["이/가", "은/는", "도"] as const;
 // Words said between the part and the verb, both for "아파요" and "안 아파요"; the last ones only fit a "not".
-const BETWEEN = ["", "원래", "평소에", "요즘", "좀", "자주", "지금은", "아직", "가끔"];
+const BETWEEN = ["", "원래", "평소에", "요즘", "좀", "자주", "지금은", "아직", "가끔", "같이", "함께"];
 const ONLY_NOT = ["별로", "전혀", "하나도", "딱히", "그렇게"];
 
 function wrongOnes(cases: Array<[string, string, "present" | "absent"]>) {
@@ -58,7 +58,7 @@ describe("other common symptoms, however they are said", () => {
   const cases: Array<[string, string, "present" | "absent"]> = [];
   for (const [name, subject, there, notThere] of SAID) for (const particle of PARTICLES) {
     const head = withParticle(subject, particle);
-    for (const word of ["", "원래", "요즘", "좀", "지금은", "아직", "평소에"]) {
+    for (const word of ["", "원래", "요즘", "좀", "지금은", "아직", "평소에", "같이"]) {
       const at = `${head} ${word ? `${word} ` : ""}`;
       for (const verb of there) if (!(word === "원래" && verb.endsWith("었어요"))) cases.push([at + verb, name, "present"]);
       for (const verb of notThere) cases.push([at + verb, name, "absent"]);
@@ -91,5 +91,7 @@ describe("one onset for symptoms said together", () => {
   it("does not carry an onset into a new sentence or onto a long-standing symptom", () => {
     expect(read("어제부터 기침을 해요. 복통도 있어요.", "복통")?.onset).toBeNull();
     expect(read("어제부터 기침을 하고, 배는 원래 아파요", "복통")?.onset).toBe("원래부터");
+    // "같이" (together) carries it even into a new sentence (2026-11-11 phone test).
+    expect(read("어제부터 기침을 하고 머리가 너무 아파요 배도 같이 아팠어요", "복통")?.onset).toBe("어제부터");
   });
 });

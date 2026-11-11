@@ -16664,7 +16664,7 @@
      "name": "두통",
      "status": "present",
      "body_site": "머리",
-     "onset": null,
+     "onset": "어제부터",
      "onset_date": null,
      "severity": null,
      "frequency": null,
@@ -25189,6 +25189,135 @@
   "reference_date": "2026-11-11",
   "result": {
    "symptoms": [],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "어제부터 기침을 하고 머리가 너무 아파요 배도 같이 아팠어요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "기침",
+     "status": "present",
+     "body_site": null,
+     "onset": "어제부터",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "기침을 하"
+    },
+    {
+     "name": "두통",
+     "status": "present",
+     "body_site": "머리",
+     "onset": "어제부터",
+     "onset_date": null,
+     "severity": "심함",
+     "frequency": null,
+     "trend": null,
+     "source_text": "머리가 너무 아파"
+    },
+    {
+     "name": "복통",
+     "status": "present",
+     "body_site": "복부",
+     "onset": "어제부터",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "배도 같이 아팠"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "머리랑 배가 같이 아파요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "두통",
+     "status": "present",
+     "body_site": "머리",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "머리랑 배가 같이 아파"
+    },
+    {
+     "name": "복통",
+     "status": "present",
+     "body_site": "복부",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "머리랑 배가 같이 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "배는 같이 안 아파요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "복통",
+     "status": "absent",
+     "body_site": "복부",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "배는 같이 안 아파"
+    }
+   ],
    "medications": [],
    "allergies": [],
    "medical_history": [],

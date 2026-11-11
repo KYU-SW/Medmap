@@ -198,6 +198,8 @@ const INTENSITY_WORD = (
     // How long it has been there: "배는 원래 아파요", "허리가 평소에 좀 아파요" (2026-11-11 user request).
     String.raw`원래(?:는|부터)?|평소(?:에도|에는|에)?|예전부터|옛날부터|전부터|오래전부터|` +
     String.raw`요즘(?:은|에는|에)?|최근(?:에는|에|엔)?|아직(?:은|까지)?|지금(?:은|도)?|이제(?:는)?|현재(?:는)?|` +
+    // Said with another symptom: "머리가 아파요 배도 같이 아팠어요" (2026-11-11 phone test).
+    String.raw`같이|함께|덩달아|동시에|역시|또|또다시|다시|마찬가지로|` +
     String.raw`살살|콕콕|쿡쿡|꾹꾹|구구|찌릿찌릿|찌릿|욱신욱신|욱신|지끈지끈|지끈|따끔따끔|뻐근하게|찌르듯이?|` +
     // How bad it is, said between the body part and the verb: "배가 참을 만하게 아파요".
     String.raw`데굴데굴|참을\s*만하게|견딜\s*만하게|죽을\s*(?:것\s*)?같이|미칠\s*(?:것\s*)?같이|` +
@@ -221,7 +223,7 @@ const RESOLVED_STATE = (
 // parts × modifiers × endings; before this only 이제는·지금은 fitted there).
 const NOW_ADVERB = (
     String.raw`(?:(?:이제는?|이젠|지금은|현재는|요즘(?:은|에는)?|최근(?:에는|엔)?|아직(?:은|까지는?)?|원래(?:는)?|` +
-    String.raw`평소(?:에는|에도|에)?|별로|딱히|그렇게|그다지|크게|많이|좀|자주|가끔|전혀|하나도|조금도)\s*)*`
+    String.raw`평소(?:에는|에도|에)?|별로|딱히|그렇게|그다지|크게|많이|좀|자주|가끔|전혀|하나도|조금도|같이|함께|역시|또)\s*)*`
 );
 const PARTICLE = String.raw`(?:은|는|이|가|도|을|를)?`;
 const JOINT_PART = String.raw`무릎|어깨|발목|손목|팔꿈치|고관절|골반|손가락\s*관절|손가락|발가락|턱관절|턱|관절`;
@@ -1757,8 +1759,10 @@ export function extractIntake(input: string, referenceDate: string | null = null
     if (item.onset === null && item.status === "present" && before.onset && before.status === "present"
         // "어제부터 기침을 하고(,| 그리고)? 복통이", "하고요", "하구" and "기침이랑 복통이" share the onset too
         // (2026-11-11 phone test: the comma STT put in cut it off). A new sentence ("해요. 복통도") does not.
-        && fullmatch(String.raw`(?:(?:(?!요\s)[가-힣 ]){0,8}?(?:고요?|구요?|며|면서|데)|이?랑|하고|과|와)\s*,?\s*(?:(?:그리고|또|또한|게다가|그리고\s*또)\s+)?` +
-          String.raw`(?:[가-힣]+(?:이|가|은|는|도)\s+)?`, joined)) {
+        && (fullmatch(String.raw`(?:(?:(?!요\s)[가-힣 ]){0,8}?(?:고요?|구요?|며|면서|데)|이?랑|하고|과|와)\s*,?\s*(?:(?:그리고|또|또한|게다가|그리고\s*또)\s+)?` +
+          String.raw`(?:[가-힣]+(?:이|가|은|는|도)\s+)?`, joined)
+          // "머리가 아파요. 배도 같이 아팠어요": "together" says it came with the one before, even in a new sentence.
+          || (search(String.raw`같이|함께|덩달아|동시에`, item.source_text) !== null && joined.length <= 30))) {
       ordered[index] = [start, { ...item, onset: before.onset, onset_date: before.onset_date }];
     }
   }

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import QRCode from "qrcode";
 import { decryptSummary, encryptSummary, KEY_DIGITS, keyDigits, newKeyNumber } from "./qrCrypto";
+import { readSummary, type SummarySymptom } from "./summaryView";
 import {
   deleteIntakeRecord,
   listIntakeRecords,
@@ -227,6 +228,56 @@ function encodeMonoWav(chunks: Float32Array[], sampleRate: number): Blob {
     }
   }
   return new Blob([buffer], { type: "audio/wav" });
+}
+
+// The opened QR laid out for a doctor's quick look (2026-11-11): warnings first, current symptoms as cards with
+// onset / severity / change as tags, then medicines, allergies and history. Copy still gives the plain text.
+function DoctorSummary({ text }: { text: string }) {
+  const view = readSummary(text);
+  const tone = (value: string) => (/악화/.test(value) ? " tag--worse" : /호전/.test(value) ? " tag--better" : /심함|(?:[7-9]|10)\/10점/.test(value) ? " tag--severe" : "");
+  const card = (item: SummarySymptom, faded: boolean) => (
+    <li className={`doc-card${item.urgent ? " doc-card--urgent" : ""}${faded ? " doc-card--faded" : ""}`} key={item.name}>
+      <div className="doc-card__head">
+        <strong>{item.name}</strong>
+        {item.site && <span className="doc-card__site">{item.site}</span>}
+        {item.urgent && <span className="tag tag--urgent">위험 증상</span>}
+      </div>
+      {item.facts.length > 0 && (
+        <div className="doc-card__tags">
+          {item.facts.map(([label, value]) => (
+            <span className={`tag${tone(value)}`} key={label + value}>{label && <em>{label.replace("가장 심한 정도", "최고 정도")}</em>}{value}</span>
+          ))}
+        </div>
+      )}
+    </li>
+  );
+  return (
+    <div className="doc-summary">
+      {view.fields.map(([label, value]) => (
+        <p className="doc-summary__field" key={label}><span>{label}</span>{value}</p>
+      ))}
+      {view.urgent.length > 0 && <p className="doc-alert doc-alert--urgent">🚨 빨리 진료가 필요할 수 있는 증상: <strong>{view.urgent.join(", ")}</strong></p>}
+      {view.severe.length > 0 && <p className="doc-alert">심하다고 한 증상: <strong>{view.severe.join(", ")}</strong></p>}
+      <h3 className="doc-summary__title">지금 있는 증상 <span className="count">{view.active.length}</span></h3>
+      {view.active.length === 0 ? <p className="muted">확인된 증상 없음</p> : <ul className="doc-cards">{view.active.map((item) => card(item, false))}</ul>}
+      {view.resolved.length > 0 && (
+        <>
+          <h3 className="doc-summary__title">사라진 증상</h3>
+          <ul className="doc-cards">{view.resolved.map((item) => card(item, true))}</ul>
+        </>
+      )}
+      <dl className="doc-lists">
+        {view.lists.map(([label, value]) => (
+          <div key={label} className={label === "알레르기" && value !== "확인되지 않음" ? "doc-lists__allergy" : undefined}>
+            <dt>{label}</dt>
+            <dd>{value === "확인되지 않음" ? <span className="muted">없음</span> : value}</dd>
+          </div>
+        ))}
+      </dl>
+      {view.other.map((line) => <p key={line}>{line}</p>)}
+      <p className="muted doc-summary__note">환자가 확인한 기록의 요약이며 진단 결과가 아닙니다.</p>
+    </div>
+  );
 }
 
 export default function App() {
@@ -1308,7 +1359,7 @@ export default function App() {
             {doctorMessage && <p className="record-message" role="status">{doctorMessage}</p>}
             {doctorSummary && (
               <>
-                <pre className="doctor-open__summary">{doctorSummary}</pre>
+                <DoctorSummary text={doctorSummary} />
                 <div className="button-row">
                   <button type="button" onClick={() => void navigator.clipboard.writeText(doctorSummary)
                     .then(() => setDoctorMessage("요약을 복사했어요. EMR에 붙여넣으세요."))
