@@ -66,6 +66,11 @@ describe("sourcePhrase", () => {
     expect(show("답답한데 기지개를 펴면 편해져요")).toEqual(["답답한데"]);
     expect(show("몸에서 이상한 냄새가 나요")).toEqual(["몸에서 이상한 냄새가 나요"]);
   });
+  it("does not offer a feeling as a symptom", () => {
+    const text = "마음이 좀 혼란스럽긴 한데 열은 없어요";
+    const part = { start: 0, end: 15, status: "present" as const, text: text.slice(0, 15) };
+    expect(outsideSymptoms(text, extractIntake(text, "2026-11-11"), [part])).toEqual([]);
+  });
   it("keeps evidence it cannot find, such as the rules' rewritten copy", () => {
     expect(sourcePhrase("배 아픔", "배 아파")).toBe("배 아파");
   });

@@ -441,7 +441,8 @@ const RULES: Rule[] = [
     ),
     rule(
         "메스꺼움",
-        pat(String.raw`[메매]스꺼|[메매]스껍|메슥|미식거|울렁|구역질|구역감|헛구역|토할\s*(?:것\s*)?같`),
+        // "메스 거예요", "매스 꺼워요": turbo's split spellings of 메스꺼워요 (2026-11-11 phone test).
+        pat(String.raw`[메매]스\s[꺼거](?:워|웠|운|요|예요|에요)|[메매]스거(?:워|웠|운|요|예요|에요)|[메매]스꺼|[메매]스껍|메슥|미식거|울렁|구역질|구역감|헛구역|토할\s*(?:것\s*)?같`),
         pat(
             String.raw`(?:메스꺼움|구역감|구역질|울렁거림)${PARTICLE}\s*${ABSENT_ENDING}|` +
             String.raw`메스껍지\s*않|안\s*메스꺼|울렁거리지\s*않`
@@ -449,7 +450,9 @@ const RULES: Rule[] = [
     ),
     rule(
         "설사",
-        pat(String.raw`설사|(?<!소)(?:대변|변)(?:이|을|도)?\s*(?:묽|물\s*같)|물\s*같은\s*변`),
+        // "술사도 세번 했어요", "설싸": STT spellings of 설사, only with a count or 했/해 so 술 (alcohol) is not read.
+        pat(String.raw`설사|(?<![가-힣])(?:술사|설싸|썰사)(?:를|도|가|는)?\s*(?:(?:\d+|한|두|세|네|다섯|여러)\s*번\s*)?(?:했|해|하|나)|` +
+          String.raw`(?<!소)(?:대변|변)(?:이|을|도)?\s*(?:묽|물\s*같)|물\s*같은\s*변`),
         pat(
             String.raw`설사${PARTICLE}\s*${NOW_ADVERB}(?:없|안\s*(?:했|해|하)|하지\s*않|멈췄|${RESOLVED_STATE})|` +
             String.raw`설사(?:를\s*)?한\s*적(?:은|도|이)?\s*없`
@@ -514,6 +517,8 @@ const RULES: Rule[] = [
         "속쓰림",
         pat(
             String.raw`속쓰림|(?:속|가슴|명치|윗배|위)(?:이|가|도|까지)?\s*${INTENSITY_PHRASE}(?:쓰려|쓰리|쓰린|쓰림|쓰라|타는)|` +
+            // "명치가 쓰기로": turbo's "쓰리고" (2026-11-11 phone test), only right after 명치/속.
+            String.raw`(?<![가-힣])(?:명치|속)(?:이|가|도)?\s*쓰기(?:로|고)|` +
             // "속이 따갑고", "속이 화끈거려요", "속에서 불이 나는 것 같아요" (2026-11-06)
             String.raw`(?<![가-힣])속(?:이|도)?\s*${INTENSITY_PHRASE}(?:따갑|따가|화끈)|(?<![가-힣])속에서\s*불|` +
             String.raw`신물(?:이)?\s*(?:올라|넘어)|위산\s*역류`
@@ -527,7 +532,7 @@ const RULES: Rule[] = [
         "식욕부진",
         pat(
             // "입맛이 전혀 없어요", "식욕도 확 줄었어요", "밥맛이 아예 없다", "밥 생각이 없어요" (2026-11-06)
-            String.raw`식욕부진|(?:식욕|입맛|밥\s*맛)(?:이|도)?\s*(?:(?:${INTENSITY_WORD}|전혀|아예|완전히|통|별로)\s*)*(?:없|떨어|뚝|줄었|제로)|` +
+            String.raw`식욕부진|(?:식욕|입맛|밥\s*맛)(?:이|도)?\s*(?:(?:${INTENSITY_WORD}|전혀|아예|완전히|통|별로|하나도|조금도|영)\s*)*(?:없|떨어|뚝|줄었|제로)|` +
             String.raw`밥\s*생각(?:이|도)?\s*(?:(?:전혀|별로|통)\s*)?없|` +
             // "목이 막힌 것처럼 밥이 안 넘어가요" is trouble swallowing (삼킴 곤란), not appetite (2026-11-09 phone test).
             String.raw`밥(?:을|이)?\s*(?:잘\s*)?(?:못\s*먹|먹기\s*싫)|` +
@@ -716,7 +721,10 @@ const RULES: Rule[] = [
         "체중 감소",
         pat(
             String.raw`체중(?:이)?\s*(?:줄|빠졌|감소)|몸무게(?:가)?\s*(?:줄|빠졌)|살(?:이)?\s*(?:많이\s*|갑자기\s*)?빠졌|` +
-            String.raw`\d+\s*(?:킬로|kg)(?:가|나|이)?\s*(?:빠졌|줄었)`
+            // "살이 3킬로 정도 빠졌어요", "몸무게가 요즘 5kg 넘게 줄었어요" (2026-11-11 long-sentence check).
+            String.raw`(?:체중|몸무게|(?<![가-힣])살)(?:이|가|도|은|는)?\s*${INTENSITY_PHRASE}` +
+            String.raw`(?:\d+\s*(?:킬로|키로|kg)(?:\s*(?:정도|쯤|가량|넘게|이상|이나|나))?\s*)?(?:줄었|줄어|빠졌|빠져)|` +
+            String.raw`\d+\s*(?:킬로|키로|kg)(?:가|나|이)?(?:\s*(?:정도|쯤|가량|넘게|이상))?\s*(?:빠졌|줄었)`
         ),
         pat(String.raw`(?:체중|몸무게)(?:은|는|도)?\s*(?:그대로|변화\s*없|안\s*빠졌)`),
     ),
@@ -855,7 +863,8 @@ const RULES: Rule[] = [
     rule(
         "혼란",
         // Not "마음이 혼란스러워요" (feelings), "혼란스러워 보일까 봐" (how one seems) or "정신이 없어요" (busy).
-        pat(String.raw`(?<!(?:마음|생각|기분)(?:이|가)?\s*)혼란스(?:러|럽)(?!워?\s*보)|의식(?:이)?\s*혼미|` +
+        // "마음이 좀 혼란스럽긴 한데": a word or two may sit between (2026-11-11 long-sentence check).
+        pat(String.raw`(?<!(?:마음|생각|기분|머릿속|감정)(?:이|가|은|는|도)?\s*(?:[가-힣]+\s+){0,2})혼란스(?:러|럽)(?!워?\s*보)|의식(?:이)?\s*혼미|` +
           String.raw`정신(?:이)?\s*${INTENSITY_PHRASE}(?:오락가락|왔다\s*갔다|흐릿|흐려)|사람(?:을|도)?\s*(?:잘\s*)?못\s*알아|` +
           String.raw`(?:여기가|지금이)\s*(?:어디|언제)인지\s*(?:잘\s*)?모르`),
         pat(String.raw`혼란${PARTICLE}\s*${ABSENT_ENDING}|정신(?:은|도)?\s*(?:멀쩡|또렷|맑)`),
@@ -884,7 +893,7 @@ const RULES: Rule[] = [
         "땀 과다",
         // How much ("땀이 비 오듯 나요"); 식은땀 and a plain "땀이 나요" stay 식은땀.
         pat(String.raw`다한증|(?<![가-힣])땀(?:이|을|도)?\s*` +
-          String.raw`(?:${INTENSITY_WORD}\s*|평소보다\s*|평상시보다\s*|훨씬\s*|비\s*오듯\s*|줄줄\s*|폭포처럼\s*|뻘뻘\s*|지나치게\s*|끊임없이\s*)+(?:나|났|흘|흐르|많)|` +
+          String.raw`(?:${INTENSITY_WORD}\s*|평소보다\s*|평상시보다\s*|훨씬\s*|(?:비|물)\s*(?:오|흐르)듯(?:이)?\s*|줄줄\s*|폭포처럼\s*|뻘뻘\s*|지나치게\s*|끊임없이\s*)+(?:나|났|흘|흐르|많)|` +
           String.raw`(?<![가-힣])땀(?:이)?\s*많(?:아|이|은|다)`),
         pat(String.raw`(?<![가-힣])땀(?:이|은|도)?\s*많이\s*나는\s*편(?:은|이)?\s*아니|다한증${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
@@ -1087,7 +1096,28 @@ function knownSpelling(name: string): string {
       return known;
     }
   }
+  // By sound (2026-11-11 phone test): "펜이실린" is 페니실린 split differently, "메트프로민"/"매트포르민" are 메트포르민
+  // with two letters swapped or ㅐ for ㅔ. Compared letter by letter inside the syllables, the silent ㅇ and ㅐ/ㅔ
+  // set aside, at most two letters apart.
+  const heard = soundOf(name);
+  for (const known of KNOWN_SPELLINGS) {
+    if (Math.abs(known.length - name.length) <= 1 && known.length >= 4 && letterDistance(heard, soundOf(known)) <= 2) return known;
+  }
   return name;
+}
+
+const soundOf = (word: string) => [...word.normalize("NFD").replace(/ᄋ/g, "").replace(/ᅢ/g, "ᅦ")];
+
+function letterDistance(a: string[], b: string[]): number {
+  let row = Array.from({ length: b.length + 1 }, (_, index) => index);
+  for (let i = 1; i <= a.length; i += 1) {
+    const next = [i];
+    for (let j = 1; j <= b.length; j += 1) {
+      next[j] = Math.min(row[j] + 1, next[j - 1] + 1, row[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    }
+    row = next;
+  }
+  return row[b.length];
 }
 
 const TEMPERATURE_PATTERN = pat(String.raw`(?<![\d.])(3[5-9]|4[0-2])(?:\.(\d))?\s*(?:도|度|℃|°)`);
@@ -1528,16 +1558,21 @@ function extractMedications(text: string): [string[], string[]] {
         found.push([name.start, word]);
       }
     }
+    // "매트포르민을 먹고 있어요": a name the patient takes, misheard, with no dose said (2026-11-11 phone test).
+    for (const name of pat(String.raw`(?<![가-힣])([가-힣]{4,})(?:을|를)\s*(?:먹|복용|드시|챙겨)`).finditer(clause)) {
+      const word = name.groups[1]!;
+      if (knownSpelling(word) !== word && !found.some(([start]) => start === name.start)) found.push([name.start, word]);
+    }
     // "타이레놀" is both a known name and a sound-alike match
     found = [...new Map(found.map((item) => [`${item[0]}\u0000${item[1]}`, item])).values()]
       .sort((a, b) => a[0] - b[0] || (a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0));
     found.forEach(([position, heard], index) => {
-      const name = knownSpelling(heard); // same length, so the dose tail below still lines up
+      const name = knownSpelling(heard); // may differ in length from what was heard: the dose tail below uses heard
       if (names.includes(name) || names.some((other) => other.includes(name) || name.includes(other))) return;
       names.push(name);
       // Dose and timing said right after the name, before the next medicine, belong to it.
       const nextPosition = index + 1 < found.length ? found[index + 1][0] : clause.length;
-      const tail = clause.slice(position + name.length, Math.min(nextPosition, position + name.length + 30));
+      const tail = clause.slice(position + heard.length, Math.min(nextPosition, position + heard.length + 30));
       let dose = DOSE_PATTERN.search(tail);
       // "한 알, 아니 두 알": the patient corrected the dose.
       const corrected = dose && matchStart(String.raw`\s*[,?]?\s*아니(?:고|라)?\s*,?\s*`, tail.slice(dose.end));
@@ -1811,9 +1846,11 @@ export function extractIntake(input: string, referenceDate: string | null = null
   for (const [start, end] of subclauseSpans(normalized)) {
     const fragment = normalized.slice(start, end).trim();
     if (!fragment || !MEDICAL_SIGNAL_PATTERN.search(fragment)) continue;
+    // A name read through knownSpelling ("펜이실린" as 페니실린) counts too, by the word as heard.
+    const heardAs = fragment.split(/\s+/).map((word) => knownSpelling(word.replace(/(?:이|가|은|는|을|를|도|에)$/, "")));
     const recognized = evidenceSpans.some(([spanStart, spanEnd]) => spanStart < end && spanEnd > start)
-      || medicationNames.some((name) => fragment.replace(/\s+/g, "").includes(name))
-      || allergies.some((allergen) => fragment.includes(allergen));
+      || medicationNames.some((name) => fragment.replace(/\s+/g, "").includes(name) || heardAs.includes(name))
+      || allergies.some((allergen) => fragment.includes(allergen) || heardAs.includes(allergen));
     if (!recognized) unrecognizedFragments.push(fragment);
   }
   return {

@@ -692,6 +692,9 @@ export default function App() {
     const changes = apply ? verification?.changes ?? [] : [];
     setVerification((current) => current && { ...current, changes: [] });
     if (changes.length === 0) return;
+    // The AI's suggestions were read from the first transcript ("냄새도 잘 못 먹겠어요"); once turbo's reading is taken,
+    // read them again from turbo's text so a misheard part is not offered (2026-11-11 phone test).
+    if (verification?.turboText) void findOutsideSymptoms(verification.turboText);
     setIntake((current) => {
       if (!current) return current;
       let symptoms = current.symptoms;

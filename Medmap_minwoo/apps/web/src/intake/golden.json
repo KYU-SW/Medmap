@@ -8851,9 +8851,7 @@
     "smoking": null,
     "drinking": null
    },
-   "unrecognized_fragments": [
-    "페니슐린 알레르기가 있어요"
-   ],
+   "unrecognized_fragments": [],
    "needs_user_confirmation": true
   }
  },
@@ -8875,9 +8873,7 @@
     "smoking": null,
     "drinking": null
    },
-   "unrecognized_fragments": [
-    "헤니실린 알레르기가 있어요"
-   ],
+   "unrecognized_fragments": [],
    "needs_user_confirmation": true
   }
  },
@@ -9835,9 +9831,7 @@
     "smoking": null,
     "drinking": null
    },
-   "unrecognized_fragments": [
-    "콧가루 알레르기가 있어요"
-   ],
+   "unrecognized_fragments": [],
    "needs_user_confirmation": true
   }
  },
@@ -18418,9 +18412,7 @@
     "smoking": null,
     "drinking": null
    },
-   "unrecognized_fragments": [
-    "콧가루 알레르기가 있고"
-   ],
+   "unrecognized_fragments": [],
    "needs_user_confirmation": true
   }
  },
@@ -25328,6 +25320,322 @@
     "pregnancy": null,
     "smoking": null,
     "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "지금은 입맛이 하나도 없어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "식욕부진",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "입맛이 하나도 없"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "한 달 사이에 살이 3킬로 정도 빠졌어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "체중 감소",
+     "status": "present",
+     "body_site": null,
+     "onset": "1달",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "살이 3킬로 정도 빠졌"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "마음이 좀 혼란스럽긴 한데 열은 없어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "발열",
+     "status": "absent",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "열은 없"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "당뇨가 있어서 매트포르민을 먹고 있고, 펜이실린 알레르기가 있어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [],
+   "medications": [
+    "메트포르민"
+   ],
+   "allergies": [
+    "페니실린"
+   ],
+   "medical_history": [
+    "당뇨"
+   ],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "메트프로민 500mg 하루 두 번 먹어요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [],
+   "medications": [
+    "메트포르민 500mg 하루 2회"
+   ],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "땀이 비오듯이 나요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "땀 과다",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "땀이 비오듯이 나"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "아이스크림을 먹고 배가 아파요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "복통",
+     "status": "present",
+     "body_site": "복부",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "배가 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "어제 저녁 먹고 나서부터 명치가 쓰기로 속이 메스 거예요 오늘 아침에 두번 토했고 술사도 세번 했어요 지금은 입맛이 하나도 없어요 당뇨가 있어서 매트포로민을 먹고 있고 페네실린 알레르기가 있어요 남편도 어제부터 배가 아프다고 해요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "속쓰림",
+     "status": "present",
+     "body_site": "명치",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "명치가 쓰기로"
+    },
+    {
+     "name": "메스꺼움",
+     "status": "present",
+     "body_site": null,
+     "onset": "오늘 아침",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "메스 거예요"
+    },
+    {
+     "name": "구토",
+     "status": "present",
+     "body_site": null,
+     "onset": "오늘 아침",
+     "onset_date": null,
+     "severity": null,
+     "frequency": "2회",
+     "trend": null,
+     "source_text": "토했"
+    },
+    {
+     "name": "설사",
+     "status": "present",
+     "body_site": null,
+     "onset": "오늘 아침",
+     "onset_date": null,
+     "severity": null,
+     "frequency": "3회",
+     "trend": null,
+     "source_text": "술사도 세번 했"
+    },
+    {
+     "name": "식욕부진",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "입맛이 하나도 없"
+    }
+   ],
+   "medications": [
+    "메트포르민"
+   ],
+   "allergies": [
+    "페니실린"
+   ],
+   "medical_history": [
+    "당뇨"
+   ],
+   "others_symptoms": [
+    {
+     "person": "남편",
+     "symptom": "복통",
+     "source_text": "배가 아프"
+    }
+   ],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "어제 술 사서 마셨어요",
+  "reference_date": null,
+  "result": {
+   "symptoms": [],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": "yes"
    },
    "unrecognized_fragments": [],
    "needs_user_confirmation": true

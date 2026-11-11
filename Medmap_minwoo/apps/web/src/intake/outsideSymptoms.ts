@@ -85,6 +85,8 @@ export function outsideSymptoms(text: string, rules: IntakeExtraction, spans: Mo
       : [span]))
     .filter((span) => otherPersonFor(text, span.end) === null) // the person may be inside the span ("남편이 코를 골아요")
     .filter((span) => !notSymptoms.some((word) => squash(span.text).includes(word)))
+    // Feelings, not symptoms: "마음이 좀 혼란스럽긴 한데", "기분이 답답해요" (2026-11-11 phone test).
+    .filter((span) => !/(?:마음|기분|생각|머릿속|감정|심정)(?:이|가|은|는|도)?\s*(?:[가-힣]+\s+){0,2}(?:혼란|답답|복잡|심란|울적|싱숭)/.test(span.text))
     .map((span) => {
       const name = namePart(span.text, reported);
       // A part with no name that runs on past its first clause ("답답한데 기지개를 펴면 편해져요", 2026-11-11 phone
