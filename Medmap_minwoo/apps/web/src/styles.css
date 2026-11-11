@@ -1336,6 +1336,48 @@ textarea::placeholder {
   font-size: 15px;
 }
 
+/* The number that opens the encrypted QR: big enough to read out across a desk. */
+.summary-qr .summary-qr__number {
+  margin: 4px 0 8px;
+  color: var(--color-foreground);
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Doctor: open an encrypted QR ---------- */
+.doctor-open label {
+  margin-top: 14px;
+}
+
+.doctor-open input[type="file"] {
+  display: none;
+}
+
+.doctor-open__photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.doctor-open__summary {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: keep-all;
+}
+
 /* ---------- History ---------- */
 .timeline {
   margin-top: 24px;

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import QRCode from "qrcode";
+import { decryptSummary, encryptSummary, KEY_DIGITS, keyDigits, newKeyNumber } from "./qrCrypto";
 import {
   deleteIntakeRecord,
   listIntakeRecords,
@@ -54,8 +55,8 @@ import {
   type RecordGroup,
 } from "./recordGroups";
 
-type View = "home" | "record" | "review" | "summary" | "history" | "trends" | "profile";
-const VIEWS: View[] = ["home", "record", "review", "summary", "history", "trends", "profile"];
+type View = "home" | "record" | "review" | "summary" | "history" | "trends" | "profile" | "doctor";
+const VIEWS: View[] = ["home", "record", "review", "summary", "history", "trends", "profile", "doctor"];
 
 // One task per screen; the hash keeps the phone back button working.
 function readView(): View {
@@ -78,7 +79,7 @@ const presentFirst = <T extends { status: keyof typeof STATUS_ORDER }>(symptoms:
 const summaryDate = new Intl.DateTimeFormat("ko-KR", { month: "long", day: "numeric", hour: "numeric", minute: "2-digit" });
 const VIEW_TITLE: Record<View, string> = {
   home: "MedMap", record: "증상 기록", review: "정리된 내용 확인", summary: "진료 전 요약",
-  history: "지난 기록", trends: "지난 기록", profile: "기본 정보",
+  history: "지난 기록", trends: "지난 기록", profile: "기본 정보", doctor: "의사용 · QR 열기",
 };
 const TREND_BADGE = {
   improving: { tone: "better", label: "↓ 호전 중" },
@@ -263,6 +264,14 @@ export default function App() {
   const [recordMessage, setRecordMessage] = useState("");
   const [summaryMessage, setSummaryMessage] = useState("");
   const [summaryQrCode, setSummaryQrCode] = useState("");
+  // The number that opens this QR: shown to the patient only, kept nowhere else (2026-11-11 encrypted QR).
+  const [summaryQrNumber, setSummaryQrNumber] = useState("");
+  // Doctor screen: the QR's text (camera, scanner or pasted), the number the patient says, and what it opened to.
+  const [doctorQr, setDoctorQr] = useState("");
+  const [doctorNumber, setDoctorNumber] = useState("");
+  const [doctorSummary, setDoctorSummary] = useState("");
+  const [doctorMessage, setDoctorMessage] = useState("");
+  const [doctorBusy, setDoctorBusy] = useState(false);
   const [calendarMonth, setCalendarMonth] = useState<Date | null>(null);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const [selectedHistory, setSelectedHistory] = useState<string | null>(null);
@@ -1072,15 +1081,52 @@ export default function App() {
     }
     if (!visitSummary) return;
     try {
-      const dataUrl = await QRCode.toDataURL(visitSummaryText(visitSummary), {
+      // Only ciphertext goes in the QR; the number is told to the doctor in the room (docs/QR_FORMAT.md).
+      const number = newKeyNumber();
+      const dataUrl = await QRCode.toDataURL(await encryptSummary(visitSummaryText(visitSummary), number), {
         errorCorrectionLevel: "M",
         margin: 2,
         width: 360,
       });
+      setSummaryQrNumber(number);
       setSummaryQrCode(dataUrl);
-      setSummaryMessage("QR을 만들었습니다. 환자 정보가 서버로 전송되지는 않습니다.");
+      setSummaryMessage("암호화한 QR을 만들었습니다. 환자 정보가 서버로 전송되지는 않습니다.");
     } catch {
       setSummaryMessage("기록이 너무 길어 QR을 만들지 못했습니다. PDF 저장을 이용해 주세요.");
+    }
+  }
+
+  // Doctor screen. Nothing leaves the device: the QR is opened here with the number the patient says.
+  async function openDoctorQr() {
+    setDoctorBusy(true);
+    setDoctorSummary("");
+    try {
+      setDoctorSummary(await decryptSummary(doctorQr, doctorNumber));
+      setDoctorMessage("");
+    } catch (error) {
+      setDoctorMessage(error instanceof Error ? error.message : "QR을 열지 못했습니다.");
+    } finally {
+      setDoctorBusy(false);
+    }
+  }
+
+  // A photo of the QR (or the phone camera via capture), read by the platform's BarcodeDetector where there is one.
+  async function readDoctorQrPhoto(file: File | undefined) {
+    if (!file) return;
+    const Detector = (window as unknown as { BarcodeDetector?: new (options: { formats: string[] }) => {
+      detect(image: ImageBitmap): Promise<Array<{ rawValue: string }>>;
+    } }).BarcodeDetector;
+    if (!Detector) {
+      setDoctorMessage("이 기기는 사진에서 QR을 읽지 못해요. 카메라 앱이나 스캐너로 읽은 글을 위 칸에 붙여넣어 주세요.");
+      return;
+    }
+    try {
+      const [found] = await new Detector({ formats: ["qr_code"] }).detect(await createImageBitmap(file));
+      if (!found) throw new Error();
+      setDoctorQr(found.rawValue);
+      setDoctorMessage("QR을 읽었어요. 환자가 불러 주는 번호를 넣어 주세요.");
+    } catch {
+      setDoctorMessage("사진에서 QR을 찾지 못했어요. 다시 찍어 주세요.");
     }
   }
 
@@ -1194,6 +1240,7 @@ export default function App() {
                 ["summary", "summary", "진료 전 요약", visitSummary ? "의사에게 보여 줄 요약" : "기록을 저장하면 만들어져요", !visitSummary],
                 ["history", "calendar", "지난 기록", `${visibleRecords.length}개 · 달력과 증상별 변화`, false],
                 ["profile", "user", "기본 정보", profileText(profile) || "나이·성별·흡연·음주 (선택)", false],
+                ["doctor", "qr", "의사용 · QR 열기", "환자의 암호화 QR과 번호로 요약 보기", false],
               ] as const).map(([target, icon, label, hint, disabled]) => (
                 <button className="menu-list__item" type="button" key={target} onClick={() => go(target)} disabled={disabled}>
                   <span className="menu-list__icon"><ActionIcon name={icon} size={22} /></span>
@@ -1224,6 +1271,58 @@ export default function App() {
               </div>
             </details>
           </>
+        )}
+        {view === "doctor" && (
+          <section className="doctor-open" aria-label="암호화 QR 열기">
+            <p className="lead">환자의 QR을 읽고, 환자가 불러 주는 12자리 번호를 넣으면 진료 전 요약이 보입니다. 이 기기 안에서만 풀며 아무 데도 보내지 않습니다.</p>
+            <label htmlFor="doctor-qr">QR 내용</label>
+            <textarea
+              id="doctor-qr"
+              rows={3}
+              value={doctorQr}
+              placeholder="스캐너로 읽거나, 카메라 앱으로 읽은 글을 붙여넣으세요 (MM1.로 시작)"
+              onChange={(event) => { setDoctorQr(event.target.value); setDoctorSummary(""); }}
+            />
+            <label className="button--secondary fold-button doctor-open__photo">
+              QR 사진 찍기 · 고르기
+              <input type="file" accept="image/*" capture="environment" hidden
+                onChange={(event) => { void readDoctorQrPhoto(event.target.files?.[0]); event.target.value = ""; }} />
+            </label>
+            <label htmlFor="doctor-number">환자가 불러 준 번호 (숫자 12자리)</label>
+            <input
+              id="doctor-number"
+              inputMode="numeric"
+              autoComplete="off"
+              value={doctorNumber}
+              placeholder="예: 4821-0937-5562"
+              onChange={(event) => { setDoctorNumber(event.target.value); setDoctorSummary(""); }}
+            />
+            <button
+              className="primary-wide"
+              type="button"
+              disabled={doctorBusy || !doctorQr.trim() || keyDigits(doctorNumber).length !== KEY_DIGITS}
+              onClick={() => void openDoctorQr()}
+            >
+              {doctorBusy ? "여는 중…" : "요약 열기"}
+            </button>
+            {doctorMessage && <p className="record-message" role="status">{doctorMessage}</p>}
+            {doctorSummary && (
+              <>
+                <pre className="doctor-open__summary">{doctorSummary}</pre>
+                <div className="button-row">
+                  <button type="button" onClick={() => void navigator.clipboard.writeText(doctorSummary)
+                    .then(() => setDoctorMessage("요약을 복사했어요. EMR에 붙여넣으세요."))
+                    .catch(() => setDoctorMessage("복사하지 못했어요. 글을 길게 눌러 복사해 주세요."))}>
+                    요약 복사
+                  </button>
+                  <button className="button--secondary" type="button"
+                    onClick={() => { setDoctorQr(""); setDoctorNumber(""); setDoctorSummary(""); setDoctorMessage(""); }}>
+                    지우기
+                  </button>
+                </div>
+              </>
+            )}
+          </section>
         )}
         {view === "profile" && (
         <section className="patient-profile">
@@ -1823,9 +1922,10 @@ export default function App() {
               </div>
               {summaryQrCode && (
                 <div className="summary-qr">
-                  <img src={summaryQrCode} alt="진료 전 증상 요약 QR 코드" />
-                  <p>의사의 카메라로 읽으면 요약 글자가 표시됩니다.</p>
-                  <p>QR을 촬영한 사람은 내용을 읽을 수 있으므로 진료할 때만 보여주세요.</p>
+                  <img src={summaryQrCode} alt="진료 전 증상 요약 QR 코드 (암호화됨)" />
+                  <p>의사에게 이 번호를 불러 주세요</p>
+                  <p className="summary-qr__number">{summaryQrNumber}</p>
+                  <p>QR은 암호화되어 있어 이 번호가 있어야 열립니다. 번호는 QR을 만들 때마다 바뀌고 어디에도 저장되지 않습니다.</p>
                 </div>
               )}
               {summaryMessage && <p className="confirmed summary-feedback">{summaryMessage}</p>}

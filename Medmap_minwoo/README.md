@@ -85,6 +85,7 @@
 ### 📄 진료 전 요약
 - 증상별 카드, 변화 배지(`↑ 악화`, `↓ 호전`), 복용약·알레르기·과거력 칩으로 한눈에 정리합니다.
 - **복사 · PDF 저장 · QR 코드**로 의사에게 보여 줄 수 있습니다.
+- 🔒 QR은 **암호화**됩니다. QR 아래에 나오는 숫자 12자리를 환자가 의사에게 불러 주면, 의사는 앱의 `의사용 · QR 열기`에서 QR과 번호로 요약을 엽니다. 서버를 거치지 않습니다(형식: `docs/QR_FORMAT.md`).
 
 ### 📏 정확도 (2026-11-11 코드 기준)
 
@@ -169,7 +170,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_web_desktop.ps
 - 🎙️ 음성은 글자로 바꾸는 동안만 쓰고, 저장하지 않습니다. 안드로이드 앱은 음성·증상 정리·AI 제안을 **모두 폰 안에서** 처리하고,
   PC·브라우저 버전은 음성을 내 PC의 서버로 보내 글자로 바꿉니다.
 - 💾 환자가 확인한 기록만 **기기 안(IndexedDB)에** 저장하고 서버에 보관하지 않습니다. 확인 전 문장과 AI 제안은 저장하지 않습니다.
-- 📤 QR·PDF·백업 파일에는 **암호화되지 않은 건강 정보**가 들어 있습니다. 앱에서 기록을 지워도 이미 만든 QR 사진·PDF·백업 파일은 지워지지 않습니다.
+- 📤 진료 전 요약 **QR은 암호화**되어, 환자가 불러 주는 숫자 12자리가 있어야 열립니다. **PDF·백업 파일에는 암호화되지 않은 건강 정보**가 들어 있습니다. 앱에서 기록을 지워도 이미 만든 QR 사진·PDF·백업 파일은 지워지지 않습니다.
 - 🗑️ 기록은 화면에서 언제든 삭제할 수 있고, 백업 파일도 서버로 보내지 않습니다.
 - 🚫 시험용 음성·문장에 실제 환자 정보를 넣지 않습니다.
 
@@ -318,6 +319,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_web_desktop.ps
 - AI가 문장 전체를 증상 하나로 잡으면 첫 마디(`답답한데`)까지만 보여 줌. 정밀 인식 비교의 `(못 들음) → (없음)`처럼 뜻 없는 줄을 고침
 - 같은 종류의 말을 한꺼번에 점검: 부위 × 조사 × 사이에 끼는 말(`원래`, `요즘`, `별로`, `지금은` 등) × 있음/없음 말끝, 시작 시점 × 연결어(`~고 또`, `~는데`)를 모두 조합한 약 4,700문장이 맞게 읽히도록 고치고 테스트로 고정. `배는 원래 안 아파요` → 복통 없음, `지난주부터`·`며칠 전부터`·`세 시간 전부터`도 시작 시점으로 읽음
 - 부위 없이 `답답해요`라고만 하면 짐작하지 않고 "어디가 답답한가요? (가슴·속·코·숨)"를 물음
+- 🔒 진료 전 요약 QR을 암호화(AES-256-GCM, 여는 번호 숫자 12자리는 환자가 말로 전함)하고, 의사가 QR을 여는 `의사용 · QR 열기` 화면을 추가. 형식은 다른 의사 화면도 쓸 수 있게 `docs/QR_FORMAT.md`에 공개
 - 360문장 F1 94.2% → 94.6%(잘못 찾음 11 → 10), 시작 시점 있음 80% → 100%
 ---
 
@@ -329,6 +331,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run_web_desktop.ps
 | [docs/STT_SPEC.md](docs/STT_SPEC.md) | 음성 인식 기능 범위 |
 | [docs/ANDROID_APP.md](docs/ANDROID_APP.md) | 안드로이드 앱 빌드·설치, AI 모델 준비 |
 | [docs/PRIVACY.md](docs/PRIVACY.md) | 개인정보 원칙 |
+| [docs/QR_FORMAT.md](docs/QR_FORMAT.md) | 암호화 QR 형식(다른 의사 화면에서 열 때) |
 | [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) | 앱 폴더 구조 |
 | [README.team.md](README.team.md) | DDXPlus 분석 단계별 설명 |
 | [04_partial_observation_design.md](04_partial_observation_design.md) · [RESULTS.md](RESULTS.md) | 부분 관찰 실험 설계와 데이터 감사 결과 |
