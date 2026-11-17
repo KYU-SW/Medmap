@@ -25640,5 +25640,30 @@
    "unrecognized_fragments": [],
    "needs_user_confirmation": true
   }
+ },
+ {
+  "text": "당뇨가 있어서 매트 포르민을 먹고 있고, 타이 레놀을 먹었어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [],
+   "medications": [
+    "메트포르민",
+    "타이레놀"
+   ],
+   "allergies": [],
+   "medical_history": [
+    "당뇨"
+   ],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
  }
 ]

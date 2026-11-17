@@ -1559,15 +1559,23 @@ function extractMedications(text: string): [string[], string[]] {
       }
     }
     // "매트포르민을 먹고 있어요": a name the patient takes, misheard, with no dose said (2026-11-11 phone test).
-    for (const name of pat(String.raw`(?<![가-힣])([가-힣]{4,})(?:을|를)\s*(?:먹|복용|드시|챙겨)`).finditer(clause)) {
-      const word = name.groups[1]!;
-      if (knownSpelling(word) !== word && !found.some(([start]) => start === name.start)) found.push([name.start, word]);
+    // Speech recognition may split the name ("매트 포르민을", 2026-11-17 phone test).
+    for (const name of pat(String.raw`(?<![가-힣])((?:[가-힣]{2,}\s)?[가-힣]{2,})(?:을|를)\s*(?:먹|복용|드시|챙겨)`).finditer(clause)) {
+      // The word before may not be part of the name ("있어서 매트포르민을"): then the last word alone.
+      for (const heard of [name.groups[1]!, name.groups[1]!.split(" ").at(-1)!]) {
+        const word = heard.replace(/\s/g, "");
+        const known = knownSpelling(word);
+        if (word.length < 4 || (known === word && (heard === word || !KNOWN_SPELLINGS.includes(known)))) continue;
+        const start = name.start + name.groups[1]!.length - heard.length;
+        if (!found.some(([at]) => at === start)) found.push([start, heard]);
+        break;
+      }
     }
     // "타이레놀" is both a known name and a sound-alike match
     found = [...new Map(found.map((item) => [`${item[0]}\u0000${item[1]}`, item])).values()]
       .sort((a, b) => a[0] - b[0] || (a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0));
     found.forEach(([position, heard], index) => {
-      const name = knownSpelling(heard); // may differ in length from what was heard: the dose tail below uses heard
+      const name = knownSpelling(heard.replace(/\s/g, "")); // may differ in length from what was heard: the dose tail below uses heard
       if (names.includes(name) || names.some((other) => other.includes(name) || name.includes(other))) return;
       names.push(name);
       // Dose and timing said right after the name, before the next medicine, belong to it.

@@ -10,7 +10,7 @@ const squash = (text: string) => text.replace(/\s+/g, "").normalize("NFD");
 // "삼키기 힘들" also matches "삼키기가 힘들어": a particle (up to two syllables) may sit where the word has a space.
 const patterns = new Map<string, RegExp>();
 const pattern = (word: string) =>
-  patterns.get(word) ?? patterns.set(word, new RegExp(word.trim().split(/\s+/).map(squash).join(".{0,6}"))).get(word)!;
+  patterns.get(word) ?? patterns.set(word, new RegExp(word.trim().split(/\s+/).map(squash).join(".{0,12}"))).get(word)!;
 
 // A one-syllable word ("질", "입", "배") counts only on its own, maybe with a particle: not in 딸꾹질, 입원 or 배고파.
 const alone = (word: string) => patterns.get(`1:${word}`) ?? patterns.set(`1:${word}`,

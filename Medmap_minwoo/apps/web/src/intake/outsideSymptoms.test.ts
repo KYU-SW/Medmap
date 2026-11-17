@@ -66,6 +66,14 @@ describe("sourcePhrase", () => {
     expect(show("답답한데 기지개를 펴면 편해져요")).toEqual(["답답한데"]);
     expect(show("몸에서 이상한 냄새가 나요")).toEqual(["몸에서 이상한 냄새가 나요"]);
   });
+  it("names listed symptoms said loosely, but not urination as stool (2026-11-16)", () => {
+    expect(nameSymptom("손발은 분명 차가운데")).toBe("손발 차가움");
+    expect(nameSymptom("입맛이 확실히 없어졌어요")).toBe("식욕부진");
+    expect(nameSymptom("목소리가 좀 이상해진 거 같아요")).toBe("쉰 목소리");
+    expect(nameSymptom("한쪽 다리에 힘이 덜 들어가는 것 같아요")).toBe("마비");
+    expect(nameSymptom("소변이 거의 안 나오네요")).not.toBe("변비");
+    expect(nameSymptom("소변에 빨간 것 같은 게 보여요")).not.toBe("혈변");
+  });
   it("does not offer a feeling as a symptom", () => {
     const text = "마음이 좀 혼란스럽긴 한데 열은 없어요";
     const part = { start: 0, end: 15, status: "present" as const, text: text.slice(0, 15) };
