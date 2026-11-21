@@ -81,7 +81,9 @@ export function outsideSymptoms(text: string, rules: IntakeExtraction, spans: Mo
     // A part over the rules' evidence keeps only what lies outside it, and only where that names a symptom of its own:
     // "딸꾹질이 계속 나서 잠을 잘 못 잤어요" over the rules' 불면 still offers 딸꾹질.
     .flatMap((span) => (taken.some((at) => overlaps(at, [span.start, span.end]))
-      ? outsideEvidence(text, span, taken).filter((part) => nameSymptom(part.text) !== "기타")
+      // A piece starting with "게/건/거" is the rest of the rules' own clause: "숨찬 | 게 잠을 못 잘 정도예요" is how bad
+      // the 호흡곤란 is, not 불면 (2026-11-21).
+      ? outsideEvidence(text, span, taken).filter((part) => nameSymptom(part.text) !== "기타" && !/^(?:게|건|거|것이?|게요)\s/.test(part.text))
       : [span]))
     .filter((span) => otherPersonFor(text, span.end) === null) // the person may be inside the span ("남편이 코를 골아요")
     .filter((span) => !notSymptoms.some((word) => squash(span.text).includes(word)))

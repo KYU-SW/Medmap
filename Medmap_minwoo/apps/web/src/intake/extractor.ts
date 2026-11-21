@@ -192,6 +192,8 @@ function rule(name: string, mention: Pat, absent: Pat, bodySite: string | null =
 
 const INTENSITY_WORD = (
     String.raw`(?:아주|매우|너무|많이|조금|약간|심하게|살짝|계속|자꾸|되게|엄청|진짜|정말|좀|막|` +
+    // "손발은 분명 차가운데", "입맛이 확실히 없어졌어요", "예전보다 많이 차가워졌어요" (2026-11-21, training dev half)
+    String.raw`확실히|분명히?|예전보다|전보다|평소보다|어제보다|딱|` +
     // How often or how much, said between the body part and the verb: "머리가 꽤 아프네요", "배가 은근히 아파요" (2026-11-06).
     String.raw`꽤|은근히|상당히|무척|몹시|굉장히|엄청나게|너무나|진짜로|정말로|조금씩|약간씩|살짝살짝|` +
     String.raw`가끔씩|가끔|자주|종종|때때로|간혹|이따금|갑자기|점점|여전히|아직도|계속해서|하루\s*종일|항상|늘|부쩍|확|` +
@@ -204,6 +206,9 @@ const INTENSITY_WORD = (
     // How bad it is, said between the body part and the verb: "배가 참을 만하게 아파요".
     String.raw`데굴데굴|참을\s*만하게|견딜\s*만하게|죽을\s*(?:것\s*)?같이|미칠\s*(?:것\s*)?같이|` +
     String.raw`(?:참을\s*만한|견딜\s*만한|구를|죽을|미칠|못\s*참을|잠을\s*못\s*잘)\s*(?:정도로|만큼)|` +
+    // "머리가 깨질 것처럼 아파요", "허리가 끊어질 듯이 아파요", "배가 보통 정도로 아파요" (2026-11-21, 360 set odd half).
+    String.raw`(?:깨질|터질|쪼개질|빠개질|끊어질|찢어질|부서질|으스러질|뽑힐|타는|찌르는)\s*(?:것\s*)?(?:처럼|같이|듯이?)|` +
+    String.raw`(?:보통|중간|적당한|어느|그럭저럭)\s*정도로|` +
     String.raw`심하(?:지는|진|지)\s*않(?:은데|지만|고))`
 );
 const INTENSITY_PHRASE = String.raw`(?:${INTENSITY_WORD}\s*)*`;
@@ -285,7 +290,7 @@ const RULES: Rule[] = [
     rule(
         "호흡곤란",
         pat(
-            String.raw`숨(?:이|은|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}(?:차|가빠|가쁘|가쁜|막혀|막히)|` +
+            String.raw`숨(?:이|은|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}(?:차|찬|찼|가빠|가쁘|가쁜|막혀|막히)|` +
             String.raw`숨(?:을)?\s*헐떡|` +
             String.raw`숨(?:을)?\s*쉬기(?:가)?\s*(?:힘들|어렵|어려|${IMPROVEMENT_PHRASE})|` +
             // "숨 쉬는 게 좀 힘들어졌어", "숨 쉴 때 좀 힘들어요" (2026-11-06)
@@ -324,13 +329,13 @@ const RULES: Rule[] = [
             String.raw`(?:복통|(?<![가-힣])배)(?:가|는|도)?\s*${CHANGE_PHRASE}|` +
             String.raw`(?:배|복부|속)(?:랑|과|하고)\s*머리(?:가|는|도)?\s*` +
             String.raw`(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}(?:아프|아파|아팠|아픈)|` +
-            String.raw`(?:배|복부|속|명치|옆구리)(?:이|가|는|도|야)?\s*(?:${INLINE_ONSET}\s*)?` +
+            String.raw`(?:배|복부|(?<![가-힣])속|명치|옆구리)(?:이|가|는|도|야)?\s*(?:${INLINE_ONSET}\s*)?` +
             String.raw`${INTENSITY_PHRASE}(?:아프|아파|아팠|아픈|쑤시|쑤셔|쑤신|뒤틀|꼬여|꼬이)|` +
             // "폭통": on-device STT's usual spelling of "복통".
             String.raw`복통|폭통|(?:배|복부|명치|옆구리)\s*통증|배탈|위경련|위통`
         ),
         pat(
-            String.raw`(?:배|복부|속|명치|옆구리)(?:이|가|은|는|도)?\s*${NOW_ADVERB}${NOT_PAINFUL}|` +
+            String.raw`(?:배|복부|(?<![가-힣])속|명치|옆구리)(?:이|가|은|는|도)?\s*${NOW_ADVERB}${NOT_PAINFUL}|` +
             String.raw`복통(?:은|이|도)?\s*${NOW_ADVERB}(?:없|${RESOLVED_STATE})|` +
             String.raw`(?:배|복부|속)\s*통증(?:은|이|도)?\s*${NOW_ADVERB}(?:없|${RESOLVED_STATE})`
         ),
@@ -677,7 +682,7 @@ const RULES: Rule[] = [
         pat(
             // "소변 볼 때마다 통증이 있어요", "소변 볼 때도 조금 아프네요" (2026-11-06)
             String.raw`배뇨통|(?:소변|오줌)(?:을)?\s*(?:볼|눌)\s*때\s*(?:마다|도)?\s*${INTENSITY_PHRASE}` +
-            String.raw`(?:아프|아파|아픔|통증|따끔|찌릿|화끈|쓰라)`
+            String.raw`(?:아프|아파|아픔|통증|따끔|따가|따갑|찌릿|화끈|쓰라|쓰려|쓰리)`
         ),
         pat(String.raw`배뇨통${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
@@ -705,7 +710,10 @@ const RULES: Rule[] = [
     rule(
         "말 어눌함",
         // 말 as a word of its own: "정말 이상해요" and "정말 괜찮아요" say nothing about speech.
-        pat(String.raw`(?<![가-힣])(?:말|발음)(?:이|을)?\s*(?:자꾸\s*|갑자기\s*)?(?:어눌|꼬여|꼬이|안\s*나와|이상해)|(?<![가-힣])말하기(?:가)?\s*힘들`),
+        // "말이 좀 꼬이는 것 같고", "말이 엉키고", "말하는 게 약간 어눌하고" (2026-11-21, training dev half)
+        pat(String.raw`(?<![가-힣])(?:말|발음)(?:이|을|도)?\s*${INTENSITY_PHRASE}(?:어눌|꼬여|꼬이|엉키|엉켜|안\s*나와|이상해|흐려|부정확)|` +
+          String.raw`(?<![가-힣])말(?:하는\s*(?:게|것이?|것도)|할\s*때)\s*${INTENSITY_PHRASE}(?:어눌|꼬여|꼬이|엉키|부정확|불명확)|` +
+          String.raw`(?<![가-힣])말하기(?:가)?\s*${INTENSITY_PHRASE}힘들`),
         pat(String.raw`(?<![가-힣])(?:말|발음)(?:은|도)?\s*(?:괜찮|정상|또렷)`),
     ),
     rule(
@@ -857,7 +865,8 @@ const RULES: Rule[] = [
           String.raw`목[가-힣\s]{0,6}(?:막|걸)[가-힣\s]{0,12}(?:밥|음식|물)(?:을|이)?\s*(?:잘\s*)?안\s*넘어|` +
           String.raw`(?:밥|음식)(?:이|을|도)?\s*(?:자꾸\s*)?목에\s*(?:걸|막)|` +
           String.raw`(?<!침(?:을)?\s*)(?:삼키|넘기)(?:기(?:가|도|는)?|는\s*(?:게|것이?|것도|거|데|건))\s*` +
-          String.raw`(?:${INTENSITY_WORD}\s*|전보다\s*|예전보다\s*|요즘\s*|더\s*|훨씬\s*)*(?:힘들|힘든|어렵|어려|불편|곤란)`),
+          // Up to three words between, not a denial: "삼키기도 전과 비교해서 훨씬 어렵게", "여간 힘든 게 아니네요" (2026-11-21).
+          String.raw`(?:(?!(?:안|못|별로|전혀|하나도|그다지|딱히)\s)[가-힣]+\s+){0,3}?(?:힘들|힘든|어렵|어려|불편|곤란)`),
         pat(String.raw`삼킴\s*곤란${PARTICLE}\s*${ABSENT_ENDING}|(?:삼키|넘기)(?:는\s*(?:건|것은|거|것도)|기(?:는|도))\s*${NOW_ADVERB}(?:괜찮|문제\s*없|편하)`),
     ),
     rule(
@@ -1029,14 +1038,18 @@ const FREQUENCY_NOW_PATTERN = pat(
 );
 const TREND_PATTERN = pat(
     String.raw`(?<improving>(?:(?:조금|좀|많이|전보다|점점)\s*)?` +
-    String.raw`(?:괜찮아졌|나아졌|호전됐|좋아졌|덜해졌|줄었|완화됐|편해졌))|` +
-    String.raw`(?<worsening>(?:(?:더|훨씬|점점|많이)\s*)?` +
-    String.raw`(?:심해졌|악화됐|나빠졌|더\s*아프|잦아졌|늘었))|` +
+    // "열이 어제보다 좀 내렸어요", "점점 심해지고 있어요", "갈수록 심해져요" (2026-11-21, 360 set odd half).
+    String.raw`(?:괜찮아졌|나아졌|호전됐|좋아졌|덜해졌|줄었|완화됐|편해졌|내렸|떨어졌|나아지고|좋아지고))|` +
+    String.raw`(?<worsening>(?:(?:더|훨씬|점점|많이|(?:날이\s*)?갈수록)\s*)?` +
+    String.raw`(?:심해졌|심해져|심해지(?:고|네|는)|악화됐|나빠졌|나빠지고|더\s*아프|잦아졌|늘었))|` +
     String.raw`(?<unchanged>(?:그대로|비슷|여전|변화\s*없))`
 );
+const GENERIC_MEDICINE_FORMS = ["연고", "물파스", "파스", "안약", "가글", "흡입기", "패치"];
 const MEDICATION_NAME_PATTERN = pat(
     String.raw`((?:(?:알레르기|감기|비염|혈압|당뇨|진통|해열|소화|위장|고지혈증|콜레스테롤|갑상선|천식|수면|우울증)\s*약)|` +
-    String.raw`(?:[가-힣A-Za-z0-9-]{2,20}(?:약|제)))` +
+    String.raw`(?:[가-힣A-Za-z0-9-]{2,20}(?:약|제))|` +
+    // "연고를 발랐어요", "파스를 붙였어요" (2026-11-21, 360 set odd half)
+    String.raw`(?<![가-힣])(?:${GENERIC_MEDICINE_FORMS.join("|")}))` +
     String.raw`(?=(?:과|와|을|를|도|은|는)?(?:\s|$))`
 );
 const KNOWN_MEDICATION_PATTERN = pat(
@@ -1062,7 +1075,7 @@ const TYLENOL_SOUNDALIKE_PATTERN = pat(
     String.raw`(?<![가-힣])타이(?!밍|머|어|핑|트|틀)[가-힣]{1,2}?(?=(?:을|를|은|는|도|으로|로)?(?:\s|$))`
 );
 const MEDICATION_VERB_PATTERN = pat(
-    String.raw`먹|복용|처방|투여|맞았|맞고|흡입|뿌리|뿌려|바르|발라|발랐|붙이|붙여|붙였|마셨|마시|마셔`
+    String.raw`먹|복용|처방|투여|맞았|맞고|흡입|뿌리|뿌려|바르|발라|발랐|붙이|붙여|붙였|마셨|마시|마셔|넣고|넣어|넣었`
 );
 const DOSE_PATTERN = pat(
     String.raw`\d+(?:\.\d+)?\s*(?:mg|밀리그램|밀리|mcg|g|그램|ml|cc|정(?!도)|알(?!레)|캡슐|포|봉|방울|퍼프)|` +
@@ -1501,7 +1514,11 @@ function frequencyForSymptom(text: string, start: number, end: number, symptomPo
     chosen = maxBy(earlier, (found) => found.start);
   }
   let frequency = normalizeFrequency(chosen.text);
-  const now = FREQUENCY_NOW_PATTERN.search(beforeFirst(SENTENCE_SPLIT_PATTERN, text.slice(chosen.end)));
+  // "하루에 설사를 다섯 번": 하루 said before the symptom (2026-11-21, 360 set odd half).
+  if (!frequency.startsWith("하루") && chosen.start >= end && search(String.raw`하루(?:에|에도|에만)?\s*$`, text.slice(0, start))) {
+    frequency = `하루 ${frequency}`;
+  }
+  const now =FREQUENCY_NOW_PATTERN.search(beforeFirst(SENTENCE_SPLIT_PATTERN, text.slice(chosen.end)));
   if (now) frequency = `${frequency} → ${normalizeFrequency(now.groups[1]!)}`;
   return frequency;
 }
@@ -1527,6 +1544,9 @@ function doseText(dose: string): string {
 
 const timingText = (timing: string) => sub(String.raw`\s*(?:에|으로|로)$`, "", timing.replace(/\s+/g, " "));
 
+// "페니실린 알레르기", "아스피린에 알레르기가 있어서 못 먹어요" (2026-11-21): an allergy, not a medicine being taken.
+const ALLERGY_AFTER_NAME = String.raw`(?:에|에는|에도|에\s*대한)?\s*,?\s*알레르기`;
+
 /** Medication lines for the record ("타이레놀 500mg 하루 2회") and the bare names. */
 function extractMedications(text: string): [string[], string[]] {
   const names: string[] = [];
@@ -1536,14 +1556,14 @@ function extractMedications(text: string): [string[], string[]] {
     let found: Array<[number, string]> = [];
     for (const name of MEDICATION_NAME_PATTERN.finditer(clause)) {
       // "조영제 알레르기" is an allergy
-      if (!matchStart(String.raw`\s*,?\s*알레르기`, clause.slice(name.end))) {
+      if (!matchStart(ALLERGY_AFTER_NAME, clause.slice(name.end))) {
         found.push([name.start, name.groups[1]!.replace(/\s+/g, "")]);
       }
     }
     for (const pattern of [KNOWN_MEDICATION_PATTERN, DRUG_NAME_PATTERN, TYLENOL_SOUNDALIKE_PATTERN]) {
       for (const name of pattern.finditer(clause)) {
         // "페니실린 알레르기" is an allergy, not a medicine being taken.
-        if (!matchStart(String.raw`\s*,?\s*알레르기`, clause.slice(name.end))) found.push([name.start, name.text]);
+        if (!matchStart(ALLERGY_AFTER_NAME, clause.slice(name.end))) found.push([name.start, name.text]);
       }
     }
     for (const name of UNKNOWN_DOSED_MEDICATION_PATTERN.finditer(clause)) {
@@ -1574,6 +1594,9 @@ function extractMedications(text: string): [string[], string[]] {
     // "타이레놀" is both a known name and a sound-alike match
     found = [...new Map(found.map((item) => [`${item[0]}\u0000${item[1]}`, item])).values()]
       .sort((a, b) => a[0] - b[0] || (a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0));
+    // "벤토린 흡입기", "후시딘 연고": the form right after a name is that medicine, not another one.
+    found = found.filter(([position, heard], index) => !(GENERIC_MEDICINE_FORMS.includes(heard)
+      && found.slice(0, index).some(([start, other]) => position - (start + other.length) <= 1)));
     found.forEach(([position, heard], index) => {
       const name = knownSpelling(heard.replace(/\s/g, "")); // may differ in length from what was heard: the dose tail below uses heard
       if (names.includes(name) || names.some((other) => other.includes(name) || name.includes(other))) return;
@@ -1693,8 +1716,12 @@ type Evidence = { start: number; end: number; text: string; carried: boolean };
 
 const evidenceOf = (found: Match): Evidence => ({ start: found.start, end: found.end, text: found.text, carried: false });
 
+// "어지럽진 않아요", "토하지는 않았는데", "가렵지도 않고": the verb itself denied right after the evidence (2026-11-21).
+const DENIED_RIGHT_AFTER_PATTERN = pat(String.raw`(?:지는|진|지도|지)\s*않(?!을까|나\s*싶|았으면)`);
+
 function isNegatedInList(text: string, evidence: Evidence): boolean {
   const after = text.slice(evidence.end);
+  if (DENIED_RIGHT_AFTER_PATTERN.match(after)) return true;
   // "열이나" already took the connector
   if (search(`${LIST_CONNECTOR}$`, evidence.text)) return Boolean(matchStart(NEGATION_LATER_IN_CLAUSE, after));
   let listed = LISTED_BEFORE_NEGATION_PATTERN.match(after);

@@ -25665,5 +25665,649 @@
    "unrecognized_fragments": [],
    "needs_user_confirmation": true
   }
+ },
+ {
+  "text": "어지럽진 않아요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "어지러움",
+     "status": "absent",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "어지럽"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "토하지는 않았는데 메스꺼워요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "구토",
+     "status": "absent",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "토하"
+    },
+    {
+     "name": "메스꺼움",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "메스꺼"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "가렵지도 않고 붓지도 않아요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "가려움",
+     "status": "absent",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "가렵"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [
+    "붓지도 않아요."
+   ],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "머리가 깨질 것처럼 아파요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "두통",
+     "status": "present",
+     "body_site": "머리",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "머리가 깨질 것처럼 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "허리가 끊어질 듯이 아파요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "요통",
+     "status": "present",
+     "body_site": "허리",
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "허리가 끊어질 듯이 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "배가 보통 정도로 아파요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "복통",
+     "status": "present",
+     "body_site": "복부",
+     "onset": null,
+     "onset_date": null,
+     "severity": "중간",
+     "frequency": null,
+     "trend": null,
+     "source_text": "배가 보통 정도로 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "허리가 심하진 않은데 계속 아파요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "요통",
+     "status": "present",
+     "body_site": "허리",
+     "onset": null,
+     "onset_date": null,
+     "severity": "경미함",
+     "frequency": null,
+     "trend": null,
+     "source_text": "허리가 심하진 않은데 계속 아파"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "배 아픈 게 점점 심해지고 있어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "복통",
+     "status": "present",
+     "body_site": "복부",
+     "onset": null,
+     "onset_date": null,
+     "severity": "심함",
+     "frequency": null,
+     "trend": "worsening",
+     "source_text": "배 아픈"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "열이 어제보다 좀 내렸어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "발열",
+     "status": "present",
+     "body_site": null,
+     "onset": "어제",
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": "improving",
+     "source_text": "열이 "
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "두통이 갈수록 심해져요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "두통",
+     "status": "present",
+     "body_site": "머리",
+     "onset": null,
+     "onset_date": null,
+     "severity": "심함",
+     "frequency": null,
+     "trend": "worsening",
+     "source_text": "두통"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "하루에 설사를 다섯 번 해요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "설사",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": "하루 5회",
+     "trend": null,
+     "source_text": "설사"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "숨찬 게 잠을 못 잘 정도예요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "호흡곤란",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": "심함",
+     "frequency": null,
+     "trend": null,
+     "source_text": "숨찬"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "소변 볼 때 따가워요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "배뇨통",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "소변 볼 때 따가"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "연고를 발랐어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [],
+   "medications": [
+    "연고"
+   ],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "후시딘 연고를 발랐어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [],
+   "medications": [
+    "후시딘"
+   ],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "안약을 넣고 있어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [],
+   "medications": [
+    "안약"
+   ],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "아스피린에 알레르기가 있어서 못 먹어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [],
+   "medications": [],
+   "allergies": [
+    "아스피린"
+   ],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "말이 좀 꼬이는 것 같고 말하는 게 약간 어눌해요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "말 어눌함",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": "경미함",
+     "frequency": null,
+     "trend": null,
+     "source_text": "말이 좀 꼬이"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "손발은 분명 차가운데 입맛이 확실히 없어졌어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "손발 차가움",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "손발은 분명 차가운"
+    },
+    {
+     "name": "식욕부진",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "입맛이 확실히 없"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "음식을 삼키는 것이 요즈음 들어 상당히 어려워졌어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "삼킴 곤란",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "삼키는 것이 요즈음 들어 상당히 어려"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "삼키는 건 별로 안 힘들어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
  }
 ]
