@@ -194,6 +194,8 @@ const INTENSITY_WORD = (
     String.raw`(?:아주|매우|너무|많이|조금|약간|심하게|살짝|계속|자꾸|되게|엄청|진짜|정말|좀|막|` +
     // "손발은 분명 차가운데", "입맛이 확실히 없어졌어요", "예전보다 많이 차가워졌어요" (2026-11-21, training dev half)
     String.raw`확실히|분명히?|예전보다|전보다|평소보다|어제보다|딱|` +
+    // "소변을 보면 매번 피가", "가슴이 묵직하게 아프더니", "숨이 꽉 막히는", "입이 얼마나 마르던지" (2026-11-22, training dev half)
+    String.raw`매번|묵직하게|힘들게|꽉|얼마나|` +
     // How often or how much, said between the body part and the verb: "머리가 꽤 아프네요", "배가 은근히 아파요" (2026-11-06).
     String.raw`꽤|은근히|상당히|무척|몹시|굉장히|엄청나게|너무나|진짜로|정말로|조금씩|약간씩|살짝살짝|` +
     String.raw`가끔씩|가끔|자주|종종|때때로|간혹|이따금|갑자기|점점|여전히|아직도|계속해서|하루\s*종일|항상|늘|부쩍|확|` +
@@ -253,9 +255,10 @@ const RULES: Rule[] = [
         pat(
             String.raw`머리(?:랑|와|하고)\s*(?:배|복부|속)(?:가|는|도)?\s*` +
             String.raw`(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}(?:아프|아파|아팠|아픈)|` +
-            String.raw`두통|머리\s*통증|머리(?:가|는|도|야)?\s*(?:${INLINE_ONSET}\s*)?` +
+            // "머리에 약간의 통증이 있어요", "머리 아픔은 어제부터" (2026-11-22)
+            String.raw`두통|머리(?:에)?\s*(?:${INTENSITY_PHRASE}|약간의\s*)통증|머리(?:가|는|도|야)?\s*(?:${INLINE_ONSET}\s*)?` +
             String.raw`(?:같이\s*|함께\s*)?${INTENSITY_PHRASE}` +
-            String.raw`(?:아프|아파|아팠|아픈|지끈|욱신|띵)|` +
+            String.raw`(?:아프|아파|아팠|아픈|아픔|지끈|욱신|띵)|` +
             String.raw`(?:두통|머리)(?:이|가|은|는|도)?\s*${CHANGE_PHRASE}`
         ),
         pat(
@@ -290,9 +293,11 @@ const RULES: Rule[] = [
     rule(
         "호흡곤란",
         pat(
-            String.raw`숨(?:이|은|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}(?:차|찬|찼|가빠|가쁘|가쁜|막혀|막히)|` +
+            // "숨이 좀 턱까지 차서", "숨이 좀 힘들게 쉬어지네요", "숨 쉬기가 너무 힘들어졌어요" (2026-11-22)
+            String.raw`숨(?:이|은|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}(?:턱(?:까지|끝까지)\s*)?(?:차|찬|찼|가빠|가쁘|가쁜|막혀|막히)|` +
+            String.raw`숨(?:이)?\s*${INTENSITY_PHRASE}힘들게\s*쉬어|` +
             String.raw`숨(?:을)?\s*헐떡|` +
-            String.raw`숨(?:을)?\s*쉬기(?:가)?\s*(?:힘들|어렵|어려|${IMPROVEMENT_PHRASE})|` +
+            String.raw`숨(?:을)?\s*쉬기(?:가)?\s*(?:${INTENSITY_PHRASE}(?:힘들|어렵|어려)|${IMPROVEMENT_PHRASE})|` +
             // "숨 쉬는 게 좀 힘들어졌어", "숨 쉴 때 좀 힘들어요" (2026-11-06)
             String.raw`숨\s*(?:쉬는\s*(?:게|것이?|것도)|쉴\s*때(?:마다)?)\s*${INTENSITY_PHRASE}(?:힘들|어렵|어려|불편|답답)|` +
             String.raw`숨쉬기가\s*(?:전보다\s*)?편해졌|` +
@@ -357,7 +362,7 @@ const RULES: Rule[] = [
     rule(
         "흉통",
         pat(
-            String.raw`흉통|(?:가슴|흉부)\s*통증|가슴(?:이|은|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}` +
+            String.raw`흉통|(?:가슴|흉부)(?:에)?\s*통증|가슴(?:이|은|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}` +
             String.raw`(?:아프|아파|아팠|아픈|찌르|찌릿|콕콕|쑤시|쑤셔|쥐어짜)`
         ),
         pat(
@@ -392,10 +397,11 @@ const RULES: Rule[] = [
     rule(
         "코막힘",
         // "콧막힘", "코마킹", "코마킨드": STT spellings of "코막힘".
-        pat(String.raw`코\s*막힘|콧\s*막힘|코마킹|코마킨|코(?:가|는|도)?\s*${INTENSITY_PHRASE}(?:꽉\s*)?[막박](?:혀|히|혔|힌)`),
+        // "코가 좀 답답해요", "콧속이 꽉 막히신지", "코 속이 왜 이렇게 답답한지" (2026-11-22)
+        pat(String.raw`코\s*막힘|콧\s*막힘|코마킹|코마킨|(?<![가-힣])(?:코|콧속|코\s*속)(?:가|이|는|도)?\s*${INTENSITY_PHRASE}(?:왜\s*이렇게\s*)?(?:[막박](?:혀|히|혔|힌)|답답)`),
         pat(
             String.raw`코\s*막힘${PARTICLE}\s*${ABSENT_ENDING}|` +
-            String.raw`코(?:는|가|도)?\s*${NOW_ADVERB}(?:안\s*막|막히지\s*않)`
+            String.raw`(?<![가-힣])(?:코|콧속)(?:는|가|도)?\s*${NOW_ADVERB}(?:안\s*막|막히지\s*않|안\s*답답|답답하지\s*않)`
         ),
         "코",
     ),
@@ -415,8 +421,9 @@ const RULES: Rule[] = [
         "근육통",
         pat(
             // 몸 as a word of its own (2026-11-06): 잇몸 is the gums.
-            String.raw`근육통|몸살|(?<![가-힣])(?:온몸|몸|근육|팔다리)(?:이|가|은|도)?\s*${INTENSITY_PHRASE}` +
-            String.raw`(?:쑤시|쑤셔|쑤신|결리|결려|아프|아파|아픈)`
+            // "전신이 쑤시는 느낌", "몸 전체가 묵직하게 아픈", "여기저기 쑤시는 느낌" (2026-11-22)
+            String.raw`근육통|몸살|(?<![가-힣])(?:온몸|몸\s*전체|몸|전신|근육|팔다리)(?:이|가|은|도)?\s*${INTENSITY_PHRASE}` +
+            String.raw`(?:쑤시|쑤셔|쑤신|결리|결려|아프|아파|아픈)|(?<![가-힣])(?:몸\s*)?여기저기(?:가)?\s*${INTENSITY_PHRASE}(?:쑤시|쑤셔|쑤신|결리|결려)`
         ),
         pat(
             String.raw`(?:근육통|몸살)${PARTICLE}\s*${ABSENT_ENDING}|` +
@@ -438,7 +445,7 @@ const RULES: Rule[] = [
     ),
     rule(
         "어지러움",
-        pat(String.raw`어지러|어지럽|어지럼|현기증|핑\s*(?:돌|돈)|빙빙\s*(?:돌|돈)`),
+        pat(String.raw`어지러|어지럽|어지럼|현기증|핑\s*(?:돌|돈)|(?:빙빙|빙글빙글)\s*(?:돌|돈)`),
         pat(
             String.raw`(?:어지럼증?|어지러움|현기증)${PARTICLE}\s*${ABSENT_ENDING}|` +
             String.raw`${NOW_ADVERB}안\s*어지러|어지럽지\s*않`
@@ -510,7 +517,7 @@ const RULES: Rule[] = [
     rule(
         "소화불량",
         pat(
-            String.raw`소화불량|소화(?:가)?\s*(?:잘\s*)?안\s*(?:돼|되|된|됐)|체했|체한|체기|체해|` +
+            String.raw`소화\s*불량|소화(?:가)?\s*${INTENSITY_PHRASE}(?:잘\s*)?안\s*(?:돼|되|된|됐)|체했|체한|체기|체해|` +
             String.raw`더부룩|트림`
         ),
         pat(
@@ -539,6 +546,8 @@ const RULES: Rule[] = [
             // "입맛이 전혀 없어요", "식욕도 확 줄었어요", "밥맛이 아예 없다", "밥 생각이 없어요" (2026-11-06)
             String.raw`식욕부진|(?:식욕|입맛|밥\s*맛)(?:이|도)?\s*(?:(?:${INTENSITY_WORD}|전혀|아예|완전히|통|별로|하나도|조금도|영)\s*)*(?:없|떨어|뚝|줄었|제로)|` +
             String.raw`밥\s*생각(?:이|도)?\s*(?:(?:전혀|별로|통)\s*)?없|` +
+            // "먹는 게 별로 흥미가 없어졌어요", "식사하고 싶은 마음이 전혀 없네요" (2026-11-22)
+            String.raw`먹는\s*(?:게|것에|거에)\s*(?:별로\s*)?흥미(?:가)?\s*없|(?:식사|밥\s*먹고|먹고)(?:하고)?\s*싶은\s*마음(?:이|도)?\s*(?:(?:전혀|별로)\s*)?없|` +
             // "목이 막힌 것처럼 밥이 안 넘어가요" is trouble swallowing (삼킴 곤란), not appetite (2026-11-09 phone test).
             String.raw`밥(?:을|이)?\s*(?:잘\s*)?(?:못\s*먹|먹기\s*싫)|` +
             String.raw`(?<!목[가-힣\s]{0,6}(?:막|걸)[가-힣\s]{0,12})밥(?:을|이)?\s*(?:잘\s*)?안\s*넘어가`
@@ -571,8 +580,8 @@ const RULES: Rule[] = [
         "귀 통증",
         pat(
             String.raw`귀(?:가|는|도)?\s*${CHANGE_PHRASE}|` +
-            String.raw`귀\s*통증|귀(?:가|는|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}` +
-            String.raw`(?:아프|아파|아팠|아픈|찌르|먹먹|욱신)`
+            String.raw`귀(?:에|도)?\s*통증|귀(?:가|는|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}` +
+            String.raw`(?:아프|아파|아팠|아픈|아픔|찌르|먹먹|욱신)`
         ),
         pat(String.raw`귀(?:는|가|도)?\s*${NOW_ADVERB}${NOT_PAINFUL}|귀\s*통증${PARTICLE}\s*${ABSENT_ENDING}`),
         "귀",
@@ -590,8 +599,9 @@ const RULES: Rule[] = [
         "치통",
         pat(
             String.raw`(?:치통|(?<![가-힣])이|이빨|치아)(?:가|이|는|도)?\s*${CHANGE_PHRASE}|` +
-            String.raw`치통|(?:(?<![가-힣])이|이빨|치아|잇몸|어금니)(?:가|이|는|도)?\s*${INTENSITY_PHRASE}` +
-            String.raw`(?:아프|아파|아팠|아픈|시려|시리|욱신|쑤셔)`
+            // "왼쪽 윗니가 찌르듯 아프네요", "이가 왼쪽에 좀 아프고", "이빨 하나가 심하게", "치아에 통증이" (2026-11-22)
+            String.raw`치통|(?:(?<![가-힣])이|이빨|치아|잇몸|어금니|윗니|아랫니|앞니)(?:\s*하나)?(?:가|이|는|도)?\s*(?:(?:왼|오른)쪽(?:에)?\s*)?${INTENSITY_PHRASE}` +
+            String.raw`(?:아프|아파|아팠|아픈|시려|시리|욱신|쑤셔)|(?:치아|이빨|어금니|윗니|아랫니|잇몸)(?:에|가|도)?\s*통증`
         ),
         pat(
             String.raw`치통${PARTICLE}\s*${ABSENT_ENDING}|(?:(?<![가-힣])이|이빨|치아|잇몸)(?:가|은|이|는|도)?\s*${NOW_ADVERB}${NOT_PAINFUL}`
@@ -641,7 +651,8 @@ const RULES: Rule[] = [
     ),
     rule(
         "코피",
-        pat(String.raw`코피|코에서\s*피`),
+        // "코에서 조금씩 피가 나는", "피가 코에서 자주 나와요" (2026-11-22)
+        pat(String.raw`코피|코에서\s*${INTENSITY_PHRASE}피|피(?:가)?\s*코에서`),
         pat(String.raw`코피${PARTICLE}\s*${NOW_ADVERB}(?:없|안\s*나|멈췄|${RESOLVED_STATE})`),
         "코",
     ),
@@ -674,7 +685,9 @@ const RULES: Rule[] = [
     ),
     rule(
         "혈뇨",
-        pat(String.raw`혈뇨|피오줌|(?:소변|오줌)(?:에|에서|이)?\s*(?:피|빨갛|붉)`),
+        // "소변 볼 때 피가 좀 섞여", "소변을 보면 매번 피가", "소변 볼 때마다 빨갛게", "소변에 빨간 흔적이" (2026-11-22)
+        pat(String.raw`혈뇨|피오줌|(?:소변|오줌)(?:에|에서|이)?\s*(?:피|빨갛|붉|빨간)|` +
+          String.raw`(?:소변|오줌)(?:을)?\s*(?:볼\s*때(?:마다)?|보면|보는\s*동안)\s*${INTENSITY_PHRASE}(?:피(?:가|도)|빨갛게|빨간\s*(?:게|피))`),
         pat(String.raw`혈뇨${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
     rule(
@@ -682,7 +695,9 @@ const RULES: Rule[] = [
         pat(
             // "소변 볼 때마다 통증이 있어요", "소변 볼 때도 조금 아프네요" (2026-11-06)
             String.raw`배뇨통|(?:소변|오줌)(?:을)?\s*(?:볼|눌)\s*때\s*(?:마다|도)?\s*${INTENSITY_PHRASE}` +
-            String.raw`(?:아프|아파|아픔|통증|따끔|따가|따갑|찌릿|화끈|쓰라|쓰려|쓰리)`
+            String.raw`(?:아프|아파|아픔|통증|따끔|따가|따갑|찌릿|화끈|쓰라|쓰려|쓰리)|` +
+            // "소변을 보는 것도 아픔이 있어요" (2026-11-22)
+            String.raw`(?:소변|오줌)(?:을)?\s*보는\s*(?:게|것도?|것이)\s*${INTENSITY_PHRASE}(?:아프|아파|아픔|따끔|따가|따갑)`
         ),
         pat(String.raw`배뇨통${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
@@ -720,7 +735,8 @@ const RULES: Rule[] = [
         "쉰 목소리",
         pat(
             String.raw`쉰\s*목소리|쉬는\s*목소리|목(?:이)?\s*쉬었|목(?:이)?\s*쉬어|목(?:이)?\s*잠겼|` +
-            String.raw`목소리(?:가|도)?\s*${INTENSITY_PHRASE}(?:쉬|변했|변해|안\s*나|잘\s*안\s*나|갈라|거칠|잠겼)`
+            // "목소리가 좀 이상해진 거 같아요", "목소리가 좀 편하게 안 나오긴 해요", "목소리가 달라진 것 같긴 한데" (2026-11-22)
+            String.raw`목소리(?:가|도)?\s*${INTENSITY_PHRASE}(?:쉬|변했|변해|변한|달라|이상해|이상하|(?:편하게\s*|제대로\s*|잘\s*)?안\s*나|갈라|거칠|잠겼)`
         ),
         pat(String.raw`목소리(?:는|도)?\s*(?:괜찮|정상)`),
         "목",
@@ -731,7 +747,7 @@ const RULES: Rule[] = [
             String.raw`체중(?:이)?\s*(?:줄|빠졌|감소)|몸무게(?:가)?\s*(?:줄|빠졌)|살(?:이)?\s*(?:많이\s*|갑자기\s*)?빠졌|` +
             // "살이 3킬로 정도 빠졌어요", "몸무게가 요즘 5kg 넘게 줄었어요" (2026-11-11 long-sentence check).
             String.raw`(?:체중|몸무게|(?<![가-힣])살)(?:이|가|도|은|는)?\s*${INTENSITY_PHRASE}` +
-            String.raw`(?:\d+\s*(?:킬로|키로|kg)(?:\s*(?:정도|쯤|가량|넘게|이상|이나|나))?\s*)?(?:줄었|줄어|빠졌|빠져)|` +
+            String.raw`(?:\d+\s*(?:킬로|키로|kg)(?:\s*(?:정도|쯤|가량|넘게|이상|이나|나))?\s*)?(?:줄었|줄어|빠졌|빠져|빠진)|` +
             String.raw`\d+\s*(?:킬로|키로|kg)(?:가|나|이)?(?:\s*(?:정도|쯤|가량|넘게|이상))?\s*(?:빠졌|줄었)`
         ),
         pat(String.raw`(?:체중|몸무게)(?:은|는|도)?\s*(?:그대로|변화\s*없|안\s*빠졌)`),
@@ -835,7 +851,8 @@ const RULES: Rule[] = [
     ),
     rule(
         "우울감",
-        pat(String.raw`우울(?!증)|의욕(?:이)?\s*없|아무것도\s*하기\s*싫|기분(?:이)?\s*(?:계속\s*)?(?:가라앉|처져|처지|다운)`),
+        // "기분이 좀 처지더라고요", "요즘 기분이 많이 안 좋아요", "기분이 정말 별로예요", "기분도 많이 흐려졌어요" (2026-11-22)
+        pat(String.raw`우울(?!증)|의욕(?:이)?\s*없|아무것도\s*하기\s*싫|(?<![가-힣])기분(?:이|도)?\s*${INTENSITY_PHRASE}(?:가라앉|처져|처지|다운|안\s*좋|별로|흐려)`),
         pat(String.raw`우울(?:감|증)?${PARTICLE}\s*${ABSENT_ENDING}|우울하지\s*않`),
     ),
     rule(
@@ -1717,7 +1734,8 @@ type Evidence = { start: number; end: number; text: string; carried: boolean };
 const evidenceOf = (found: Match): Evidence => ({ start: found.start, end: found.end, text: found.text, carried: false });
 
 // "어지럽진 않아요", "토하지는 않았는데", "가렵지도 않고": the verb itself denied right after the evidence (2026-11-21).
-const DENIED_RIGHT_AFTER_PATTERN = pat(String.raw`(?:지는|진|지도|지)\s*않(?!을까|나\s*싶|았으면)`);
+// "살이 빠진 건 아니에요", "기분이 안 좋은 건 아니에요" (2026-11-22), not "…건 아니라 …" (it is something else instead).
+const DENIED_RIGHT_AFTER_PATTERN = pat(String.raw`(?:지는|진|지도|지)\s*않(?!을까|나\s*싶|았으면)|[은는]?\s*(?:건|것은|거는)\s*아니(?!라)`);
 
 function isNegatedInList(text: string, evidence: Evidence): boolean {
   const after = text.slice(evidence.end);
