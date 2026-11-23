@@ -1,0 +1,110 @@
+{
+  "spec_id": "MEDMAP_B7_B9_B10_INTEGRATED_SPEC_v1",
+  "written_at": "2026-11-18 12:12 KST",
+  "author": "SUBAGENT C (formalization)",
+  "status": "SYNTHETIC_ONLY. 모든 규칙·효과는 합성. 의학적 정확성 주장 없음. 판정 범주의 신규성 주장 없음.",
+  "reference_implementation": "integrated_model.py (judge/categorize = 정답 기준 brute; milp_AA/milp_exists = MILP)",
+
+  "inputs": {
+    "clinical_vars": "P = {c_1..c_k} ⊂ {0,1}; 관측 obs_i ∈ {T,F,U,C}; provenance_i (출처·확인 상태 문자열, 계산에는 obs 만 사용)",
+    "dependencies": "imp(a,b): a=1→b=1, excl(a,b): ¬(a∧b). 허용 임상 상태 S_P = {s : obs 와 일치(U,C 는 자유), 의존성 만족}",
+    "knowledge_vars": "K_u = 미확인 상호작용 등 지식 이진 변수 (u=1: 금기 존재 가능 세계). 환자에게 물어 닫을 수 없음",
+    "plans": "X = 약/권고의 부분집합(조합 처방). 명시 목록 또는 이진 변수 x_i",
+    "hard_rules": "rule = (drugs D, lits λ over P∪K_u, kind ∈ {CONTRAINDICATION, CONFLICT, DUPLICATE, UNKNOWN_INTERACTION}); D ⊆ x ∧ λ(s) ⇒ x 부적격. n항 허용(쌍에 한정 안 함)",
+    "guidelines": "g = (app_g 리터럴 논리곱, cover_g); app_g(s) ⇒ x ∩ cover_g ≠ ∅ (hard)",
+    "burden": "b(x) = Σ pills_i x_i; 기준 'burden' 값 = -b(x)/5; 상한 Bcap ∈ bcap_options (환자 선호 미확정 시 여러 값)",
+    "weights": "W = {w ≥ 0, Σw = 1, 서열 w_a ≥ w_b, lo_j ≤ w_j ≤ hi_j}. 한 점으로 고정 금지(환자가 정확히 한 점을 말한 경우만 lo=hi)",
+    "effects": "e_{i,j}(s) ∈ {구간 [L,U], ⊥}. 매핑은 B10 상태(E1,E2,E3,E5)와 규범 매개변수 norm 으로 결정",
+    "synergy": "쌍 보완 효과 구간 [L,U] (조합에 추가되는 별도 효과 항)",
+    "norms": {
+      "NORM_A": {"OUT": "bounded → 결과 척도 범위 [a,b]", "PUB": "넓힌 구간"},
+      "NORM_B": {"OUT": "⊥", "PUB": "⊥"},
+      "note": "규범은 전문가 선택(C 정답). 범주가 규범마다 다르면 EXPERT_JUDGMENT_REQUIRED"
+    }
+  },
+
+  "b10_evidence_states_per_option_state": {
+    "E1_eligibility": "MET | NOT_MET | NO_TRIAL  (참가 조건 Φ_t(s))",
+    "E2_similar_participants": "IN | OUT | PUBLIC_UNRESOLVED | NO_TRIAL  (지지 영역 A_t ⊆ {Φ_t=1}; PUBLIC_UNRESOLVED = 집계표 LP 경계로 판정 불가, P* 3번)",
+    "E3_generalization": "SUPPORTED | UNASSESSED | INDIRECT | NO_TRIAL  (효과 수정인자·전이 근거)",
+    "E4_info_insufficient": "환자 수준 파생: E1..E3 가 S_P 위에서 상태마다 달라짐(YES/NO)",
+    "E5_no_evidence": "근거 시험 집합 T(r)=∅ (ALL/SOME/NO 상태)",
+    "rule": "E1=MET 은 E2=IN 을 함의하지 않는다. E2=OUT 은 E1 과 독립적으로 표시. E4(정보 부족)와 E5(근거 부족)는 서로 다른 상태로 출력"
+  },
+
+  "effect_semantics": {
+    "bottom": "⊥ = 경계를 인정할 근거가 없는 효과 = (-∞,+∞). 0 대입 금지",
+    "interval": "[L,U] 구간. 점 추정 대입 금지",
+    "corner_rule": "w≥0, 가산 효용, 효과 구간이 (약,기준)별 독립 상자일 때: ∀(e) 쪽은 x* 약 L·그 외 U, ∃(e) 쪽은 반대 꼭짓점이 모든 w·모든 경쟁자에 대해 동시에 최악/최선 (정확)",
+    "bottom_propagation": [
+      "x* 자신의 약이 x* 적격 상태에서 ⊥ 이고 그 기준의 max_{w∈W} w_j > 0 → KNOWLEDGE_GAP_* (판정하지 않음)",
+      "경쟁자의 ⊥ → ∀ 판정에서 경쟁자 +∞ (x* 확정 불가), ∃ 판정에서 -∞",
+      "구현: ⊥ = ±M (M=10). M=10 vs 1000 에서 범주 1088/1088 일치 확인(m_stability_check.py). 엄밀 정의는 M→∞ 극한"
+    ]
+  },
+
+  "optimality": "opt(x*, s, k, q, e, w) ⇔ feasible(x*,s,k,q) ∧ ∀x ∈ X: feasible(x,s,k,q) ⇒ Σ_j w_j v_j(x*) ≥ Σ_j w_j v_j(x)  (약한 최적, 동점 허용)",
+
+  "uncertainty_groups": {
+    "P": "환자 임상 변수(U/C) — 환자 정보 확인으로 닫힘",
+    "K": "지식: 미확인 상호작용 u, 효과 e(구간/⊥) — 의학 지식으로 닫힘",
+    "Q": "선호: w ∈ W, Bcap — 선호 확인으로 닫힘"
+  },
+
+  "flags": {
+    "AA": "∀P∀K∀Q opt",
+    "EE (=PKQ)": "∃P∃K∃Q opt",
+    "CLOSE_G for G ⊆ {P,K,Q}": "∃G ∀(나머지) opt. 예: CLOSE_P = ∃P ∀K∀Q (임상 정보 확인만으로 확정될 수 있는 세계 존재)"
+  },
+
+  "output_categories_in_priority_order": [
+    {"code": "DATA_CONFLICT", "rule": "S_P = ∅ (관측·의존성 모순)", "answer_type": "A"},
+    {"code": "HARD_EXCLUDED", "rule": "모든 (P,K,Q) 에서 hard 제약 위반", "answer_type": "A (규칙 인코딩이 원문과 맞는지는 B)"},
+    {"code": "KNOWLEDGE_GAP_ALL_STATES", "rule": "x* 적격인 모든 P 상태에서 x* 자신의 효과에 ⊥ (가중 가능 기준)", "meaning": "의학 지식 부족. 환자에게 더 물어도 안 닫힘", "answer_type": "A + C"},
+    {"code": "KNOWLEDGE_GAP_INFO_DEPENDENT", "rule": "x* 적격인 P 상태 중 일부에서만 ⊥", "meaning": "임상 정보 확인 결과에 따라 지식 부족 여부가 갈림", "answer_type": "A + C"},
+    {"code": "ALWAYS_BEST", "rule": "AA", "answer_type": "A"},
+    {"code": "NEVER_BEST", "rule": "¬EE", "answer_type": "A"},
+    {"code": "CLOSABLE_BY_<G1|G2..>", "rule": "단일 그룹 G 중 CLOSE_G 참인 것들 나열(P,Q,K). 없으면 쌍(PQ,PK,KQ) 중 참인 것", "meaning": "어떤 불확실성을 해소해야 확정될 수 있는지", "answer_type": "A"},
+    {"code": "CLOSABLE_ONLY_BY_ALL", "rule": "EE 참, 단일·쌍 CLOSE 모두 거짓", "answer_type": "A"},
+    {"code": "EXPERT_JUDGMENT_REQUIRED", "rule": "NORM_A 와 NORM_B 의 범주가 다름 (두 범주 모두 함께 출력)", "answer_type": "C"}
+  ],
+
+  "pair_level_b7_outputs": {
+    "ACTUAL_CONFLICT_ALL_STATES": "규칙 리터럴이 모든 허용 (P,K) 상태에서 참",
+    "CONDITIONAL_CONFLICT_INFO_DEPENDENT": "일부 상태에서만 참, 미확인 임상 변수에 의존",
+    "UNDETERMINED_KNOWLEDGE": "지식 변수(u)에 의존 = 상호작용 근거 부족. '상호작용 없음'으로 출력 금지",
+    "NOT_TRIGGERED": "어떤 허용 상태에서도 거짓",
+    "DUPLICATE": "같은 계열 중복 (본 합성 모형에서는 hard 금지로 인코딩 — 모델링 선택)",
+    "COMPLEMENT_CERTAIN / COMPLEMENT_POSSIBLE": "보완 효과 구간 L>0 / L≤0<U",
+    "GUIDELINE_SET JOINTLY_UNSATISFIABLE_ALL/SOME": "적용 지침을 모두 만족하는 적격 처방이 없는 상태가 전부/일부"
+  },
+
+  "forbidden_false_certain_outputs": [
+    "⊥(근거 없음) 효과를 0 으로 두고 낸 ALWAYS_BEST / NEVER_BEST",
+    "구간 효과를 점 추정으로 바꿔 낸 확정",
+    "U/C 임상 변수를 F 로 가정(closed world)해 낸 확정 또는 제외",
+    "가중치를 한 점으로 고정해 낸 '최선' (W 가 한 점이 아닌데)",
+    "지식 미확인 상호작용을 '상호작용 없음'으로 출력",
+    "E1=MET 을 근거로 E2=IN(근거 적용 가능) 출력",
+    "쌍별 충돌 없음 ⇒ 조합 안전 (n항 규칙 무시)",
+    "EE(가능 최선)만 성립하는데 '권고/최선' 출력",
+    "KNOWLEDGE_GAP 을 '환자 정보 부족(추가 질문하면 해결)'으로 출력하거나 그 반대",
+    "EXPERT_JUDGMENT_REQUIRED 를 한 규범의 결과로 단정"
+  ],
+
+  "answer_types": {
+    "A": "수학적 정답: 입력이 주어졌을 때 플래그·범주 (brute = MILP 로 검증 가능)",
+    "B": "지침 원문 일치: rules/guidelines/effects 매핑이 원문과 같은지 (원문 대조 필요)",
+    "C": "전문가 판단: 규범(OUT/PUB→구간 or ⊥), 중복을 금지로 볼지, 범주의 임상 유용성",
+    "D": "실제 치료 효과: 합성 모형으로는 검증 불가 (IPD·결과 자료 필요)"
+  },
+
+  "d_experiment_scoring_rules": {
+    "reference": "brute judge/categorize (두 규범) = A 정답",
+    "false_certain": "기준선 범주 ∈ {ALWAYS_BEST, NEVER_BEST, HARD_EXCLUDED} 이고 정답 범주 ∉ 그 집합",
+    "unnecessary_withholding": "정답 범주 ∈ {ALWAYS_BEST, NEVER_BEST} 인데 기준선이 비확정 범주",
+    "gap_misattribution": "정답 KNOWLEDGE_GAP_* ↔ 기준선 CLOSABLE_BY_P 등 정보 부족 범주 (양방향 별도 집계)",
+    "category_changed": "정답과 범주 문자열이 다름",
+    "report": "분포가 치우침(HARD_EXCLUDED 다수, ALWAYS_BEST 희소) → 범주별 분모와 함께 보고. 합성 결과는 [합성] 태그"
+  }
+}

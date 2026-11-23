@@ -1,0 +1,4 @@
+method,n_pairs,agree_with_gold_3v,agreement,false_ELIGIBLE_total,false_ELIGIBLE_when_gold_INELIGIBLE,gold_UNDETERMINED_not_flagged
+gold_cw,144,115,0.799,6,0,29
+regex_3v,144,119,0.826,14,11,10
+regex_cw,144,100,0.694,18,11,29

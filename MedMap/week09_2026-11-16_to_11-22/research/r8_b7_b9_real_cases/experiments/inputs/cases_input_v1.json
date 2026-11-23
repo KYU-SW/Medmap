@@ -1,0 +1,187 @@
+{
+  "_note": "실제 사례(CASE_01~10, 출처 agentA_candidates) + 공개 벤치마크 가상 사례(CASE_12~13) 인코딩. 변수 group: P=환자 임상정보(검사·확인으로 닫힘), Q=환자 선호(대화로 닫힘), K=지식·근거(환자에게 물어 닫히지 않음). known=null 이면 미확인. default = 폐쇄 세계 가정값(방법 A가 사용). 규칙 근거 = guideline-evidence/RULES_v1.csv. 모든 방법에 같은 파일을 준다.",
+  "cases": {
+    "CASE_01": {"case_type": "REAL_WITH_PREF",
+      "vars": {
+        "t2dm": {"group": "P", "known": true}, "hf": {"group": "P", "known": true}, "ckd": {"group": "P", "known": true},
+        "egfr_lt30": {"group": "P", "known": false}, "age_ge65": {"group": "P", "known": true}, "on_statin": {"group": "P", "known": true},
+        "htn": {"group": "P", "known": true},
+        "sglt2_contra": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "SGLT2i 미사용 이유·과거 이상반응 확인"},
+        "alt_glycemic_ok": {"group": "P", "known": null, "domain": [true, false], "default": true, "cost": 1, "how": "HbA1c + 대체약으로 조절 가능 여부"},
+        "hba1c_above_target": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "HbA1c"},
+        "uacr_gt30": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "UACR"},
+        "q_more_glucose_checks": {"group": "Q", "known": "reject", "src": "S1 Table No.5 'Not willing to check blood sugar more often'"}
+      },
+      "items": {
+        "I1": {"action": "SGLT2i 시작", "rules": ["DM21", "DM22", "CKD15"], "applies": "v['t2dm'] and (v['hf'] or v['ckd'])", "contra": "v['sglt2_contra']", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I2": {"action": "meglitinide(nateglinide)를 다른 계열로 교체", "rules": ["DM25"], "applies": "v['t2dm'] and v['age_ge65'] and v['alt_glycemic_ok']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I3": {"action": "HbA1c 목표 초과 시 자가혈당 측정 증가를 동반한 강화", "rules": ["DM9_10"], "applies": "v['t2dm'] and v['hba1c_above_target']", "contra": "False", "prefs": [["q_more_glucose_checks", "accept"]], "evidence_scope": "NOT_EVALUATED"},
+        "I4": {"action": "스타틴 유지", "rules": ["CKD19"], "applies": "v['ckd'] and v['on_statin']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I5": {"action": "알부민뇨 근거 ACEi/ARB 시작", "rules": ["CKD12"], "applies": "v['htn'] and v['uacr_gt30']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"}
+      }},
+    "CASE_02": {"case_type": "REAL_WITH_PREF",
+      "vars": {
+        "t2dm": {"group": "P", "known": true}, "hf": {"group": "P", "known": true}, "ckd": {"group": "P", "known": true},
+        "egfr_lt30": {"group": "P", "known": true}, "age_ge65": {"group": "P", "known": true}, "high_comorb_low_func": {"group": "P", "known": true},
+        "on_acei": {"group": "P", "known": true}, "dialysis": {"group": "P", "known": false},
+        "acei_intol": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "칼륨·크레아티닌 추이·이상반응"},
+        "sglt2_contra": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "SGLT2i 미사용 이유"},
+        "alt_glycemic_ok": {"group": "P", "known": null, "domain": [true, false], "default": true, "cost": 1, "how": "HbA1c·저혈당 이력"},
+        "q_more_specialists": {"group": "Q", "known": "reject", "src": "S1 Table No.19 'Doesn't wish to see more specialists'"}
+      },
+      "items": {
+        "I1": {"action": "투석·보존적 관리 준비 위한 신장내과 의뢰", "rules": ["CKD9"], "applies": "v['ckd'] and v['egfr_lt30'] and v['high_comorb_low_func']", "contra": "False", "prefs": [["q_more_specialists", "accept"]], "evidence_scope": "NOT_EVALUATED"},
+        "I2": {"action": "신대체요법 vs 보존적 관리 공동의사결정", "rules": ["CKD8"], "applies": "v['ckd'] and v['egfr_lt30']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I3": {"action": "lisinopril 지속", "rules": ["CKD14"], "applies": "v['egfr_lt30'] and v['on_acei']", "contra": "v['acei_intol']", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I4": {"action": "SGLT2i 시작", "rules": ["DM21", "DM22", "CKD15"], "applies": "v['t2dm'] and (v['hf'] or v['ckd']) and not v['dialysis']", "contra": "v['sglt2_contra']", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I5": {"action": "insulin을 다른 계열로 우선 교체", "rules": ["DM25"], "applies": "v['t2dm'] and v['age_ge65'] and v['alt_glycemic_ok']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"}
+      }},
+    "CASE_03": {"case_type": "REAL_WITH_PREF",
+      "vars": {
+        "htn": {"group": "P", "known": true}, "ckd": {"group": "P", "known": true}, "egfr_lt60": {"group": "P", "known": true}, "cvd": {"group": "P", "known": true},
+        "on_statin": {"group": "P", "known": false},
+        "sbp_ge130": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "혈압 측정"},
+        "orthostatic": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "기립 혈압"},
+        "statin_intol": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "스타틴 미사용 이유"},
+        "hip_knee_oa": {"group": "P", "known": null, "domain": [true, false], "default": true, "cost": 2, "how": "관절염 유형·부위"},
+        "q_more_bp_meds": {"group": "Q", "known": "reject", "src": "S1 Table No.6 'Would like to decrease blood pressure medications'"}
+      },
+      "items": {
+        "I1": {"action": "수축기 <130 목표로 혈압 강화", "rules": ["HTN4", "CKD11"], "applies": "v['htn'] and v['sbp_ge130']", "contra": "v['orthostatic']", "prefs": [["q_more_bp_meds", "accept"]], "evidence_scope": "NOT_EVALUATED"},
+        "I3": {"action": "경구 NSAID", "rules": ["OA12", "OA_SB1"], "applies": "v['hip_knee_oa']", "contra": "v['ckd'] or v['cvd']", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I4": {"action": "스타틴 시작", "rules": ["CKD19"], "applies": "v['ckd'] and not v['on_statin']", "contra": "v['statin_intol']", "prefs": [], "evidence_scope": "NOT_EVALUATED"}
+      }},
+    "CASE_04": {"case_type": "REAL_WITH_PREF",
+      "vars": {
+        "ckd": {"group": "P", "known": true}, "egfr_lt30": {"group": "P", "known": true}, "htn": {"group": "P", "known": true}, "on_acei": {"group": "P", "known": true},
+        "dialysis": {"group": "P", "known": false},
+        "knee_oa": {"group": "P", "known": null, "domain": [true, false], "default": true, "cost": 2, "how": "관절염 유형·부위"},
+        "hip_knee_oa": {"group": "P", "known": null, "domain": [true, false], "default": true, "cost": 2, "how": "관절염 유형·부위"},
+        "dm_type2": {"group": "P", "known": null, "domain": [true, false], "default": true, "cost": 1, "how": "당뇨 유형"},
+        "sglt2_contra": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "SGLT2i 미사용 이유"},
+        "acei_intol": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "칼륨·크레아티닌 추이"},
+        "sbp_ge130": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "혈압 측정"},
+        "k_topical_nsaid_covered": {"group": "K", "known": null, "domain": [true, false], "default": false, "how": "Sidebar 1 의 eGFR<30 NSAID 회피가 국소 NSAID 를 포함하는지(지침 해석)"},
+        "q_more_bp_meds": {"group": "Q", "known": "accept", "src": "S1 Table No.12 'Increase in blood pressure medications'(helpful)"}
+      },
+      "_consistency": "knee_oa=true 이면 hip_knee_oa=true",
+      "constraints": ["(not v['knee_oa']) or v['hip_knee_oa']"],
+      "items": {
+        "I1": {"action": "경구 NSAID", "rules": ["OA12", "OA_SB1"], "applies": "True", "contra": "v['egfr_lt30']", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I2": {"action": "무릎 국소 NSAID", "rules": ["OA11", "OA_SB1"], "applies": "v['knee_oa']", "contra": "v['egfr_lt30'] and v['k_topical_nsaid_covered']", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I3": {"action": "acetaminophen", "rules": ["OA12"], "applies": "v['hip_knee_oa']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I4": {"action": "SGLT2i 시작", "rules": ["DM22", "CKD15"], "applies": "v['dm_type2'] and v['ckd'] and not v['dialysis']", "contra": "v['sglt2_contra']", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I5": {"action": "lisinopril 지속", "rules": ["CKD14"], "applies": "v['egfr_lt30'] and v['on_acei']", "contra": "v['acei_intol']", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I6": {"action": "수축기 <130 목표로 혈압 강화", "rules": ["HTN4", "CKD11"], "applies": "v['htn'] and v['sbp_ge130']", "contra": "False", "prefs": [["q_more_bp_meds", "accept"]], "evidence_scope": "NOT_EVALUATED"}
+      }},
+    "CASE_05": {"case_type": "REAL_WITH_PREF",
+      "vars": {
+        "t2dm": {"group": "P", "known": true}, "ckd": {"group": "P", "known": true}, "cvd": {"group": "P", "known": true}, "egfr_gt30": {"group": "P", "known": true},
+        "on_statin": {"group": "P", "known": true}, "on_metformin": {"group": "P", "known": true}, "dialysis": {"group": "P", "known": false},
+        "hip_knee_oa": {"group": "P", "known": null, "domain": [true, false], "default": true, "cost": 2, "how": "관절염 유형·부위"},
+        "sglt2_contra": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "SGLT2i/GLP-1 RA 미사용 이유"},
+        "q_statin_reduced_dose": {"group": "Q", "known": "accept", "src": "S1 Table No.14 'Reduction in simvastatin to 3 times per week is helping'"}
+      },
+      "items": {
+        "I1": {"action": "스타틴 유지(현재 감량 용법)", "rules": ["CKD19"], "applies": "v['ckd'] and v['on_statin'] and not v['dialysis']", "contra": "False", "prefs": [["q_statin_reduced_dose", "accept"]], "evidence_scope": "NOT_EVALUATED"},
+        "I2": {"action": "SGLT2i 또는 GLP-1 RA 추가 고려", "rules": ["DM24"], "applies": "v['t2dm'] and (v['cvd'] or v['ckd'])", "contra": "v['sglt2_contra']", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I3": {"action": "SGLT2i 시작", "rules": ["DM22", "CKD15"], "applies": "v['t2dm'] and v['ckd'] and not v['dialysis']", "contra": "v['sglt2_contra']", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I4": {"action": "metformin 지속", "rules": ["CKD_P125"], "applies": "v['on_metformin'] and v['egfr_gt30']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I5": {"action": "경구 NSAID", "rules": ["OA12", "OA_SB1"], "applies": "v['hip_knee_oa']", "contra": "v['ckd'] or v['cvd']", "prefs": [], "evidence_scope": "NOT_EVALUATED"}
+      }},
+    "CASE_06": {"case_type": "REAL_WITH_PREF",
+      "vars": {
+        "af": {"group": "P", "known": true}, "on_warfarin": {"group": "P", "known": true}, "htn": {"group": "P", "known": true}, "cvd": {"group": "P", "known": true},
+        "on_acetaminophen": {"group": "P", "known": true},
+        "sbp_ge130": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "혈압 측정"},
+        "orthostatic": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "기립 혈압·낙상"},
+        "hip_knee_oa": {"group": "P", "known": null, "domain": [true, false], "default": true, "cost": 2, "how": "관절염 유형·부위"},
+        "k_anticoag_benefit_age90": {"group": "K", "known": null, "domain": [true, false], "default": true, "how": "90세 이상 항응고 순이득 근거(원문 의료진: 'not sure how many 90-year-olds were in the studies')"},
+        "q_bleed_tradeoff": {"group": "Q", "known": null, "domain": ["accept", "reject"], "default": "accept", "cost": 1, "how": "뇌졸중 예방 대 출혈·멍(활동 위축) 감수 의향"},
+        "q_new_arthritis_med": {"group": "Q", "known": "reject", "src": "S1 Table No.2 'Fearful of trying new medications for arthritis pain'"}
+      },
+      "items": {
+        "I1": {"action": "warfarin 지속", "rules": ["NO_STRUCTURABLE_AF_GUIDELINE"], "applies": "v['af'] and v['on_warfarin'] and v['k_anticoag_benefit_age90']", "contra": "False", "prefs": [["q_bleed_tradeoff", "accept"]], "evidence_scope": "SCOPE_UNCERTAIN"},
+        "I2": {"action": "새 관절염 약(경구 NSAID)", "rules": ["OA12", "OA_SB1"], "applies": "v['hip_knee_oa']", "contra": "v['cvd']", "prefs": [["q_new_arthritis_med", "accept"]], "evidence_scope": "NOT_EVALUATED"},
+        "I3": {"action": "acetaminophen 하루 4 g 상한 안내", "rules": ["OA_SB1"], "applies": "v['on_acetaminophen']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I4": {"action": "수축기 <130 목표로 혈압 강화", "rules": ["HTN4"], "applies": "v['htn'] and v['sbp_ge130']", "contra": "v['orthostatic']", "prefs": [], "evidence_scope": "NOT_EVALUATED"}
+      }},
+    "CASE_07": {"case_type": "REAL_WITH_PREF",
+      "vars": {
+        "t2dm": {"group": "P", "known": true}, "hf": {"group": "P", "known": true}, "ckd": {"group": "P", "known": true}, "htn": {"group": "P", "known": true},
+        "hba1c_below_target": {"group": "P", "known": true}, "on_glucose_lowering": {"group": "P", "known": true}, "sbp_ge130": {"group": "P", "known": true},
+        "dialysis": {"group": "P", "known": false},
+        "sglt2_contra": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "현재 당뇨약 이름·SGLT2i 사용 여부"},
+        "bp_valid": {"group": "P", "known": null, "domain": [true, false], "default": true, "cost": 1, "how": "급성기(GCS 11) 1회 측정 아닌 안정 시 반복 측정"},
+        "orthostatic": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "기립 혈압(허약 CFS 6)"},
+        "q_fewer_meds": {"group": "Q", "known": "accept", "src": "'The patient and spouse agreed with the team to simplify her medications'"}
+      },
+      "items": {
+        "I1": {"action": "혈당강하 치료 강도 낮춤", "rules": ["DM9_10", "CKD_P125"], "applies": "v['t2dm'] and v['hba1c_below_target'] and v['on_glucose_lowering']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I2": {"action": "SGLT2i 시작", "rules": ["DM21", "DM22", "CKD15"], "applies": "v['t2dm'] and (v['hf'] or v['ckd']) and not v['dialysis']", "contra": "v['sglt2_contra']", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I3": {"action": "수축기 <130 목표로 혈압 강화", "rules": ["HTN4", "CKD11"], "applies": "v['htn'] and v['sbp_ge130'] and v['bp_valid']", "contra": "v['orthostatic']", "prefs": [], "evidence_scope": "NOT_EVALUATED"}
+      }},
+    "CASE_08": {"case_type": "REAL_NO_PREF",
+      "vars": {
+        "t2dm": {"group": "P", "known": true}, "hf": {"group": "P", "known": true}, "ckd": {"group": "P", "known": true}, "egfr_gt30": {"group": "P", "known": true},
+        "acute_illness": {"group": "P", "known": true}, "prior_edka": {"group": "P", "known": true}, "prior_mala": {"group": "P", "known": true},
+        "age_ge65": {"group": "P", "known": false},
+        "alt_glycemic_ok": {"group": "P", "known": null, "domain": [true, false], "default": true, "cost": 1, "how": "GLP-1 RA 후 HbA1c"},
+        "k_metformin_after_mala_safe": {"group": "K", "known": null, "domain": [true, false], "default": true, "how": "MALA 후 metformin 재개 안전성(원문: 합의 없음)"}
+      },
+      "items": {
+        "I1": {"action": "아픈 날 SGLT2i·metformin·ARNI·이뇨제 일시 중단", "rules": ["CKD_P126"], "applies": "v['acute_illness']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I2": {"action": "SGLT2i 재개", "rules": ["DM21", "DM22"], "applies": "v['t2dm'] and (v['hf'] or v['ckd'])", "contra": "v['prior_edka']", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I3": {"action": "GLP-1 RA", "rules": ["DM23"], "applies": "v['t2dm'] and v['ckd'] and v['prior_edka']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I4": {"action": "metformin 재개", "rules": ["CKD_P125"], "applies": "v['egfr_gt30'] and v['k_metformin_after_mala_safe']", "contra": "False", "prefs": [], "evidence_scope": "SCOPE_UNCERTAIN"},
+        "I5": {"action": "sulfonylurea 회피", "rules": ["DM25"], "applies": "v['t2dm'] and v['alt_glycemic_ok']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"}
+      }},
+    "CASE_09": {"case_type": "REAL_NO_PREF",
+      "vars": {
+        "t2dm": {"group": "P", "known": true}, "hf": {"group": "P", "known": true}, "ckd": {"group": "P", "known": true},
+        "high_comorb_low_func": {"group": "P", "known": true}, "aki": {"group": "P", "known": true}, "on_diuretic": {"group": "P", "known": true},
+        "q_life_prolonging": {"group": "Q", "known": null, "domain": ["accept", "reject"], "default": "accept", "cost": 1, "how": "치료 목표(수명 연장 vs 완화) — 환자가 딸에게 위임"}
+      },
+      "items": {
+        "I1": {"action": "보존적 관리 vs 신대체요법 공동의사결정(대리인 포함)", "rules": ["CKD8", "CKD9"], "applies": "v['ckd'] and v['high_comorb_low_func']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I2": {"action": "SGLT2i 시작", "rules": ["DM21"], "applies": "v['t2dm'] and v['hf']", "contra": "False", "prefs": [["q_life_prolonging", "accept"]], "evidence_scope": "NOT_EVALUATED"},
+        "I3": {"action": "급성 신손상 시 이뇨제 일시 중단 고려", "rules": ["CKD_P121"], "applies": "v['aki'] and v['on_diuretic']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"}
+      }},
+    "CASE_10": {"case_type": "REAL_NO_PREF",
+      "vars": {
+        "age_ge65": {"group": "P", "known": true}, "on_su": {"group": "P", "known": true}, "hypoglycemia_tendency": {"group": "P", "known": true},
+        "on_metformin": {"group": "P", "known": true}, "egfr_gt30_t1": {"group": "P", "known": true}, "egfr_gt30_t2": {"group": "P", "known": false},
+        "ckd": {"group": "P", "known": true}, "dialysis": {"group": "P", "known": false},
+        "acute_illness": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "섭취 저하가 급성 질환(아픈 날)인지"},
+        "dm_type2": {"group": "P", "known": null, "domain": [true, false], "default": true, "cost": 1, "how": "당뇨 유형"},
+        "sglt2_contra": {"group": "P", "known": null, "domain": [true, false], "default": false, "cost": 1, "how": "SGLT2i 금기·미사용 이유"}
+      },
+      "items": {
+        "I1": {"action": "장시간형 sulfonylurea 중단(시점 1)", "rules": ["DM25"], "applies": "v['age_ge65'] and v['on_su'] and v['hypoglycemia_tendency']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I2": {"action": "metformin 지속(시점 1, eGFR 43)", "rules": ["CKD_P125", "CKD_P126"], "applies": "v['on_metformin'] and v['egfr_gt30_t1']", "contra": "v['acute_illness']", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I3": {"action": "metformin 지속(시점 2, eGFR 18)", "rules": ["CKD_P125"], "applies": "v['on_metformin'] and v['egfr_gt30_t2']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I4": {"action": "SGLT2i 시작", "rules": ["DM22", "CKD15"], "applies": "v['dm_type2'] and v['ckd'] and not v['dialysis']", "contra": "v['sglt2_contra']", "prefs": [], "evidence_scope": "NOT_EVALUATED"}
+      }},
+    "CASE_12": {"case_type": "GUIDELINE_VIGNETTE",
+      "vars": {
+        "af": {"group": "P", "known": true}, "chadsvasc_gt2": {"group": "P", "known": true}, "on_acei": {"group": "P", "known": true}, "on_nondhp_ccb": {"group": "P", "known": true},
+        "uacr_gt30": {"group": "P", "known": false},
+        "q_avoid_inr": {"group": "Q", "known": "accept", "src": "MGCDS Case 2 'John's preferences'(저자 작성 가상 선호)"}
+      },
+      "items": {
+        "I1": {"action": "aspirin 대신 항응고제", "rules": ["MGCDS2"], "applies": "v['af'] and v['chadsvasc_gt2']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I2": {"action": "warfarin 대신 DOAC", "rules": ["MGCDS2"], "applies": "v['af'] and v['chadsvasc_gt2']", "contra": "False", "prefs": [["q_avoid_inr", "accept"]], "evidence_scope": "NOT_EVALUATED"},
+        "I3": {"action": "ACEi 유지", "rules": ["MGCDS2"], "applies": "v['on_acei']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I4": {"action": "심박수 조절 beta blocker 추가", "rules": ["MGCDS2"], "applies": "v['af']", "contra": "v['on_acei'] and v['on_nondhp_ccb']", "prefs": [], "evidence_scope": "NOT_EVALUATED"}
+      }},
+    "CASE_13": {"case_type": "GUIDELINE_VIGNETTE",
+      "vars": {
+        "osteoporosis": {"group": "P", "known": true}, "prior_tia": {"group": "P", "known": true}, "prior_aspirin_ulcer": {"group": "P", "known": true}, "on_ppi": {"group": "P", "known": true}
+      },
+      "items": {
+        "I1": {"action": "골다공증 약 시작", "rules": ["MGCDS1"], "applies": "v['osteoporosis']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I2": {"action": "항혈소판 이차예방 유지", "rules": ["MGCDS1"], "applies": "v['prior_tia']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"},
+        "I3": {"action": "aspirin→clopidogrel + PPI 중단(대안 1)", "rules": ["MGCDS1"], "applies": "v['prior_tia'] and v['prior_aspirin_ulcer'] and v['on_ppi'] and v['osteoporosis']", "contra": "False", "prefs": [], "evidence_scope": "NOT_EVALUATED"}
+      }}
+  }
+}

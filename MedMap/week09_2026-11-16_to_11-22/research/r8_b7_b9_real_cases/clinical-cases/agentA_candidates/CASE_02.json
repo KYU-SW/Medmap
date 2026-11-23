@@ -1,0 +1,112 @@
+{
+  "case_id": "CASE_02",
+  "case_type": "REAL_WITH_PREF",
+  "case_type_reason": "실제 환자(EHR 기반, 구두 동의, 비식별 공개) + 환자 본인의 건강 목표·치료 선호가 원문 표에 기록됨",
+  "source": {
+    "title": "Challenges and strategies in patients' health priorities-aligned decision-making for older adults with multiple chronic conditions",
+    "first_author": "Tinetti ME (외)",
+    "journal": "PLoS ONE",
+    "year": 2019,
+    "doi": "10.1371/journal.pone.0218249",
+    "pmid": "31181117",
+    "pmcid": "PMC6557523",
+    "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6557523/",
+    "supplement_url": "https://journals.plos.org/plosone/article/file?type=supplementary&id=10.1371/journal.pone.0218249.s002",
+    "license": "CC0 1.0 (public domain dedication)",
+    "license_quote": "This is an open access article, free of all copyright, and may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose.",
+    "real_patient_evidence": "본문 Results: 'Descriptions of the 35 patients discussed are displayed in [S1 Table]... ascertained from their EHRs.' / IRB 문단: 'All patients provided verbal consent to participate, share the data ... and publish without identifying information.'",
+    "access_date": "2026-11-21",
+    "verification_level": "[원문] 본문 XML(NCBI efetch) + S1 Table docx 원문",
+    "location": "S1 Table, 환자 No. 19"
+  },
+  "condition_combination": "(1) 당뇨+CKD+심부전",
+  "combination_reason": "우선 조합 그대로(CKD 4기, 90+세)",
+  "conditions": [
+    "제2형 당뇨병",
+    "CKD 4기",
+    "심방세동",
+    "울혈성 심부전",
+    "고혈압",
+    "고지혈증",
+    "갑상선기능저하증"
+  ],
+  "clinical_info_in_source": {
+    "demographics_function": "90+세 여성, ADL 도움 받음",
+    "active_problem_count": 16,
+    "medications_names_only": [
+      "diltiazem",
+      "furosemide",
+      "insulin",
+      "lisinopril",
+      "metoprolol",
+      "pravastatin",
+      "Preservision AREDS",
+      "vitamin D",
+      "warfarin"
+    ],
+    "labs": "원문에 없음"
+  },
+  "info_not_in_source": [
+    "모든 검사값(eGFR·UACR·HbA1c·혈압·칼륨·EF 등) 없음 — S1 Table은 EHR 문제목록·약물명만 제공",
+    "약물 용량·투여 기간 없음",
+    "심부전 유형(HFrEF/HFpEF)·NYHA 등급 없음",
+    "이 환자에 대해 실제로 내린 임상 결정·결과 없음(토론 세션 요약만, 결정 기록 미제공)",
+    "나이는 10년 단위(예: 70+)로만 제공(재식별 방지)"
+  ],
+  "patient_goals_preferences": {
+    "level": "실제 환자 본인 선호(목표+원하는/원치 않는 치료)",
+    "health_outcome_goals": [
+      "저녁식사·카드게임 참여 지속",
+      "동행인과 매주 쇼핑 지속",
+      "집안일을 더 스스로 하기",
+      "장벽: 쇠약·통증·설사"
+    ],
+    "helpful_doable_care": [
+      "INR 채혈 월 1회(최근 주 1회로 증가)",
+      "롤레이터 보행기"
+    ],
+    "bothersome_unwanted_care": [
+      "\"Doesn't wish to see more specialists\"",
+      "Wants \"no surgery of any kind\""
+    ],
+    "specific_ask": "\"I can't go where I want to as much because of this diarrhea\"",
+    "quote_location": "S1 Table 환자 No. 19 행(Health Outcome Goals / Healthcare Preferences / Specific Ask 열)"
+  },
+  "actual_clinical_decision": {
+    "described_in_source": false,
+    "summary": "UNKNOWN — 원문에 이 환자의 실제 결정 기록 없음",
+    "clinician_quotes": []
+  },
+  "relevant_guidelines": [
+    {
+      "guideline": "G-VA-CKD-2025 (VA/DoD CKD CPG v5.0, 2025)",
+      "location": "Recommendations 8–10 (pp.32–33, 본문 p.47): 신대체요법 공동의사결정, 동반질환 많고 기능 낮은 환자의 신장내과 의뢰, 투석의 삶의 질 효과 근거 불충분",
+      "relation": "'전문의 더 안 봄'·'수술 일절 거부' 선호와 직접 관련"
+    },
+    {
+      "guideline": "G-VA-CKD-2025 (VA/DoD CKD CPG v5.0, 2025)",
+      "location": "Recommendation 14 (p.33): eGFR<30에서 ACEi/ARB 지속 (Weak for)",
+      "relation": "lisinopril 사용 중 — 칼륨·eGFR 없음"
+    },
+    {
+      "guideline": "G-VA-DM-2023 (VA/DoD T2DM CPG v6.0, 2023)",
+      "location": "Recommendations 9–10, 25 (pp.25–27)",
+      "relation": "insulin 사용 90+세 — HbA1c·저혈당 정보 없음"
+    },
+    {
+      "guideline": "G-KSHF-2023-COMORB (대한심부전학회 심부전 진료지침: 원인·동반질환, IJHF 2023)",
+      "location": "ATRIAL FIBRILLATION 절, RENAL FAILURE AND ELECTROLYTE IMBALANCE 절",
+      "relation": "HF 유형 미상, 비DHP CCB(diltiazem) 적합성은 지침 해당 문장 확인 필요"
+    }
+  ],
+  "info_gaps_that_could_change_judgment": [
+    "HF 유형: diltiazem 지속 적합성 판단이 달라질 수 있음(확인 필요)",
+    "정확한 eGFR·칼륨: ACEi 지속·SGLT2i 적용 조건",
+    "설사 원인: 'Specific Ask'와 직결되나 원인 정보 없음",
+    "INR 주 1회 증가 이유: 출혈·INR 불안정 여부 미상",
+    "선호상 신장내과 의뢰·투석 접근 수술 거부 → 지침상 의뢰 권고와 충돌 가능, 먼저 '투석을 원하는지'를 물어야 함"
+  ],
+  "research_relevance": "B7: CKD 4기 의뢰·RAS 차단제 지속 vs 고령·쇠약. B9: '전문의·수술 거부'라는 실제 선호가 의뢰 권고를 바꿀 수 있음.",
+  "reuse_constraints": "CC0: 구조화·재배포 허용. 출처 표기 권장(학술 관례).",
+  "limitations": "환자 선호는 실제(우선순위 확인 과정에서 의료진이 기록). 단 검사값·실제 결정이 없어 '정답 결정' 비교용으로는 사용 불가, 선호·정보부족 시나리오용으로 적합."
+}

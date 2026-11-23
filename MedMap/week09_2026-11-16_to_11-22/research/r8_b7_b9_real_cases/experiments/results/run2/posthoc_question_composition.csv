@@ -1,0 +1,13 @@
+case_id,case_type,n_questions,n_P,n_Q,ranked
+CASE_01,REAL_WITH_PREF,4,4,0,"alt_glycemic_ok(P,1)|hba1c_above_target(P,1)|sglt2_contra(P,1)|uacr_gt30(P,1)"
+CASE_02,REAL_WITH_PREF,3,3,0,"acei_intol(P,1)|alt_glycemic_ok(P,1)|sglt2_contra(P,1)"
+CASE_03,REAL_WITH_PREF,3,3,0,"orthostatic(P,1)|sbp_ge130(P,1)|statin_intol(P,1)"
+CASE_04,REAL_WITH_PREF,6,6,0,"acei_intol(P,1)|dm_type2(P,1)|sbp_ge130(P,1)|sglt2_contra(P,1)|hip_knee_oa(P,1)|knee_oa(P,1)"
+CASE_05,REAL_WITH_PREF,1,1,0,"sglt2_contra(P,2)"
+CASE_06,REAL_WITH_PREF,3,2,1,"orthostatic(P,1)|q_bleed_tradeoff(Q,1)|sbp_ge130(P,1)"
+CASE_07,REAL_WITH_PREF,3,3,0,"bp_valid(P,1)|orthostatic(P,1)|sglt2_contra(P,1)"
+CASE_08,REAL_NO_PREF,1,1,0,"alt_glycemic_ok(P,1)"
+CASE_09,REAL_NO_PREF,1,0,1,"q_life_prolonging(Q,1)"
+CASE_10,REAL_NO_PREF,3,3,0,"acute_illness(P,1)|dm_type2(P,1)|sglt2_contra(P,1)"
+CASE_12,GUIDELINE_VIGNETTE,0,0,0,
+CASE_13,GUIDELINE_VIGNETTE,0,0,0,

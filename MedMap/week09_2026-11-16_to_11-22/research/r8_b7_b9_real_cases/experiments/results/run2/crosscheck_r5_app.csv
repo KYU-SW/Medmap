@@ -1,0 +1,45 @@
+case_id,item,applies,r5_app,main_B_app,match
+CASE_01,I2,v['t2dm'] and v['age_ge65'] and v['alt_glycemic_ok'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_01,I3,v['t2dm'] and v['hba1c_above_target'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_01,I4,v['ckd'] and v['on_statin'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_01,I5,v['htn'] and v['uacr_gt30'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_02,I1,v['ckd'] and v['egfr_lt30'] and v['high_comorb_low_func'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_02,I2,v['ckd'] and v['egfr_lt30'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_02,I3,v['egfr_lt30'] and v['on_acei'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_02,I5,v['t2dm'] and v['age_ge65'] and v['alt_glycemic_ok'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_03,I1,v['htn'] and v['sbp_ge130'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_03,I3,v['hip_knee_oa'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_03,I4,v['ckd'] and not v['on_statin'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_04,I2,v['knee_oa'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_04,I3,v['hip_knee_oa'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_04,I4,v['dm_type2'] and v['ckd'] and not v['dialysis'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_04,I5,v['egfr_lt30'] and v['on_acei'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_04,I6,v['htn'] and v['sbp_ge130'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_05,I1,v['ckd'] and v['on_statin'] and not v['dialysis'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_05,I3,v['t2dm'] and v['ckd'] and not v['dialysis'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_05,I4,v['on_metformin'] and v['egfr_gt30'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_05,I5,v['hip_knee_oa'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_06,I1,v['af'] and v['on_warfarin'] and v['k_anticoag_benefit_age90'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_06,I2,v['hip_knee_oa'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_06,I3,v['on_acetaminophen'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_06,I4,v['htn'] and v['sbp_ge130'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_07,I1,v['t2dm'] and v['hba1c_below_target'] and v['on_glucose_lowering'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_07,I3,v['htn'] and v['sbp_ge130'] and v['bp_valid'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_08,I1,v['acute_illness'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_08,I3,v['t2dm'] and v['ckd'] and v['prior_edka'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_08,I4,v['egfr_gt30'] and v['k_metformin_after_mala_safe'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_08,I5,v['t2dm'] and v['alt_glycemic_ok'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_09,I1,v['ckd'] and v['high_comorb_low_func'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_09,I2,v['t2dm'] and v['hf'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_09,I3,v['aki'] and v['on_diuretic'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_10,I1,v['age_ge65'] and v['on_su'] and v['hypoglycemia_tendency'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_10,I2,v['on_metformin'] and v['egfr_gt30_t1'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_10,I3,v['on_metformin'] and v['egfr_gt30_t2'],NOT_APPLY,NOT_APPLY,True
+CASE_10,I4,v['dm_type2'] and v['ckd'] and not v['dialysis'],CONDITIONAL_APPLY,CONDITIONAL_APPLY,True
+CASE_12,I1,v['af'] and v['chadsvasc_gt2'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_12,I2,v['af'] and v['chadsvasc_gt2'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_12,I3,v['on_acei'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_12,I4,v['af'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_13,I1,v['osteoporosis'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_13,I2,v['prior_tia'],CONFIRMED_APPLY,CONFIRMED_APPLY,True
+CASE_13,I3,v['prior_tia'] and v['prior_aspirin_ulcer'] and v['on_ppi'] and v['osteoporosis'],CONFIRMED_APPLY,CONFIRMED_APPLY,True

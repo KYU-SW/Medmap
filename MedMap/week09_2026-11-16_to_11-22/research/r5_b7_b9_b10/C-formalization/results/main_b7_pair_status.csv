@@ -1,0 +1,7 @@
+item,kind,patient_status,states_triggered
+R1_A1_contra_ckd,CONTRAINDICATION,CONDITIONAL_CONFLICT_INFO_DEPENDENT (unconfirmed: ckd),4/6
+R2_A2B1_conflict_hk,CONFLICT,CONDITIONAL_CONFLICT_INFO_DEPENDENT (unconfirmed: hk),2/6
+R3_A2B2_duplicate,DUPLICATE,DUPLICATE,6/6
+R4_B1S_unknown,UNKNOWN_INTERACTION,UNDETERMINED_KNOWLEDGE (interaction evidence insufficient),3/6
+A1+B2,SYNERGY,COMPLEMENT_POSSIBLE (L<=0<U),"interval=(0.0, 0.1)"
+GA+GB jointly,GUIDELINE_SET,SATISFIABLE_ALL,no feasible plan in 0/12 states

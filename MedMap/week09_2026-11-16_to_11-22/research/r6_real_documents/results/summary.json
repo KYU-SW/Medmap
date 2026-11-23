@@ -1,0 +1,17 @@
+{
+ "n_level3_pair_variables": 52,
+ "n_windows": 4032,
+ "dense_checked": 4032,
+ "dense_mismatch": 0,
+ "level4_pairs": 20,
+ "windows_diff": 197,
+ "windows_cat_change": 0,
+ "wrong_confirm": 0,
+ "unnecessary_hold": 0,
+ "spurious_allowed_out": 158,
+ "spurious_disallowed_in": 135,
+ "secondary_pairs": 5,
+ "secondary_pairs_with_diff": 5,
+ "elapsed_s": 10.23,
+ "peak_mem_bytes": 3296304
+}

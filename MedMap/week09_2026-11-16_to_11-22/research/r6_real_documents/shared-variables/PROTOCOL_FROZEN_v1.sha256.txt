@@ -1,0 +1,10 @@
+2026-11-20T14:03:45+09:00
+85522833553a5fd012743cbb985a141cde08e981dd2bb0c37199610da28ea7d6  PROTOCOL_FROZEN_v1.md
+ba31b02b130351006b5c9753f4b3a8857c0a3a5e3b9a5bbe0ac52baa34891de2  CURATED_LABEL_RULES.csv
+2026-11-20T14:04:43+09:00
+AMBIGUITY_RESOLUTIONS.csv written after reading raw text (manual, before experiment)
+963514a9d0f5fdb1bf8dd1b76f7ab3fbf6dc852cdf3c2aea5f1c7493a2d60b8e  AMBIGUITY_RESOLUTIONS.csv
+2026-11-20T14:05:14+09:00
+manual corrections (3) appended after raw-text verification of all 47 LEVEL-3 trial intervals; before experiment
+b73a57d14866a8ef48fc533ec66e192b521433df517014e2b8d320f0a83ad501  AMBIGUITY_RESOLUTIONS.csv
+9a05d69ed532791fd3b817337b883b93be157c45438863e53e332a28d5697f5a  code/link_levels.py

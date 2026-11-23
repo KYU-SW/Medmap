@@ -1,0 +1,11 @@
+{
+ "frozen_at_local": "2026-11-18T12:07:31.550219+09:00",
+ "method_code_present_at_freeze": [],
+ "sha256": {
+  "frozen/SPEC.md": "0894d69ef21fd0581d23bd38830413339adb9f351a9f5c489c51563c4163c3b4",
+  "frozen/ground_truth.json": "7b6b81db86b58fc9880931254b78464c7d77f0635ad26ca06e6b3ccf3a2e52ce",
+  "inputs/instances.json": "954063b1d18c3f8fbafad86e5e8bbf82073a9cdfd6a8f364accdadfb41322633",
+  "frozen/gen_instances.py.frozen": "5340d9c9bb8c6cfa748c5f6c7e8cd19ce242946e4d8aca87dd7bf3469b777257",
+  "frozen/ground_truth.py.frozen": "ab0fa14c40546eb7f2b63360bbfbe6b738d8202f6f1bc1758684bd89fa0b9262"
+ }
+}

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MedMap 근거 추적 시제품</title>
+<link rel="stylesheet" href="/fonts/WantedSansVariable.css">
+<style>
+:root{
+  --canvas:#F3F4F7;--surface:#FFFFFF;--surface-2:#F7F8FA;--hair:#E3E6EB;--hair-strong:#CBD0D8;
+  --ink:#141A2E;--ink-muted:#3E4659;--ink-subtle:#5E6678;
+  --accent:#4B3FC9;--accent-strong:#3A2FA8;--accent-soft:#EFEDFC;--accent-line:#C9C3F3;--neutral-soft:#EDF0F4;
+  --ok:#1F7A4D;--ok-soft:#E7F4EC;--warn:#8A5A00;--warn-soft:#FBF1DC;--bad:#A3263A;--bad-soft:#FBE9EC;
+  --shadow:0 1px 2px rgba(20,26,46,.04),0 4px 16px rgba(20,26,46,.04);--r:14px;--r-sm:10px;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);font-family:"Wanted Sans Variable","Wanted Sans",system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+header.top{position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:1px solid var(--hair);padding:var(--s3) var(--s5);display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center}
+.brand{font-weight:700;font-size:17px;letter-spacing:-.01em}
+.tag{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:12.5px;font-weight:600;border:1px solid var(--hair);background:var(--surface-2);color:var(--ink-muted);white-space:nowrap}
+.tag.accent{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent-strong)}
+.tag.ok{background:var(--ok-soft);border-color:#BFE3CD;color:var(--ok)}
+.tag.warn{background:var(--warn-soft);border-color:#EED9A8;color:var(--warn)}
+.tag.bad{background:var(--bad-soft);border-color:#F1C4CC;color:var(--bad)}
+.spacer{flex:1}
+main{max-width:1440px;margin:0 auto;padding:var(--s5);display:grid;gap:var(--s4)}
+.card{background:var(--surface);border:1px solid var(--hair);border-radius:var(--r);box-shadow:var(--shadow);padding:var(--s4) var(--s5)}
+.card h2{margin:0 0 var(--s3);font-size:16px;font-weight:700;display:flex;align-items:center;gap:var(--s2)}
+.card h2 .num{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:7px;background:var(--accent-soft);color:var(--accent-strong);font-size:12.5px}
+.sub{color:var(--ink-subtle);font-size:13px}
+.case{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s4)}
+.kv .k{font-size:12.5px;color:var(--ink-subtle)}
+.kv .v{font-weight:650;font-size:15.5px}
+.steps{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center}
+button{font:inherit;cursor:pointer;border-radius:var(--r-sm);border:1px solid var(--hair-strong);background:var(--surface);color:var(--ink);height:36px;padding:0 14px;font-weight:600;font-size:14px}
+button:hover:not(:disabled){border-color:var(--accent-line);background:var(--accent-soft)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+button.primary:hover:not(:disabled){background:var(--accent-strong);border-color:var(--accent-strong)}
+button.step[aria-current="step"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-strong)}
+button.small{height:28px;padding:0 10px;font-size:12.5px}
+input[type=datetime-local]{font:inherit;height:36px;border:1px solid var(--hair-strong);border-radius:var(--r-sm);padding:0 10px;color:var(--ink);background:var(--surface)}
+.asof{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;margin-top:var(--s3);padding-top:var(--s3);border-top:1px solid var(--hair)}
+.asof strong{font-size:18px;font-variant-numeric:tabular-nums}
+.grid2{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:var(--s4);align-items:start}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-weight:600;color:var(--ink-subtle);font-size:12.5px;padding:6px 8px;border-bottom:1px solid var(--hair)}
+td{padding:7px 8px;border-bottom:1px solid var(--hair);vertical-align:top}
+tr.future td{color:#A0A6B3}
+tr.future .tag{opacity:.6}
+td.time{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
+.group{margin-top:var(--s3)}
+.group h3{font-size:13.5px;margin:0 0 var(--s2);color:var(--ink-muted);font-weight:700}
+.ev{border:1px solid var(--hair);border-radius:var(--r-sm);padding:var(--s3);margin-bottom:var(--s2);background:var(--surface)}
+.ev.usable{border-color:var(--accent-line);background:linear-gradient(0deg,var(--surface),var(--surface)),var(--accent-soft)}
+.ev .row1{display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center;justify-content:space-between}
+.ev .title{font-weight:650}
+.ev .text{margin-top:6px;color:var(--ink-muted);font-size:13.5px}
+.ev .why{margin-top:6px;font-size:13px;color:var(--ink-subtle)}
+.score{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;font-variant-numeric:tabular-nums}
+.probs{display:flex;gap:2px;margin-top:8px;height:8px;border-radius:4px;overflow:hidden;background:var(--neutral-soft)}
+.probs span{display:block;height:100%}
+.legend{display:flex;gap:var(--s3);font-size:11.5px;color:var(--ink-subtle);margin-top:4px;font-variant-numeric:tabular-nums}
+.diff li{margin-bottom:6px;font-size:13.5px}
+.checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--s2)}
+.check{border:1px solid var(--hair);border-radius:var(--r-sm);padding:var(--s3);display:flex;justify-content:space-between;gap:var(--s2);align-items:center}
+.check .lbl{font-size:13.5px}
+.notice{font-size:12.5px;color:var(--ink-subtle);margin-top:var(--s2)}
+.empty{color:var(--ink-subtle);font-size:13.5px;padding:var(--s2) 0}
+@media (max-width:1100px){.grid2{grid-template-columns:1fr}.case{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){main{padding:var(--s3)}.case{grid-template-columns:1fr}.card{padding:var(--s3)}table{font-size:12.5px}.hide-sm{display:none}}
+@media (prefers-reduced-motion:no-preference){.ev,.check{transition:background-color .2s ease,border-color .2s ease}}
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="brand">MedMap 근거 추적 시제품</span>
+  <span class="tag accent">합성 환자 — 실제 진료자료 아님</span>
+  <span class="tag">연구용 점수 — 임상 판단 아님</span>
+  <span class="spacer"></span>
+  <span id="modelTag" class="tag">모델 확인 중</span>
+</header>
+<main>
+  <section class="card" aria-labelledby="h1">
+    <h2 id="h1"><span class="num">1</span>환자와 진단 가설</h2>
+    <div class="case">
+      <div class="kv"><div class="k">합성 환자</div><div class="v" id="pid">—</div></div>
+      <div class="kv"><div class="k">의사가 지정한 진단 가설</div><div class="v" id="hyp">—</div></div>
+      <div class="kv"><div class="k">조회 시점까지 도착한 기록</div><div class="v" id="nev">—</div></div>
+      <div class="kv"><div class="k">AI 모델</div><div class="v" id="modelName" style="font-size:13.5px">—</div></div>
+    </div>
+    <div class="asof">
+      <div class="steps" id="steps" role="group" aria-label="시연 단계"></div>
+      <button class="primary" id="play">시연 자동 실행</button>
+    </div>
+    <div class="asof">
+      <span class="sub">조회 시점</span><strong id="asofText">—</strong>
+      <label class="sub" for="asofInput">직접 선택</label><input type="datetime-local" id="asofInput" step="60">
+      <span class="sub" id="prevText"></span>
+    </div>
+  </section>
+
+  <div class="grid2">
+    <section class="card" aria-labelledby="h2">
+      <h2 id="h2"><span class="num">2</span>시간순 근거 기록</h2>
+      <div class="sub">조회 시점까지 시스템에 도착한 기록의 메타데이터만 표시합니다. 근거 문장은 AI 입력으로 실제 사용한 버전만 판단 카드에 보입니다.</div><div class="sub" id="futureNote"></div>
+      <div style="overflow-x:auto"><table aria-describedby="h2">
+        <thead><tr><th>도착</th><th>항목</th><th>상태</th><th class="hide-sm">이용 가능</th><th class="hide-sm">출처</th><th>조회 시점 역할</th></tr></thead>
+        <tbody id="timeline"></tbody>
+      </table></div>
+    </section>
+
+    <section class="card" aria-labelledby="h3">
+      <h2 id="h3"><span class="num">3</span>근거 상태와 연구용 모델 점수</h2>
+      <div class="sub">근거마다 따로 낸 연구용 점수입니다(전문가 점수 예측 모델 출력). 점수를 합산·평균하지 않습니다. 평가 보류는 0점(변화 없음)과 다릅니다.</div>
+      <div id="judge"></div>
+      <div class="group"><h3>이전 조회 대비 변화</h3><ul class="diff" id="diff"><li class="empty">비교할 이전 조회가 없습니다.</li></ul></div>
+      <div class="group" id="cfBox" hidden><h3>기록 제외 비교(기술 검사)</h3><ul class="diff" id="cf"></ul><div class="notice">이 기록을 뺐을 때 시스템 출력 차이입니다. 임상 판단의 원인이라는 뜻이 아닙니다.</div></div>
+    </section>
+  </div>
+
+  <section class="card" aria-labelledby="h4">
+    <h2 id="h4"><span class="num">4</span>기술 검증</h2>
+    <div class="checks" id="checks"></div>
+    <div class="group"><h3>같은 시점 단순 처리(BASE)라면</h3><div id="baseNow" class="sub"></div></div>
+    <div class="group"><h3>합성 비교 실험(BASE vs MedMap)</h3><div id="compare" class="sub">불러오는 중</div></div>
+  </section>
+</main>
+<script>
+const SCORE_KO={"-2":"크게 감소","-1":"조금 감소","0":"변화 없음","1":"조금 증가","2":"크게 증가"};
+const STATUS_KO={ORDERED:"검사 요청",PENDING:"결과 대기",AVAILABLE:"결과",CORRECTED:"정정",CANCELLED:"취소",INVALID:"무효"};
+const ROLE_KO={USED:["사용","ok"],SUPERSEDED:["이전 버전","warn"],DUPLICATE:["중복","warn"],NOT_YET_AVAILABLE:["아직 이용 불가","warn"],TIME_UNKNOWN:["시각 모름","warn"],ORDER:["요청","" ],PENDING:["대기",""],CANCEL:["취소","bad"],INVALID_RESULT:["무효","bad"],CONFLICT:["충돌","bad"],OTHER_PATIENT:["다른 환자","bad"],SOURCE_UNKNOWN:["출처 모름","warn"],NOT_LINKED:["연결 태그 없음",""],HELD_VERSION:["보류","warn"]};
+const REASON_KO={EVIDENCE_ORDERED_ONLY:"요청만 있음",EVIDENCE_PENDING:"결과 대기",EVIDENCE_NOT_YET_AVAILABLE:"아직 이용 불가",TIME_UNKNOWN:"이용 가능 시각 모름",SOURCE_UNKNOWN:"출처 모름",CONFLICTING_VERSIONS:"버전 충돌",LINEAGE_INVALID:"정정 계보 오류",PATIENT_ID_CONFLICT:"환자 ID 충돌",EVIDENCE_CANCELLED:"취소됨",EVIDENCE_INVALID:"무효 결과",DUPLICATE_EVIDENCE:"중복 기록",PATIENT_MISMATCH:"다른 환자 기록",NOT_LINKED_TO_HYPOTHESIS:"가설 연결 태그 없음",DUPLICATE_OF_SUPERSEDED_VERSION:"정정 전 내용 사본",NEWER_VERSION_NOT_YET_AVAILABLE:"새 버전 대기",NEWER_VERSION_TIME_UNKNOWN:"새 버전 시각 모름"};
+let CASE=null,CUR=null,PREV=null,timer=null;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const hm=iso=>iso?iso.slice(11,16):"—";
+const tag=(t,c="")=>`<span class="tag ${c}">${esc(t)}</span>`;
+async function j(u){const r=await fetch(u);const d=await r.json();if(!r.ok)throw new Error(d.error||r.status);return d}
+function toLocalInput(iso){return iso.slice(0,16)}
+function fromLocalInput(v){return v+":00+09:00"}
+async function init(){
+  CASE=await j("/api/case");
+  $("pid").textContent=CASE.patient_id;
+  $("hyp").textContent=CASE.hypothesis+" (폐색전증)";
+  const m=CASE.model;
+  $("modelTag").className="tag "+(m.status==="LOADED"?"ok":"bad");
+  $("modelTag").textContent=m.status==="LOADED"?"AI 모델 연결됨":"MODEL_UNAVAILABLE";
+  $("modelName").textContent=m.status==="LOADED"?m.id:("사용 불가 — "+(m.error||""));
+  $("steps").innerHTML=CASE.steps.map((s,i)=>`<button class="step" data-i="${i}">${i+1}. ${esc(s.name)}</button>`).join("");
+  $("steps").querySelectorAll("button").forEach(b=>b.onclick=()=>{stop();go(CASE.steps[+b.dataset.i].as_of,+b.dataset.i)});
+  $("asofInput").onchange=e=>{stop();go(fromLocalInput(e.target.value),null)};
+  $("play").onclick=()=>timer?stop():play();
+  loadCompare();
+  const qs=new URLSearchParams(location.search);const si=Math.min(Math.max(parseInt(qs.get("step")||"1",10)-1,0),CASE.steps.length-1);
+  if(si>0)await go(CASE.steps[si-1].as_of,si-1);
+  go(CASE.steps[si].as_of,si);
+}
+function stop(){if(timer){clearTimeout(timer);timer=null;$("play").textContent="시연 자동 실행"}}
+function play(){let i=0;$("play").textContent="자동 실행 멈춤";const nx=()=>{go(CASE.steps[i].as_of,i);i++;if(i<CASE.steps.length)timer=setTimeout(nx,4500);else{timer=null;$("play").textContent="시연 자동 실행"}};nx()}
+async function go(asof,idx){
+  PREV=CUR;CUR=asof;
+  document.querySelectorAll("button.step").forEach(b=>b.setAttribute("aria-current",+b.dataset.i===idx?"step":"false"));
+  const d=await j("/api/replay?as_of="+encodeURIComponent(asof)+(PREV?"&prev="+encodeURIComponent(PREV):""));
+  $("asofText").textContent=asof.slice(0,10)+" "+hm(asof);
+  $("asofInput").value=toLocalInput(asof);
+  $("prevText").textContent=PREV?("이전 조회 "+hm(PREV)+" 와 비교"):"";
+  $("nev").textContent=d.timeline.length+"건";
+  const nf=d["n_unknown_future_records(감사용 건수, 내용 미전송)"];$("futureNote").textContent=nf?`이 시점 이후에 도착하는 기록 ${nf}건은 내용을 불러오지 않았습니다(감사용 건수).`:"";
+  renderTimeline(d.timeline);renderJudge(d.assessment);renderDiff(d.diff);renderChecks(d.checks);$("cfBox").hidden=true;
+}
+function renderTimeline(tl){
+  $("timeline").innerHTML=tl.map(e=>{
+    const rk=ROLE_KO[e.role]||[e.role||"",""];const st=STATUS_KO[e.status]||e.status;
+    return `<tr><td class="time">${hm(e.recorded_at)}</td><td>${esc(e.item)}${e.other_patient?" "+tag("다른 환자 기록","bad"):""}${e.prev_version_id?`<div class="sub mono">← ${esc(e.prev_version_id)} 정정</div>`:""}</td><td>${tag(st,e.status==="CORRECTED"?"accent":"")}</td><td class="time hide-sm">${!e.has_result?"—":(e.available_at?hm(e.available_at):tag("모름","warn"))}</td><td class="hide-sm">${e.other_patient?"—":(e.source?esc(e.source):(e.has_result?tag("출처 모름","warn"):"—"))}</td><td>${e.role?tag(rk[0],rk[1]):'<span class="sub">—</span>'}</td></tr>`}).join("");
+}
+function renderJudge(a){
+  const groups=[["USABLE","AI 입력으로 사용한 근거"],["HELD","평가 보류"],["EXCLUDED","사용하지 않은 근거"]];
+  $("judge").innerHTML=groups.map(([s,title])=>{
+    const rows=a.rows.filter(r=>r.state===s);
+    return `<div class="group"><h3>${title} · ${rows.length}건</h3>${rows.length?rows.map(r=>evCard(r,a)).join(""):'<div class="empty">없음</div>'}</div>`}).join("");
+  document.querySelectorAll("button[data-cf]").forEach(b=>b.onclick=()=>cf(b.dataset.cf));
+}
+function evCard(r){
+  const A=r.assessment;let right="";
+  if(r.state==="USABLE"){
+    if(A.status==="SCORED")right=`<span class="score" aria-label="연구용 점수">${A.score>0?"+":""}${A.score} · ${SCORE_KO[A.score]}</span>`;
+    else right=tag("MODEL_UNAVAILABLE","bad");
+  }else right=r.reasons.filter(x=>!x.startsWith("LINEAGE:")).map(x=>tag(REASON_KO[x]||x,r.state==="HELD"?"warn":"bad")).join(" ");
+  let probs="";
+  if(A&&A.status==="SCORED"){const cols=["#A3263A","#D98A97","#CBD0D8","#9C94E6","#4B3FC9"];const ks=["-2","-1","0","1","2"];
+    probs=`<div class="probs" aria-hidden="true">${ks.map((k,i)=>`<span style="width:${(A.probs[k]*100).toFixed(1)}%;background:${cols[i]}"></span>`).join("")}</div><div class="legend">${ks.map(k=>`${k}: ${(A.probs[k]*100).toFixed(0)}%`).join(" · ")}</div>`}
+  return `<div class="ev ${r.state==="USABLE"?"usable":""}"><div class="row1"><span class="title">${esc(r.item)} <span class="sub mono">${esc(r.used_event_id||r.lineage_id)}</span></span>${right}</div>${r.used_content?`<div class="text">근거 문장: “${esc(r.used_content)}”</div>`:""}<div class="why">${esc(r.explanation)}</div>${probs}${r.used_event_id?`<div style="margin-top:8px"><button class="small" data-cf="${esc(r.used_event_id)}">이 기록 빼고 다시 계산</button></div>`:""}</div>`;
+}
+function renderDiff(d){
+  if(!d){$("diff").innerHTML='<li class="empty">비교할 이전 조회가 없습니다.</li>';return}
+  $("diff").innerHTML=d.length?d.map(x=>`<li>${tag(({NEW_RECORD:"새 기록",VERSION_CHANGED:"버전 변경",BECAME_USABLE:"사용 시작",NO_LONGER_USABLE:"사용 중단",STATUS_CHANGED:"상태 변경",NOT_PRESENT_NOW:"과거로 되돌림"})[x.change]||x.change,"accent")} <b>${esc(x.lineage_id)}</b> — ${esc(x.explanation)}</li>`).join(""):'<li class="empty">변화 없음</li>';
+}
+async function cf(eid){const d=await j("/api/counterfactual?as_of="+encodeURIComponent(CUR)+"&exclude="+encodeURIComponent(eid));$("cfBox").hidden=false;
+  $("cf").innerHTML=`<li><b>${esc(eid)}</b> 제외 시</li>`+(d.changes.length?d.changes.map(x=>`<li>${esc(x.lineage_id)}: ${esc(x.explanation)}</li>`).join(""):'<li class="empty">출력 변화 없음</li>')}
+function renderChecks(c){
+  const it=[["미래 기록 차단(사용 0건)",c.future_info_used===0,`조회 이후 도착 ${c.future_records_hidden}건 미사용`],
+    ["과거 재생 = 그 당시 시스템 상태",c.past_replay_matches_snapshot,"당시 저장소로 다시 계산해 비교"],
+    ["입력 순서와 무관",c.input_order_independent,"기록을 역순으로 넣어 비교"],
+    ["보류 근거에 점수 없음",c.held_with_score===0,"평가 보류 ≠ 0점"],
+    ["보류·제외 사유 표시",c.held_without_reason===0,"사유 없는 보류 0건"],
+    ["중복 기록 통제",c.duplicates_removed?true:null,`중복 ${c.duplicates_removed}건 독립 근거에서 제외`],
+    ["정정 버전 선택",c.superseded_versions?true:null,`이전 버전 ${c.superseded_versions}건 대체`]];
+  $("checks").innerHTML=it.map(([l,ok,s])=>`<div class="check"><div><div class="lbl">${esc(l)}</div><div class="sub">${esc(s)}</div></div>${ok===null?tag("해당 없음"):tag(ok?"통과":"실패",ok?"ok":"bad")}</div>`).join("");
+  const b=c.base_same_time;
+  $("baseNow").innerHTML=`단순 처리라면 이 시점에 기록 ${b.n_inputs}건을 모두 AI 에 넣습니다 — 그중 미래 정보 ${b.future}건, 요청·대기·취소 ${b.pending_or_order}건, 다른 환자 ${b.other_patient}건.`;
+}
+async function loadCompare(){
+  const d=await j("/api/compare");
+  if(d.status==="NOT_RUN"||!d.results){$("compare").textContent="비교 실험 미실행";return}
+  const L={A:"미래 정보 사용",A2:"시각 모름 결과 사용",B:"요청·대기·취소 기록 사용",C:"중복 사본을 원본과 함께 사용",D:"정정으로 대체된 버전 사용",E:"다른 환자 기록 사용",G:"보류·제외 사유 누락",G2:"사유 불일치",I:"거짓 보류(써야 할 근거 미사용)"};
+  const P=d.results.primary,M=P.metrics;
+  const cell=v=>v.occurrences+` <span class="sub">(계보 ${v.lineages} · 환자 ${v.patients})</span>`;
+  const rows=Object.keys(L).map(k=>`<tr><td>${L[k]}</td><td class="time">${cell(M.BASE[k])}</td><td class="time">${cell(M.MEDMAP[k])}</td></tr>`).join("")+
+    ["F","H"].map(k=>`<tr><td>${k==="F"?"과거 재생 불일치 조회":"반복·입력 순서 불일치 조회"}</td><td class="time">${M.BASE[k].queries} <span class="sub">(환자 ${M.BASE[k].patients})</span></td><td class="time">${M.MEDMAP[k].queries} <span class="sub">(환자 ${M.MEDMAP[k].patients})</span></td></tr>`).join("")+
+    `<tr><td>정답 입력 집합 완전 일치(조회)</td><td class="time">${M.BASE.exact_used_match}</td><td class="time">${M.MEDMAP.exact_used_match}</td></tr>`;
+  const conf=d.results.confirm.map((r,i)=>`seed ${r.seed}: ${d.pass_confirm[i]?"통과":"미통과"}`).join(" · ");
+  $("compare").innerHTML=`<div style="overflow-x:auto"><table><thead><tr><th>지표(발생 건수, 괄호는 고유 계보·환자 수)</th><th>단순 처리(BASE)</th><th>MedMap</th></tr></thead><tbody>${rows}</tbody></table></div>
+  <div class="notice">주 seed ${P.seed}: 합성 환자 ${P.n_patients}명, 조회 ${P.n_queries}개 — ${d.pass_primary?"사전 정의 합성 시험 통과":"미통과"}. 확인 seed ${conf}. 지표는 합산하지 않습니다. BASE 는 흔한 구현 실수를 모아 의도적으로 약하게 정의한 기준선이며, 결과는 규칙 해석 일치 검사입니다(임상 의료 오류 차단을 뜻하지 않음).</div>`;
+}
+init().catch(e=>{document.querySelector("main").insertAdjacentHTML("afterbegin",`<div class="card" role="alert">오류: ${esc(e.message)}</div>`)});
+</script>
+</body>
+</html>

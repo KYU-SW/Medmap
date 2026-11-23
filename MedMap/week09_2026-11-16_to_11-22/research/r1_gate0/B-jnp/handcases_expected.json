@@ -1,0 +1,238 @@
+{
+ "_note": "SYNTHETIC hand-computed expectations, written BEFORE any code was executed. flags order: AA(forall s forall w), EE(exists s exists w), AE(forall s exists w), EA(exists s forall w), EwAs(exists w forall s). Categories: ALWAYS/CONDITIONAL/UNDETERMINED/EXCLUDED/INSUFFICIENT",
+ "_written_at": "2026-11-17 (before first run)",
+ "HC1": {
+  "O1": {
+   "flags": [
+    0,
+    1,
+    0,
+    1,
+    0
+   ],
+   "cat": "CONDITIONAL"
+  },
+  "O2": {
+   "flags": [
+    0,
+    1,
+    0,
+    1,
+    0
+   ],
+   "cat": "CONDITIONAL"
+  },
+  "closed_world": {
+   "O1": "ALWAYS",
+   "O2": "EXCLUDED"
+  },
+  "penalty_P0.3": {
+   "O1": "ALWAYS",
+   "O2": "EXCLUDED"
+  },
+  "penalty_P10": {
+   "O1": "CONDITIONAL",
+   "O2": "CONDITIONAL"
+  }
+ },
+ "HC2": {
+  "O1": {
+   "flags": [
+    0,
+    1,
+    1,
+    0,
+    1
+   ],
+   "cat": "UNDETERMINED"
+  },
+  "O2": {
+   "flags": [
+    0,
+    1,
+    1,
+    0,
+    1
+   ],
+   "cat": "UNDETERMINED"
+  },
+  "O3": {
+   "flags": [
+    0,
+    1,
+    1,
+    0,
+    1
+   ],
+   "cat": "UNDETERMINED"
+  },
+  "O4": {
+   "flags": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cat": "EXCLUDED"
+  },
+  "ror_pairwise": {
+   "O4": "UNDETERMINED (EE wrongly 1)"
+  },
+  "vertex_only_exists_w": {
+   "O3": "EXCLUDED (EE wrongly 0)"
+  }
+ },
+ "HC3": {
+  "O1": {
+   "flags": [
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "cat": "UNDETERMINED"
+  },
+  "O2": {
+   "flags": [
+    0,
+    1,
+    0,
+    1,
+    0
+   ],
+   "cat": "CONDITIONAL"
+  },
+  "O3": {
+   "flags": [
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "cat": "UNDETERMINED"
+  },
+  "closed_world(conflict->T last record, U->F)": {
+   "O1": "EXCLUDED",
+   "O2": "ALWAYS",
+   "O3": "EXCLUDED"
+  }
+ },
+ "HC4": {
+  "O1": {
+   "flags": [
+    0,
+    1,
+    1,
+    0,
+    0
+   ],
+   "cat": "UNDETERMINED"
+  },
+  "O2": {
+   "flags": [
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "cat": "UNDETERMINED"
+  },
+  "O3": {
+   "flags": [
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "cat": "UNDETERMINED"
+  },
+  "naive_ror_combo": {
+   "O1": "EwAs wrongly 1 (=AE)"
+  }
+ },
+ "HC5": {
+  "O1": {
+   "flags": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cat": "INSUFFICIENT"
+  },
+  "O2": {
+   "flags": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cat": "INSUFFICIENT"
+  }
+ },
+ "HC6": {
+  "O1": {
+   "flags": [
+    0,
+    1,
+    1,
+    0,
+    1
+   ],
+   "cat": "INSUFFICIENT"
+  },
+  "O2": {
+   "flags": [
+    0,
+    1,
+    1,
+    0,
+    1
+   ],
+   "cat": "UNDETERMINED"
+  }
+ },
+ "_erratum_HC2": "(2026-11-17, after first run) HC2 의 ror_pairwise 기대(O4 EE 오판)는 손계산 오류였음: O3=(0.6,0.6)이 O4=(0.4,0.4)를 지배하므로 pairwise 로도 O4 는 탈락. 이 오류를 수정하기 위해 HC7 을 실행 전에 추가함.",
+ "HC7": {
+  "O1": {
+   "flags": [
+    0,
+    1,
+    1,
+    0,
+    1
+   ],
+   "cat": "UNDETERMINED"
+  },
+  "O2": {
+   "flags": [
+    0,
+    1,
+    1,
+    0,
+    1
+   ],
+   "cat": "UNDETERMINED"
+  },
+  "O3": {
+   "flags": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cat": "EXCLUDED"
+  },
+  "ror_pairwise": {
+   "O3": "UNDETERMINED (EE wrongly 1: O3≿_P O1 at w1<0.4, O3≿_P O2 at w1>0.6, but never both)"
+  }
+ }
+}

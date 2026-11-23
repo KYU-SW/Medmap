@@ -1,0 +1,10 @@
+{
+ "frozen_before_sampling": {
+  "__init__.py": "a3e5feec2074d74e364ddbc4757b965571e34b21258620e19e3e1b02e373902c",
+  "lexicon.py": "e962c4ce3e612493e528ee366aef9c2cd23d2f468beab3cf65f649410c1d3665",
+  "parser.py": "1b346c8ade9b9a82c95ab7bdad4124880e9a03a19c218a81d9887f6a0d70a788",
+  "pipeline.py": "f8beb3c40cc7ac0af8ff3061fdb0130c97722629bef62e3b9f453c51f28ac6c3",
+  "relations.py": "284e5398cc6688391da011846153d4a5b8605c9fe0453d193c531b1215da2351",
+  "evidence_relations.json": "27477d7c2e002b32ef9e0e32372fc2e24cde3a80ddd527419fb6806d298ad57e"
+ }
+}

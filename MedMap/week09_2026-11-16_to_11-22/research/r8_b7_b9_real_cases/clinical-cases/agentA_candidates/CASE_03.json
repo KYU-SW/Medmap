@@ -1,0 +1,126 @@
+{
+  "case_id": "CASE_03",
+  "case_type": "REAL_WITH_PREF",
+  "case_type_reason": "실제 환자(EHR 기반, 구두 동의, 비식별 공개) + 환자 본인의 건강 목표·치료 선호가 원문 표에 기록됨",
+  "source": {
+    "title": "Challenges and strategies in patients' health priorities-aligned decision-making for older adults with multiple chronic conditions",
+    "first_author": "Tinetti ME (외)",
+    "journal": "PLoS ONE",
+    "year": 2019,
+    "doi": "10.1371/journal.pone.0218249",
+    "pmid": "31181117",
+    "pmcid": "PMC6557523",
+    "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6557523/",
+    "supplement_url": "https://journals.plos.org/plosone/article/file?type=supplementary&id=10.1371/journal.pone.0218249.s002",
+    "license": "CC0 1.0 (public domain dedication)",
+    "license_quote": "This is an open access article, free of all copyright, and may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose.",
+    "real_patient_evidence": "본문 Results: 'Descriptions of the 35 patients discussed are displayed in [S1 Table]... ascertained from their EHRs.' / IRB 문단: 'All patients provided verbal consent to participate, share the data ... and publish without identifying information.'",
+    "access_date": "2026-11-21",
+    "verification_level": "[원문] 본문 XML(NCBI efetch) + S1 Table docx 원문",
+    "location": "S1 Table, 환자 No. 6"
+  },
+  "condition_combination": "(2) 당뇨+CKD+골관절염(관절염)",
+  "combination_reason": "우선 조합. 원문은 'arthritis'로만 표기(골관절염 여부 미확인)",
+  "conditions": [
+    "관절염(유형 미기재)",
+    "뇌졸중(CVA)",
+    "CKD 3기",
+    "우울증",
+    "제2형 당뇨병",
+    "통풍",
+    "고혈압",
+    "고지혈증",
+    "갑상선기능저하증",
+    "말초신경병증",
+    "요실금"
+  ],
+  "clinical_info_in_source": {
+    "demographics_function": "80+세 여성, 독거, 지팡이 또는 보행기",
+    "active_problem_count": 34,
+    "medications_names_only": [
+      "amlodipine",
+      "clopidogrel",
+      "levothyroxine",
+      "Linzess(linaclotide)",
+      "lisinopril",
+      "Lyrica(pregabalin)",
+      "Morphine ER",
+      "omeprazole",
+      "Pristiq(desvenlafaxine)",
+      "vitamin D"
+    ],
+    "labs": "원문에 없음"
+  },
+  "info_not_in_source": [
+    "모든 검사값(eGFR·UACR·HbA1c·혈압·칼륨·EF 등) 없음 — S1 Table은 EHR 문제목록·약물명만 제공",
+    "약물 용량·투여 기간 없음",
+    "심부전 유형(HFrEF/HFpEF)·NYHA 등급 없음",
+    "이 환자에 대해 실제로 내린 임상 결정·결과 없음(토론 세션 요약만, 결정 기록 미제공)",
+    "나이는 10년 단위(예: 70+)로만 제공(재식별 방지)"
+  ],
+  "patient_goals_preferences": {
+    "level": "실제 환자 본인 선호(목표+원하는/원치 않는 치료)",
+    "health_outcome_goals": [
+      "하루 두 번 개 산책",
+      "매주 딸과 저녁식사"
+    ],
+    "helpful_doable_care": [
+      "아들에게 손잡이 설치 요청",
+      "매일 목 운동",
+      "약 미리 나눠 담기"
+    ],
+    "bothersome_unwanted_care": [
+      "\"Would like to decrease blood pressure medications if possible\"",
+      "\"Constipation a problem\""
+    ],
+    "specific_ask": "\"I want to be less dizzy and unsteady in the morning so that I can keep going for walks to see my neighbors and take care of my dog\"",
+    "quote_location": "S1 Table 환자 No. 6 행(Health Outcome Goals / Healthcare Preferences / Specific Ask 열)"
+  },
+  "actual_clinical_decision": {
+    "described_in_source": false,
+    "summary": "UNKNOWN — 원문에 이 환자의 실제 결정 기록 없음",
+    "clinician_quotes": [
+      {
+        "text": "There's too many parts of this puzzle that we don't have enough information about it to make smart recommendations.",
+        "speaker": "PCP about Patient # 6",
+        "location": "본문 Table 2(Challenges) 'Uncertainty, complexity, and multiplicity' 행"
+      }
+    ]
+  },
+  "relevant_guidelines": [
+    {
+      "guideline": "G-VA-HTN-2026 (VA/DoD HTN CPG v5.0, 2026)",
+      "location": "Recommendation 4 (p.26): 수축기 <130 목표, '환자 특성과 선호에 따라' (Strong for)",
+      "relation": "혈압약 감량 선호·아침 어지럼과 충돌 가능 — 혈압값 없음"
+    },
+    {
+      "guideline": "G-VA-CKD-2025 (VA/DoD CKD CPG v5.0, 2025)",
+      "location": "Recommendation 11 (p.33): eGFR<60에서 집중 혈압관리 (Weak for)",
+      "relation": "같은 방향의 권고 — 기립성 저혈압 정보 없음"
+    },
+    {
+      "guideline": "G-WHO-HTN-2021 (WHO 성인 고혈압 약물치료 지침, 2021)",
+      "location": "권고 6절 목표 혈압 (PDF p.11, 본문 p.28): DM·CKD 고위험군 수축기 <130 조건부 제안",
+      "relation": "동일"
+    },
+    {
+      "guideline": "G-VA-OA-2026 (VA/DoD Hip & Knee OA CPG v3.0, 2026)",
+      "location": "Recommendation 14 (p.24): 관절염에 opioid 신규 시작 반대, 장기 사용자는 Opioid CPG 참조",
+      "relation": "Morphine ER 사용 중(적응증 원문 미기재)"
+    },
+    {
+      "guideline": "G-VA-OPIOID-2022 (VA/DoD Opioids for Chronic Pain CPG, 2022)",
+      "location": "웹페이지 확인만, 권고 번호 미확인",
+      "relation": "장기 opioid 관리"
+    }
+  ],
+  "info_gaps_that_could_change_judgment": [
+    "아침 어지럼 원인(기립성 저혈압·약물·신경병증 등) 미상: 혈압 강하 강화 vs 감량 판단이 반대로 갈림",
+    "실제 혈압값·기립 혈압: 미상",
+    "당뇨 약 없음 — 식이조절인지 누락인지 미상",
+    "관절염 유형·부위: OA 권고 적용 가능 여부"
+  ],
+  "research_relevance": "B7: 혈압 목표(HTN·CKD·WHO 지침 중복) vs 어지럼(조건부 충돌). B9: 실제 감량 선호. 원문에 PCP 발언 '정보가 부족해 판단 어렵다'가 있어 '정보 부족 시 보류' 질문과 직접 연결.",
+  "reuse_constraints": "CC0: 구조화·재배포 허용. 출처 표기 권장(학술 관례).",
+  "limitations": "환자 선호는 실제(우선순위 확인 과정에서 의료진이 기록). 단 검사값·실제 결정이 없어 '정답 결정' 비교용으로는 사용 불가, 선호·정보부족 시나리오용으로 적합."
+}

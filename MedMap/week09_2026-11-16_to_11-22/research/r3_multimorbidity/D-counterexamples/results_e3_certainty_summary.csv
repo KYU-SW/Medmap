@@ -1,0 +1,10 @@
+metric,count,total,pct
+disagree_WL_LL,37904,85264,44.455
+disagree_WL_PROB,24334,85264,28.54
+disagree_LL_PROB,39296,85264,46.087
+opposite_WL_LL,7904,85264,9.27
+opposite_WL_PROB,2018,85264,2.367
+opposite_LL_PROB,12276,85264,14.398
+all_three_differ,4694,85264,5.505
+aspic_impl_mismatch,0,170528,0
+grade_nma_eq_possibilistic,64,64,100.0

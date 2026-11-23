@@ -1,0 +1,142 @@
+{
+ "n_items": 174,
+ "by_source": {
+  "Adelaide SCT": 102,
+  "Open Medical SCT": 72
+ },
+ "by_hyp_type": {
+  "OTHER": 132,
+  "DIAGNOSIS": 42
+ },
+ "split_diag": {
+  "eval": 28,
+  "dev": 14
+ },
+ "Q1": {
+  "n_diag": 42,
+  "share_diag": 0.241,
+  "n_graph_hypothesis": 0,
+  "engine_output_not_no_knowledge": 0
+ },
+ "Q2": {
+  "direction_all_diag": {
+   "INC": 21,
+   "DEC": 20,
+   "ZERO": 1
+  },
+  "direction_eval": {
+   "INC": 16,
+   "DEC": 11,
+   "ZERO": 1
+  },
+  "agreement_median": 1.0,
+  "agreement_iqr": [
+   0.9,
+   1.0
+  ],
+  "share_agree_ge_0.8": 0.81
+ },
+ "Q3": {
+  "n_negative_items": 2,
+  "ref": {
+   "ZERO": 1,
+   "DEC": 1
+  },
+  "note": "n=2 — 해석 불가"
+ },
+ "Q4": {
+  "n_panel_decrease": 20,
+  "engine_can_express_conflict": 0,
+  "share_positive_finding(Q4b)": 0.95,
+  "n_positive_finding": 19
+ },
+ "Q5": {
+  "majority_class_from_dev": "DEC",
+  "dev_n": 14,
+  "direction_agreement": {
+   "major": {
+    "eval_acc": 0.393,
+    "eval_ci": [
+     0.269,
+     0.517
+    ],
+    "eval_n": 28,
+    "all_diag_acc": 0.476
+   },
+   "rule": {
+    "eval_acc": 0.607,
+    "eval_ci": [
+     0.483,
+     0.731
+    ],
+    "eval_n": 28,
+    "all_diag_acc": 0.524
+   },
+   "claude-3-5-sonnet-latest": {
+    "eval_acc": 0.846,
+    "eval_ci": [
+     0.72,
+     0.963
+    ],
+    "eval_n": 26,
+    "all_diag_acc": 0.816
+   },
+   "gpt-4o": {
+    "eval_acc": 0.846,
+    "eval_ci": [
+     0.708,
+     0.962
+    ],
+    "eval_n": 26,
+    "all_diag_acc": 0.842
+   },
+   "o1-preview": {
+    "eval_acc": 0.88,
+    "eval_ci": [
+     0.704,
+     1.0
+    ],
+    "eval_n": 25,
+    "all_diag_acc": 0.892
+   },
+   "gemini-1.5-pro-002": {
+    "eval_acc": 0.692,
+    "eval_ci": [
+     0.5,
+     0.88
+    ],
+    "eval_n": 26,
+    "all_diag_acc": 0.711
+   }
+  },
+  "llm_files": {
+   "claude-3-5-sonnet-latest": {
+    "parsed": 127,
+    "keys": [
+     "response"
+    ]
+   },
+   "gpt-4o": {
+    "parsed": 127,
+    "keys": [
+     "response"
+    ]
+   },
+   "o1-preview": {
+    "parsed": 126,
+    "keys": [
+     "response"
+    ]
+   },
+   "gemini-1.5-pro-002": {
+    "parsed": 127,
+    "keys": [
+     "response"
+    ]
+   }
+  },
+  "note": "규칙은 소견 유무만 사용. 엔진 자체는 이 문항들에 답할 지식 없음(Q1)."
+ },
+ "clinical_metrics": "NOT_EVALUABLE",
+ "sensitivity_excl_seen_1_101": "문항 1·101 은 hyp_type OTHER 라 DIAGNOSIS 지표에 영향 없음"
+}

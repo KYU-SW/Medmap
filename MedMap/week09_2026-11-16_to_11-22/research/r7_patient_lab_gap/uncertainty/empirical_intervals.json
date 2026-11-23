@@ -1,0 +1,166 @@
+{
+ "eGFR": {
+  "le6h": {
+   "train_pairs": 146,
+   "train_patients": 27,
+   "interval": [
+    -12.832,
+    11.952
+   ],
+   "test_pairs": 132,
+   "test_patients": 32,
+   "coverage": 0.8939393939393939,
+   "coverage_ci95": [
+    0.8019688610082383,
+    0.968
+   ],
+   "status": "EVALUATED"
+  },
+  "6-24h": {
+   "train_pairs": 694,
+   "train_patients": 46,
+   "interval": [
+    -14.679,
+    18.782
+   ],
+   "test_pairs": 794,
+   "test_patients": 48,
+   "coverage": 0.9420654911838791,
+   "coverage_ci95": [
+    0.9119665550682134,
+    0.9651700629776062
+   ],
+   "status": "EVALUATED"
+  },
+  "1-3d": {
+   "train_pairs": 279,
+   "train_patients": 47,
+   "interval": [
+    -18.828,
+    20.767
+   ],
+   "test_pairs": 310,
+   "test_patients": 46,
+   "coverage": 0.9806451612903225,
+   "coverage_ci95": [
+    0.9634496531170608,
+    0.9934874367648753
+   ],
+   "status": "EVALUATED"
+  },
+  "3-7d": {
+   "train_pairs": 49,
+   "train_patients": 11,
+   "interval": [
+    -20.615,
+    21.826
+   ],
+   "test_pairs": 53,
+   "test_patients": 17,
+   "coverage": 0.8867924528301887,
+   "coverage_ci95": [
+    0.625,
+    0.9747017015978419
+   ],
+   "status": "EVALUATED"
+  },
+  "gt7d": {
+   "train_pairs": 184,
+   "train_patients": 26,
+   "interval": [
+    -33.584,
+    26.978
+   ],
+   "test_pairs": 257,
+   "test_patients": 31,
+   "coverage": 0.9727626459143969,
+   "coverage_ci95": [
+    0.9512135341941654,
+    0.9932524177532164
+   ],
+   "status": "EVALUATED"
+  }
+ },
+ "K": {
+  "le6h": {
+   "train_pairs": 179,
+   "train_patients": 32,
+   "interval": [
+    -1.865,
+    0.8
+   ],
+   "test_pairs": 150,
+   "test_patients": 37,
+   "coverage": 0.8733333333333333,
+   "coverage_ci95": [
+    0.8266597222222222,
+    0.9151540832049306
+   ],
+   "status": "EVALUATED"
+  },
+  "6-24h": {
+   "train_pairs": 721,
+   "train_patients": 46,
+   "interval": [
+    -1.0,
+    1.0
+   ],
+   "test_pairs": 816,
+   "test_patients": 48,
+   "coverage": 0.9571078431372549,
+   "coverage_ci95": [
+    0.9334219784006584,
+    0.975797606382129
+   ],
+   "status": "EVALUATED"
+  },
+  "1-3d": {
+   "train_pairs": 268,
+   "train_patients": 46,
+   "interval": [
+    -0.8,
+    0.9
+   ],
+   "test_pairs": 286,
+   "test_patients": 46,
+   "coverage": 0.9300699300699301,
+   "coverage_ci95": [
+    0.8938775510204081,
+    0.9573878747582205
+   ],
+   "status": "EVALUATED"
+  },
+  "3-7d": {
+   "train_pairs": 50,
+   "train_patients": 12,
+   "interval": [
+    -0.777,
+    1.055
+   ],
+   "test_pairs": 26,
+   "test_patients": 16,
+   "coverage": 0.9230769230769231,
+   "coverage_ci95": [
+    0.8333333333333334,
+    1.0
+   ],
+   "status": "EVALUATED"
+  },
+  "gt7d": {
+   "train_pairs": 178,
+   "train_patients": 25,
+   "interval": [
+    -1.358,
+    1.787
+   ],
+   "test_pairs": 241,
+   "test_patients": 31,
+   "coverage": 0.9626556016597511,
+   "coverage_ci95": [
+    0.9325831549848403,
+    0.9866681415929204
+   ],
+   "status": "EVALUATED"
+  }
+ }
+}

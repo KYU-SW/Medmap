@@ -1,0 +1,34 @@
+후보,선점 연구,연도,URL/DOI,확인 수준,겹치는 부분
+PA,Murphy DR·Singh H 등 - e-trigger 기반 이상 검사 후속 지연 탐지 무작위 대조시험(폐·대장·전립선암),2015,https://pmc.ncbi.nlm.nih.gov/articles/PMC4622097,[검색요약],결과 발행 후 후속 미완료를 전자 기록 규칙으로 찾고 의사에게 통지. PA의 '후속 완료' 축과 직접 겹침
+PA,Zimolzak·Singh 등 - VA 가상 협업 개입 stepped-wedge 시험(누락된 이상 검사 결과 후속),2024,https://pmc.ncbi.nlm.nih.gov/articles/PMC10940951,[검색요약],e-trigger로 후속 필요 이상 결과 측정. 개입 효과 없음 보고(측정 도구 자체는 선점)
+PA,Wright 등 / AHRQ PSNet - Closing the loop on test results 신속 검토,확인 필요,https://psnet.ahrq.gov/issue/closing-loop-test-results-reduce-communication-failures-rapid-review-evidence-practice-and,[검색요약],결과 전달·확인·조치 단계별 실패 분류(미시행·미반환·미확인). PA의 상태 구분 틀과 겹침
+PA,Dalal 등 - Partners 결과 관리 도구(results manager) 연구(JAMIA),확인 필요,https://psnet.ahrq.gov/issue/linking-acknowledgement-action-closing-loop-non-urgent-clinically-significant-test-results,[검색요약],열람(acknowledgement)과 조치 연결. PA의 '열람/검토' 구분 선점
+PB,GuidelineForge - 지침→CQL 변환 + 원문 문장 연결 + 거부 사유 6종 + 3값 판정,2026,https://neurips.cc/virtual/2026/177622,[검색요약],원문 충실도·변환 거부를 측정 출력으로 보고. PB 핵심과 거의 동일(본문 미확인)
+PB,NICE 지침→ASP 실행 모델 LLM 자동 변환(정확/부정확/핵심 누락/환각 5범주),2026,https://arxiv.org/pdf/2608.30022,[검색요약],규칙별 조건·결론 충실도 범주화 = 의미 손실 감사. '단일 정답 번역 없음'을 저자 스스로 인정
+PB,CPGPrompt - 지침→결정 트리 변환(부정·시간 추론 실패 보고),확인 필요,https://penglab.weill.cornell.edu/publications/cpgprompt-translating-clinical-guidelines-large-language-model-executable-decision,[검색요약],변환 의미 손실 유형(부정·시간) 보고
+PB,Wu·Peleg - JBI 180:105072(이전 R8 보고서에서 본문 미확인으로 표시),2026,10.1016/j.jbi.2026.105072 (확인 필요),[미확인·이전 보고서 인용],복합질환 지침 형식화. 이전 보고서가 '가장 큰 미확인 변수'로 지정
+PC,Roberts·Cahan·Demner-Fushman - DupLink(복사 구간 정렬 + 상대 날짜 오류 탐지),확인 필요,https://www.lhncbc.nlm.nih.gov/LHC-publications/PDF/pub8973.pdf,[검색요약],복사된 문장이 새 노트에서 시간상 틀려지는 오류 탐지. PC 핵심(복사로 생긴 시간 모순)과 직접 겹침
+PC,Cohen·Elhadad 등 - MIMIC-III 근중복 노트와 NLP 영향(JBI),2018,https://cseweb.ucsd.edu/%7Ejmcauley/pdfs/jbi18.pdf,[검색요약],MIMIC 노트 중복 정량화
+PC,UCSF 진료기록 텍스트 출처 분석(수기 입력 1/5 미만) / Penn 중복 연구(JAMA),확인 필요,https://nam.edu/clinicianwellbeing/resources/characterizing-the-source-of-text-in-electronic-health-record-progress-notes/,[검색요약],복사·가져오기 텍스트 비율과 오래된 정보 위험 측정
+PC,Woldegebriel·Kumah-Crystal - LLM 4종으로 EHR 불일치 6유형 탐지(QNOTE·PDQI-9),확인 필요,https://www.vumc.org/vclic/sites/default/files/InformaticCon_Woldegebriel.pdf,[검색요약],노트 내·노트 간 불일치 LLM 탐지. 예비 포스터
+PC,Romanov·Shivade - MedNLI(MIMIC-III 문장쌍 모순 라벨),2018,https://arxiv.org/pdf/1808.06752,[검색요약],임상 문장 모순 판정 강한 기준선 자원
+PD,Baron 등(Vanderbilt) - 중복 검사 경고 수용/무시 예측 ML,확인 필요,https://news.vumc.org/?p=354251,[검색요약],경고 무시 예측으로 경고 부담 감소. PD와 직접 겹침
+PD,대만 약물 CDSS 경고 수용 예측(AUROC 0.94) JMIR Med Inform,2020,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7714650/,[검색요약],ML 경고 필터링
+PD,경고 무시율 기반 필터링(49~96% 무시),확인 필요,https://pmc.ncbi.nlm.nih.gov/articles/PMC3041356,[검색요약],무시율로 불필요 경고 제거
+PE,Safer Dx Trigger Tools Framework / 응급실 e-trigger 개념(재방문 입원·ICU 전환·사망·증상-질환 쌍),2021,https://qualitysafety.bmj.com/content/early/2022/03/21/bmjqs-2021-013683.full,[검색요약],PE 전체 개념 선점. 정답은 SaferDx 도구로 임상의 차트 검토
+PE,소아 응급실 e-trigger 진단 오류 역학(놓친 기회 2.6%),확인 필요,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11921087/,[검색요약],트리거 + 수기 검토. 트리거 단독 PPV 낮음
+PE,성인 응급실 e-trigger ML 정제(PPV 소폭 개선),2026,https://pubmed.ncbi.nlm.nih.gov/40988507/,[검색요약],트리거 + ML. '강한 기준선' 이미 존재
+PF,Hegselmann 등 - MIMIC-IV-Note 환자 요약 환각 주석(전문가 2인 100+100) ,2024,https://arxiv.org/abs/2402.15422,[검색요약],MIMIC 요약 충실도·환각 라벨. 사람 작성 요약에도 '환각' 존재 지적(참조 정답 결함)
+PF,MIMIC-IV 퇴원 기록 핵심 사건 추출·환각,2025,https://arxiv.org/abs/2504.19061,[검색요약],퇴원 요약 누락·환각
+PF,자동 편집 전자 인계 도구 RCT(누락 오류 감소) / I-PASS 다기관 연구,확인 필요,https://ouci.dntb.gov.ua/works/4NZJz184,[검색요약],인계 누락 감소 개입. 정답은 사람 관찰·검토
+PF,퇴원 시 미결 검사(pending results at discharge) 연구 계열(Roy 2005 등),확인 필요,확인 필요,[미확인·기억],퇴원 요약에 미결 결과 누락. PF+PA 교차 지점 선점 가능성 높음
+PG,Lau·Payne·Uzuner·Yetisgen - 영상 판독 권고 추출 + 330만 보고서 이행 분석,2019,https://arxiv.org/abs/1905.05877,[초록],권고 문장·검사·기한 추출 후 이행 분석. PG 핵심 그대로(비MIMIC)
+PG,Park·Yetisgen·Gunn 등 - 영상 후속 상태 주석 말뭉치 6393건/586명 + 전통 ML vs LLM,2025,https://arxiv.org/abs/2511.11867,[초록],'후속 이행 탐지 시스템 벤치마크' 명시. 데이터 출처 미기재(MIMIC 여부 미확인)
+PG,Xiao 등 Radiology - MIMIC-CXR 판독 권고 분류(GPT-4 F1 0.969),2025,확인 필요,[검색요약],MIMIC 판독 권고 식별의 강한 기준선 이미 존재(이행 여부는 아님)
+PG,Abbasi·Lacson·Khorasani 등 Radiology - 추가 영상 권고 폐쇄 루프 추적 도구,확인 필요,https://pubs.rsna.org/doi/pdf/10.1148/radiol.243750,[검색요약],권고 전달·추적·해결까지 폐쇄 루프
+PG,JACR CT 우연 소견 추가 영상 권고 이행률 39.1%,2021,https://pubmed.ncbi.nlm.nih.gov/32857982/,[검색요약],이행률 측정 선점
+PG,Dalal 등 - 권고-후속 검사 매칭 Extremely Randomized Trees,2020(확인 필요),https://pmc.ncbi.nlm.nih.gov/articles/PMC7064732 (링크-논문 대응 확인 필요),[검색요약],권고↔후속 검사 자동 매칭 = PG 알고리즘 부분 선점
+PH,침상 환자 데이터 표시 특허(추세 그래프 옆 'Last' 측정 시각),확인 필요,https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/8832558,[검색요약],값 옆 마지막 측정 시각 표시 = PH 표시 기능
+PH,ICU 검사값 자동 분석·위험 통지 특허(타임스탬프 기반 stale 판정·검사별 신뢰 창),확인 필요,https://uspto.report/patent/app/20180082042,[검색요약],검사별 변동 속도에 따른 유효 창 + stale 판정. PH 핵심 선점
+PH,EHR 검사 그래프 8종 비교(불균등 간격 왜곡) JAMIA,2015,https://pmc.ncbi.nlm.nih.gov/articles/PMC4482275,[검색요약],시간 간격 표시 오류가 판독에 영향
+PH,MedMap 자체 R2·K7(as-of·시간 DB로 해결 가능 판정) / R7,2026,내부 보고서,[본문·내부],정보 신선도는 기존 시간 DB 기법 영역이라는 이전 판정

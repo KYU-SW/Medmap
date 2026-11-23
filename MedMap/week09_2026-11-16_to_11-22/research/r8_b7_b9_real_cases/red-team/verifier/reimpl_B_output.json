@@ -1,0 +1,459 @@
+{
+ "CASE_01": {
+  "items": {
+   "I1": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "sglt2_contra"
+    ]
+   },
+   "I2": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "alt_glycemic_ok"
+    ]
+   },
+   "I3": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "hba1c_above_target"
+    ]
+   },
+   "I4": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I5": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "uacr_gt30"
+    ]
+   }
+  },
+  "questions": [
+   "alt_glycemic_ok",
+   "hba1c_above_target",
+   "sglt2_contra",
+   "uacr_gt30"
+  ]
+ },
+ "CASE_02": {
+  "items": {
+   "I1": {
+    "label": "SDM_CONFLICT",
+    "cause": [],
+    "relevant": []
+   },
+   "I2": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I3": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "acei_intol"
+    ]
+   },
+   "I4": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "sglt2_contra"
+    ]
+   },
+   "I5": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "alt_glycemic_ok"
+    ]
+   }
+  },
+  "questions": [
+   "acei_intol",
+   "alt_glycemic_ok",
+   "sglt2_contra"
+  ]
+ },
+ "CASE_03": {
+  "items": {
+   "I1": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "orthostatic",
+     "sbp_ge130"
+    ]
+   },
+   "I3": {
+    "label": "NOT_APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I4": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "statin_intol"
+    ]
+   }
+  },
+  "questions": [
+   "orthostatic",
+   "sbp_ge130",
+   "statin_intol"
+  ]
+ },
+ "CASE_04": {
+  "items": {
+   "I1": {
+    "label": "NOT_APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I2": {
+    "label": "HOLD",
+    "cause": [
+     "K",
+     "P"
+    ],
+    "relevant": [
+     "k_topical_nsaid_covered",
+     "knee_oa"
+    ]
+   },
+   "I3": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "hip_knee_oa"
+    ]
+   },
+   "I4": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "dm_type2",
+     "sglt2_contra"
+    ]
+   },
+   "I5": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "acei_intol"
+    ]
+   },
+   "I6": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "sbp_ge130"
+    ]
+   }
+  },
+  "questions": [
+   "acei_intol",
+   "dm_type2",
+   "hip_knee_oa",
+   "knee_oa",
+   "sbp_ge130",
+   "sglt2_contra"
+  ]
+ },
+ "CASE_05": {
+  "items": {
+   "I1": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I2": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "sglt2_contra"
+    ]
+   },
+   "I3": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "sglt2_contra"
+    ]
+   },
+   "I4": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I5": {
+    "label": "NOT_APPLY",
+    "cause": [],
+    "relevant": []
+   }
+  },
+  "questions": [
+   "sglt2_contra"
+  ]
+ },
+ "CASE_06": {
+  "items": {
+   "I1": {
+    "label": "HOLD",
+    "cause": [
+     "K",
+     "Q"
+    ],
+    "relevant": [
+     "k_anticoag_benefit_age90",
+     "q_bleed_tradeoff"
+    ]
+   },
+   "I2": {
+    "label": "NOT_APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I3": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I4": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "orthostatic",
+     "sbp_ge130"
+    ]
+   }
+  },
+  "questions": [
+   "orthostatic",
+   "q_bleed_tradeoff",
+   "sbp_ge130"
+  ]
+ },
+ "CASE_07": {
+  "items": {
+   "I1": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I2": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "sglt2_contra"
+    ]
+   },
+   "I3": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "bp_valid",
+     "orthostatic"
+    ]
+   }
+  },
+  "questions": [
+   "bp_valid",
+   "orthostatic",
+   "sglt2_contra"
+  ]
+ },
+ "CASE_08": {
+  "items": {
+   "I1": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I2": {
+    "label": "NOT_APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I3": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I4": {
+    "label": "HOLD",
+    "cause": [
+     "K"
+    ],
+    "relevant": [
+     "k_metformin_after_mala_safe"
+    ]
+   },
+   "I5": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "alt_glycemic_ok"
+    ]
+   }
+  },
+  "questions": [
+   "alt_glycemic_ok"
+  ]
+ },
+ "CASE_09": {
+  "items": {
+   "I1": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I2": {
+    "label": "HOLD",
+    "cause": [
+     "Q"
+    ],
+    "relevant": [
+     "q_life_prolonging"
+    ]
+   },
+   "I3": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   }
+  },
+  "questions": [
+   "q_life_prolonging"
+  ]
+ },
+ "CASE_10": {
+  "items": {
+   "I1": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I2": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "acute_illness"
+    ]
+   },
+   "I3": {
+    "label": "NOT_APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I4": {
+    "label": "HOLD",
+    "cause": [
+     "P"
+    ],
+    "relevant": [
+     "dm_type2",
+     "sglt2_contra"
+    ]
+   }
+  },
+  "questions": [
+   "acute_illness",
+   "dm_type2",
+   "sglt2_contra"
+  ]
+ },
+ "CASE_12": {
+  "items": {
+   "I1": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I2": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I3": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I4": {
+    "label": "NOT_APPLY",
+    "cause": [],
+    "relevant": []
+   }
+  },
+  "questions": []
+ },
+ "CASE_13": {
+  "items": {
+   "I1": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I2": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   },
+   "I3": {
+    "label": "APPLY",
+    "cause": [],
+    "relevant": []
+   }
+  },
+  "questions": []
+ }
+}
