@@ -1,0 +1,105 @@
+{
+ "version": "v3",
+ "scope": "ER-REASON v1.1.0 전문가 가능성 변화 점수(−2..+2) 예측 — 사후 설계 탐색, 단일 기관, 평가 782행·환자 192명. 임상 성능 NOT_EVALUATED",
+ "license_note": "원자료·행 단위·모델 파일은 포함하지 않음. 집계만",
+ "EXP-MAI-006(방법별, 환자 군집 95% 구간)": {
+  "A": {
+   "exact": 0.1,
+   "exact_ci": [
+    0.08,
+    0.12
+   ],
+   "direction": 0.1,
+   "direction_ci": [
+    0.08,
+    0.12
+   ],
+   "mae": 1.32,
+   "mae_ci": [
+    1.28,
+    1.37
+   ]
+  },
+  "B": {
+   "exact": 0.29,
+   "exact_ci": [
+    0.26,
+    0.33
+   ],
+   "direction": 0.49,
+   "direction_ci": [
+    0.46,
+    0.53
+   ],
+   "mae": 1.34,
+   "mae_ci": [
+    1.26,
+    1.41
+   ]
+  },
+  "C": {
+   "exact": 0.32,
+   "exact_ci": [
+    0.29,
+    0.35
+   ],
+   "direction": 0.54,
+   "direction_ci": [
+    0.51,
+    0.58
+   ],
+   "mae": 1.36,
+   "mae_ci": [
+    1.28,
+    1.45
+   ]
+  },
+  "D": {
+   "exact": 0.41,
+   "exact_ci": [
+    0.37,
+    0.44
+   ],
+   "direction": 0.65,
+   "direction_ci": [
+    0.62,
+    0.68
+   ],
+   "mae": 1.06,
+   "mae_ci": [
+    0.98,
+    1.14
+   ]
+  }
+ },
+ "EXP-MAI-006 주 비교 D−C 정확 일치": {
+  "diff": 0.09,
+  "ci95": [
+   0.06,
+   0.12
+  ]
+ },
+ "EXP-MAI-008(순서형 vs 재현 D)": {
+  "reproduction": "REPRODUCED_EXACT",
+  "mae_diff": -0.01,
+  "mae_diff_ci": [
+   -0.05,
+   0.03
+  ],
+  "final_verdict": "차이 불확실(구간이 0 포함 — 동등·효과 없음 아님)",
+  "case": "CASE C — MAE 차이 불확실",
+  "ORDINAL": {
+   "exact": 0.38,
+   "direction": 0.64,
+   "mae": 1.05,
+   "mae_ci": [
+    0.97,
+    1.13
+   ]
+  }
+ },
+ "sources_sha256": {
+  "006": "d733ff55a1c3d40d8862921773f42c7a7d50431496732dc750504bd27ac380e6",
+  "008": "aff040ab87d038255686bc42752c89f176524a8e40fd6e0ac8beefdc97c5c591"
+ }
+}

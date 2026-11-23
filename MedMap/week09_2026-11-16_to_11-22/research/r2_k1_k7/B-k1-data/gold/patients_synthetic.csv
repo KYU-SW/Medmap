@@ -1,0 +1,25 @@
+pid,age,t2d,t1d,egfr,uacr,hba1c,dialysis,transplant,k,acei_arb,nyha,hfref,recent_cv_days,sglt2_current,glp1_days,ascvd,sbp,retinopathy,design_note
+P01,64,Y,N,40,800,7.8,N,N,4.5,Y,1,N,none,N,none,N,135,N,typical DKD all fields present
+P02,64,Y,N,22,800,7.8,N,N,4.5,Y,1,N,none,N,none,N,135,N,eGFR 22 (EMPA 20-45 only)
+P03,64,Y,N,18,800,7.8,N,N,4.5,Y,1,N,none,N,none,N,135,N,eGFR 18 below all
+P04,64,Y,N,8,800,7.8,Y,N,4.5,Y,1,N,none,N,none,N,135,N,maintenance dialysis
+P05,58,Y,N,50,400,7.5,N,Y,4.4,Y,1,N,none,N,none,N,130,N,functioning transplant
+P06,64,Y,N,40,NA,7.8,N,N,4.5,Y,1,N,none,N,none,N,135,N,UACR unmeasured
+P07,61,Y,N,55,150,7.6,N,N,4.3,Y,1,N,none,N,none,N,138,Y,moderate albuminuria + retinopathy
+P08,52,N,N,35,1000,NA,N,N,4.6,Y,1,N,none,N,none,N,132,N,non-diabetic CKD
+P09,40,N,Y,40,900,8.2,N,N,4.5,Y,1,N,none,N,none,N,128,N,type 1 diabetes
+P10,66,Y,N,40,800,7.8,N,N,5.0,Y,1,N,none,N,none,N,135,N,potassium 5.0
+P11,66,Y,N,40,800,7.8,N,N,NA,Y,1,N,none,N,none,N,135,N,potassium unmeasured
+P12,66,Y,N,40,800,7.8,N,N,4.5,N,1,N,none,N,none,N,135,N,not on ACEi/ARB (reason unknown)
+P13,59,Y,N,40,800,12.5,N,N,4.5,Y,1,N,none,N,none,N,135,N,HbA1c 12.5
+P14,59,Y,N,40,800,NA,N,N,4.5,Y,1,N,none,N,none,N,135,N,HbA1c unmeasured
+P15,70,Y,N,40,800,7.8,N,N,4.5,Y,1,N,20,N,none,Y,135,N,MI 20 days ago
+P16,72,Y,N,40,800,7.8,N,N,4.5,Y,4,Y,none,N,none,Y,120,N,NYHA IV HFrEF
+P17,63,Y,N,40,800,7.8,N,N,4.5,Y,1,N,none,Y,none,N,135,N,currently on SGLT2i
+P18,67,Y,N,70,250,7.4,N,N,4.4,Y,1,N,none,N,none,Y,134,N,eGFR 70 UACR 250 with ASCVD
+P19,60,Y,NA,38,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,sparse record
+P20,62,Y,N,40,800,7.8,N,N,4.5,Y,1,N,none,N,10,N,185,N,SBP 185 and GLP-1RA 10 days ago
+P21,65,Y,N,25,5000,12.0,N,N,4.5,Y,1,N,none,N,none,N,135,N,exact boundaries 25/5000/12.0
+P22,65,Y,N,45,100,7.5,N,N,4.5,Y,1,N,none,N,none,N,135,NA,exact boundaries 45/100 retinopathy unknown
+P23,64,Y,N,40,800,7.8,NA,NA,4.5,Y,1,N,none,N,none,N,135,N,dialysis/transplant not documented
+P24,NA,Y,N,40,800,7.8,N,N,4.5,Y,1,N,none,N,none,N,135,N,age missing

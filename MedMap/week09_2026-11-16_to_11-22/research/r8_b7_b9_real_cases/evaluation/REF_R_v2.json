@@ -1,0 +1,430 @@
+{
+ "label": "REF-R (연구자 작성, 비독립). 의료 전문가 정답 아님. 작성자 = 메인 에이전트(사례 인코딩 작성자와 동일 — 순환 위험 있음). 방법 출력 보기 전 작성·동결. | v2 = run2 결과와 독립 검증을 본 뒤의 사후 정정(E1~E8). 사후 정정이므로 v1 과 함께만 보고.",
+ "label_space": {
+  "APPLY": "현재 정보로 권고 적용 확정",
+  "NOT_APPLY": "현재 정보로 비적용·금기 확정",
+  "SDM_CONFLICT": "지침 권고와 확인된 환자 선호가 충돌함을 확정 — 공동의사결정 필요",
+  "HOLD": "현재 정보로 확정 금지. cause = P(환자 임상정보), Q(환자 선호), K(지식·근거 — 환자에게 물어 닫히지 않음)"
+ },
+ "cases": {
+  "CASE_01": {
+   "items": {
+    "I1": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ],
+    "I2": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ],
+    "I3": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ],
+    "I4": [
+     "APPLY",
+     []
+    ],
+    "I5": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ]
+   },
+   "required_confirm": [
+    "sglt2_contra",
+    "alt_glycemic_ok",
+    "hba1c_above_target",
+    "uacr_gt30"
+   ],
+   "acceptable_confirm": [
+    "sglt2_contra",
+    "alt_glycemic_ok",
+    "hba1c_above_target",
+    "uacr_gt30"
+   ]
+  },
+  "CASE_02": {
+   "items": {
+    "I1": [
+     "SDM_CONFLICT",
+     []
+    ],
+    "I2": [
+     "APPLY",
+     []
+    ],
+    "I3": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ],
+    "I4": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ],
+    "I5": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ]
+   },
+   "required_confirm": [
+    "acei_intol",
+    "sglt2_contra",
+    "alt_glycemic_ok",
+    "egfr_ge20"
+   ],
+   "acceptable_confirm": [
+    "acei_intol",
+    "sglt2_contra",
+    "alt_glycemic_ok",
+    "egfr_ge20"
+   ]
+  },
+  "CASE_03": {
+   "items": {
+    "I1": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ],
+    "I3": [
+     "NOT_APPLY",
+     []
+    ],
+    "I4": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ]
+   },
+   "required_confirm": [
+    "sbp_ge130",
+    "orthostatic",
+    "statin_intol"
+   ],
+   "acceptable_confirm": [
+    "sbp_ge130",
+    "orthostatic",
+    "statin_intol",
+    "hip_knee_oa"
+   ]
+  },
+  "CASE_04": {
+   "items": {
+    "I1": [
+     "NOT_APPLY",
+     []
+    ],
+    "I2": [
+     "NOT_APPLY",
+     []
+    ],
+    "I3": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ],
+    "I4": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ],
+    "I5": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ],
+    "I6": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ]
+   },
+   "required_confirm": [
+    "knee_oa",
+    "hip_knee_oa",
+    "dm_type2",
+    "acei_intol",
+    "sbp_ge130",
+    "egfr_ge20"
+   ],
+   "acceptable_confirm": [
+    "knee_oa",
+    "hip_knee_oa",
+    "dm_type2",
+    "acei_intol",
+    "sbp_ge130",
+    "sglt2_contra",
+    "egfr_ge20"
+   ]
+  },
+  "CASE_05": {
+   "items": {
+    "I1": [
+     "APPLY",
+     []
+    ],
+    "I2": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ],
+    "I3": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ],
+    "I4": [
+     "APPLY",
+     []
+    ],
+    "I5": [
+     "NOT_APPLY",
+     []
+    ]
+   },
+   "required_confirm": [
+    "sglt2_contra"
+   ],
+   "acceptable_confirm": [
+    "sglt2_contra"
+   ]
+  },
+  "CASE_06": {
+   "items": {
+    "I1": [
+     "HOLD",
+     [
+      "K",
+      "Q"
+     ]
+    ],
+    "I2": [
+     "NOT_APPLY",
+     []
+    ],
+    "I3": [
+     "APPLY",
+     []
+    ],
+    "I4": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ]
+   },
+   "required_confirm": [
+    "q_bleed_tradeoff",
+    "sbp_ge130",
+    "orthostatic"
+   ],
+   "acceptable_confirm": [
+    "q_bleed_tradeoff",
+    "sbp_ge130",
+    "orthostatic",
+    "hip_knee_oa"
+   ]
+  },
+  "CASE_07": {
+   "items": {
+    "I1": [
+     "NOT_APPLY",
+     []
+    ],
+    "I2": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ],
+    "I3": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ]
+   },
+   "required_confirm": [
+    "sglt2_contra",
+    "bp_valid",
+    "orthostatic",
+    "sbp_ge130"
+   ],
+   "acceptable_confirm": [
+    "sglt2_contra",
+    "bp_valid",
+    "orthostatic",
+    "sbp_ge130"
+   ]
+  },
+  "CASE_08": {
+   "items": {
+    "I1": [
+     "APPLY",
+     []
+    ],
+    "I2": [
+     "HOLD",
+     [
+      "K"
+     ]
+    ],
+    "I3": [
+     "HOLD",
+     [
+      "K"
+     ]
+    ],
+    "I4": [
+     "HOLD",
+     [
+      "K",
+      "P"
+     ]
+    ],
+    "I5": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ]
+   },
+   "required_confirm": [
+    "alt_glycemic_ok",
+    "egfr_post_ok"
+   ],
+   "acceptable_confirm": [
+    "alt_glycemic_ok",
+    "egfr_post_ok"
+   ]
+  },
+  "CASE_09": {
+   "items": {
+    "I1": [
+     "APPLY",
+     []
+    ],
+    "I2": [
+     "HOLD",
+     [
+      "P",
+      "Q"
+     ]
+    ],
+    "I3": [
+     "APPLY",
+     []
+    ]
+   },
+   "required_confirm": [
+    "q_life_prolonging",
+    "sglt2_contra"
+   ],
+   "acceptable_confirm": [
+    "q_life_prolonging",
+    "sglt2_contra"
+   ]
+  },
+  "CASE_10": {
+   "items": {
+    "I1": [
+     "APPLY",
+     []
+    ],
+    "I2": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ],
+    "I3": [
+     "NOT_APPLY",
+     []
+    ],
+    "I4": [
+     "HOLD",
+     [
+      "P"
+     ]
+    ]
+   },
+   "required_confirm": [
+    "acute_illness",
+    "dm_type2"
+   ],
+   "acceptable_confirm": [
+    "acute_illness",
+    "dm_type2",
+    "sglt2_contra"
+   ]
+  },
+  "CASE_12": {
+   "items": {
+    "I1": [
+     "APPLY",
+     []
+    ],
+    "I2": [
+     "APPLY",
+     []
+    ],
+    "I3": [
+     "APPLY",
+     []
+    ],
+    "I4": [
+     "NOT_APPLY",
+     []
+    ]
+   },
+   "required_confirm": [],
+   "acceptable_confirm": []
+  },
+  "CASE_13": {
+   "items": {
+    "I1": [
+     "APPLY",
+     []
+    ],
+    "I2": [
+     "APPLY",
+     []
+    ],
+    "I3": [
+     "HOLD",
+     [
+      "Q"
+     ]
+    ]
+   },
+   "required_confirm": [
+    "q_regimen_choice"
+   ],
+   "acceptable_confirm": [
+    "q_regimen_choice"
+   ]
+  }
+ }
+}

@@ -1,0 +1,76 @@
+{
+  "case_id": "CASE_12",
+  "case_type": "GUIDELINE_VIGNETTE",
+  "case_type_reason": "연구 공동체가 기능 특성을 보여주기 위해 작성한 예시 사례. JBI 2023 초록: 'defining exemplar case studies covering these features'. 실제 환자라는 문구 없음. 'John's preferences'는 저자가 작성한 선호",
+  "source": {
+    "repo_primary": "https://github.com/MGCDS/benchmark-framework (Benchmark_4_cases.docx)",
+    "repo_full": "https://github.com/william-vw/MGCDS (Case 1–4 폴더, Solution Reports)",
+    "paper_1": "O'Sullivan D, Van Woensel W, Wilk S, Tu SW, et al. AMIA Annu Symp Proc 2021 (PMC8861752, PMID 35308994)",
+    "paper_2": "Van Woensel W et al. J Biomed Inform 2023;142:104395, doi:10.1016/j.jbi.2023.104395 (PMID 37201618, 초록만 확인)",
+    "license": "Apache-2.0 (두 저장소 모두 GitHub API spdx_id)",
+    "license_quote": "Apache License Version 2.0 ... TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION",
+    "license_caveat": "저장소에 함께 올라온 제3자 지침 PDF(NICE-2006/2019, Hypertension Canada, ESMO 등)는 Apache 적용 대상이 아님 — 재사용 금지",
+    "access_date": "2026-11-21",
+    "verification_level": "[원문] 저장소 docx 원문 + 논문 초록",
+    "location": "Case 2 'Chronic kidney disease/hypertension/atrial fibrillation' (Benchmark_4_cases.docx; william-vw/MGCDS Case 2 description.docx)"
+  },
+  "condition_combination": "(3) 기타 조합: CKD+고혈압+심방세동",
+  "combination_reason": "당뇨 없음. 공개 벤치마크 중 유일하게 '환자 선호' 필드와 '수정된 치료안(기대 출력)'이 함께 있어 B9 형식 비교 기준으로 유용",
+  "conditions": [
+    "CKD(eGFR 35, 비단백뇨성)",
+    "고혈압(3단계 치료)",
+    "빈혈(Hb 95)",
+    "신규 지속성 비판막성 심방세동"
+  ],
+  "clinical_info_in_source": {
+    "demographics_function": "70세 남성(가상 이름 John)",
+    "labs": "eGFR 35, Hb 95, ferritin 110, CHA2DS2-VASc >2",
+    "medications": "darbepoetin alfa, 저용량 aspirin, captopril, diltiazem, chlorthalidone"
+  },
+  "info_not_in_source": [
+    "칼륨·UACR 수치",
+    "출혈 위험 점수",
+    "실제 환자 여부(가상)"
+  ],
+  "patient_goals_preferences": {
+    "level": "저자 작성 가상 선호(실제 아님)",
+    "quotes": [
+      {
+        "text": "John's preferences: To have warfarin replaced by one of the DOACs (apixaban) in order to avoid hassle around checking the INR level on a regular basis.",
+        "location": "Case 2, 'John's preferences' 줄"
+      }
+    ]
+  },
+  "actual_clinical_decision": {
+    "described_in_source": true,
+    "summary": "저자 작성 기대 출력: aspirin→항응고제(warfarin, 선호 반영해 DOAC), amiodarone 대신 propafenone(CKD), BB는 ACEi·비DHP CCB 병용 비권장으로 미처방, 3개월 내 신기능·ECG",
+    "quote": "Revised treatment for CKD, HTN, and AFib: ESA, DOAC, ACE inhibitor, CCB, Diuretic, SCB ...",
+    "location": "Case 2 'Revised treatment' 줄",
+    "rationale_in_source": "'Adverse interactions and revisions' 절(저자 작성)"
+  },
+  "expected_output_available": "있음: 사례 내 'Revised treatment'(저자 기대안) + Solution Reports 폴더(6개 팀 해법 보고서). 단 의료 전문가 합의 정답(gold standard)이라는 문구는 없음",
+  "relevant_guidelines": [
+    {
+      "guideline": "G-VA-CKD-2025 (VA/DoD CKD CPG v5.0, 2025)",
+      "location": "Recommendations 12–14 (p.33)",
+      "relation": "ACEi 지속·추가 강압제"
+    },
+    {
+      "guideline": "G-VA-HTN-2026 (VA/DoD HTN CPG v5.0, 2026)",
+      "location": "Recommendations 4, 11, 13 (pp.26–27)",
+      "relation": "3제 요법"
+    },
+    {
+      "guideline": "사례 원 근거(저장소 Supporting Evidence)",
+      "location": "Andrade-2018(CCS AF), Macle-2016, NICE-2006/2019, Hypertension Canada-2015, Levin-2008 등",
+      "relation": "제3자 저작물 — 인용만"
+    }
+  ],
+  "info_gaps_that_could_change_judgment": [
+    "eGFR 35에서 DOAC 용량 조건(체중·나이·Cr) 미기재",
+    "선호가 가상이므로 실제 환자 선호 검증 불가"
+  ],
+  "research_relevance": "B9 형식 기준(선호가 처방 선택을 바꾸는 예). 실제 근거 사례 아님.",
+  "reuse_constraints": "Apache-2.0: 고지·출처 유지 시 수정·구조화·재배포 허용(사례 텍스트). 제3자 PDF 제외.",
+  "limitations": "가상 사례."
+}

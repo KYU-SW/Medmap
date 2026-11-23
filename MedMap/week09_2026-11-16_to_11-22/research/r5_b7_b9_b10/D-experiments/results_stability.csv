@@ -1,0 +1,16 @@
+exp,method,adjacent_pairs,unnecessary_change,insensitive
+E5,A_mitplan_style,200,14,83
+E5,B_joint,200,0,0
+E5,Bp_modular,200,10,7
+E5,C_naive,200,0,131
+E5,V_exclude_variant,200,27,39
+E6,A_mitplan_style,160,0,3
+E6,B_joint,160,0,0
+E6,Bp_modular,160,0,0
+E6,C_naive,160,0,3
+E6,V_exclude_variant,160,6,0
+E7,A_mitplan_style,120,6,35
+E7,B_joint,120,0,0
+E7,Bp_modular,120,2,3
+E7,C_naive,120,0,50
+E7,V_exclude_variant,120,16,24

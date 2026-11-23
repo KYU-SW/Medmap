@@ -1,0 +1,382 @@
+{
+ "fitness": {
+  "patients_total": 100,
+  "admissions_total": 275,
+  "labevents_rows": 107727,
+  "mdrd_rows": 739,
+  "mdrd_kind_counts": {
+   "value": 310,
+   "censored_gt": 234,
+   "unparsed": 195
+  },
+  "K_serum_obs": 3015,
+  "K_serum_patients": 100,
+  "K_serum_patients_repeat": 100,
+  "K_wholeblood_obs": 302,
+  "K_wholeblood_patients": 69,
+  "K_wholeblood_patients_repeat": 52,
+  "Cr_obs": 2998,
+  "Cr_patients": 100,
+  "Cr_patients_repeat": 100,
+  "eGFR_derived_obs": 2998,
+  "eGFR_derived_patients": 100,
+  "eGFR_derived_patients_repeat": 100,
+  "eGFR_derived_age_uncertain_patients": 4,
+  "patients_both_K_eGFR": 100,
+  "valid_charttime_K": 3015,
+  "valid_storetime_K": 3015,
+  "clean_log": {
+   "K_drop_valuenum_na": 3,
+   "K_dup_removed": 4,
+   "K_store_inversion": 0,
+   "Kwb_drop_valuenum_na": 0,
+   "Kwb_dup_removed": 0,
+   "Kwb_store_inversion": 0,
+   "Cr_drop_valuenum_na": 0,
+   "Cr_drop_nonpositive": 0,
+   "Cr_dup_removed": 5,
+   "Cr_store_inversion": 0
+  }
+ },
+ "L1_series": {
+  "eGFR": {
+   "obs": 2998,
+   "patients": 100,
+   "adjacent_pairs": 2898,
+   "gap_bin_counts": {
+    "le6h": 278,
+    "6-24h": 1488,
+    "1-3d": 589,
+    "3-7d": 102,
+    "gt7d": 441
+   },
+   "gap_by_admission": {
+    "same_admission": 2109,
+    "involves_outpatient": 755,
+    "different_admission": 34
+   },
+   "gap_h_median": 23.083333333333332,
+   "gap_h_p90": 639.0200000000003,
+   "turnaround_h_median": 1.3,
+   "turnaround_h_p90": 2.6166666666666667,
+   "turnaround_negative": 0,
+   "near_abs_obs": 1018,
+   "near_abs_patients": 45,
+   "near_rel_obs": 896,
+   "near_rel_patients": 45,
+   "crossing_pairs": 558,
+   "crossing_patients": 44,
+   "crossing_by_gapbin": {
+    "6-24h": 292,
+    "gt7d": 107,
+    "1-3d": 79,
+    "le6h": 57,
+    "3-7d": 23
+   },
+   "per_threshold_near_abs_obs": {
+    "20": 243,
+    "25": 256,
+    "30": 217,
+    "45": 238,
+    "50": 244,
+    "60": 192
+   },
+   "per_threshold_near_abs_patients": {
+    "20": 20,
+    "25": 23,
+    "30": 26,
+    "45": 30,
+    "50": 34,
+    "60": 36
+   }
+  },
+  "K": {
+   "obs": 3015,
+   "patients": 100,
+   "adjacent_pairs": 2915,
+   "gap_bin_counts": {
+    "le6h": 329,
+    "6-24h": 1537,
+    "1-3d": 554,
+    "3-7d": 76,
+    "gt7d": 419
+   },
+   "gap_by_admission": {
+    "same_admission": 2200,
+    "involves_outpatient": 677,
+    "different_admission": 38
+   },
+   "gap_h_median": 22.116666666666667,
+   "gap_h_p90": 541.389999999999,
+   "turnaround_h_median": 1.3166666666666667,
+   "turnaround_h_p90": 2.6166666666666667,
+   "turnaround_negative": 0,
+   "near_abs_obs": 460,
+   "near_abs_patients": 57,
+   "near_rel_obs": 1013,
+   "near_rel_patients": 76,
+   "crossing_pairs": 562,
+   "crossing_patients": 60,
+   "crossing_by_gapbin": {
+    "6-24h": 224,
+    "gt7d": 150,
+    "1-3d": 85,
+    "le6h": 78,
+    "3-7d": 25
+   },
+   "per_threshold_near_abs_obs": {
+    "4.8": 270,
+    "5.0": 198,
+    "5.5": 68
+   },
+   "per_threshold_near_abs_patients": {
+    "4.8": 49,
+    "5.0": 47,
+    "5.5": 23
+   }
+  }
+ },
+ "L1_evaluation_points": {
+  "eGFR": {
+   "eval_points": 2898,
+   "patients": 100,
+   "state_counts": {
+    "age_le24h": 1762,
+    "age_gt24h": 1136
+   },
+   "with_pending_results": 10,
+   "near_boundary_available": 1000,
+   "near_boundary_and_stale": 306,
+   "near_boundary_patients": 45,
+   "status_changed_vs_realized": 560,
+   "status_changed_patients": 44,
+   "info_age_bin_counts": {
+    "6-24h": 1493,
+    "1-3d": 592,
+    "gt7d": 442,
+    "le6h": 269,
+    "3-7d": 102
+   }
+  },
+  "K": {
+   "eval_points": 2915,
+   "patients": 100,
+   "state_counts": {
+    "age_le24h": 1860,
+    "age_gt24h": 1054,
+    "no_available_value": 1
+   },
+   "with_pending_results": 11,
+   "near_boundary_available": 443,
+   "near_boundary_and_stale": 187,
+   "near_boundary_patients": 55,
+   "status_changed_vs_realized": 562,
+   "status_changed_patients": 60,
+   "info_age_bin_counts": {
+    "6-24h": 1539,
+    "1-3d": 556,
+    "gt7d": 422,
+    "le6h": 321,
+    "3-7d": 76
+   }
+  }
+ },
+ "L2_uncertainty": {
+  "eGFR": {
+   "le6h": {
+    "train_pairs": 146,
+    "train_patients": 27,
+    "interval": [
+     -12.832,
+     11.952
+    ],
+    "test_pairs": 132,
+    "test_patients": 32,
+    "coverage": 0.8939393939393939,
+    "coverage_ci95": [
+     0.8019688610082383,
+     0.968
+    ],
+    "status": "EVALUATED"
+   },
+   "6-24h": {
+    "train_pairs": 694,
+    "train_patients": 46,
+    "interval": [
+     -14.679,
+     18.782
+    ],
+    "test_pairs": 794,
+    "test_patients": 48,
+    "coverage": 0.9420654911838791,
+    "coverage_ci95": [
+     0.9119665550682134,
+     0.9651700629776062
+    ],
+    "status": "EVALUATED"
+   },
+   "1-3d": {
+    "train_pairs": 279,
+    "train_patients": 47,
+    "interval": [
+     -18.828,
+     20.767
+    ],
+    "test_pairs": 310,
+    "test_patients": 46,
+    "coverage": 0.9806451612903225,
+    "coverage_ci95": [
+     0.9634496531170608,
+     0.9934874367648753
+    ],
+    "status": "EVALUATED"
+   },
+   "3-7d": {
+    "train_pairs": 49,
+    "train_patients": 11,
+    "interval": [
+     -20.615,
+     21.826
+    ],
+    "test_pairs": 53,
+    "test_patients": 17,
+    "coverage": 0.8867924528301887,
+    "coverage_ci95": [
+     0.625,
+     0.9747017015978419
+    ],
+    "status": "EVALUATED"
+   },
+   "gt7d": {
+    "train_pairs": 184,
+    "train_patients": 26,
+    "interval": [
+     -33.584,
+     26.978
+    ],
+    "test_pairs": 257,
+    "test_patients": 31,
+    "coverage": 0.9727626459143969,
+    "coverage_ci95": [
+     0.9512135341941654,
+     0.9932524177532164
+    ],
+    "status": "EVALUATED"
+   }
+  },
+  "K": {
+   "le6h": {
+    "train_pairs": 179,
+    "train_patients": 32,
+    "interval": [
+     -1.865,
+     0.8
+    ],
+    "test_pairs": 150,
+    "test_patients": 37,
+    "coverage": 0.8733333333333333,
+    "coverage_ci95": [
+     0.8266597222222222,
+     0.9151540832049306
+    ],
+    "status": "EVALUATED"
+   },
+   "6-24h": {
+    "train_pairs": 721,
+    "train_patients": 46,
+    "interval": [
+     -1.0,
+     1.0
+    ],
+    "test_pairs": 816,
+    "test_patients": 48,
+    "coverage": 0.9571078431372549,
+    "coverage_ci95": [
+     0.9334219784006584,
+     0.975797606382129
+    ],
+    "status": "EVALUATED"
+   },
+   "1-3d": {
+    "train_pairs": 268,
+    "train_patients": 46,
+    "interval": [
+     -0.8,
+     0.9
+    ],
+    "test_pairs": 286,
+    "test_patients": 46,
+    "coverage": 0.9300699300699301,
+    "coverage_ci95": [
+     0.8938775510204081,
+     0.9573878747582205
+    ],
+    "status": "EVALUATED"
+   },
+   "3-7d": {
+    "train_pairs": 50,
+    "train_patients": 12,
+    "interval": [
+     -0.777,
+     1.055
+    ],
+    "test_pairs": 26,
+    "test_patients": 16,
+    "coverage": 0.9230769230769231,
+    "coverage_ci95": [
+     0.8333333333333334,
+     1.0
+    ],
+    "status": "EVALUATED"
+   },
+   "gt7d": {
+    "train_pairs": 178,
+    "train_patients": 25,
+    "interval": [
+     -1.358,
+     1.787
+    ],
+    "test_pairs": 241,
+    "test_patients": 31,
+    "coverage": 0.9626556016597511,
+    "coverage_ci95": [
+     0.9325831549848403,
+     0.9866681415929204
+    ],
+    "status": "EVALUATED"
+   }
+  }
+ },
+ "comparison": {
+  "test_patients": 50,
+  "eval_points_test": 3065,
+  "eval_points_computable": 3065,
+  "not_computable_reasons": {},
+  "pair_evaluations": 80230,
+  "with_spurious": 20426,
+  "eval_points_with_any_spurious": 1965,
+  "patients_with_any_spurious": 49,
+  "spurious_allowed_out": 12048,
+  "spurious_disallowed_in": 17639,
+  "cat_change": 0,
+  "wrong_confirm": 0,
+  "unnecessary_hold": 0,
+  "hold_joint": 28682,
+  "realized_outside_J": 441,
+  "by_var": {
+   "K": {
+    "pair_evals": 9114,
+    "with_spurious": 3498,
+    "patients_with_spurious": 49,
+    "realized_outside_J": 101
+   },
+   "eGFR": {
+    "pair_evals": 71116,
+    "with_spurious": 16928,
+    "patients_with_spurious": 31,
+    "realized_outside_J": 340
+   }
+  }
+ },
+ "elapsed_s": 19.9
+}

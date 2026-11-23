@@ -1,0 +1,111 @@
+{
+  "case_id": "CASE_05",
+  "case_type": "REAL_WITH_PREF",
+  "case_type_reason": "실제 환자(EHR 기반, 구두 동의, 비식별 공개) + 환자 본인의 건강 목표·치료 선호가 원문 표에 기록됨",
+  "source": {
+    "title": "Challenges and strategies in patients' health priorities-aligned decision-making for older adults with multiple chronic conditions",
+    "first_author": "Tinetti ME (외)",
+    "journal": "PLoS ONE",
+    "year": 2019,
+    "doi": "10.1371/journal.pone.0218249",
+    "pmid": "31181117",
+    "pmcid": "PMC6557523",
+    "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6557523/",
+    "supplement_url": "https://journals.plos.org/plosone/article/file?type=supplementary&id=10.1371/journal.pone.0218249.s002",
+    "license": "CC0 1.0 (public domain dedication)",
+    "license_quote": "This is an open access article, free of all copyright, and may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose.",
+    "real_patient_evidence": "본문 Results: 'Descriptions of the 35 patients discussed are displayed in [S1 Table]... ascertained from their EHRs.' / IRB 문단: 'All patients provided verbal consent to participate, share the data ... and publish without identifying information.'",
+    "access_date": "2026-11-21",
+    "verification_level": "[원문] 본문 XML(NCBI efetch) + S1 Table docx 원문",
+    "location": "S1 Table, 환자 No. 14"
+  },
+  "condition_combination": "(2) 당뇨+CKD+골관절염(관절염)",
+  "combination_reason": "우선 조합(CKD 2기). 원문에 스타틴 감량이라는 실제 과거 조정이 환자 선호로 기록됨",
+  "conditions": [
+    "관절염(유형 미기재)",
+    "유착성 관절낭염(어깨)",
+    "대동맥판 협착",
+    "CKD 2기",
+    "변비",
+    "제2형 당뇨병",
+    "불안",
+    "고혈압",
+    "고지혈증",
+    "서혜부 탈장",
+    "수면무호흡",
+    "신장결석",
+    "비골근 위축",
+    "GERD",
+    "요폐"
+  ],
+  "clinical_info_in_source": {
+    "demographics_function": "70+세 남성, ADL 부분 의존",
+    "active_problem_count": 24,
+    "medications_names_only": [
+      "aspirin",
+      "CoQ10",
+      "famotidine",
+      "metformin",
+      "metoprolol",
+      "Miralax",
+      "simvastatin",
+      "trazodone"
+    ],
+    "labs": "원문에 없음"
+  },
+  "info_not_in_source": [
+    "모든 검사값(eGFR·UACR·HbA1c·혈압·칼륨·EF 등) 없음 — S1 Table은 EHR 문제목록·약물명만 제공",
+    "약물 용량·투여 기간 없음",
+    "심부전 유형(HFrEF/HFpEF)·NYHA 등급 없음",
+    "이 환자에 대해 실제로 내린 임상 결정·결과 없음(토론 세션 요약만, 결정 기록 미제공)",
+    "나이는 10년 단위(예: 70+)로만 제공(재식별 방지)"
+  ],
+  "patient_goals_preferences": {
+    "level": "실제 환자 본인 선호(목표+원하는/원치 않는 치료)",
+    "health_outcome_goals": [
+      "매일 친구들과 커피·카드",
+      "매일 체육관",
+      "주 1회 병원 봉사"
+    ],
+    "helpful_doable_care": [
+      "\"Reduction in simvastatin to 3 times per week is helping, decreased muscle pain\"",
+      "Trazodone is helping with sleep",
+      "CPAP is \"a pain\" but it helps"
+    ],
+    "bothersome_unwanted_care": [
+      "Tamsulosin did not help"
+    ],
+    "specific_ask": "NA(원문에 없음)",
+    "quote_location": "S1 Table 환자 No. 14 행(Health Outcome Goals / Healthcare Preferences / Specific Ask 열)"
+  },
+  "actual_clinical_decision": {
+    "described_in_source": false,
+    "summary": "UNKNOWN — 원문에 이 환자의 실제 결정 기록 없음",
+    "clinician_quotes": []
+  },
+  "relevant_guidelines": [
+    {
+      "guideline": "G-VA-CKD-2025 (VA/DoD CKD CPG v5.0, 2025)",
+      "location": "Recommendation 19 (p.34): 투석 전 CKD에 스타틴 시작 (Strong for)",
+      "relation": "근육통으로 감량한 실제 조정과 긴장 관계"
+    },
+    {
+      "guideline": "G-VA-DM-2023 (VA/DoD T2DM CPG v6.0, 2023)",
+      "location": "Recommendation 24 (p.27): CVD·신질환 동반 T2DM에 SGLT-2i/GLP-1 RA 고려 (Weak for)",
+      "relation": "대동맥판 협착·CKD 동반, 혈당 목표 달성 여부 미상"
+    },
+    {
+      "guideline": "G-VA-OA-2026 (VA/DoD Hip & Knee OA CPG v3.0, 2026)",
+      "location": "Recommendations 4, 31 (운동·요가/태극권), 12 (p.24)",
+      "relation": "매일 체육관 목표와 부합(보완)"
+    }
+  ],
+  "info_gaps_that_could_change_judgment": [
+    "스타틴 감량 결정 시점·지질 수치·CV 위험 미상",
+    "대동맥판 협착 중증도 미상 — 운동 목표의 안전성 판단에 영향",
+    "eGFR·UACR·HbA1c 미상"
+  ],
+  "research_relevance": "B7: CKD 스타틴 강권고 vs 실제 부작용으로 감량(보완/충돌). B9: 환자가 '도움 된다'고 밝힌 감량 선호.",
+  "reuse_constraints": "CC0: 구조화·재배포 허용. 출처 표기 권장(학술 관례).",
+  "limitations": "환자 선호는 실제(우선순위 확인 과정에서 의료진이 기록). 단 검사값·실제 결정이 없어 '정답 결정' 비교용으로는 사용 불가, 선호·정보부족 시나리오용으로 적합."
+}

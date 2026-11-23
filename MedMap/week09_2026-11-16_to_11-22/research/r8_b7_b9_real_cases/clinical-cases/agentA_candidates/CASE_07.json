@@ -1,0 +1,106 @@
+{
+  "case_id": "CASE_07",
+  "case_type": "REAL_WITH_PREF",
+  "case_type_reason": "동료심사 사례 보고의 실제 환자 + 환자 본인의 돌봄 장소 선호(재가 돌봄, 시설 거부)가 원문에 기록. 단 약물 치료 선호는 '약 단순화 동의' 수준",
+  "source": {
+    "title": "Deprescribing in Real Time: Hospitalized Septuagenarian With Polypharmacy",
+    "first_author": "Famuyiro (외)",
+    "journal": "Cureus",
+    "year": 2023,
+    "doi": "10.7759/cureus.40699",
+    "pmid": "37485211",
+    "pmcid": "PMC10359101",
+    "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10359101/",
+    "license": "CC BY (버전 표기 없음)",
+    "license_quote": "This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+    "access_date": "2026-11-21",
+    "verification_level": "[원문] 본문 XML"
+  },
+  "condition_combination": "(1) 당뇨+CKD+심부전",
+  "combination_reason": "우선 조합 + 다약제·만성통증·암 동반",
+  "conditions": [
+    "제2형 당뇨병(비인슐린)",
+    "고지혈증",
+    "고도비만(BMI 39)",
+    "HFpEF",
+    "본태성 고혈압",
+    "불안",
+    "우울증",
+    "만성 요통",
+    "폐 선편평상피암(수술·항암·방사선 후 면역치료)",
+    "다발골수종(bortezomib·prednisone)",
+    "불면증",
+    "만성 저산소성 호흡부전(산소 2L)",
+    "만성 기관지염",
+    "GERD",
+    "허약으로 인한 기능적 하지마비(CFS 6)",
+    "CKD 3a기"
+  ],
+  "clinical_info_in_source": {
+    "demographics_function": "75세 여성, 남편(80대)이 유일한 돌봄자, 섭식·몸단장·화장실 외 ADL 의존",
+    "labs": "HbA1c 5.2%; Hb 9.6 g/dL; Na 142; K 3.8; glucose 78 mg/dL; BUN 18; Cr 1.2 mg/dL; eGFR 54; Ca 8.4; albumin 1.9 g/dL; Mg 1.8; 혈압 169/60; GCS 11; 소변약물검사 opiate·benzodiazepine·cannabinoid 양성 (Table 1, Case presentation)",
+    "medications": "약국 기록 16종 vs 집 약봉지 28종(중복 benzodiazepine, 다수 향정신성약, opioid, 유효기간 지난 furosemide, OTC 보충제·THC 젤리) (Table 2)"
+  },
+  "info_not_in_source": [
+    "복용 중인 혈당강하제 이름(비인슐린이라고만 기재 — 본 감사에서 Table 2 전체 미확인, 확인 필요)",
+    "EF 수치",
+    "UACR",
+    "심부전 표준치료(SGLT2i 등) 사용 여부와 이유",
+    "퇴원 후 결과"
+  ],
+  "patient_goals_preferences": {
+    "level": "실제 환자 본인 선호(돌봄 장소) + 약 단순화 동의",
+    "quotes": [
+      {
+        "text": "Despite her functional limitations, the patient's wish was to receive care in her home (she refused any post-acute care recommendations).",
+        "location": "Case presentation 2번째 문단"
+      },
+      {
+        "text": "Physical therapy recommended post-acute care, but the patient expressed her preference for being discharged to home with home health.",
+        "location": "Case presentation, 입원 경과 문단"
+      }
+    ]
+  },
+  "actual_clinical_decision": {
+    "described_in_source": true,
+    "summary": "항경련제 시작 보류, 약물 정리(중복·만료약 폐기), oxycodone-acetaminophen 정시→필요시로 변경, carvedilol·amlodipine·duloxetine 지속, 재가 간호와 함께 자택 퇴원",
+    "quote": "The patient and spouse agreed with the team to simplify her medications, including discarding expired or duplicate medications.",
+    "location": "Case presentation, Table 2 직후 문단",
+    "rationale_in_source": "감염·신경·대사 검사 음성, 진짜 경련인지 확정 불가 → 약물 정리에 집중(원문)"
+  },
+  "relevant_guidelines": [
+    {
+      "guideline": "G-VA-DM-2023 (VA/DoD T2DM CPG v6.0, 2023)",
+      "location": "Recommendations 9–10, 25 (pp.25–27)",
+      "relation": "HbA1c 5.2%는 7.0–8.5% 범위보다 낮음 — 약제 미상이라 과치료 여부 보류"
+    },
+    {
+      "guideline": "G-VA-CKD-2025 (VA/DoD CKD CPG v5.0, 2025)",
+      "location": "Recommendation 15 (p.33): T2D 동반 CKD에 SGLT2i",
+      "relation": "사용 여부 원문 없음"
+    },
+    {
+      "guideline": "G-KSHF-2023-TX (대한심부전학회 심부전 진료지침: 치료, IJHF 2023)",
+      "location": "HFmrEF and HFpEF 절",
+      "relation": "HFpEF 치료 — 사용 여부 원문 없음"
+    },
+    {
+      "guideline": "G-VA-OPIOID-2022 (VA/DoD Opioids for Chronic Pain CPG, 2022)",
+      "location": "웹페이지 확인만, 권고 번호 미확인",
+      "relation": "opioid·benzodiazepine 병용"
+    },
+    {
+      "guideline": "G-VA-HTN-2026 (VA/DoD HTN CPG v5.0, 2026)",
+      "location": "Recommendation 4 (p.26)",
+      "relation": "입원 혈압 169/60"
+    }
+  ],
+  "info_gaps_that_could_change_judgment": [
+    "혈당강하제 종류(저혈당 유발 약이면 감량 방향)",
+    "부종(1+)에 대한 이뇨제 필요성 — furosemide 중단 기록과 HFpEF 관계",
+    "기대여명·암 예후: time-to-benefit 판단(원문 Discussion이 이 기준 언급)"
+  ],
+  "research_relevance": "B7: 다약제 상황에서 지침별 약을 더하는 대신 정리. B9: 시설 거부·재가 선호가 퇴원 결정을 실제로 바꿈.",
+  "reuse_constraints": "CC BY: 출처 표기 시 구조화·재배포 허용.",
+  "limitations": "선호는 '돌봄 장소' 중심이며 당뇨·심부전 약물에 대한 환자 선호는 없음."
+}

@@ -1,0 +1,80 @@
+{
+  "case_id": "CASE_11",
+  "case_type": "GUIDELINE_VIGNETTE",
+  "case_type_reason": "AGS 2012 원칙 설명용 교육 사례. 원문: 'To illustrate the application of these principles, two cases are described' / 'the cases have been distilled'. 실제 환자 여부는 원문에 명시되지 않음 → 실제 자료로 표시 금지(확인 필요)",
+  "source": {
+    "title": "Guiding Principles for the Care of Older Adults with Multimorbidity: An Approach for Clinicians",
+    "first_author": "American Geriatrics Society Expert Panel (Boyd C 외)",
+    "journal": "J Am Geriatr Soc",
+    "year": 2012,
+    "doi": "10.1111/j.1532-5415.2012.04188.x",
+    "pmid": "22994865",
+    "pmcid": "PMC4450364",
+    "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4450364/",
+    "license": "저작권 보유(© 2012 AGS). PMC 'text mining·fair use' 조건",
+    "license_quote": "This file is available for text mining. It may also be used consistent with the principles of fair use under the copyright law.",
+    "access_date": "2026-11-21",
+    "verification_level": "[원문] 본문 XML"
+  },
+  "condition_combination": "(1)+(2) 당뇨+심부전+골관절염(+Cr 1.7)",
+  "combination_reason": "우선 조합 두 개를 동시에 포함하는 공개 교육 사례. CKD는 진단명으로 기재되지 않고 Cr 1.7·BUN 40만 있음",
+  "conditions": [
+    "알츠하이머병 의증",
+    "울혈성 심부전",
+    "골관절염",
+    "골다공증",
+    "불면증",
+    "제2형 당뇨병",
+    "양성전립선비대"
+  ],
+  "clinical_info_in_source": {
+    "demographics_function": "87세 남성, 독거, 자녀가 의료 대리인",
+    "labs": "MMSE 23/30(6개월 전 25); 혈압 앉아 110/70·서서 100/60; 맥박 54; HbA1c 6.8%(3개월 전 7%); EF 30%(약 1년 전); LDL 70, TG 300; BUN 40, Cr 1.7, glucose 100",
+    "medications": "metformin, glyburide, aspirin 325, donepezil, memantine, furosemide, metoprolol, lisinopril, tamsulosin, acetaminophen, tramadol, calcium/vit D, alendronate, zolpidem, simvastatin (15종)"
+  },
+  "info_not_in_source": [
+    "eGFR·UACR",
+    "CKD 진단 여부",
+    "실제 환자 여부"
+  ],
+  "patient_goals_preferences": {
+    "level": "저자 작성 교육 사례 속 선호(실제 환자 선호 아님)",
+    "quotes": [
+      {
+        "text": "This patient and his children express the following priorities: To stay alive / To optimize quality of life / To reduce out-of-pocket expenses ... / To remain safely in his home ...",
+        "location": "Case Example 1 > 'What Are the Preferences of the Individual and His Family?'"
+      }
+    ]
+  },
+  "actual_clinical_decision": {
+    "described_in_source": true,
+    "summary": "저자 제시 '가능한 수정안'(실제 결정 아님): metoprolol 감량·아침 1회, 혈당 목표 완화와 약 감량 제안, 심부전 약 아침 일괄 복용, zolpidem 감량 등",
+    "quote": "We therefore suggest that you reduce some of your medications and relax your effort to achieve tight control of your blood sugar levels.",
+    "location": "Case Example 1 > 'Communicate and Discuss Decisions...'",
+    "rationale_in_source": "선호·예후(기대여명 2–3년)·상호작용 고려(원문)"
+  },
+  "relevant_guidelines": [
+    {
+      "guideline": "G-VA-DM-2023 (VA/DoD T2DM CPG v6.0, 2023)",
+      "location": "Recommendations 9–10, 25 (pp.25–27)",
+      "relation": "glyburide·HbA1c 6.8% 고령"
+    },
+    {
+      "guideline": "G-VA-OA-2026 (VA/DoD Hip & Knee OA CPG v3.0, 2026)",
+      "location": "Recommendations 12, 14 (p.24)",
+      "relation": "tramadol(opioid 신규 시작 반대)"
+    },
+    {
+      "guideline": "G-KSHF-2023-TX (대한심부전학회 심부전 진료지침: 치료, IJHF 2023)",
+      "location": "HFrEF > (1)–(4) 절",
+      "relation": "EF 30%"
+    }
+  ],
+  "info_gaps_that_could_change_judgment": [
+    "eGFR: metformin 지속 여부(원문은 HF·신기능 저하에서 회피 언급)",
+    "실제 환자 여부 미상 → 정답 비교용 아님"
+  ],
+  "research_relevance": "B9 교육 사례(선호→결정 연결이 명시적). 실제 근거 사례가 아니므로 대조군·설명용으로만.",
+  "reuse_constraints": "구조화 저장·재배포 금지(저작권). 짧은 인용·위치 표기만.",
+  "limitations": "가상/정제 사례 가능성. Case Example 2도 존재(72세 여성) — 본 감사에서 상세 미검토."
+}

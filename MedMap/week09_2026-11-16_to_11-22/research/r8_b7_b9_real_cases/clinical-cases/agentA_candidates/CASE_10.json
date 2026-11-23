@@ -1,0 +1,74 @@
+{
+  "case_id": "CASE_10",
+  "case_type": "REAL_NO_PREF",
+  "case_type_reason": "실제 환자, 선호 기록 없음",
+  "source": {
+    "title": "Metformin-Associated Lactic Acidosis in an Older Adult: A Case Report and Review",
+    "first_author": "Jain (외)",
+    "journal": "Cureus",
+    "year": 2024,
+    "doi": "10.7759/cureus.62729",
+    "pmid": "39036128",
+    "pmcid": "PMC11260110",
+    "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11260110/",
+    "license": "CC BY 4.0",
+    "license_quote": "This is an open access article distributed under the terms of the Creative Commons Attribution License CC-BY 4.0., which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+    "access_date": "2026-11-21",
+    "verification_level": "[원문] 본문 XML"
+  },
+  "condition_combination": "(3) 기타 조합: 당뇨+CKD+심방세동",
+  "combination_reason": "HF·OA 없음. eGFR 변화에 따른 metformin 감량(조건부 적용)이 검사값과 함께 시점별로 기록되어 '적용 조건 변화' 시나리오에 적합",
+  "conditions": [
+    "당뇨병(유형 미기재)",
+    "CKD(원문 'stage 2' 기재)",
+    "심방세동(apixaban)",
+    "뇌졸중 병력",
+    "4기 천골 욕창"
+  ],
+  "clinical_info_in_source": {
+    "demographics_function": "82세 남성, 재활 요양시설 거주",
+    "labs": "재활시설: Cr 2.61, eGFR 43, K 4.3, HCO3 22 / 1차 입원: Cr 2.79, eGFR 40 / 2차 입원: Cr 4.12, eGFR 18, K 5.7, HCO3 2, lactate 15, HbA1c 5.9%, pH 6.5 (Table 1)",
+    "medications": "장시간형 sulfonylurea(중단), metformin 1000 mg bid→500 mg bid, apixaban, amoxicillin/clavulanate 장기"
+  },
+  "info_not_in_source": [
+    "환자 선호",
+    "metformin 감량 후 eGFR 재평가 주기",
+    "심부전 여부",
+    "퇴원 후 혈당 치료"
+  ],
+  "patient_goals_preferences": {
+    "level": "없음",
+    "quotes": []
+  },
+  "actual_clinical_decision": {
+    "described_in_source": true,
+    "summary": "eGFR 43·섭취 저하 시 sulfonylurea 중단, metformin 감량 → 4개월 후 eGFR 18에서 MALA·PEA 심정지 → 투석 후 안정화",
+    "quote": "...his long-acting sulfonylurea was discontinued and metformin was decreased from 1000 mg twice a day to 500 mg twice a day.",
+    "location": "Case presentation 1번째 문단",
+    "rationale_in_source": "섭취 저하·저혈당 경향·eGFR 43(원문)"
+  },
+  "relevant_guidelines": [
+    {
+      "guideline": "G-KDA-2025 (대한당뇨병학회 2025 진료지침, DMJ 2025)",
+      "location": "14. PHARMACOLOGIC THERAPY FOR T2DM, 18. DIABETIC KIDNEY DISEASE, 25. DIABETES IN OLDER ADULTS 절",
+      "relation": "신기능별 metformin·고령 저혈당"
+    },
+    {
+      "guideline": "G-VA-DM-2023 (VA/DoD T2DM CPG v6.0, 2023)",
+      "location": "Recommendation 25 (p.27)",
+      "relation": "sulfonylurea 중단과 같은 방향"
+    },
+    {
+      "guideline": "G-VA-CKD-2025 (VA/DoD CKD CPG v5.0, 2025)",
+      "location": "CKDCST04 'Clinical Reference for CKD Medication Dosing'(VA 웹페이지 도구, 내용 미검토)",
+      "relation": "신기능별 용량"
+    }
+  ],
+  "info_gaps_that_could_change_judgment": [
+    "eGFR 재측정 시점: 감량 후 추적이 있었다면 중단 시점이 달라졌을 수 있음",
+    "원문 내부 불일치: 'stage 2 CKD'라고 쓰였으나 Cr 2.61·eGFR 43 → 진단명과 수치 중 무엇을 믿을지 확인 필요"
+  ],
+  "research_relevance": "B7: 신기능 조건에 따라 같은 권고가 '허용→감량→금기'로 바뀌는 조건부 충돌. B10: 원문 진단명-수치 불일치.",
+  "reuse_constraints": "CC BY 4.0: 출처 표기 시 구조화·재배포 허용.",
+  "limitations": "선호 없음, HF 없음."
+}

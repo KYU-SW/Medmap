@@ -1,0 +1,30 @@
+id,field,citation,url,access_level,used_for,note
+S01,6/12 multi-temporal clinical DB,"Combi C. (with Montanari A., Pozzi G.), lecture slides ""Managing multiple time dimensions in clinical databases"" (Univ. Verona, PDF 62p, c.2007)",https://cdn.docs.univr.it/documenti/OccorrenzaIns/matdid/matdid032497.pdf,원문(저자 강의 슬라이드; PyMuPDF로 본문 추출해 직접 읽음),"availability time 정의, 두통 예시(환자 발화·입력 지연·정정), AT 수정 가능성, TT/AT 관계","CIKM 논문 원문은 아님"
+S02,6/12,"Combi C., Montanari A., Pozzi G. The T4SQL temporal query language. CIKM 2007",https://www.academia.edu/14031386/The_t4sql_temporal_query_language,초록/서지(원문 열람 403 실패),"4차원(VT/TT/ET/AT) 모델과 질의 의미(current/sequenced/nonsequenced/next)",검색 요약 + DBLP 등록 확인
+S03,6/12,"Combi C., Montanari A. Data Models with Multiple Temporal Dimensions: Completing the Picture. CAiSE 2001, LNCS 2068:187-202",,서지(2차 인용 목록에서 확인),availability time 최초 제안 추정,원문 미열람
+S04,6,"Nascimento M.A., Eich M.H. Decision Time in Temporal Databases. TIME 1995, pp.157-162",https://en.wikipedia.org/wiki/Decision_time,서지(위키백과 인용),tritemporal / decision time,원문 미열람
+S05,6,Wikipedia: Decision time,https://en.wikipedia.org/wiki/Decision_time,2차자료,"decision time ≤ transaction time, SQL:2011에 decision time 절 없음",
+S06,6,"Jensen C.S., Snodgrass R.T. Temporal Specialization and Generalization. IEEE TKDE 6(6):954-974, 1994",https://smsf.cs.arizona.edu/~rts/pubs/TKDEDec94.pdf,초록/검색 발췌,"retroactive 관계, 관계 간 흐름에서 여러 transaction time(temporal generalization)",원문 PDF 존재 확인만
+S07,6,"Dyreson C.E., Snodgrass R.T. Supporting Valid-Time Indeterminacy. ACM TODS 23(1):1-57, 1998. doi:10.1145/288086.288087",https://smsf.cs.arizona.edu/~rts/pubs/TODS98.pdf,초록,"'사흘 전부터' 같은 불확정 발생 시점, possible/definite 질의",
+S08,6,"Kulkarni K., Michels J.-E. Temporal features in SQL:2011. SIGMOD Record 41(3):34-43, 2012. doi:10.1145/2380776.2380786",https://sigmodrecord.org/2012/09/30/temporal-features-in-sql2011/,서지,"system-versioned + application-time period, FOR SYSTEM_TIME AS OF",본문 미열람
+S09,10/6,"Dignös A., Glavic B., Niu X., Böhlen M., Gamper J. Snapshot Semantics for Temporal Multiset Relations. PVLDB 12(6):639-652, 2019",https://arxiv.org/abs/1902.04938,초록,K-relation(semiring) 기반 시간 질의 = provenance와 시간 결합,
+S10,5/10,HL7 FHIR R5 Provenance resource,https://hl7.org/fhir/R5/provenance.html,원문(공식 명세; 요약 도구 경유),"occurred[x] vs recorded, 버전 지정 target, Provenance(생성) vs AuditEvent(사용)",페이지 앞 100k자만 읽음
+S11,5/10,HL7 FHIR R5 Condition resource,https://hl7.org/fhir/R5/condition.html,원문(공식 명세; 요약 도구 경유),"verificationStatus, clinicalStatus, onset, recordedDate; 상태 이력은 Condition 자체가 아님",페이지 앞 100k자만 읽음
+S12,5,FHIR history interaction / _at (AWS HealthLake 문서),https://docs.aws.amazon.com/healthlake/latest/devguide/managing-fhir-resources-read-history.html,2차(벤더 문서),버전 이력 기반 transaction-time 'as of',
+S13,5,openEHR RM Common (AUDIT_DETAILS / ATTESTATION / VERSION),https://specifications.openehr.org/releases/RM/latest/common.html,2차(검색 요약),"time_committed, change_type, attestation(확인 서명)",명세 원문 미열람
+S14,1,"Van Veen D. et al. Adapted large language models can outperform medical experts in clinical text summarization. Nat Med 30:1134-1142, 2024",https://www.nature.com/articles/s41591-024-02855-5,초록/2차,"임상 요약 완전성·정확성·간결성 평가, 오류·조작 분석",시간·출처 오류 범주 유무 미확인
+S15,1,"Tang L. et al. Evaluating large language models on medical evidence summarization. npj Digit Med 6:158, 2023. doi:10.1038/s41746-023-00896-7",https://pmc.ncbi.nlm.nih.gov/articles/PMC10449915,초록,"자동 지표 상관 약함, 오류 유형 정의",오류 유형 세부 미열람
+S16,1,MED-HALT (Pal et al. 2023),,미확인(검색 결과에 없음),의료 환각 벤치마크,서지 미확인
+S17,2,"Pakhomov S. et al. Agreement between patient-reported symptoms and their documentation in the medical record. Am J Manag Care 14(8):530-539, 2008",https://pmc.ncbi.nlm.nih.gov/articles/PMC2581509,초록,"환자 보고 vs 기록 불일치(흉통·호흡곤란·기침 positive agreement 74/70/63)",
+S18,3,"Harkema H. et al. ConText: an algorithm for determining negation, experiencer, and temporal status from clinical reports. J Biomed Inform 42(5):839-851, 2009",https://pmc.ncbi.nlm.nih.gov/articles/PMC2757457,초록,"부정·가정·과거·경험자; historical 판정은 표면 단서로 한계",
+S19,3,"Chapman W.W. et al. NegEx (J Biomed Inform 2001)",,서지 미확인(내 기억),부정 탐지,이번 검색으로 서지 미확인
+S20,3,"Sun W., Rumshisky A., Uzuner O. Evaluating temporal relations in clinical text: 2012 i2b2 Challenge. JAMIA 20(5):806-813, 2013",,서지(2차 인용),임상 시간 관계 추출,
+S21,3/4,"Styler W.F. IV et al. Temporal Annotation in the Clinical Domain. TACL 2:143-154, 2014",https://aclanthology.org/Q14-1012,초록,"THYME-TimeML, DocTimeRel, 사건 연결",
+S22,3,Clinical TempEval 2015-2017 (Bethard et al.),,미확인(이번 검색에서 서지 확인 안 함),,
+S23,1/10,"Stinard A. ClinicalBench: Stress-Testing Assertion-Aware Retrieval for Cross-Admission Clinical QA on MIMIC-IV. arXiv:2605.11143, 2026",https://arxiv.org/abs/2605.11143,초록 페이지,"사실마다 assertion label + temporality tag(EpiKG); as-of·정정 이력 없음(초록 기준)",동료심사 여부 미확인
+S24,6/7,"Rasmussen P. et al. Zep: A Temporal Knowledge Graph Architecture for Agent Memory. arXiv:2501.13956, 2025",https://arxiv.org/abs/2501.13956,초록/2차,LLM 기억용 bi-temporal 지식그래프(사건 시간축 T + 수집 시간축 T'),
+S25,11,"van Houwelingen H.C. Dynamic Prediction by Landmarking in Event History Analysis. Scand J Stat 34(1):70-85, 2007",https://econpapers.repec.org/RePEc:bla:scjsta:v:34:y:2007:i:1:p:70-85,서지/초록,landmark 시점 기준 예측,
+S26,11,Ramadan/Liu et al. 2025 JAMA Netw Open (ICD 코드 label leakage),https://burkh4rt.github.io/pubs/Ramadan-Liu-et-al-2025-JAMA-Netw-Open.pdf,2차(검색 요약),"코드는 사후 입력·수정·퇴원 후 확정 → 누설",서지 세부 미확인
+S27,12,"EHR audit trail in litigation (Legal Intelligencer 2021; Hinshaw 2017; Oklahoma Bar Journal 2025)",https://www.okbar.org/obj/2025/september/42,2차(법률 실무 기사),"감사 로그는 접근 시각만, 본 내용은 대개 안 보임",
+S28,8/9/10,"de Kleer 1986 ATMS; Gupta et al. 1993 DRed; Green et al. 2007 provenance semirings; W3C PROV 2013; McSherry et al. differential dataflow; event sourcing",,이번 재확인 안 함(이전 Gate 0 A 문서의 2차자료 수준),선택적 재평가 NO-GO 근거 재사용,
+S29,code,MedMap apps/web/src/research/doctorAB/encounterLink.ts (stateAsOf 147-171행) / doctorAB.test.ts 106-114행 / cases.ts 104-107행,/home/<user>/medmap-team/MedMap/apps/web/src/research/doctorAB/,직접 확인(코드),"reviewedOnly가 reviewedAt을 시점 필터에 쓰지 않음",D에 전달할 반례

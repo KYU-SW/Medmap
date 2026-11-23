@@ -1,0 +1,82 @@
+{
+  "case_id": "CASE_08",
+  "case_type": "REAL_NO_PREF",
+  "case_type_reason": "동료심사 사례 보고의 실제 환자. 치료 목표·선호 기록 없음(생일 여행은 생활 사건이며 치료 선호 아님)",
+  "source": {
+    "title": "Combined lactic acidosis and ketoacidosis in a female diabetic patient with severe heart failure",
+    "first_author": "Nzomessi (외)",
+    "journal": "Cardiovascular Endocrinology & Metabolism",
+    "year": 2023,
+    "doi": "10.1097/XCE.0000000000000287",
+    "pmid": "37424794",
+    "pmcid": "PMC10325753",
+    "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10325753/",
+    "license": "CC BY 4.0",
+    "license_quote": "This is an open access article distributed under the Creative Commons Attribution License 4.0 (CCBY), which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.",
+    "access_date": "2026-11-21",
+    "verification_level": "[원문] 본문 XML"
+  },
+  "condition_combination": "(1) 당뇨+CKD+심부전",
+  "combination_reason": "우선 조합. 검사값이 가장 풍부",
+  "conditions": [
+    "제2형 당뇨병",
+    "STEMI 후 PCI(4개월 전)",
+    "만성 LAD 폐색",
+    "진행성 심부전(NYHA III, LVEF 25%, ICD, 심장이식 대기)",
+    "신기능 저하(eGFR 48)"
+  ],
+  "clinical_info_in_source": {
+    "demographics_function": "58세 여성",
+    "labs": "기저: HbA1c 6.9%, eGFR 48 mL/min/1.73m²; 입원 시: K 6.4, Cr 801 µmol/L, glucose 9 mmol/L, ketone 5.6 mmol/L, lactate 17 mmol/L, metformin 40.0 mg/L, pH 6.72, HCO3 3.4 (Case report, Table 1)",
+    "medications": "aspirin, clopidogrel, atorvastatin, ezetimibe, metoprolol, sacubitril/valsartan 50 mg bid, spironolactone 25 mg, empagliflozin 10 mg, metformin 500 mg bid, long-acting insulin 6 U",
+    "event": "구토·설사·식사 불가 4일 동안 약을 계속 복용 후 입원"
+  },
+  "info_not_in_source": [
+    "환자 목표·선호",
+    "UACR",
+    "CKD 진단 기간(만성 여부는 'stable compared with previously'만 기재)",
+    "퇴원 후 insulin 지속 여부",
+    "sick day 교육을 받았는지 여부"
+  ],
+  "patient_goals_preferences": {
+    "level": "없음",
+    "quotes": []
+  },
+  "actual_clinical_decision": {
+    "described_in_source": true,
+    "summary": "모든 경구 혈당강하제 중단 → ICU, 중탄산염·간헐적 투석 → 9일 후 신기능 회복 → GLP-1 RA + gliclazide로 변경, SGLT2i·metformin 영구 중단, 4주 후 퇴원, 5개월 후 심장이식",
+    "quote": "Oral antidiabetics were switched to glucagon-like peptide-1 receptor agonists and gliclazide, and the patient was discharged home after 4 weeks.",
+    "location": "Case report 마지막 문단",
+    "rationale_in_source": "Discussion: EDKA 진단 후 SGLT2i 영구 중단 권고, MALA 후 metformin 재개는 합의 없으나 영구 중단 결정(원문 'we decided to stop it definitely as well')"
+  },
+  "relevant_guidelines": [
+    {
+      "guideline": "G-VA-DM-2023 (VA/DoD T2DM CPG v6.0, 2023)",
+      "location": "Recommendations 21–22 (p.26): T2DM+HF, T2DM+CKD에 SGLT-2i (Strong for)",
+      "relation": "실제 충돌: 강권고 약제를 이상반응 후 영구 중단"
+    },
+    {
+      "guideline": "G-KSHF-2023-TX (대한심부전학회 심부전 진료지침: 치료, IJHF 2023)",
+      "location": "HFrEF > (4) SGLT2 inhibitors 절",
+      "relation": "동일"
+    },
+    {
+      "guideline": "G-VA-DM-2023 (VA/DoD T2DM CPG v6.0, 2023)",
+      "location": "Recommendation 23 (p.27): SGLT2i 부적합 시 신보호 GLP-1 RA (Strong for)",
+      "relation": "실제 결정(GLP-1 RA 전환)과 같은 방향"
+    },
+    {
+      "guideline": "G-KDA-2025 (대한당뇨병학회 2025 진료지침, DMJ 2025)",
+      "location": "14. PHARMACOLOGIC THERAPY FOR T2DM, 18. DIABETIC KIDNEY DISEASE 절",
+      "relation": "metformin·SGLT2i 신기능 조건"
+    }
+  ],
+  "info_gaps_that_could_change_judgment": [
+    "환자에게 sick day 규칙 교육 여부: 재발 방지 판단",
+    "insulin 지속 여부와 저혈당 위험(gliclazide 추가)",
+    "이식 대기라는 특수 상황이 일반 HF 환자로 일반화되는지(B10)"
+  ],
+  "research_relevance": "B7: 3개 지침 공통 권고(SGLT2i) vs 개별 환자 이상반응 — '실제 충돌' 사례. B10: 심장이식 대기 환자.",
+  "reuse_constraints": "CC BY 4.0: 출처 표기 시 구조화·재배포 허용.",
+  "limitations": "환자 선호 없음."
+}

@@ -1,0 +1,9 @@
+case_id,case_type,pref_var,pref_known,item,action,possible_if_accept,possible_if_reject
+CASE_01,REAL_WITH_PREF,q_more_glucose_checks,reject,I3,HbA1c 목표 초과 시 자가혈당 측정 증가를 동반한 강화,APPLY/NOT_APPLY,NOT_APPLY/SDM_CONFLICT
+CASE_02,REAL_WITH_PREF,q_more_specialists,reject,I1,투석·보존적 관리 준비 위한 신장내과 의뢰,APPLY,SDM_CONFLICT
+CASE_03,REAL_WITH_PREF,q_more_bp_meds,reject,I1,수축기 <130 목표로 혈압 강화,APPLY/NOT_APPLY,NOT_APPLY/SDM_CONFLICT
+CASE_04,REAL_WITH_PREF,q_more_bp_meds,accept,I6,수축기 <130 목표로 혈압 강화,APPLY/NOT_APPLY,NOT_APPLY/SDM_CONFLICT
+CASE_05,REAL_WITH_PREF,q_statin_reduced_dose,accept,I1,스타틴 유지(현재 감량 용법),APPLY,SDM_CONFLICT
+CASE_06,REAL_WITH_PREF,q_bleed_tradeoff,,I1,warfarin 지속,APPLY/NOT_APPLY,NOT_APPLY/SDM_CONFLICT
+CASE_09,REAL_NO_PREF,q_life_prolonging,,I2,SGLT2i 시작,APPLY,SDM_CONFLICT
+CASE_12,GUIDELINE_VIGNETTE,q_avoid_inr,accept,I2,warfarin 대신 DOAC,APPLY,SDM_CONFLICT

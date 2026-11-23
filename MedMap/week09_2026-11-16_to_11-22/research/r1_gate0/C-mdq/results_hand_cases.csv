@@ -1,0 +1,9 @@
+case,status,exp_adaptive,exp_batch,exp_axp,exp_exp_u,exp_cont_adaptive,exp_cont_batch,exp_g_set,got_adaptive,got_batch,got_milp,got_axp,got_exp_u,got_cont_adaptive,got_cont_batch,got_g_set,got_grid_tree_hold_c,got_grid_tree_wrong_c,exp_grid_tree_hold_c,exp_grid_tree_wrong_c
+H1_safety,PASS,1.0,1.0,1.0,1.0,1.0,1.0,A/B,1.0,1.0,1.0,1.0,1.0,1.0,1.0,A/B,0.0,0.0,,
+H2_pref,PASS,1.0,1.0,1.0,1.0,1.0,1.0,A/B,1.0,1.0,1.0,1.0,1.0,1.0,1.0,A/B,0.0,0.0,,
+H2b_tie_grid,PASS,1.0,1.0,1.0,1.0,1.0,1.0,B/UNDET,1.0,1.0,1.0,1.0,1.0,1.0,1.0,B/UNDET,0.5,0.0,0.5,
+H3_undeterminable,PASS,0.0,0.0,0.0,0.0,0.0,0.0,UNDET,0.0,0.0,0.0,0.0,0.0,0.0,0.0,UNDET,0.0,0.0,,
+H4_adaptive_gap,PASS,2.0,3.0,2.0,2.0,2.0,3.0,A/B/C/D,2.0,3.0,3.0,2.0,2.0,2.0,3.0,A/B/C/D,0.0,0.0,,
+H5_majority,PASS,3.0,3.0,2.0,2.5,3.0,3.0,A/B,3.0,3.0,3.0,2.0,2.5,3.0,3.0,A/B,0.0,0.0,,
+H6_bundle,PASS,1.5,1.5,1.5,1.5,1.5,1.5,A/B/C,1.5,1.5,1.5,1.5,1.5,1.5,1.5,A/B/C,0.0,0.0,,
+H7_thin_region,PASS,1.0,1.0,1.0,1.0,0.0,0.0,A/C,1.0,1.0,1.0,1.0,1.0,0.0,0.0,A/C,0.0,1.0,,1.0

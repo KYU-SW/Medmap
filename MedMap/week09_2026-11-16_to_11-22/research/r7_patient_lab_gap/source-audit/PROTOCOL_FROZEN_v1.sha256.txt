@@ -1,0 +1,9 @@
+2026-11-21T00:37:13+09:00
+d44a05ca054ee9d0f92654128499def491cbf3e1d15c4908191a6b4b4ef87a1f  source-audit/PROTOCOL_FROZEN_v1.md
+reused copies (originals untouched):
+58595c3a064c027a040c534930bef5315050730319c64d1197a9cdf2f33f457b  /home/<user>/medmap-real-evidence-pilot/experiments/run_compare.py
+ba31b02b130351006b5c9753f4b3a8857c0a3a5e3b9a5bbe0ac52baa34891de2  /home/<user>/medmap-real-evidence-pilot/shared-variables/CURATED_LABEL_RULES.csv
+59a0a8700244e7a3a2b5320051e82b860b4f8b727da8e52a8735e14e625d9ef5  /home/<user>/medmap-real-evidence-pilot/results/pairs_level4.csv
+ba31b02b130351006b5c9753f4b3a8857c0a3a5e3b9a5bbe0ac52baa34891de2  comparison/reused/CURATED_LABEL_RULES.csv
+59a0a8700244e7a3a2b5320051e82b860b4f8b727da8e52a8735e14e625d9ef5  comparison/reused/pairs_level4.csv
+58595c3a064c027a040c534930bef5315050730319c64d1197a9cdf2f33f457b  comparison/reused/run_compare.py

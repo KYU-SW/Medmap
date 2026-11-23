@@ -1,0 +1,108 @@
+{
+  "case_id": "CASE_04",
+  "case_type": "REAL_WITH_PREF",
+  "case_type_reason": "실제 환자(EHR 기반, 구두 동의, 비식별 공개) + 환자 본인의 건강 목표·치료 선호가 원문 표에 기록됨",
+  "source": {
+    "title": "Challenges and strategies in patients' health priorities-aligned decision-making for older adults with multiple chronic conditions",
+    "first_author": "Tinetti ME (외)",
+    "journal": "PLoS ONE",
+    "year": 2019,
+    "doi": "10.1371/journal.pone.0218249",
+    "pmid": "31181117",
+    "pmcid": "PMC6557523",
+    "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6557523/",
+    "supplement_url": "https://journals.plos.org/plosone/article/file?type=supplementary&id=10.1371/journal.pone.0218249.s002",
+    "license": "CC0 1.0 (public domain dedication)",
+    "license_quote": "This is an open access article, free of all copyright, and may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose.",
+    "real_patient_evidence": "본문 Results: 'Descriptions of the 35 patients discussed are displayed in [S1 Table]... ascertained from their EHRs.' / IRB 문단: 'All patients provided verbal consent to participate, share the data ... and publish without identifying information.'",
+    "access_date": "2026-11-21",
+    "verification_level": "[원문] 본문 XML(NCBI efetch) + S1 Table docx 원문",
+    "location": "S1 Table, 환자 No. 12"
+  },
+  "condition_combination": "(2) 당뇨+CKD+골관절염(관절염)",
+  "combination_reason": "우선 조합. CKD 4기 + NSAID 제한이 원문에 있음. 관절염 유형 미기재",
+  "conditions": [
+    "관절염(유형 미기재)",
+    "CKD 4기",
+    "당뇨병(유형 미기재)",
+    "악성흑색종 병력",
+    "통풍",
+    "고혈압",
+    "비만"
+  ],
+  "clinical_info_in_source": {
+    "demographics_function": "80+세 여성, 자택 거주",
+    "active_problem_count": 10,
+    "medications_names_only": [
+      "allopurinol",
+      "calcitriol",
+      "Claritin(loratadine)",
+      "hydrochlorothiazide",
+      "lisinopril",
+      "metoprolol",
+      "vitamin D"
+    ],
+    "labs": "원문에 없음"
+  },
+  "info_not_in_source": [
+    "모든 검사값(eGFR·UACR·HbA1c·혈압·칼륨·EF 등) 없음 — S1 Table은 EHR 문제목록·약물명만 제공",
+    "약물 용량·투여 기간 없음",
+    "심부전 유형(HFrEF/HFpEF)·NYHA 등급 없음",
+    "이 환자에 대해 실제로 내린 임상 결정·결과 없음(토론 세션 요약만, 결정 기록 미제공)",
+    "나이는 10년 단위(예: 70+)로만 제공(재식별 방지)"
+  ],
+  "patient_goals_preferences": {
+    "level": "실제 환자 본인 선호(목표+원하는/원치 않는 치료)",
+    "health_outcome_goals": [
+      "매일 정원 일",
+      "매주 운전해서 손주 돌보기"
+    ],
+    "helpful_doable_care": [
+      "Renal diet",
+      "Increase in blood pressure medications",
+      "Limit use of NSAIDs"
+    ],
+    "bothersome_unwanted_care": [
+      "Interferon caused depression \"I refused to go back on it, I don't want to live that way\"",
+      "Recommended foot surgery; concerned about decreased postoperative mobility"
+    ],
+    "specific_ask": "NA(원문에 없음)",
+    "quote_location": "S1 Table 환자 No. 12 행(Health Outcome Goals / Healthcare Preferences / Specific Ask 열)"
+  },
+  "actual_clinical_decision": {
+    "described_in_source": false,
+    "summary": "UNKNOWN — 원문에 이 환자의 실제 결정 기록 없음",
+    "clinician_quotes": []
+  },
+  "relevant_guidelines": [
+    {
+      "guideline": "G-VA-OA-2026 (VA/DoD Hip & Knee OA CPG v3.0, 2026)",
+      "location": "Sidebar 1 Initial Individualized Treatment Plan (p.21): CKD에서 NSAID 일반적 회피, eGFR<30이면 회피",
+      "relation": "원문 'Limit use of NSAIDs'와 같은 방향"
+    },
+    {
+      "guideline": "G-VA-OA-2026 (VA/DoD Hip & Knee OA CPG v3.0, 2026)",
+      "location": "Recommendations 11–12 (p.24): 무릎 OA 국소 NSAID, 고관절·무릎 OA 경구 NSAID 또는 acetaminophen",
+      "relation": "관절 부위 미상 → 국소 NSAID 적용 가능성 보류"
+    },
+    {
+      "guideline": "G-VA-CKD-2025 (VA/DoD CKD CPG v5.0, 2025)",
+      "location": "Recommendations 12–15 (p.33): ACEi/ARB, thiazide/CCB 추가, eGFR<30 ACEi 지속, SGLT2i(T2D 동반 시)",
+      "relation": "당뇨 유형·eGFR·UACR 미상"
+    },
+    {
+      "guideline": "G-VA-DM-2023 (VA/DoD T2DM CPG v6.0, 2023)",
+      "location": "Recommendation 22 (p.26): T2DM+CKD에 SGLT-2i (Strong for)",
+      "relation": "당뇨 유형·약 미상"
+    }
+  ],
+  "info_gaps_that_could_change_judgment": [
+    "관절 부위(무릎/고관절/발): 국소 NSAID 권고 적용 여부",
+    "정확한 eGFR: <30이면 경구 NSAID 회피 권고에 해당",
+    "당뇨 유형·치료: 약물 목록에 혈당강하제 없음 — 이유 미상",
+    "수술 후 이동성 저하 우려: 수술적 선택지 수용도에 영향 — 먼저 '정원 일·운전 유지'에 무엇이 가장 중요한지 확인"
+  ],
+  "research_relevance": "B7: OA 통증 조절(NSAID) vs CKD(신독성) 실제 충돌, 원문에 이미 제한 방향 기록. B9: 기능 유지 목표와 수술 우려라는 실제 선호.",
+  "reuse_constraints": "CC0: 구조화·재배포 허용. 출처 표기 권장(학술 관례).",
+  "limitations": "환자 선호는 실제(우선순위 확인 과정에서 의료진이 기록). 단 검사값·실제 결정이 없어 '정답 결정' 비교용으로는 사용 불가, 선호·정보부족 시나리오용으로 적합."
+}

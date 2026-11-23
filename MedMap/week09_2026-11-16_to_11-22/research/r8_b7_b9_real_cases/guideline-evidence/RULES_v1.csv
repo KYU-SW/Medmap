@@ -1,0 +1,24 @@
+rule_id,source,location,strength,paraphrase_condition_action,source_check
+DM21,VA/DoD T2DM CPG v6.0 (2023),Rec 21 p.26,Strong for,T2DM + 심부전 -> SGLT2i(심부전 입원 예방),[원문] 메인 확인
+DM22,VA/DoD T2DM CPG v6.0 (2023),Rec 22 p.26,Strong for,T2DM + CKD -> 신보호 SGLT2i,[원문] 메인 확인
+DM23,VA/DoD T2DM CPG v6.0 (2023),Rec 23 p.27,Strong for,T2DM + CKD + SGLT2i 부적합 -> 신보호 GLP-1 RA,[원문] 메인 확인
+DM24,VA/DoD T2DM CPG v6.0 (2023),Rec 24 p.27,Weak for,T2DM + CVD 또는 신질환 -> 혈당 목표 달성 중이어도 SGLT2i 또는 GLP-1 RA 추가 고려,[원문] 메인 확인
+DM25,VA/DoD T2DM CPG v6.0 (2023),Rec 25 p.27,Weak for,T2DM(특히 65세 이상) -> 다른 약으로 혈당 조절 가능하면 insulin·SU·meglitinide 외 약 우선,[원문] 메인 확인
+DM9_10,VA/DoD T2DM CPG v6.0 (2023),Rec 9-10 p.25,Weak for,개인화 HbA1c 목표; 대부분 7.0-8.5%(안전하게 달성 가능할 때),[원문] 메인 확인
+CKD_P125,VA/DoD CKD CPG v5.0 (2025),Module 표 p.125,알고리즘 문구,기대여명<5년·중대 동반질환·자기관리 어려움 -> HbA1c 목표 8-9%; metformin은 eGFR>30에서 사용 가능,[원문] 메인 확인
+CKD8,VA/DoD CKD CPG v5.0 (2025),Rec 8 p.33,Weak for,신대체요법 vs 보존적 관리 공동의사결정,[원문] 메인 확인
+CKD9,VA/DoD CKD CPG v5.0 (2025),Rec 9 p.33,Weak for,동반질환 많음/기능 낮음 -> 환자 가치·선호에 따라 보존적 관리 또는 투석 준비를 위한 신장내과 의뢰,[원문] 메인 확인
+CKD11,VA/DoD CKD CPG v5.0 (2025),Rec 11 p.33,Weak for,eGFR<60 -> 집중 혈압관리,[원문] 메인 확인
+CKD12,VA/DoD CKD CPG v5.0 (2025),Rec 12 p.33,Strong for,고혈압 + 알부민뇨(UACR>30) -> ACEi 또는 ARB,[원문] 메인 확인
+CKD14,VA/DoD CKD CPG v5.0 (2025),Rec 14 p.33,Weak for,eGFR<30 + ACEi/ARB 복용 중 -> 내약성 문제·이상반응 없으면 지속,[원문] 메인 확인
+CKD15,VA/DoD CKD CPG v5.0 (2025),Rec 15 p.33-34,Strong for,CKD + (T2D 또는 UACR>200 또는 심부전) -> 최대 내약 ACEi/ARB에 SGLT2i 추가; 투석 시작까지 지속,[원문] 메인 확인
+CKD19,VA/DoD CKD CPG v5.0 (2025),Rec 19 p.34,Strong for,투석 전 CKD -> 스타틴 시작,[원문] 메인 확인
+CKD_P121,VA/DoD CKD CPG v5.0 (2025),알고리즘 Box 22 p.121-122,알고리즘 문구,급성 신손상(비응급) -> 신독성 약 중단; ACEi/ARB·이뇨제·SGLT2i 일시 중단 고려; metformin 중단,[원문] 메인 확인
+CKD_P126,VA/DoD CKD CPG v5.0 (2025),Module 표 p.126,알고리즘 문구,아픈 날 계획: SU·ACEi·이뇨제·metformin·ARB·NSAID·SGLT2i 일시 중단(SADMANS),[원문] 메인 확인
+HTN4,VA/DoD HTN CPG v5.0 (2026),Rec 4 p.26,Strong for,고혈압 -> 수축기 <130 목표(환자 특성과 선호에 따라),[원문] 메인 확인
+OA_SB1,VA/DoD Hip & Knee OA CPG v3.0 (2026),Sidebar 1 p.21,알고리즘 문구,NSAID(COX-2 포함)는 CVD·CKD·상부위장관 위험에서 일반적으로 회피; eGFR<30이면 회피; acetaminophen 최대 4 g/일,[원문] 메인 확인
+OA11,VA/DoD Hip & Knee OA CPG v3.0 (2026),Rec 11 p.24,Weak for,무릎 OA -> 국소 NSAID,[원문] 메인 확인
+OA12,VA/DoD Hip & Knee OA CPG v3.0 (2026),Rec 12 p.24,Weak for,고관절·무릎 OA -> 경구 NSAID 또는 acetaminophen,[원문] 메인 확인
+OA14,VA/DoD Hip & Knee OA CPG v3.0 (2026),Rec 14 p.24,Weak against,고관절·무릎 OA -> opioid 신규 시작 반대; 장기 사용자는 Opioid CPG,[원문] 메인 확인
+MGCDS2,MGCDS benchmark Case 2 (Apache-2.0; 저자 작성 가상 사례),Case 2 Adverse interactions and revisions,저자 기대안,CKD+HTN+AF -> aspirin을 항응고제로; 선호 시 DOAC; ACEi+비DHP CCB 병용 시 BB 미처방,[원문] Agent A·C 확인; 메인은 사례 JSON 대조
+MGCDS1,MGCDS benchmark Case 1 (Apache-2.0; 저자 작성 가상 사례),Case 1 Adverse interactions and revisions,저자 대안 3개,TIA+aspirin 궤양+골다공증 -> PPI가 골다공증 이차 원인; 대안 1(aspirin->clopidogrel+PPI 중단+골다공증약) 등,[원문] Agent A·C 확인; 메인은 사례 JSON 대조

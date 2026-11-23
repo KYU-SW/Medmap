@@ -1,0 +1,228 @@
+{
+  "_note": "D-k7 독립 반례 v1. 합성 문장만 사용(실제 환자 자료 없음). cases.ts(개발 사례)와 다른 문장으로 작성. 의료 전문가 정답 없음.",
+  "patientId": "syn-P-D01",
+  "episodeId": "ep-D01",
+  "cases": [
+    {
+      "id": "N01", "risk": 1, "title": "나중 승인을 과거 승인으로 재구성 (reviewedOnly)",
+      "patient": [],
+      "statements": [
+        {"id": "s1", "spokenAt": "2026-11-10T10:00:00.000Z", "enteredAt": "2026-11-10T10:05:00.000Z", "text": "폐렴이 의심됩니다."}
+      ],
+      "reviews": [{"stmt": "s1", "kind": "diagnosis", "label": "폐렴", "state": "accepted", "reviewedAt": "2026-11-15T09:00:00.000Z"}],
+      "queries": [
+        {"qid": "N01.q1", "type": "asof_diagnosis", "at": "2026-11-12T00:00:00.000Z", "reviewedOnly": true, "label": "폐렴"},
+        {"qid": "N01.q2", "type": "asof_diagnosis", "at": "2026-11-16T00:00:00.000Z", "reviewedOnly": true, "label": "폐렴"}
+      ]
+    },
+    {
+      "id": "N02", "risk": 1, "title": "나중 수정(edit)이 과거 시점 상태로 소급",
+      "patient": [],
+      "statements": [
+        {"id": "s1", "spokenAt": "2026-11-10T10:00:00.000Z", "enteredAt": "2026-11-10T10:05:00.000Z", "text": "폐렴이 의심됩니다."}
+      ],
+      "reviews": [{"stmt": "s1", "kind": "diagnosis", "label": "폐렴", "state": "edited", "edit": {"status": "confirmed_by_clinician"}, "reviewedAt": "2026-11-15T09:00:00.000Z"}],
+      "queries": [
+        {"qid": "N02.q1", "type": "asof_diagnosis", "at": "2026-11-12T00:00:00.000Z", "reviewedOnly": false, "label": "폐렴"},
+        {"qid": "N02.q2", "type": "asof_diagnosis", "at": "2026-11-16T00:00:00.000Z", "reviewedOnly": false, "label": "폐렴"}
+      ]
+    },
+    {
+      "id": "N03", "risk": 1, "title": "나중 거절(rejected)이 과거 시점 후보를 소급 삭제",
+      "patient": [],
+      "statements": [
+        {"id": "s1", "spokenAt": "2026-11-10T10:00:00.000Z", "enteredAt": "2026-11-10T10:05:00.000Z", "text": "결핵이 의심됩니다."}
+      ],
+      "reviews": [{"stmt": "s1", "kind": "diagnosis", "label": "결핵", "state": "rejected", "reviewedAt": "2026-11-15T09:00:00.000Z"}],
+      "queries": [
+        {"qid": "N03.q1", "type": "asof_diagnosis", "at": "2026-11-12T00:00:00.000Z", "reviewedOnly": false, "label": "결핵"},
+        {"qid": "N03.q2", "type": "asof_diagnosis", "at": "2026-11-16T00:00:00.000Z", "reviewedOnly": false, "label": "결핵"}
+      ]
+    },
+    {
+      "id": "N04", "risk": 2, "title": "한 설명 안 동일 진단 두 번(진단→배제)",
+      "patient": [],
+      "statements": [
+        {"id": "s1", "spokenAt": "2026-11-16T10:00:00.000Z", "enteredAt": "2026-11-16T10:05:00.000Z", "text": "결핵으로 진단됐었는데 재검사에서 결핵이 아닌 것으로 확인됐습니다."}
+      ],
+      "reviews": [],
+      "queries": [
+        {"qid": "N04.q1", "type": "stmt_status", "stmt": "s1", "kind": "diagnosis", "label": "결핵"},
+        {"qid": "N04.q2", "type": "mention_count", "stmt": "s1", "kind": "diagnosis", "label": "결핵"}
+      ]
+    },
+    {
+      "id": "N05", "risk": 2, "title": "한 설명 안 동일 검사 두 번(대기→결과)",
+      "patient": [],
+      "statements": [
+        {"id": "s1", "spokenAt": "2026-11-16T10:00:00.000Z", "enteredAt": "2026-11-16T10:05:00.000Z", "text": "조직검사 결과를 기다리는 중이었는데 오늘 병리 결과가 나왔습니다."}
+      ],
+      "reviews": [],
+      "queries": [
+        {"qid": "N05.q1", "type": "stmt_status", "stmt": "s1", "kind": "test", "label": "병리검사"},
+        {"qid": "N05.q2", "type": "mention_count", "stmt": "s1", "kind": "test", "label": "병리검사"}
+      ]
+    },
+    {
+      "id": "N06", "risk": 3, "title": "나중에 입력한 과거 증상(기록 간)",
+      "patient": [
+        {"recordedAt": "2026-11-16T09:00:00.000Z", "text": "열은 없어요."},
+        {"recordedAt": "2026-11-16T12:00:00.000Z", "text": "지난주에 열이 났었어요."}
+      ],
+      "statements": [],
+      "reviews": [],
+      "queries": [
+        {"qid": "N06.q1", "type": "patient_current", "label": "발열"},
+        {"qid": "N06.q2", "type": "asof_patient", "at": "2026-11-16T13:00:00.000Z", "label": "발열"}
+      ]
+    },
+    {
+      "id": "N07", "risk": 3, "title": "한 기록 안에서 현재를 먼저, 과거를 나중에 말함",
+      "patient": [
+        {"recordedAt": "2026-11-16T09:00:00.000Z", "text": "오늘은 열이 없는데 지난주에는 열이 났었어요."}
+      ],
+      "statements": [],
+      "reviews": [],
+      "queries": [
+        {"qid": "N07.q1", "type": "patient_current", "label": "발열"}
+      ]
+    },
+    {
+      "id": "N08", "risk": 4, "title": "확인 전 추출 후보가 출처 간 차이로 표시될 때 확인 전 표시 유지",
+      "patient": [
+        {"recordedAt": "2026-11-16T09:00:00.000Z", "text": "열은 없어요."}
+      ],
+      "statements": [
+        {"id": "s1", "spokenAt": "2026-11-16T10:00:00.000Z", "enteredAt": "2026-11-16T10:05:00.000Z", "text": "환자분께서 열이 있다고 하셨습니다."}
+      ],
+      "reviews": [],
+      "queries": [
+        {"qid": "N08.q1", "type": "needscheck_carries_review_state", "label": "발열"},
+        {"qid": "N08.q2", "type": "confirmed_list_contains", "label": "발열"}
+      ]
+    },
+    {
+      "id": "N09", "risk": 5, "title": "결과 대기 vs 미시행 vs 예정 vs 조건문",
+      "patient": [],
+      "statements": [
+        {"id": "s1", "spokenAt": "2026-11-16T10:00:00.000Z", "enteredAt": "2026-11-16T10:01:00.000Z", "text": "CT를 찍지 않으면 정확히 알 수 없습니다."},
+        {"id": "s2", "spokenAt": "2026-11-16T10:02:00.000Z", "enteredAt": "2026-11-16T10:03:00.000Z", "text": "조직검사는 다음 주에 할 예정입니다."},
+        {"id": "s3", "spokenAt": "2026-11-16T10:04:00.000Z", "enteredAt": "2026-11-16T10:05:00.000Z", "text": "CT는 찍었는데 결과는 아직이에요."}
+      ],
+      "reviews": [],
+      "queries": [
+        {"qid": "N09.q1", "type": "stmt_status", "stmt": "s1", "kind": "test", "label": "CT"},
+        {"qid": "N09.q2", "type": "stmt_status", "stmt": "s2", "kind": "test", "label": "병리검사"},
+        {"qid": "N09.q3", "type": "stmt_status", "stmt": "s3", "kind": "test", "label": "CT"}
+      ]
+    },
+    {
+      "id": "N10", "risk": 6, "title": "의심·배제·확진 뒤바뀜",
+      "patient": [],
+      "statements": [
+        {"id": "s1", "spokenAt": "2026-11-16T10:00:00.000Z", "enteredAt": "2026-11-16T10:01:00.000Z", "text": "폐선암으로 확진된 것은 아닙니다."},
+        {"id": "s2", "spokenAt": "2026-11-16T10:02:00.000Z", "enteredAt": "2026-11-16T10:03:00.000Z", "text": "폐렴이 확진됐다고 하기는 어렵습니다."},
+        {"id": "s3", "spokenAt": "2026-11-16T10:04:00.000Z", "enteredAt": "2026-11-16T10:05:00.000Z", "text": "결핵 가능성을 배제할 수는 없습니다."},
+        {"id": "s4", "spokenAt": "2026-11-16T10:06:00.000Z", "enteredAt": "2026-11-16T10:07:00.000Z", "text": "폐렴은 아니고 결핵이 의심됩니다."}
+      ],
+      "reviews": [],
+      "queries": [
+        {"qid": "N10.q1", "type": "stmt_status", "stmt": "s1", "kind": "diagnosis", "label": "폐선암"},
+        {"qid": "N10.q2", "type": "stmt_status", "stmt": "s2", "kind": "diagnosis", "label": "폐렴"},
+        {"qid": "N10.q3", "type": "stmt_status", "stmt": "s3", "kind": "diagnosis", "label": "결핵"},
+        {"qid": "N10.q4", "type": "stmt_status", "stmt": "s4", "kind": "diagnosis", "label": "폐렴"},
+        {"qid": "N10.q5", "type": "stmt_status", "stmt": "s4", "kind": "diagnosis", "label": "결핵"}
+      ]
+    },
+    {
+      "id": "N11", "risk": 7, "title": "환자 본인 vs 가족 (가족어 부분문자열 포함)",
+      "patient": [
+        {"recordedAt": "2026-11-16T09:00:00.000Z", "text": "어머니가 기침을 해요. 저는 기침 없어요."}
+      ],
+      "statements": [
+        {"id": "s1", "spokenAt": "2026-11-16T10:00:00.000Z", "enteredAt": "2026-11-16T10:01:00.000Z", "text": "조직형은 선암으로 확인됐습니다."},
+        {"id": "s2", "spokenAt": "2026-11-16T10:02:00.000Z", "enteredAt": "2026-11-16T10:03:00.000Z", "text": "형태상 폐선암이 의심됩니다."},
+        {"id": "s3", "spokenAt": "2026-11-16T10:04:00.000Z", "enteredAt": "2026-11-16T10:05:00.000Z", "text": "어머니 말씀으로는 환자분이 작년에 결핵 진단을 받으셨다고 합니다."}
+      ],
+      "reviews": [],
+      "queries": [
+        {"qid": "N11.q1", "type": "stmt_subject", "stmt": "s1", "kind": "diagnosis", "label": "폐선암"},
+        {"qid": "N11.q2", "type": "stmt_status", "stmt": "s1", "kind": "diagnosis", "label": "폐선암"},
+        {"qid": "N11.q3", "type": "stmt_subject", "stmt": "s2", "kind": "diagnosis", "label": "폐선암"},
+        {"qid": "N11.q4", "type": "stmt_status", "stmt": "s2", "kind": "diagnosis", "label": "폐선암"},
+        {"qid": "N11.q5", "type": "stmt_subject", "stmt": "s3", "kind": "diagnosis", "label": "결핵"},
+        {"qid": "N11.q6", "type": "patient_current", "label": "기침"}
+      ]
+    },
+    {
+      "id": "N12", "risk": 8, "title": "다른 환자 혼입 (인계 자료 환자 식별 부재, 설명 속 타 환자)",
+      "patient": [
+        {"recordedAt": "2026-11-16T09:00:00.000Z", "text": "기침이 나요."}
+      ],
+      "handoffGroupId": "existing-records",
+      "linkAs": {"patientId": "syn-P-D01", "episodeId": "existing-records"},
+      "handoffActuallyFrom": "syn-P-OTHER",
+      "statements": [
+        {"id": "s1", "spokenAt": "2026-11-16T10:00:00.000Z", "enteredAt": "2026-11-16T10:01:00.000Z", "text": "옆 병상 환자분은 결핵으로 확진됐습니다."}
+      ],
+      "reviews": [],
+      "queries": [
+        {"qid": "N12.q1", "type": "handoff_of_other_patient_refused"},
+        {"qid": "N12.q2", "type": "stmt_subject", "stmt": "s1", "kind": "diagnosis", "label": "결핵"}
+      ]
+    },
+    {
+      "id": "N13", "risk": 9, "title": "정정(철회형): 원본 보존 + 정정 후 상태",
+      "patient": [],
+      "statements": [
+        {"id": "s1", "spokenAt": "2026-11-10T10:00:00.000Z", "enteredAt": "2026-11-10T10:05:00.000Z", "text": "폐렴이 의심됩니다."},
+        {"id": "s2", "spokenAt": "2026-11-12T10:00:00.000Z", "enteredAt": "2026-11-12T10:05:00.000Z", "text": "앞의 설명은 잘못 입력한 것입니다.", "correctionOf": "s1"}
+      ],
+      "reviews": [],
+      "queries": [
+        {"qid": "N13.q1", "type": "asof_diagnosis", "at": "2026-11-11T00:00:00.000Z", "reviewedOnly": false, "label": "폐렴"},
+        {"qid": "N13.q2", "type": "asof_diagnosis", "at": "2026-11-13T00:00:00.000Z", "reviewedOnly": false, "label": "폐렴"},
+        {"qid": "N13.q3", "type": "original_preserved", "stmt": "s1"}
+      ]
+    },
+    {
+      "id": "N14", "risk": 10, "title": "다른 시간의 상반 기록(당시엔 일치) — 확인 필요 오탐",
+      "patient": [
+        {"recordedAt": "2026-11-10T09:00:00.000Z", "text": "열이 나요."},
+        {"recordedAt": "2026-11-16T09:00:00.000Z", "text": "열은 없어요."}
+      ],
+      "statements": [
+        {"id": "s1", "spokenAt": "2026-11-11T10:00:00.000Z", "enteredAt": "2026-11-11T10:05:00.000Z", "text": "환자분께서 열이 있다고 하셨습니다."}
+      ],
+      "reviews": [],
+      "queries": [
+        {"qid": "N14.q1", "type": "needscheck_flagged", "label": "발열"},
+        {"qid": "N14.q2", "type": "needscheck_says_contradiction", "label": "발열"}
+      ]
+    },
+    {
+      "id": "N15", "risk": 11, "title": "늦게 입력된 과거 설명(backfill) — 당시 사용 불가",
+      "patient": [],
+      "statements": [
+        {"id": "s1", "spokenAt": "2026-11-10T10:00:00.000Z", "enteredAt": "2026-11-16T10:00:00.000Z", "text": "결핵은 배제했습니다."}
+      ],
+      "reviews": [],
+      "queries": [
+        {"qid": "N15.q1", "type": "asof_diagnosis", "at": "2026-11-12T00:00:00.000Z", "reviewedOnly": false, "label": "결핵"},
+        {"qid": "N15.q2", "type": "asof_diagnosis", "at": "2026-11-17T00:00:00.000Z", "reviewedOnly": false, "label": "결핵"}
+      ]
+    },
+    {
+      "id": "N16", "risk": 12, "title": "환자가 한 말(타병원 검사)을 의사가 전함 — 검사결과와 같은 확실성?",
+      "patient": [],
+      "statements": [
+        {"id": "s1", "spokenAt": "2026-11-16T10:00:00.000Z", "enteredAt": "2026-11-16T10:01:00.000Z", "text": "환자분이 다른 병원 CT에서 결절이 있었다고 하셨습니다."}
+      ],
+      "reviews": [],
+      "queries": [
+        {"qid": "N16.q1", "type": "stmt_status_or_hearsay", "stmt": "s1", "kind": "test", "label": "CT"},
+        {"qid": "N16.q2", "type": "asof_keys_separate"}
+      ]
+    }
+  ]
+}

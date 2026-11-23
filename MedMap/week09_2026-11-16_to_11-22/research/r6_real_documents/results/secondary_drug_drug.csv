@@ -1,0 +1,6 @@
+nct_id,drug_a,drug_b,rules_a,rules_b,n_windows,windows_diff,spurious_combos_total
+NCT01619059,metformin,dapagliflozin,MET-1|MET-2|MET-3,DAPA-G1|DAPA-G2,81,10,20
+NCT02630706,metformin,ertugliflozin,MET-1|MET-2|MET-3,ERTU-1|ERTU-2,81,10,20
+NCT03429543,metformin,empagliflozin,MET-1|MET-2|MET-3,EMPA-G1|EMPA-G2,81,10,20
+NCT03968224,metformin,dapagliflozin,MET-1|MET-2|MET-3,DAPA-G1|DAPA-G2,81,10,20
+NCT06327815,metformin,dapagliflozin,MET-1|MET-2|MET-3,DAPA-G1|DAPA-G2,81,10,20

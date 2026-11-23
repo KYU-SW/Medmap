@@ -1,0 +1,5 @@
+d,n_trial,n_patients,within_marginal,in_hull,marginal_says_in_but_outside_hull
+2,300,200,200,109,91
+3,300,200,200,29,171
+5,300,200,200,3,197
+8,300,200,200,0,200

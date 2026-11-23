@@ -1,0 +1,2621 @@
+{
+ "B": {
+  "CASE_01": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "alt_glycemic_ok"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "hba1c_above_target"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "uacr_gt30"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    }
+   },
+   "questions": [
+    "alt_glycemic_ok",
+    "hba1c_above_target",
+    "sglt2_contra",
+    "uacr_gt30"
+   ],
+   "question_scores": {
+    "sglt2_contra": 1,
+    "alt_glycemic_ok": 1,
+    "hba1c_above_target": 1,
+    "uacr_gt30": 1
+   }
+  },
+  "CASE_02": {
+   "items": {
+    "I1": {
+     "label": "SDM_CONFLICT",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "acei_intol"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "alt_glycemic_ok"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    }
+   },
+   "questions": [
+    "acei_intol",
+    "alt_glycemic_ok",
+    "sglt2_contra"
+   ],
+   "question_scores": {
+    "acei_intol": 1,
+    "sglt2_contra": 1,
+    "alt_glycemic_ok": 1
+   }
+  },
+  "CASE_03": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "orthostatic",
+      "sbp_ge130"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I3": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "statin_intol"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    }
+   },
+   "questions": [
+    "orthostatic",
+    "sbp_ge130",
+    "statin_intol"
+   ],
+   "question_scores": {
+    "orthostatic": 1,
+    "sbp_ge130": 1,
+    "statin_intol": 1
+   }
+  },
+  "CASE_04": {
+   "items": {
+    "I1": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "K",
+      "P"
+     ],
+     "relevant": [
+      "k_topical_nsaid_covered",
+      "knee_oa"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": false
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "hip_knee_oa"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "dm_type2",
+      "sglt2_contra"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "acei_intol"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I6": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sbp_ge130"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    }
+   },
+   "questions": [
+    "acei_intol",
+    "dm_type2",
+    "sbp_ge130",
+    "sglt2_contra",
+    "hip_knee_oa",
+    "knee_oa"
+   ],
+   "question_scores": {
+    "knee_oa": 1,
+    "hip_knee_oa": 1,
+    "dm_type2": 1,
+    "sglt2_contra": 1,
+    "acei_intol": 1,
+    "sbp_ge130": 1
+   }
+  },
+  "CASE_05": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I5": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    }
+   },
+   "questions": [
+    "sglt2_contra"
+   ],
+   "question_scores": {
+    "sglt2_contra": 2
+   }
+  },
+  "CASE_06": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [
+      "K",
+      "Q"
+     ],
+     "relevant": [
+      "k_anticoag_benefit_age90",
+      "q_bleed_tradeoff"
+     ],
+     "evidence_scope": "SCOPE_UNCERTAIN",
+     "closable_by_asking": false
+    },
+    "I2": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "orthostatic",
+      "sbp_ge130"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    }
+   },
+   "questions": [
+    "orthostatic",
+    "q_bleed_tradeoff",
+    "sbp_ge130"
+   ],
+   "question_scores": {
+    "q_bleed_tradeoff": 1,
+    "orthostatic": 1,
+    "sbp_ge130": 1
+   }
+  },
+  "CASE_07": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "bp_valid",
+      "orthostatic"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    }
+   },
+   "questions": [
+    "bp_valid",
+    "orthostatic",
+    "sglt2_contra"
+   ],
+   "question_scores": {
+    "sglt2_contra": 1,
+    "bp_valid": 1,
+    "orthostatic": 1
+   }
+  },
+  "CASE_08": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I2": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "K"
+     ],
+     "relevant": [
+      "k_metformin_after_mala_safe"
+     ],
+     "evidence_scope": "SCOPE_UNCERTAIN",
+     "closable_by_asking": false
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "alt_glycemic_ok"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    }
+   },
+   "questions": [
+    "alt_glycemic_ok"
+   ],
+   "question_scores": {
+    "alt_glycemic_ok": 1
+   }
+  },
+  "CASE_09": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "Q"
+     ],
+     "relevant": [
+      "q_life_prolonging"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    }
+   },
+   "questions": [
+    "q_life_prolonging"
+   ],
+   "question_scores": {
+    "q_life_prolonging": 1
+   }
+  },
+  "CASE_10": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "acute_illness"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I3": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "dm_type2",
+      "sglt2_contra"
+     ],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    }
+   },
+   "questions": [
+    "acute_illness",
+    "dm_type2",
+    "sglt2_contra"
+   ],
+   "question_scores": {
+    "acute_illness": 1,
+    "dm_type2": 1,
+    "sglt2_contra": 1
+   }
+  },
+  "CASE_12": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I4": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_13": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": [],
+     "evidence_scope": "NOT_EVALUATED",
+     "closable_by_asking": true
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  }
+ },
+ "A": {
+  "CASE_01": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_02": {
+   "items": {
+    "I1": {
+     "label": "SDM_CONFLICT",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_03": {
+   "items": {
+    "I1": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_04": {
+   "items": {
+    "I1": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I6": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_05": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_06": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_07": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_08": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_09": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_10": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_12": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_13": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  }
+ },
+ "C": {
+  "CASE_01": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ]
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "alt_glycemic_ok"
+     ]
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "hba1c_above_target"
+     ]
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "uacr_gt30"
+     ]
+    }
+   },
+   "questions": [
+    "alt_glycemic_ok",
+    "hba1c_above_target",
+    "sglt2_contra",
+    "uacr_gt30"
+   ],
+   "question_scores": {
+    "sglt2_contra": 1,
+    "alt_glycemic_ok": 1,
+    "hba1c_above_target": 1,
+    "uacr_gt30": 1
+   }
+  },
+  "CASE_02": {
+   "items": {
+    "I1": {
+     "label": "SDM_CONFLICT",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "acei_intol"
+     ]
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ]
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "alt_glycemic_ok"
+     ]
+    }
+   },
+   "questions": [
+    "acei_intol",
+    "alt_glycemic_ok",
+    "sglt2_contra"
+   ],
+   "question_scores": {
+    "acei_intol": 1,
+    "sglt2_contra": 1,
+    "alt_glycemic_ok": 1
+   }
+  },
+  "CASE_03": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "orthostatic",
+      "sbp_ge130"
+     ]
+    },
+    "I3": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "statin_intol"
+     ]
+    }
+   },
+   "questions": [
+    "orthostatic",
+    "sbp_ge130",
+    "statin_intol"
+   ],
+   "question_scores": {
+    "orthostatic": 1,
+    "sbp_ge130": 1,
+    "statin_intol": 1
+   }
+  },
+  "CASE_04": {
+   "items": {
+    "I1": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "k_topical_nsaid_covered",
+      "knee_oa"
+     ]
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "hip_knee_oa"
+     ]
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "dm_type2",
+      "sglt2_contra"
+     ]
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "acei_intol"
+     ]
+    },
+    "I6": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sbp_ge130"
+     ]
+    }
+   },
+   "questions": [
+    "acei_intol",
+    "dm_type2",
+    "sbp_ge130",
+    "sglt2_contra",
+    "hip_knee_oa",
+    "knee_oa"
+   ],
+   "question_scores": {
+    "knee_oa": 1,
+    "hip_knee_oa": 1,
+    "sglt2_contra": 1,
+    "dm_type2": 1,
+    "acei_intol": 1,
+    "sbp_ge130": 1
+   }
+  },
+  "CASE_05": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ]
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ]
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [
+    "sglt2_contra"
+   ],
+   "question_scores": {
+    "sglt2_contra": 2
+   }
+  },
+  "CASE_06": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "k_anticoag_benefit_age90"
+     ]
+    },
+    "I2": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "orthostatic",
+      "sbp_ge130"
+     ]
+    }
+   },
+   "questions": [
+    "orthostatic",
+    "sbp_ge130"
+   ],
+   "question_scores": {
+    "orthostatic": 1,
+    "sbp_ge130": 1
+   }
+  },
+  "CASE_07": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ]
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "bp_valid",
+      "orthostatic"
+     ]
+    }
+   },
+   "questions": [
+    "bp_valid",
+    "orthostatic",
+    "sglt2_contra"
+   ],
+   "question_scores": {
+    "sglt2_contra": 1,
+    "orthostatic": 1,
+    "bp_valid": 1
+   }
+  },
+  "CASE_08": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "k_metformin_after_mala_safe"
+     ]
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "alt_glycemic_ok"
+     ]
+    }
+   },
+   "questions": [
+    "alt_glycemic_ok"
+   ],
+   "question_scores": {
+    "alt_glycemic_ok": 1
+   }
+  },
+  "CASE_09": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_10": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "acute_illness"
+     ]
+    },
+    "I3": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "dm_type2",
+      "sglt2_contra"
+     ]
+    }
+   },
+   "questions": [
+    "acute_illness",
+    "dm_type2",
+    "sglt2_contra"
+   ],
+   "question_scores": {
+    "acute_illness": 1,
+    "sglt2_contra": 1,
+    "dm_type2": 1
+   }
+  },
+  "CASE_12": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_13": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  }
+ },
+ "D": {
+  "CASE_01": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ]
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "alt_glycemic_ok"
+     ]
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "hba1c_above_target"
+     ]
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "uacr_gt30"
+     ]
+    }
+   },
+   "questions": [
+    "alt_glycemic_ok",
+    "hba1c_above_target",
+    "sglt2_contra",
+    "uacr_gt30"
+   ],
+   "question_scores": {
+    "sglt2_contra": 1,
+    "alt_glycemic_ok": 1,
+    "hba1c_above_target": 1,
+    "uacr_gt30": 1
+   }
+  },
+  "CASE_02": {
+   "items": {
+    "I1": {
+     "label": "SDM_CONFLICT",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "acei_intol"
+     ]
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ]
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "alt_glycemic_ok"
+     ]
+    }
+   },
+   "questions": [
+    "acei_intol",
+    "alt_glycemic_ok",
+    "sglt2_contra"
+   ],
+   "question_scores": {
+    "acei_intol": 1,
+    "sglt2_contra": 1,
+    "alt_glycemic_ok": 1
+   }
+  },
+  "CASE_03": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "orthostatic",
+      "sbp_ge130"
+     ]
+    },
+    "I3": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "statin_intol"
+     ]
+    }
+   },
+   "questions": [
+    "orthostatic",
+    "sbp_ge130",
+    "statin_intol"
+   ],
+   "question_scores": {
+    "orthostatic": 1,
+    "sbp_ge130": 1,
+    "statin_intol": 1
+   }
+  },
+  "CASE_04": {
+   "items": {
+    "I1": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "knee_oa"
+     ]
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "hip_knee_oa"
+     ]
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "dm_type2",
+      "sglt2_contra"
+     ]
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "acei_intol"
+     ]
+    },
+    "I6": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sbp_ge130"
+     ]
+    }
+   },
+   "questions": [
+    "acei_intol",
+    "dm_type2",
+    "sbp_ge130",
+    "sglt2_contra",
+    "hip_knee_oa",
+    "knee_oa"
+   ],
+   "question_scores": {
+    "knee_oa": 1,
+    "hip_knee_oa": 1,
+    "dm_type2": 1,
+    "sglt2_contra": 1,
+    "acei_intol": 1,
+    "sbp_ge130": 1
+   }
+  },
+  "CASE_05": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ]
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ]
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [
+    "sglt2_contra"
+   ],
+   "question_scores": {
+    "sglt2_contra": 2
+   }
+  },
+  "CASE_06": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [
+      "Q"
+     ],
+     "relevant": [
+      "q_bleed_tradeoff"
+     ]
+    },
+    "I2": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "orthostatic",
+      "sbp_ge130"
+     ]
+    }
+   },
+   "questions": [
+    "orthostatic",
+    "q_bleed_tradeoff",
+    "sbp_ge130"
+   ],
+   "question_scores": {
+    "q_bleed_tradeoff": 1,
+    "orthostatic": 1,
+    "sbp_ge130": 1
+   }
+  },
+  "CASE_07": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "sglt2_contra"
+     ]
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "bp_valid",
+      "orthostatic"
+     ]
+    }
+   },
+   "questions": [
+    "bp_valid",
+    "orthostatic",
+    "sglt2_contra"
+   ],
+   "question_scores": {
+    "sglt2_contra": 1,
+    "bp_valid": 1,
+    "orthostatic": 1
+   }
+  },
+  "CASE_08": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "alt_glycemic_ok"
+     ]
+    }
+   },
+   "questions": [
+    "alt_glycemic_ok"
+   ],
+   "question_scores": {
+    "alt_glycemic_ok": 1
+   }
+  },
+  "CASE_09": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "Q"
+     ],
+     "relevant": [
+      "q_life_prolonging"
+     ]
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [
+    "q_life_prolonging"
+   ],
+   "question_scores": {
+    "q_life_prolonging": 1
+   }
+  },
+  "CASE_10": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "acute_illness"
+     ]
+    },
+    "I3": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [
+      "P"
+     ],
+     "relevant": [
+      "dm_type2",
+      "sglt2_contra"
+     ]
+    }
+   },
+   "questions": [
+    "acute_illness",
+    "dm_type2",
+    "sglt2_contra"
+   ],
+   "question_scores": {
+    "acute_illness": 1,
+    "dm_type2": 1,
+    "sglt2_contra": 1
+   }
+  },
+  "CASE_12": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_13": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  }
+ },
+ "ALL_HOLD": {
+  "CASE_01": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [
+    "sglt2_contra",
+    "alt_glycemic_ok",
+    "hba1c_above_target",
+    "uacr_gt30"
+   ],
+   "question_scores": {}
+  },
+  "CASE_02": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [
+    "acei_intol",
+    "sglt2_contra",
+    "alt_glycemic_ok"
+   ],
+   "question_scores": {}
+  },
+  "CASE_03": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [
+    "sbp_ge130",
+    "orthostatic",
+    "statin_intol",
+    "hip_knee_oa"
+   ],
+   "question_scores": {}
+  },
+  "CASE_04": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I6": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [
+    "knee_oa",
+    "hip_knee_oa",
+    "dm_type2",
+    "sglt2_contra",
+    "acei_intol",
+    "sbp_ge130"
+   ],
+   "question_scores": {}
+  },
+  "CASE_05": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [
+    "hip_knee_oa",
+    "sglt2_contra"
+   ],
+   "question_scores": {}
+  },
+  "CASE_06": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [
+    "sbp_ge130",
+    "orthostatic",
+    "hip_knee_oa",
+    "q_bleed_tradeoff"
+   ],
+   "question_scores": {}
+  },
+  "CASE_07": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [
+    "sglt2_contra",
+    "bp_valid",
+    "orthostatic"
+   ],
+   "question_scores": {}
+  },
+  "CASE_08": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [
+    "alt_glycemic_ok"
+   ],
+   "question_scores": {}
+  },
+  "CASE_09": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [
+    "q_life_prolonging"
+   ],
+   "question_scores": {}
+  },
+  "CASE_10": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [
+    "acute_illness",
+    "dm_type2",
+    "sglt2_contra"
+   ],
+   "question_scores": {}
+  },
+  "CASE_12": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_13": {
+   "items": {
+    "I1": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "HOLD",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  }
+ },
+ "GUIDELINE_ONLY": {
+  "CASE_01": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_02": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_03": {
+   "items": {
+    "I1": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_04": {
+   "items": {
+    "I1": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I6": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_05": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_06": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_07": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_08": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I5": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_09": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_10": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_12": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I4": {
+     "label": "NOT_APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  },
+  "CASE_13": {
+   "items": {
+    "I1": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I2": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    },
+    "I3": {
+     "label": "APPLY",
+     "cause": [],
+     "relevant": []
+    }
+   },
+   "questions": [],
+   "question_scores": {}
+  }
+ }
+}

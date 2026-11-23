@@ -1,0 +1,26 @@
+{
+ "recompute_matches": {
+  "pair_evals": true,
+  "with_spurious": true,
+  "spurious_allowed_out": true,
+  "cat_change": true,
+  "realized_outside_J": true,
+  "eGFR_status_changed": true
+ },
+ "POSTHOC_recorded_MDRD": {
+  "rows": 739,
+  "numeric": 310,
+  "censored_gt75": 234,
+  "unparsed": 195,
+  "numeric_patients": 60,
+  "near_abs_obs": 199,
+  "near_abs_patients": 49
+ },
+ "POSTHOC_exclude_age_uncertain": {
+  "age_uncertain_patients": 4,
+  "pair_evals_excl": 80230,
+  "with_spurious_excl": 20426,
+  "cat_change_excl": 0,
+  "eval_points_eGFR_excl": 2845
+ }
+}

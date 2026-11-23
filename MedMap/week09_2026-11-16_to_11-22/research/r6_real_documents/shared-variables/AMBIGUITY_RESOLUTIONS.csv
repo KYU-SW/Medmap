@@ -1,0 +1,7 @@
+nct_id,variable,resolved,lo,lo_inc,hi,hi_inc,note
+NCT02540993,eGFR,yes,25,1,75,0,"raw text: two OR-subgroups eGFR >=25 to <60 (UACR 30-300 + retinopathy) or >=25 to <75 (UACR>=300); eGFR-only union [25;75); UACR dependency simplified (treated as satisfied)"
+NCT04869124,eGFR,yes,30,1,inf,1,"raw text: inclusion eGFR >=30 (CKD-EPI) at enrolment; exclusion <20 is redundant"
+NCT05210517,eGFR,yes,60,1,inf,1,"raw text: exclusion eGFR <60 (equation unspecified) and MDRD eGFR <45; stricter bound 60 applied; equation heterogeneity noted"
+NCT01069510,potassium,yes,-inf,1,5.0,0,"manual correction: raw text 'Serum potassium >=5.0 mmol/L at initial visit ... eligible if a repeat potassium is <5.0' -> eligible K <5.0 (regex produced empty interval)"
+NCT05196347,eGFR,yes,10,1,30,1,"manual correction: raw text 'eGFR >=10 and <=30 mL/min/1.73m2 (MDRD)' (regex dropped lower bound with unknown unit)"
+NCT04676646,eGFR,yes,30,1,inf,1,"manual correction: raw text cohorts K-dependent: 'sK+ 5.1-5.9 and eGFR >=30' OR 'history HK and eGFR >=30' OR 'sK+ 4.5-5.0 and eGFR 30 to 60' -> eGFR-only union [30;inf); K dependency simplified"

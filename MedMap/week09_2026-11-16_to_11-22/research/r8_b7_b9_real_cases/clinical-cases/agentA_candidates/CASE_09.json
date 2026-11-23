@@ -1,0 +1,85 @@
+{
+  "case_id": "CASE_09",
+  "case_type": "REAL_NO_PREF",
+  "case_type_reason": "실제 환자. 환자 본인의 치료 선호는 없고, 대리 결정자(딸)의 신념·우려가 기록됨 → 환자 본인 선호 기준으로는 NO_PREF(대리인 선호는 별도 표시)",
+  "source": {
+    "title": "Rethinking Care: Early Palliative Support for Advanced Heart Failure",
+    "first_author": "Ansari (외)",
+    "journal": "Cureus",
+    "year": 2025,
+    "doi": "10.7759/cureus.82106",
+    "pmid": "40351957",
+    "pmcid": "PMC12066164",
+    "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12066164/",
+    "license": "CC BY 4.0",
+    "license_quote": "This is an open access article distributed under the terms of the Creative Commons Attribution License CC-BY 4.0., which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+    "access_date": "2026-11-21",
+    "verification_level": "[원문] 본문 XML"
+  },
+  "condition_combination": "(1) 당뇨+CKD+심부전",
+  "combination_reason": "우선 조합 + COPD·심방세동·두개내출혈 병력",
+  "conditions": [
+    "HFrEF(EF 20–25%)",
+    "COPD(가정산소 5L)",
+    "제2형 당뇨병",
+    "CKD 3기",
+    "심방세동",
+    "두개내출혈 병력",
+    "다발성 악성종양"
+  ],
+  "clinical_info_in_source": {
+    "demographics_function": "87세 남성, 기능·인지 점진 악화",
+    "labs": "EF 20–25% 외 검사값 없음",
+    "course": "최근 수개월 반복 입원(저산소성 호흡부전), COPD·HF 동시 악화, 양측 흉수, 원내폐렴 의심"
+  },
+  "info_not_in_source": [
+    "eGFR·HbA1c 등 검사값",
+    "당뇨·심부전 약물 목록",
+    "심방세동 항응고 여부(두개내출혈 병력 있음)",
+    "환자 본인의 목표·선호"
+  ],
+  "patient_goals_preferences": {
+    "level": "환자 본인: 없음(결정을 딸에게 위임) / 대리인: 있음",
+    "quotes": [
+      {
+        "text": "She expressed concerns that accepting hospice would mean \"giving up,\" a belief that delayed the patient's access to appropriate palliative services.",
+        "location": "Case presentation 3번째 문단(딸의 우려)"
+      },
+      {
+        "text": "The patient is an adult with the capacity to make decisions for his healthcare. However, he is dependent and has deferred medical decision-making to his daughter...",
+        "location": "Discussion"
+      }
+    ]
+  },
+  "actual_clinical_decision": {
+    "described_in_source": true,
+    "summary": "신기능 악화로 이뇨제 중단, 여러 차례 완화의료 상담 후 입원 호스피스 제공",
+    "quote": "Diuresis was discontinued during the hospitalization due to worsening kidney function...",
+    "location": "Case presentation 5번째 문단",
+    "rationale_in_source": "진행된 다장기 질환에서 적극 치료의 한계(원문)"
+  },
+  "relevant_guidelines": [
+    {
+      "guideline": "G-KSHF-2023-COMORB (대한심부전학회 심부전 진료지침: 원인·동반질환, IJHF 2023)",
+      "location": "RENAL FAILURE AND ELECTROLYTE IMBALANCE (Types of cardiorenal syndrome) 절",
+      "relation": "이뇨 vs 신기능 악화"
+    },
+    {
+      "guideline": "G-KSHF-2023-TX (대한심부전학회 심부전 진료지침: 치료, IJHF 2023)",
+      "location": "Multidisciplinary care 절; 별도 문서 'Advanced and Acute Heart Failure'(PMC10406557, 미검토)",
+      "relation": "진행성 HF 완화의료"
+    },
+    {
+      "guideline": "G-VA-CKD-2025 (VA/DoD CKD CPG v5.0, 2025)",
+      "location": "Recommendations 8–10 (pp.32–33)",
+      "relation": "고동반질환·저기능 환자 의사결정"
+    }
+  ],
+  "info_gaps_that_could_change_judgment": [
+    "환자 본인이 원하는 것(위임 전 본인 가치관)이 기록되지 않음 — 대리인 판단과 다를 수 있음",
+    "약물 목록 없음: 지침 약물 적용 판단 불가"
+  ],
+  "research_relevance": "B9: '환자 선호 불완전' 상태에서 대리인 선호만 있을 때 무엇을 먼저 물을지. B7: 이뇨 vs 신기능.",
+  "reuse_constraints": "CC BY 4.0: 출처 표기 시 구조화·재배포 허용.",
+  "limitations": "임상 수치 거의 없음."
+}

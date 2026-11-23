@@ -1,0 +1,11 @@
+{
+  "label": "출처 원문에 적힌 실제 임상 결정 또는 저자 기대안. 정답이 아님(실제로 한 것/저자가 쓴 것). 작성 = 메인, run2 결과를 본 뒤 작성[사후] — 원문 결정 문장만 옮김. 원문 위치는 clinical-cases/agentA_candidates/CASE_xx.json actual_clinical_decision.",
+  "items": {
+    "CASE_07": {"I1": ["UNKNOWN", "약 정리 기재, 혈당강하제 이름·조정 미기재"], "I2": ["UNKNOWN", "사용 여부 미기재"], "I3": ["NOT_INTENSIFIED", "carvedilol·amlodipine 지속(강화 기재 없음)"]},
+    "CASE_08": {"I1": ["NOT_DONE", "구토·설사 4일간 약 계속 복용 후 입원(환자 행동)"], "I2": ["NOT_APPLY", "SGLT2i 영구 중단"], "I3": ["APPLY", "GLP-1 RA 로 전환"], "I4": ["NOT_APPLY", "metformin 영구 중단('we decided to stop it definitely'), 원문: 재개 합의 없음"], "I5": ["NOT_AVOIDED", "gliclazide 추가"]},
+    "CASE_09": {"I1": ["APPLY", "완화의료 상담 여러 차례"], "I2": ["UNKNOWN", "미기재"], "I3": ["APPLY", "신기능 악화로 이뇨제 중단"]},
+    "CASE_10": {"I1": ["APPLY", "장시간형 sulfonylurea 중단"], "I2": ["APPLY_REDUCED", "metformin 1000→500 mg bid 감량 지속, 4개월 후 MALA"], "I3": ["NOT_APPLY", "MALA 후 중단"], "I4": ["UNKNOWN", "미기재"]},
+    "CASE_12": {"I1": ["APPLY", "저자 기대안"], "I2": ["APPLY", "저자 기대안(선호 반영 DOAC)"], "I3": ["APPLY", "저자 기대안 ACEi 유지"], "I4": ["NOT_APPLY", "저자 기대안 BB 미처방"]},
+    "CASE_13": {"I1": ["APPLY", "저자 대안 1~3 공통"], "I2": ["APPLY", "저자 대안 1~3 공통"], "I3": ["ONE_OF_3_OPTIONS", "저자: 대안 1 'all goals met', 대안 2·3 도 제시"]}
+  }
+}

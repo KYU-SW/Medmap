@@ -1,0 +1,14 @@
+﻿case_id,case_type,condition_combination,source_id,pmcid_or_repo,doi,license,structuring_allowed,patient_pref_level,labs_in_source,actual_decision_in_source,main_use
+CASE_01,REAL_WITH_PREF,(1) 당뇨+CKD+심부전,S05,PMC6557523,10.1371/journal.pone.0218249,CC0 1.0 (public domain dedication),가능(CC0),실제-본인,없음,없음,B9 선호·B7 적용조건 보류
+CASE_02,REAL_WITH_PREF,(1) 당뇨+CKD+심부전,S05,PMC6557523,10.1371/journal.pone.0218249,CC0 1.0 (public domain dedication),가능(CC0),실제-본인,없음,없음,B9 의뢰 거부·B7 CKD4
+CASE_03,REAL_WITH_PREF,(2) 당뇨+CKD+골관절염(관절염),S05,PMC6557523,10.1371/journal.pone.0218249,CC0 1.0 (public domain dedication),가능(CC0),실제-본인,없음,없음(의료진 '정보 부족' 발언),B7 혈압목표 vs 어지럼·B9
+CASE_04,REAL_WITH_PREF,(2) 당뇨+CKD+골관절염(관절염),S05,PMC6557523,10.1371/journal.pone.0218249,CC0 1.0 (public domain dedication),가능(CC0),실제-본인,없음,없음,B7 NSAID vs CKD·B9
+CASE_05,REAL_WITH_PREF,(2) 당뇨+CKD+골관절염(관절염),S05,PMC6557523,10.1371/journal.pone.0218249,CC0 1.0 (public domain dedication),가능(CC0),실제-본인,없음,부분(스타틴 감량 기재),B7 스타틴·B9
+CASE_06,REAL_WITH_PREF,(3) 기타 조합: 심방세동+관절염+고혈압(90+세),S05,PMC6557523,10.1371/journal.pone.0218249,CC0 1.0 (public domain dedication),가능(CC0),실제-본인,없음,부분(의료진 이견),B10 근거 적용범위·B9
+CASE_07,REAL_WITH_PREF,(1) 당뇨+CKD+심부전,S06,PMC10359101,10.7759/cureus.40699,CC BY (버전 표기 없음),가능(CC BY),실제-본인(돌봄 장소),있음,있음,B9 재가 선호·다약제
+CASE_08,REAL_NO_PREF,(1) 당뇨+CKD+심부전,S07,PMC10325753,10.1097/XCE.0000000000000287,CC BY 4.0,가능(CC BY 4.0),없음,있음(풍부),있음,B7 실제 충돌(SGLT2i)
+CASE_09,REAL_NO_PREF,(1) 당뇨+CKD+심부전,S08,PMC12066164,10.7759/cureus.82106,CC BY 4.0,가능(CC BY 4.0),대리인만,거의 없음,있음,B9 대리인 선호
+CASE_10,REAL_NO_PREF,(3) 기타 조합: 당뇨+CKD+심방세동,S09,PMC11260110,10.7759/cureus.62729,CC BY 4.0,가능(CC BY 4.0),없음,있음(시점별),있음,B7 조건부(eGFR)
+CASE_11,GUIDELINE_VIGNETTE,(1)+(2) 당뇨+심부전+골관절염(+Cr 1.7),S10,PMC4450364,10.1111/j.1532-5415.2012.04188.x,저작권 보유(© 2012 AGS). PMC 'text mining·fair use' 조건,"불가(저작권, 인용만)",가상(저자 작성),있음,저자 제안(가상),설명·대조용
+CASE_12,GUIDELINE_VIGNETTE,(3) 기타 조합: CKD+고혈압+심방세동,S01/S02,https://github.com/MGCDS/benchmark-framework (Benchmark_4_cases.docx),,Apache-2.0 (두 저장소 모두 GitHub API spdx_id),"가능(Apache-2.0, 제3자 PDF 제외)",가상(저자 작성),있음,저자 기대안(가상),B9 형식 기준
+CASE_13,GUIDELINE_VIGNETTE,(3) 기타 조합: TIA+십이지장궤양+골다공증,S01/S02,https://github.com/MGCDS/benchmark-framework (Benchmark_4_cases.docx),,Apache-2.0 (두 저장소 모두 GitHub API spdx_id),"가능(Apache-2.0, 제3자 PDF 제외)",없음,있음,저자 대안(가상),B7 충돌유형 기준

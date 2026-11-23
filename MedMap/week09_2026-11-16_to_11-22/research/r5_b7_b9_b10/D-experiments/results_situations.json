@@ -1,0 +1,120 @@
+{
+ "1_A_fails_B_succeeds": {
+  "count": 993,
+  "ids_head": [
+   "case_C",
+   "case_D",
+   "case_E",
+   "case_F",
+   "case_G",
+   "case_H",
+   "case_I",
+   "e10_0",
+   "e10_1",
+   "e10_10",
+   "e10_11",
+   "e10_12",
+   "e10_13",
+   "e10_14",
+   "e10_15"
+  ]
+ },
+ "2_B_and_Bp_both_fail": {
+  "count": 0,
+  "ids_head": []
+ },
+ "2b_B_fails_any": {
+  "count": 0,
+  "ids_head": []
+ },
+ "4_knowledge_gap_truth": {
+  "count": 97,
+  "ids_head": [
+   "case_F",
+   "e3_11",
+   "e3_31",
+   "e3_4",
+   "e3_41",
+   "e3_42",
+   "e3_57",
+   "e3_6",
+   "e3_63",
+   "e3_78",
+   "e3_84",
+   "e3_92",
+   "e3_95",
+   "e4_0",
+   "e4_105"
+  ]
+ },
+ "5_no_ground_truth": {
+  "count": 20,
+  "ids_head": [
+   "case_J",
+   "enogt_0",
+   "enogt_1",
+   "enogt_10",
+   "enogt_12",
+   "enogt_14",
+   "enogt_15",
+   "enogt_16",
+   "enogt_2",
+   "enogt_20",
+   "enogt_22",
+   "enogt_23",
+   "enogt_24",
+   "enogt_25",
+   "enogt_29"
+  ]
+ },
+ "Bp_fails_B_succeeds": {
+  "count": 137,
+  "ids_head": [
+   "case_G",
+   "case_H",
+   "case_I",
+   "e10_28",
+   "e4_10",
+   "e4_100",
+   "e4_104",
+   "e4_126",
+   "e4_141",
+   "e4_143",
+   "e4_145",
+   "e4_149",
+   "e4_17",
+   "e4_18",
+   "e4_27"
+  ]
+ },
+ "no_ground_truth_method_outputs": {
+  "A_mitplan_style": {
+   "REAL_CONFLICT": 3,
+   "CONVERGED": 12,
+   "CONFIRMED_PLAN": 5
+  },
+  "B_joint": {
+   "NO_GROUND_TRUTH": 20
+  },
+  "Bp_modular": {
+   "NO_GROUND_TRUTH": 20
+  },
+  "C_naive": {
+   "CONVERGED": 20
+  },
+  "V_exclude_variant": {
+   "NO_GROUND_TRUTH": 20
+  }
+ },
+ "freeze_manifest": {
+  "frozen_at_local": "2026-11-18T12:07:31.550219+09:00",
+  "method_code_present_at_freeze": [],
+  "sha256": {
+   "frozen/SPEC.md": "0894d69ef21fd0581d23bd38830413339adb9f351a9f5c489c51563c4163c3b4",
+   "frozen/ground_truth.json": "7b6b81db86b58fc9880931254b78464c7d77f0635ad26ca06e6b3ccf3a2e52ce",
+   "inputs/instances.json": "954063b1d18c3f8fbafad86e5e8bbf82073a9cdfd6a8f364accdadfb41322633",
+   "frozen/gen_instances.py.frozen": "5340d9c9bb8c6cfa748c5f6c7e8cd19ce242946e4d8aca87dd7bf3469b777257",
+   "frozen/ground_truth.py.frozen": "ab0fa14c40546eb7f2b63360bbfbe6b738d8202f6f1bc1758684bd89fa0b9262"
+  }
+ }
+}

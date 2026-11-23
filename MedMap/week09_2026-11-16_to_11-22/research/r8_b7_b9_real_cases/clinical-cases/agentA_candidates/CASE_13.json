@@ -1,0 +1,64 @@
+{
+  "case_id": "CASE_13",
+  "case_type": "GUIDELINE_VIGNETTE",
+  "case_type_reason": "CASE_12와 같은 벤치마크의 예시 사례(가상 이름 Mrs. Williams). 실제 환자 문구 없음",
+  "source": {
+    "repo_primary": "https://github.com/MGCDS/benchmark-framework (Benchmark_4_cases.docx)",
+    "repo_full": "https://github.com/william-vw/MGCDS (Case 1–4 폴더, Solution Reports)",
+    "paper_1": "O'Sullivan D, Van Woensel W, Wilk S, Tu SW, et al. AMIA Annu Symp Proc 2021 (PMC8861752, PMID 35308994)",
+    "paper_2": "Van Woensel W et al. J Biomed Inform 2023;142:104395, doi:10.1016/j.jbi.2023.104395 (PMID 37201618, 초록만 확인)",
+    "license": "Apache-2.0 (두 저장소 모두 GitHub API spdx_id)",
+    "license_quote": "Apache License Version 2.0 ... TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION",
+    "license_caveat": "저장소에 함께 올라온 제3자 지침 PDF(NICE-2006/2019, Hypertension Canada, ESMO 등)는 Apache 적용 대상이 아님 — 재사용 금지",
+    "access_date": "2026-11-21",
+    "verification_level": "[원문] 저장소 docx 원문 + 논문 초록",
+    "location": "Case 1 'TIA/Duodenal ulcer/Osteoporosis' (Kogan, Peleg, Tu 외)"
+  },
+  "condition_combination": "(3) 기타 조합: TIA+십이지장궤양+골다공증",
+  "combination_reason": "당뇨·CKD 없음. 3개 지침 간 상호작용과 '목표 일부 미충족' 대안 3개(Option 1–3)가 명시되어 B7 충돌 유형 분류 기준으로 유용",
+  "conditions": [
+    "TIA(13년 전)",
+    "aspirin 관련 십이지장궤양(4년 전)",
+    "신규 골다공증(T-score -2.6, FRAX >20%)"
+  ],
+  "clinical_info_in_source": {
+    "demographics_function": "76세 여성, 172 cm, 70 kg, BMI 23.7",
+    "labs": "DXA -2.6, FRAX >20%, 이차성 원인 검사 정상(전해질·비타민D·갑상선·단백전기영동·CBC)",
+    "medications": "aspirin, Nexium(PPI)"
+  },
+  "info_not_in_source": [
+    "환자 선호 없음",
+    "출혈 재발 위험 평가",
+    "실제 환자 여부(가상)"
+  ],
+  "patient_goals_preferences": {
+    "level": "없음",
+    "quotes": []
+  },
+  "actual_clinical_decision": {
+    "described_in_source": true,
+    "summary": "저자 제시 대안 3개: Option 1 aspirin→clopidogrel + PPI 중단 + 골다공증약(모든 목표 충족) / Option 2 aspirin 유지 + PPI 장기 + 골다공증약 / Option 3 aspirin 유지 + PPI 중단 + 골다공증약",
+    "quote": "Option 1: (all goals met).",
+    "location": "Case 1 'Adverse interactions and revisions'",
+    "rationale_in_source": "PPI가 골다공증 이차 원인(저자)"
+  },
+  "expected_output_available": "있음(저자 대안 3개 + Solution Reports). gold standard 문구 없음",
+  "relevant_guidelines": [
+    {
+      "guideline": "사례 원 근거(저장소 PDF)",
+      "location": "GL_Osteoporosis.pdf, GL_UlcerBleeding.pdf, Stroke prevention.pdf (원 지침명·라이선스 확인 필요)",
+      "relation": "제3자 저작물 — 인용만"
+    },
+    {
+      "guideline": "USPSTF Osteoporosis Screening",
+      "location": "권고문 미검토(확인 필요)",
+      "relation": "골다공증 선별 — 저작권 고지상 무변경 재사용·각색 시 면책 문구"
+    }
+  ],
+  "info_gaps_that_could_change_judgment": [
+    "환자 선호(약 변경 수용도) 없음 → Option 선택 불가, 무엇을 먼저 물을지가 B9 질문이 됨"
+  ],
+  "research_relevance": "B7 충돌 유형(목표 일부 미충족 대안) 기준 사례. 실제 근거 사례 아님.",
+  "reuse_constraints": "Apache-2.0(사례 텍스트). 제3자 PDF 제외.",
+  "limitations": "가상 사례, 우선 조합 아님."
+}

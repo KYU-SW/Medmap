@@ -1,0 +1,7 @@
+drug,scope,evidence_rule,windows_diff,spurious_allowed_out,spurious_disallowed_in,joint_categories,note
+canagliflozin,ALL,CANA-E,10,10,10,"{'NOT_INITIATE': 15, 'HOLD': 10, 'OK_IN': 56}",
+dapagliflozin,CKD_HF_OTHER,DAPA-E,10,10,10,"{'NOT_INITIATE': 10, 'HOLD': 10, 'OK_IN': 61}",
+dapagliflozin,T2DM_GLYCEMIC,DAPA-E,0,0,0,"{'NOT_INITIATE': 30, 'HOLD': 10, 'OK_IN': 41}",
+empagliflozin,CKD_HF_OTHER,EMPA-E,,,,,label use rule UNKNOWN for this scope; not computed
+empagliflozin,T2DM_GLYCEMIC,EMPA-E,0,0,0,"{'NOT_INITIATE': 15, 'HOLD': 10, 'OK_IN': 56}",
+sotagliflozin,ALL,SOTA-E,,,,,label use rule UNKNOWN for this scope; not computed

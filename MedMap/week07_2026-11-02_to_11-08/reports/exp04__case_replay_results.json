@@ -1,0 +1,247 @@
+{
+ "summary": {
+  "n": 11,
+  "events": 54,
+  "expressible": 38,
+  "group_A": {
+   "SAME": 2,
+   "NO_ALERT": 4
+  },
+  "group_B": {
+   "NO_ALERT": 5
+  },
+  "note": "저자 사후 서술 기준·선택된 보고 — 정확도 아님, 일반화 금지"
+ },
+ "cases": [
+  {
+   "pmcid": "PMC7253721",
+   "group": "A",
+   "events": 4,
+   "expressible": 3,
+   "author_change_step": 4.0,
+   "first_alert_step": 4.0,
+   "relation_to_author": "SAME",
+   "alert_has_source": true,
+   "v3b_classes": [
+    "NEGATIVE"
+   ],
+   "states": [
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "SUPPORTED",
+    "CONFLICT",
+    "CONFLICT"
+   ]
+  },
+  {
+   "pmcid": "PMC10826807",
+   "group": "A",
+   "events": 5,
+   "expressible": 5,
+   "author_change_step": 6.0,
+   "first_alert_step": null,
+   "relation_to_author": "NO_ALERT",
+   "alert_has_source": null,
+   "v3b_classes": [
+    "NO_MENTION",
+    "ACUTE_POS"
+   ],
+   "states": [
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "UNKNOWN",
+    "UNKNOWN",
+    "SUPPORTED"
+   ]
+  },
+  {
+   "pmcid": "PMC11308721",
+   "group": "A",
+   "events": 7,
+   "expressible": 6,
+   "author_change_step": 7.0,
+   "first_alert_step": 7.0,
+   "relation_to_author": "SAME",
+   "alert_has_source": true,
+   "v3b_classes": [
+    "NEGATIVE"
+   ],
+   "states": [
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "SUPPORTED",
+    "CONFLICT",
+    "CONFLICT"
+   ]
+  },
+  {
+   "pmcid": "PMC9670361",
+   "group": "A",
+   "events": 4,
+   "expressible": 2,
+   "author_change_step": 4.0,
+   "first_alert_step": null,
+   "relation_to_author": "NO_ALERT",
+   "alert_has_source": null,
+   "v3b_classes": [
+    "ACUTE_POS",
+    "NO_MENTION"
+   ],
+   "states": [
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "SUPPORTED",
+    "SUPPORTED",
+    "SUPPORTED"
+   ]
+  },
+  {
+   "pmcid": "PMC12584563",
+   "group": "A",
+   "events": 6,
+   "expressible": 4,
+   "author_change_step": 6.0,
+   "first_alert_step": null,
+   "relation_to_author": "NO_ALERT",
+   "alert_has_source": null,
+   "v3b_classes": [
+    "ACUTE_POS"
+   ],
+   "states": [
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "SUPPORTED",
+    "SUPPORTED",
+    "SUPPORTED"
+   ]
+  },
+  {
+   "pmcid": "PMC12867922",
+   "group": "A",
+   "events": 5,
+   "expressible": 3,
+   "author_change_step": 6.0,
+   "first_alert_step": null,
+   "relation_to_author": "NO_ALERT",
+   "alert_has_source": null,
+   "v3b_classes": [
+    "ACUTE_POS"
+   ],
+   "states": [
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "SUPPORTED",
+    "SUPPORTED",
+    "SUPPORTED"
+   ]
+  },
+  {
+   "pmcid": "PMC3002912",
+   "group": "B",
+   "events": 6,
+   "expressible": 4,
+   "author_change_step": 7.0,
+   "first_alert_step": null,
+   "relation_to_author": "NO_ALERT",
+   "alert_has_source": null,
+   "v3b_classes": [
+    "ACUTE_POS"
+   ],
+   "states": [
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "INSUFFICIENT",
+    "INSUFFICIENT",
+    "INSUFFICIENT",
+    "INSUFFICIENT"
+   ]
+  },
+  {
+   "pmcid": "PMC6288948",
+   "group": "B",
+   "events": 3,
+   "expressible": 1,
+   "author_change_step": 4.0,
+   "first_alert_step": null,
+   "relation_to_author": "NO_ALERT",
+   "alert_has_source": null,
+   "v3b_classes": [],
+   "states": [
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "INSUFFICIENT",
+    "INSUFFICIENT"
+   ]
+  },
+  {
+   "pmcid": "PMC6946195",
+   "group": "B",
+   "events": 6,
+   "expressible": 5,
+   "author_change_step": 5.0,
+   "first_alert_step": null,
+   "relation_to_author": "NO_ALERT",
+   "alert_has_source": null,
+   "v3b_classes": [
+    "NO_MENTION"
+   ],
+   "states": [
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "INSUFFICIENT",
+    "INSUFFICIENT",
+    "INSUFFICIENT",
+    "INSUFFICIENT"
+   ]
+  },
+  {
+   "pmcid": "PMC6392842",
+   "group": "B",
+   "events": 4,
+   "expressible": 2,
+   "author_change_step": 4.0,
+   "first_alert_step": null,
+   "relation_to_author": "NO_ALERT",
+   "alert_has_source": null,
+   "v3b_classes": [
+    "ACUTE_POS"
+   ],
+   "states": [
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "INSUFFICIENT",
+    "INSUFFICIENT",
+    "INSUFFICIENT"
+   ]
+  },
+  {
+   "pmcid": "PMC10612150",
+   "group": "B",
+   "events": 4,
+   "expressible": 3,
+   "author_change_step": 5.0,
+   "first_alert_step": null,
+   "relation_to_author": "NO_ALERT",
+   "alert_has_source": null,
+   "v3b_classes": [
+    "NEGATIVE"
+   ],
+   "states": [
+    "NO_HYPOTHESIS",
+    "NO_HYPOTHESIS",
+    "INSUFFICIENT",
+    "INSUFFICIENT",
+    "INSUFFICIENT"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+{
+ "_meta": {
+  "author": "SUBAGENT B, hand-coded from ClinicalTrials.gov eligibilityCriteria text (data/ctgov/*.json) only, NOT from full protocols",
+  "semantics": "inclusion = AND/OR tree that must be TRUE; exclusion = list, any TRUE -> ineligible. Kleene 3-valued. NA -> UNKNOWN. 'none' in *_days -> event absent. n_as_unknown: value N gives UNKNOWN because the criterion has an exception clause (e.g. 'unless not tolerated').",
+  "scope": "only atoms mappable to patients_synthetic.csv columns; others listed in out_of_scope and excluded from the in-scope label",
+  "dialysis_column": "current maintenance dialysis"
+ },
+ "DAPA-CKD": {"nct":"NCT03036150",
+  "inclusion": {"and":[{"v":"age","cmp":">=","x":18},{"v":"egfr","cmp":">=","x":25},{"v":"egfr","cmp":"<=","x":75},{"v":"uacr","cmp":">=","x":200},{"v":"uacr","cmp":"<=","x":5000},{"v":"acei_arb","eq":"Y","n_as_unknown":true}]},
+  "exclusion": [{"v":"transplant","eq":"Y"},{"v":"t1d","eq":"Y"},{"v":"nyha","cmp":">=","x":4},{"v":"recent_cv_days","cmp":"<=","x":84},{"v":"sglt2_current","eq":"Y"}],
+  "out_of_scope": ["albuminuria >=3 months before visit 1 (temporal)","PKD/lupus/ANCA","immunosuppression 6 months","informed consent"]},
+ "EMPA-KIDNEY": {"nct":"NCT03594110",
+  "inclusion": {"and":[{"v":"age","cmp":">=","x":18},{"or":[{"and":[{"v":"egfr","cmp":">=","x":20},{"v":"egfr","cmp":"<","x":45}]},{"and":[{"v":"egfr","cmp":">=","x":45},{"v":"egfr","cmp":"<","x":90},{"v":"uacr","cmp":">=","x":200}]}]},{"v":"acei_arb","eq":"Y","n_as_unknown":true}]},
+  "exclusion": [{"v":"sglt2_current","eq":"Y"},{"and":[{"v":"t2d","eq":"Y"},{"v":"ascvd","eq":"Y"},{"v":"egfr","cmp":">","x":60}]},{"v":"dialysis","eq":"Y"},{"v":"transplant","eq":"Y"},{"v":"t1d","eq":"Y"},{"v":"sbp","cmp":"<","x":90},{"v":"sbp","cmp":">","x":180}],
+  "out_of_scope": ["CKD criteria >=3 months before screening (temporal)","PCR alternative","investigator judges neither requires nor inappropriate (judgement)","combined ACEi+ARB","PKD","bariatric","ketoacidosis 5y","ALT/AST","immunosuppression","compliance","cancer history","pregnancy"]},
+ "CREDENCE": {"nct":"NCT02065791",
+  "inclusion": {"and":[{"v":"t2d","eq":"Y"},{"v":"hba1c","cmp":">=","x":6.5},{"v":"hba1c","cmp":"<=","x":12.0},{"v":"egfr","cmp":">=","x":30},{"v":"egfr","cmp":"<","x":90},{"v":"acei_arb","eq":"Y"},{"v":"uacr","cmp":">","x":300},{"v":"uacr","cmp":"<=","x":5000}]},
+  "exclusion": [{"v":"t1d","eq":"Y"},{"v":"nyha","cmp":">=","x":4},{"v":"k","cmp":">","x":5.5}],
+  "out_of_scope": ["stable max dose 4 weeks (temporal/dose)","DKA history","glucose-galactose malabsorption","immunosuppressive renal disease","significant liver disease (vague)","NO AGE CRITERION IN REGISTRY TEXT"]},
+ "FIDELIO-DKD": {"nct":"NCT02540993",
+  "inclusion": {"and":[{"v":"age","cmp":">=","x":18},{"v":"t2d","eq":"Y"},{"or":[{"and":[{"v":"uacr","cmp":">=","x":30},{"v":"uacr","cmp":"<","x":300},{"v":"egfr","cmp":">=","x":25},{"v":"egfr","cmp":"<","x":60},{"v":"retinopathy","eq":"Y"}]},{"and":[{"v":"uacr","cmp":">=","x":300},{"v":"egfr","cmp":">=","x":25},{"v":"egfr","cmp":"<","x":75}]}]},{"v":"acei_arb","eq":"Y"},{"v":"k","cmp":"<=","x":4.8}]},
+  "exclusion": [{"v":"sbp","cmp":">=","x":170},{"v":"hba1c","cmp":">","x":12},{"v":"sbp","cmp":"<","x":90},{"and":[{"v":"hfref","eq":"Y"},{"v":"nyha","cmp":">=","x":2}]},{"v":"recent_cv_days","cmp":"<=","x":30},{"v":"transplant","eq":"Y"}],
+  "out_of_scope": ["persistent UACR in 2 of 3 samples (temporal)","run-in/screening two visits","non-diabetic renal disease","DBP thresholds","dialysis for acute renal failure within 12 weeks (not maintenance)","worsening HF hospitalization"]},
+ "FLOW": {"nct":"NCT03819153",
+  "inclusion": {"and":[{"v":"age","cmp":">=","x":18},{"v":"t2d","eq":"Y"},{"v":"hba1c","cmp":"<=","x":10},{"or":[{"and":[{"v":"egfr","cmp":">=","x":50},{"v":"egfr","cmp":"<=","x":75},{"v":"uacr","cmp":">","x":300},{"v":"uacr","cmp":"<","x":5000}]},{"and":[{"v":"egfr","cmp":">=","x":25},{"v":"egfr","cmp":"<","x":50},{"v":"uacr","cmp":">","x":100},{"v":"uacr","cmp":"<","x":5000}]}]},{"v":"acei_arb","eq":"Y","n_as_unknown":true}]},
+  "exclusion": [{"v":"glp1_days","cmp":"<=","x":30},{"v":"recent_cv_days","cmp":"<=","x":60},{"v":"nyha","cmp":">=","x":4},{"v":"dialysis","eq":"Y"}],
+  "out_of_scope": ["Japan age >=20","stable dose 4 weeks","congenital/autoimmune kidney disease","planned revascularisation","unstable retinopathy verified by fundus exam within 90 days"]},
+ "SCORED": {"nct":"NCT03315143",
+  "inclusion": {"and":[{"v":"t2d","eq":"Y"},{"v":"hba1c","cmp":">=","x":7},{"v":"egfr","cmp":">=","x":25},{"v":"egfr","cmp":"<=","x":60},{"v":"age","cmp":">=","x":18}]},
+  "exclusion": [],
+  "out_of_scope": ["CV risk factor count (age 18 + 1 major or age 55 + 2 minor; not modeled)","stable antihyperglycemic 12 weeks","planned coronary procedure","lower extremity complications","planning to start SGLT2i","registry says list is not complete"]}
+}
