@@ -134,6 +134,19 @@ export function urgentSymptoms(symptoms: Observed[]): string[] {
     .map((symptom) => symptom.name))];
 }
 
+/** Danger symptoms the patient was unsure of ("가슴이 아픈지 잘 모르겠어요"). Symptom checkers have been seen to drop a
+ * red flag when the user said "unsure" (Which?, 2019); here it is kept: no red notice for the patient (user decision,
+ * 2026-11-27), but a calm note, and a line in the summary that goes to the doctor. */
+export function unsureUrgentSymptoms(symptoms: Observed[]): string[] {
+  return [...new Set(symptoms
+    .filter((symptom) => symptom.status === "uncertain" && URGENT_SYMPTOMS.has(symptom.name))
+    .map((symptom) => symptom.name))];
+}
+
+export function unsureUrgentNotice(names: string[]): string {
+  return `${names.join(", ")}: 확실하지 않다고 하셨지만 놓치면 안 되는 증상이에요. 진료 때 꼭 말씀해 주세요.`;
+}
+
 /** Severe common symptoms ("복통" at 심함 or 7/10 and up): to mention first at the visit, not an emergency. */
 export function severeSymptoms(symptoms: Observed[]): string[] {
   return [...new Set(symptoms

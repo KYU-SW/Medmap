@@ -14,6 +14,7 @@ export type StoredIntakeRecord = {
       frequency?: string | null;
       trend?: "improving" | "worsening" | "unchanged" | null;
       source_text: string;
+      details?: string[];
     }>;
     medications: string[];
     allergies: string[];

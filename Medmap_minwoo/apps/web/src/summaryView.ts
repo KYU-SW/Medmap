@@ -7,6 +7,7 @@ export type SummaryView = {
   fields: Array<[string, string]>; // 기본 정보, 기록 기간
   urgent: string[]; // 빨리 진료가 필요할 수 있는 증상
   severe: string[]; // 심하다고 한 증상
+  unsure: string[]; // 확실하지 않다고 했지만 확인이 필요한 위험 신호 (2026-11-27)
   active: SummarySymptom[];
   resolved: SummarySymptom[];
   lists: Array<[string, string]>; // 복용약, 알레르기, 과거력, 확실하지 않은 증상, 주변 사람
@@ -34,7 +35,7 @@ function symptomLine(line: string, resolved: boolean): SummarySymptom {
 }
 
 export function readSummary(text: string): SummaryView {
-  const view: SummaryView = { fields: [], urgent: [], severe: [], active: [], resolved: [], lists: [], other: [] };
+  const view: SummaryView = { fields: [], urgent: [], severe: [], unsure: [], active: [], resolved: [], lists: [], other: [] };
   let section: "active" | "resolved" | null = null;
   for (const line of text.split("\n").map((row) => row.trim()).filter(Boolean)) {
     if (line === "MedMap 진료 전 증상 요약" || line.startsWith("이 내용은 사용자가 확인한")) continue;
@@ -49,6 +50,7 @@ export function readSummary(text: string): SummaryView {
     const [label, value] = at < 0 ? ["", line] : [line.slice(0, at), line.slice(at + 2)];
     if (label === "빨리 진료가 필요할 수 있는 증상") view.urgent = value.split(", ");
     else if (label === "심하다고 한 증상") view.severe = value.split(", ");
+    else if (label === "확실하지 않다고 했지만 확인이 필요한 위험 신호") view.unsure = value.split(", ");
     else if (FIELD_LABELS.includes(label)) view.fields.push([label, value]);
     else if (LIST_LABELS.includes(label)) view.lists.push([label.replace("기록 기간 중 ", "").replace("기록된 ", ""), value]);
     else view.other.push(line);

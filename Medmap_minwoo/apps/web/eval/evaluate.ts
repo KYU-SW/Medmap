@@ -84,6 +84,9 @@ const profile = { gold: 0, right: 0 };
 const unlisted = { gold: 0, flagged: 0 };
 let dangerGold = 0;
 let dangerMissed = 0;
+// A danger symptom the patient was unsure of must not be dropped (2026-11-27): kept as 확실하지 않음, or as 있음.
+let unsureDangerGold = 0;
+let unsureDangerDropped = 0;
 const errors: string[] = [];
 
 const tally = <K>(map: Map<K, Count>, key: K) => map.get(key) ?? map.set(key, count()).get(key)!;
@@ -125,6 +128,10 @@ for (const item of items) {
     if (want.status === "present" && DANGER.has(want.name)) {
       dangerGold += 1;
       if (got?.status !== "present") dangerMissed += 1;
+    }
+    if (want.status === "uncertain" && DANGER.has(want.name)) {
+      unsureDangerGold += 1;
+      if (got?.status !== "uncertain" && got?.status !== "present") unsureDangerDropped += 1;
     }
     if (!got) {
       found.fn += 1; strict.fn += 1; category.fn += 1; symptom.fn += 1;
@@ -190,6 +197,7 @@ for (const [status, label] of [["present", "있음"], ["absent", "없음"], ["un
   if (entry) console.log(`  ${label} 증상을 맞는 상태로 찾음: ${ratio(entry)}`);
 }
 console.log(`  위험 증상(있음) 놓침: ${dangerMissed}/${dangerGold}`);
+console.log(`  위험 증상(확실하지 않음) 버림: ${unsureDangerDropped}/${unsureDangerGold}`);
 console.log("\n[증상 세부 정보] 이름을 찾은 증상 중");
 for (const [label, entry] of attributes) console.log(`  ${label.padEnd(10)} ${ratio(entry)}`);
 console.log("\n[그 밖의 항목]");

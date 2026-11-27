@@ -17,6 +17,8 @@ export type SymptomEpisode = {
   frequencies: string[];
   latestTrend: StoredSymptom["trend"];
   recordCount: number;
+  // "누우면 심해짐", "왼팔까지 퍼짐": every one said while it lasted, in the order first said (2026-11-27).
+  details: string[];
 };
 
 function severityValue(severity: string | null): number | null {
@@ -60,6 +62,7 @@ function startEpisode(
     frequencies: symptom.frequency ? [symptom.frequency] : [],
     latestTrend: symptom.trend,
     recordCount: 1,
+    details: [...(symptom.details ?? [])],
   };
 }
 
@@ -85,6 +88,7 @@ export function buildSymptomEpisodes(records: StoredIntakeRecord[]): SymptomEpis
           open.frequencies.push(symptom.frequency);
         }
         if (symptom.trend) open.latestTrend = symptom.trend;
+        for (const detail of symptom.details ?? []) if (!open.details.includes(detail)) open.details.push(detail);
         const site = detailedSite(symptom.body_site);
         if (site && site.length > (open.bodySite?.length ?? 0)) open.bodySite = site;
         if (!open.statedOnset && symptom.onset) {

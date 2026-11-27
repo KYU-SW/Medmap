@@ -29,6 +29,8 @@ import {
   URGENT_NOTICE,
   severeNotice,
   severeSymptoms,
+  unsureUrgentNotice,
+  unsureUrgentSymptoms,
   urgentSymptoms,
 } from "./symptomOptions";
 import { buildSymptomHistories, buildTimeline, type SymptomHistoryPoint } from "./timeline";
@@ -164,6 +166,7 @@ type SymptomObservation = {
   frequency: string | null;
   trend: "improving" | "worsening" | "unchanged" | null;
   source_text: string;
+  details?: string[];
 };
 
 type IntakeResult = {
@@ -257,6 +260,7 @@ function DoctorSummary({ text }: { text: string }) {
         <p className="doc-summary__field" key={label}><span>{label}</span>{value}</p>
       ))}
       {view.urgent.length > 0 && <p className="doc-alert doc-alert--urgent">🚨 빨리 진료가 필요할 수 있는 증상: <strong>{view.urgent.join(", ")}</strong></p>}
+      {view.unsure.length > 0 && <p className="doc-alert">확실하지 않다고 했지만 확인이 필요한 위험 신호: <strong>{view.unsure.join(", ")}</strong></p>}
       {view.severe.length > 0 && <p className="doc-alert">심하다고 한 증상: <strong>{view.severe.join(", ")}</strong></p>}
       <h3 className="doc-summary__title">지금 있는 증상 <span className="count">{view.active.length}</span></h3>
       {view.active.length === 0 ? <p className="muted">확인된 증상 없음</p> : <ul className="doc-cards">{view.active.map((item) => card(item, false))}</ul>}
@@ -715,6 +719,7 @@ export default function App() {
                 severity: turboSymptom.severity ?? symptom.severity,
                 frequency: turboSymptom.frequency ?? symptom.frequency,
                 trend: turboSymptom.trend ?? symptom.trend,
+                details: turboSymptom.details ?? symptom.details,
               }
               : symptom);
       }
@@ -1521,6 +1526,9 @@ export default function App() {
             {severeSymptoms(intake.symptoms).length > 0 && (
               <p className="severe-notice" role="status">{severeNotice(severeSymptoms(intake.symptoms))}</p>
             )}
+            {unsureUrgentSymptoms(intake.symptoms).length > 0 && (
+              <p className="severe-notice" role="status">{unsureUrgentNotice(unsureUrgentSymptoms(intake.symptoms))}</p>
+            )}
             {verificationBox}
 
             <h2 className="section-title">증상 <span className="count">{intake.symptoms.length}</span></h2>
@@ -1551,6 +1559,7 @@ export default function App() {
                     <div><dt>시작</dt><dd>{formatOnset(symptom.onset, symptom.onset_date) || "—"}</dd></div>
                     <div><dt>정도</dt><dd>{symptom.severity || "—"}</dd></div>
                     {tracksFrequency(symptom.name) && <div><dt>횟수</dt><dd>{symptom.frequency || "—"}</dd></div>}
+                    {(symptom.details?.length ?? 0) > 0 && <div><dt>특징</dt><dd>{symptom.details!.join(", ")}</dd></div>}
                   </dl>
                 )}
                 {/* Details stay folded until the patient wants to correct them; a hand-added symptom, or an unnamed one added from
@@ -1621,6 +1630,19 @@ export default function App() {
                       value={symptom.frequency ?? ""}
                       placeholder="확인되지 않음"
                       onChange={(event) => updateSymptom(index, { frequency: event.target.value || null })}
+                    />
+                  </label>
+                )}
+                {symptom.status === "present" && (
+                  <label>
+                    특징
+                    <input
+                      value={symptom.details?.join(", ") ?? ""}
+                      placeholder="예: 누우면 심해짐, 왼팔까지 퍼짐"
+                      onChange={(event) => {
+                        const details = event.target.value.split(",").map((part) => part.trim()).filter(Boolean);
+                        updateSymptom(index, { details: details.length > 0 ? details : undefined });
+                      }}
                     />
                   </label>
                 )}
@@ -1898,6 +1920,9 @@ export default function App() {
               {visitSummary.severeSymptoms.length > 0 && (
                 <p className="severe-notice" role="status">{severeNotice(visitSummary.severeSymptoms)}</p>
               )}
+              {visitSummary.unsureUrgentSymptoms.length > 0 && (
+                <p className="severe-notice" role="status">{unsureUrgentNotice(visitSummary.unsureUrgentSymptoms)}</p>
+              )}
               <div className="visit-summary-symptoms">
                 <strong>지금 있는 증상</strong>
                 {visitSummary.symptoms.every((symptom) => symptom.status !== "active") && (
@@ -1921,6 +1946,7 @@ export default function App() {
                         {tracksFrequency(symptom.name) && symptom.frequencies.length > 0 && (
                           <div><dt>횟수</dt><dd>{symptom.frequencies.join(", ")}</dd></div>
                         )}
+                        {symptom.details.length > 0 && <div><dt>특징</dt><dd>{symptom.details.join(", ")}</dd></div>}
                         <div><dt>기록</dt><dd>{symptom.recordCount}회</dd></div>
                       </dl>
                     </li>
@@ -2203,6 +2229,7 @@ export default function App() {
                         {symptom.status === "present" && ` · 정도: ${symptom.severity || "확인되지 않음"}`}
                         {symptom.status === "present" && symptom.trend && ` · 변화: ${symptom.trend === "improving" ? "호전 중" : symptom.trend === "worsening" ? "악화 중" : "변화 없음"}`}
                         {tracksFrequency(symptom.name) && symptom.status === "present" && symptom.frequency && ` · 횟수: ${symptom.frequency}`}
+                        {symptom.status === "present" && (symptom.details?.length ?? 0) > 0 && ` · 특징: ${symptom.details!.join(", ")}`}
                       </li>
                     ))}
                   </ul>

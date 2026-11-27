@@ -1,7 +1,7 @@
 import type { PatientProfile } from "./recordGroups";
 import type { StoredIntakeRecord } from "./recordStorage";
 import type { SymptomEpisode } from "./symptomEpisodes";
-import { formatOnset, severeSymptoms, tracksFrequency, urgentSymptoms } from "./symptomOptions";
+import { formatOnset, severeSymptoms, tracksFrequency, unsureUrgentSymptoms, urgentSymptoms } from "./symptomOptions";
 
 export type VisitSummary = {
   firstRecordedAt: string;
@@ -13,6 +13,8 @@ export type VisitSummary = {
   uncertainSymptoms: string[];
   othersSymptoms: string[];
   urgentSymptoms: string[];
+  // Danger symptoms said with doubt and never said as present: kept for the doctor, not dropped (2026-11-27).
+  unsureUrgentSymptoms: string[];
   severeSymptoms: string[];
   profile: string | null;
 };
@@ -76,6 +78,11 @@ export function buildVisitSummary(
       .map((item) => `${item.person} ${item.symptom}`)))],
     profile: profileText(profile),
     urgentSymptoms: urgentSymptoms(active),
+    // Kept only while the latest word on it is still "not sure": a later "없어요" settles it (2026-11-28 check of item 4).
+    unsureUrgentSymptoms: unsureUrgentSymptoms(ordered.flatMap((record) => record.intake.symptoms))
+      .filter((name) => !episodes.some((episode) => episode.name === name))
+      .filter((name) => [...ordered].reverse().flatMap((record) => record.intake.symptoms)
+        .find((symptom) => symptom.name === name)?.status === "uncertain"),
     severeSymptoms: severeSymptoms(active),
   };
 }
@@ -96,6 +103,7 @@ export function visitSummaryText(summary: VisitSummary): string {
         ? ` / 최근 변화: ${symptom.latestTrend === "improving" ? "호전 중" : symptom.latestTrend === "worsening" ? "악화 중" : "변화 없음"}`
         : "")
       + frequency(symptom)
+      + (symptom.details.length > 0 ? ` / 특징: ${symptom.details.join(", ")}` : "")
       + ` / 기록 ${symptom.recordCount}회`,
   );
   const resolvedLines = summary.symptoms.filter((symptom) => symptom.status === "resolved").map((symptom) =>
@@ -109,6 +117,9 @@ export function visitSummaryText(summary: VisitSummary): string {
     `기록 기간: ${dateFormatter.format(new Date(summary.firstRecordedAt))} ~ ${dateFormatter.format(new Date(summary.lastRecordedAt))}`,
     ...(summary.urgentSymptoms.length > 0
       ? [`빨리 진료가 필요할 수 있는 증상: ${summary.urgentSymptoms.join(", ")}`]
+      : []),
+    ...(summary.unsureUrgentSymptoms.length > 0
+      ? [`확실하지 않다고 했지만 확인이 필요한 위험 신호: ${summary.unsureUrgentSymptoms.join(", ")}`]
       : []),
     ...(summary.severeSymptoms.length > 0
       ? [`심하다고 한 증상: ${summary.severeSymptoms.join(", ")}`]
