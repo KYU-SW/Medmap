@@ -3,7 +3,7 @@ import { asksSite, formatOnset, vagueTightness, localDateString, parseList, SUPP
 
 describe("symptomOptions", () => {
   it("lists 50 unique supported symptoms", () => {
-    expect(new Set(SUPPORTED_SYMPTOMS).size).toBe(81);
+    expect(new Set(SUPPORTED_SYMPTOMS).size).toBe(89);
   });
 
   it("tracks frequency only for vomiting and diarrhea", () => {
@@ -32,7 +32,7 @@ describe("onset dates", () => {
     expect(asksSite("발열", "복부")).toBe(false);
     expect(asksSite("기침", "왼쪽 가슴")).toBe(true);
     expect(asksSite("발진", null)).toBe(true);
-    expect(asksSite("창백함", null)).toBe(true);
+    expect(asksSite("눈꺼풀 처짐", null)).toBe(true);
   });
 
   it("asks where only for a 답답해요 said with no part and not yet read", () => {

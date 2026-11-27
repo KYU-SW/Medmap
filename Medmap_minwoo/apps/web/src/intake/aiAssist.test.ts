@@ -3,7 +3,7 @@ import { runAiAssist, type AiState } from "./aiAssist";
 import { extractIntake } from "./extractor";
 import type { ModelLoad, SpanModel } from "./spanModel";
 
-const text = "머리가 아프고 얼굴이 창백해졌어요.";
+const text = "머리가 아프고 눈꺼풀이 무거워졌어요.";
 const rules = extractIntake(text, "2026-11-06");
 async function run(load: () => Promise<ModelLoad>) {
   const states: AiState["kind"][] = [];
@@ -39,10 +39,10 @@ describe("runAiAssist", () => {
   });
 
   it("finishes with what the model found, and where reading stopped on a cut-off text", async () => {
-    const start = text.indexOf("얼굴");
-    const spans = [{ start, end: start + "얼굴이 창백해졌어요".length, status: "present" as const, text: "얼굴이 창백해졌어요" }];
+    const start = text.indexOf("눈꺼풀");
+    const spans = [{ start, end: start + "눈꺼풀이 무거워졌어요".length, status: "present" as const, text: "눈꺼풀이 무거워졌어요" }];
     const { last } = await run(async () => ({ model: model(spans, { truncated: true, readUpTo: 12 }) }));
-    expect(last.kind === "done" && last.found.map((part) => part.name)).toEqual(["창백함"]);
+    expect(last.kind === "done" && last.found.map((part) => part.name)).toEqual(["눈꺼풀 처짐"]);
     expect(last.kind === "done" && last.readUpTo).toBe(12);
   });
 });

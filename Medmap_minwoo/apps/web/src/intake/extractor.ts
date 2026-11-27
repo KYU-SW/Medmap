@@ -249,6 +249,11 @@ const INLINE_ONSET = (
 );
 
 
+// Pain words from Korean pain-vocabulary studies (K-CPAT cancer-pain words, 2003; pain pictogram study, AODR) said of a
+// listed part: "배가 쥐어짜는 것 같아요", "허리가 끊어질 것 같아요", "가슴이 뜨끔해요" (2026-11-27).
+const PAIN_DESCRIPTOR = String.raw`아리|아려|아렸|얼얼|쥐어짜|후벼|도려|뜨끔|짓누르|짓눌|꼬집듯|뻗치듯|` +
+    String.raw`(?:끊어질|찢어질|터질|빠개질|쪼개질|깨질|뒤집어질)\s*(?:것|듯)`;
+
 const RULES: Rule[] = [
     rule(
         "두통",
@@ -258,7 +263,9 @@ const RULES: Rule[] = [
             // "머리에 약간의 통증이 있어요", "머리 아픔은 어제부터" (2026-11-22)
             String.raw`두통|머리(?:에)?\s*(?:${INTENSITY_PHRASE}|약간의\s*)통증|머리(?:가|는|도|야)?\s*(?:${INLINE_ONSET}\s*)?` +
             String.raw`(?:같이\s*|함께\s*)?${INTENSITY_PHRASE}` +
-            String.raw`(?:아프|아파|아팠|아픈|아픔|지끈|욱신|띵)|` +
+            String.raw`(?:아프|아파|아팠|아픈|아픔|지끈|욱신|띵|조이|조여|${PAIN_DESCRIPTOR})|` +
+            // "골이 아파요", "뒤통수가 지끈거려요" (119 emergency-call expressions, 2016)
+            String.raw`(?:(?<![가-힣])골|뒤통수|정수리)(?:이|가|도)?\s*${INTENSITY_PHRASE}(?:아프|아파|아팠|아픈|지끈|욱신|띵|${PAIN_DESCRIPTOR})|` +
             String.raw`(?:두통|머리)(?:이|가|은|는|도)?\s*${CHANGE_PHRASE}`
         ),
         pat(
@@ -296,7 +303,8 @@ const RULES: Rule[] = [
             // "숨이 좀 턱까지 차서", "숨이 좀 힘들게 쉬어지네요", "숨 쉬기가 너무 힘들어졌어요" (2026-11-22)
             String.raw`숨(?:이|은|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}(?:턱(?:까지|끝까지)\s*)?(?:차|찬|찼|가빠|가쁘|가쁜|막혀|막히)|` +
             String.raw`숨(?:이)?\s*${INTENSITY_PHRASE}힘들게\s*쉬어|` +
-            String.raw`숨(?:을)?\s*헐떡|` +
+            String.raw`숨(?:을)?\s*(?:헐떡|몰아\s*쉬)|숨(?:이|소리가)?\s*${INTENSITY_PHRASE}거칠|` +
+            String.raw`호흡(?:이)?\s*${INTENSITY_PHRASE}(?:가빠|가쁘|가파르|힘들|급하|급해)|호흡이\s*${INTENSITY_PHRASE}곤란|` +
             String.raw`숨(?:을)?\s*쉬기(?:가)?\s*(?:${INTENSITY_PHRASE}(?:힘들|어렵|어려)|${IMPROVEMENT_PHRASE})|` +
             // "숨 쉬는 게 좀 힘들어졌어", "숨 쉴 때 좀 힘들어요" (2026-11-06)
             String.raw`숨\s*(?:쉬는\s*(?:게|것이?|것도)|쉴\s*때(?:마다)?)\s*${INTENSITY_PHRASE}(?:힘들|어렵|어려|불편|답답)|` +
@@ -334,8 +342,8 @@ const RULES: Rule[] = [
             String.raw`(?:복통|(?<![가-힣])배)(?:가|는|도)?\s*${CHANGE_PHRASE}|` +
             String.raw`(?:배|복부|속)(?:랑|과|하고)\s*머리(?:가|는|도)?\s*` +
             String.raw`(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}(?:아프|아파|아팠|아픈)|` +
-            String.raw`(?:배|복부|(?<![가-힣])속|명치|옆구리)(?:이|가|는|도|야)?\s*(?:${INLINE_ONSET}\s*)?` +
-            String.raw`${INTENSITY_PHRASE}(?:아프|아파|아팠|아픈|쑤시|쑤셔|쑤신|뒤틀|꼬여|꼬이)|` +
+            String.raw`(?:배|복부|(?<![가-힣])속|명치|옆구리|배꼽\s*(?:아래|밑|위|주변)|갈비(?:뼈)?\s*(?:밑|아래))(?:\s*쪽)?(?:이|가|는|도|야|를)?\s*(?:${INLINE_ONSET}\s*)?` +
+            String.raw`${INTENSITY_PHRASE}(?:아프|아파|아팠|아픈|쑤시|쑤셔|쑤신|뒤틀|꼬여|꼬이|${PAIN_DESCRIPTOR})(?<!터질\s*(?:것|듯))|` +
             // "폭통": on-device STT's usual spelling of "복통".
             String.raw`복통|폭통|(?:배|복부|명치|옆구리)\s*통증|배탈|위경련|위통`
         ),
@@ -350,7 +358,7 @@ const RULES: Rule[] = [
         "구토",
         pat(
             String.raw`구토\s*횟수(?:가|는|도)?[^,.!?。]{0,20}(?:줄었|늘었)|` +
-            String.raw`구토|토(?:를|가)?\s*(?:했|해|하|했었)`
+            String.raw`구토|토(?:를|가)?\s*(?:했|해|하|했었)|오바이트|게워|게웠`
         ),
         pat(
             String.raw`구토(?:는|가|도|를)?\s*${NOW_ADVERB}(?:없|안\s*(?:했|해|하)|하지\s*않|${RESOLVED_STATE})|` +
@@ -362,8 +370,9 @@ const RULES: Rule[] = [
     rule(
         "흉통",
         pat(
-            String.raw`흉통|(?:가슴|흉부)(?:에)?\s*통증|가슴(?:이|은|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}` +
-            String.raw`(?:아프|아파|아팠|아픈|찌르|찌릿|콕콕|쑤시|쑤셔|쥐어짜)`
+            String.raw`흉통|(?:가슴|흉부)(?:에)?\s*통증|가슴(?:\s*(?:밑|아래)(?:\s*쪽)?)?(?:이|은|도|을)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}` +
+            // Not "가슴이 터질 것 같이 기뻐요", "가슴이 찢어질 것 같아요": as often a feeling as a pain.
+            String.raw`(?:아프|아파|아팠|아픈|찌르|찌릿|콕콕|쑤시|쑤셔|쥐어짜|${PAIN_DESCRIPTOR})(?<!(?:터질|찢어질)\s*(?:것|듯))`
         ),
         pat(
             String.raw`(?:흉통|(?:가슴|흉부)\s*통증)${PARTICLE}\s*${ABSENT_ENDING}|` +
@@ -435,7 +444,7 @@ const RULES: Rule[] = [
         pat(
             String.raw`(?:요통|허리)(?:가|는|도)?\s*${CHANGE_PHRASE}|` +
             String.raw`요통|허리\s*통증|허리(?:\s*(?:아래|위|밑)\s*쪽?(?:이|은|도|에)?)?(?:가|는|도)?\s*(?:${INLINE_ONSET}\s*)?${INTENSITY_PHRASE}` +
-            String.raw`(?:아프|아파|아팠|아픈|쑤시|쑤셔|결리|결려|뻐근|당기|당겨|삐끗)`
+            String.raw`(?:아프|아파|아팠|아픈|쑤시|쑤셔|결리|결려|뻐근|당기|당겨|땅기|땅겨|삐끗|${PAIN_DESCRIPTOR})`
         ),
         pat(
             String.raw`(?:요통|허리\s*통증)${PARTICLE}\s*${ABSENT_ENDING}|` +
@@ -454,7 +463,7 @@ const RULES: Rule[] = [
     rule(
         "메스꺼움",
         // "메스 거예요", "매스 꺼워요": turbo's split spellings of 메스꺼워요 (2026-11-11 phone test).
-        pat(String.raw`[메매]스\s[꺼거](?:워|웠|운|요|예요|에요)|[메매]스거(?:워|웠|운|요|예요|에요)|[메매]스꺼|[메매]스껍|메슥|미식거|울렁|구역질|구역감|헛구역|토할\s*(?:것\s*)?같`),
+        pat(String.raw`[메매]스\s[꺼거](?:워|웠|운|요|예요|에요)|[메매]스거(?:워|웠|운|요|예요|에요)|[메매]스꺼|[메매]스껍|메슥|미식거|울렁|구역질|구역감|헛구역|토할\s*(?:것\s*)?같|니글|느글`),
         pat(
             String.raw`(?:메스꺼움|구역감|구역질|울렁거림)${PARTICLE}\s*${ABSENT_ENDING}|` +
             String.raw`메스껍지\s*않|안\s*메스꺼|울렁거리지\s*않`
@@ -492,7 +501,7 @@ const RULES: Rule[] = [
         "피로",
         pat(
             String.raw`피곤|피로|기운(?:이|도)?\s*없|(?:몸에|온몸에)\s*힘(?:이)?\s*없|기력(?:이|도)?\s*없|무기력|나른|` +
-            String.raw`몸(?:이)?\s*(?:천근만근|무거|무겁)|녹초|지쳐|지친다`
+            String.raw`몸(?:이)?\s*(?:천근만근|무거|무겁)|녹초|지쳐|지친다|기진맥진|탈진`
         ),
         pat(
             String.raw`(?:피로감?|피곤함)${PARTICLE}\s*${ABSENT_ENDING}|` +
@@ -502,7 +511,7 @@ const RULES: Rule[] = [
     rule(
         "두근거림",
         pat(
-            String.raw`두근|벌렁|심계항진|심장(?:이|도|은)?\s*${INTENSITY_PHRASE}(?:빨리|빠르게|불규칙하게|쿵쾅|펄떡)`
+            String.raw`두근|벌렁|심계항진|심장(?:이|도)?\s*(?:자꾸|막|마구|너무|세게|쿵쾅쿵쾅)\s*뛰|심장(?:이|도|은)?\s*${INTENSITY_PHRASE}(?:빨리|빠르게|불규칙하게|쿵쾅|펄떡)`
         ),
         pat(
             String.raw`(?:두근거림|심계항진)${PARTICLE}\s*${ABSENT_ENDING}|안\s*두근|두근거리지\s*않`
@@ -517,7 +526,7 @@ const RULES: Rule[] = [
     rule(
         "소화불량",
         pat(
-            String.raw`소화\s*불량|소화(?:가)?\s*${INTENSITY_PHRASE}(?:잘\s*)?안\s*(?:돼|되|된|됐)|체했|체한|체기|체해|` +
+            String.raw`소화\s*불량|소화(?:가)?\s*${INTENSITY_PHRASE}(?:잘\s*)?안\s*(?:돼|되|된|됐)|체했|체한|체기|체해|급체|얹혔|얹힌|얹혀|` +
             String.raw`더부룩|트림`
         ),
         pat(
@@ -610,7 +619,7 @@ const RULES: Rule[] = [
     ),
     rule(
         "식은땀",
-        pat(String.raw`식은땀|(?<![가-힣])땀(?:이|을|도)?\s*(?:나|났|흘|흐르)`),
+        pat(String.raw`식은땀|진땀|(?<![가-힣])땀(?:이|을|도)?\s*(?:나|났|흘|흐르)`),
         pat(
             String.raw`식은땀${PARTICLE}\s*${ABSENT_ENDING}|(?<![가-힣])땀(?:은|이|도)?\s*${NOW_ADVERB}(?:안\s*나|나지\s*않)`
         ),
@@ -662,7 +671,7 @@ const RULES: Rule[] = [
             String.raw`객혈|각혈|(?:기침|가래)(?:할\s*때|하면|에|에서)?\s*(?:피|핏덩이)(?:가|도)?\s*(?:섞|나|묻)|` +
             // "기침할 때마다 피가 나와", "기침할 때 가끔씩 피가 섞여", "기침하면서 피가 나오긴" (2026-11-06)
             String.raw`기침(?:할\s*때(?:마다)?|하면(?:서)?|하면서)\s*${INTENSITY_PHRASE}(?:피|핏덩이|핏방울)(?:가|도|이)?\s*${INTENSITY_PHRASE}(?:섞|나|묻)|` +
-            String.raw`피(?:가)?\s*섞인\s*(?:가래|기침)`
+            String.raw`피(?:가)?\s*섞인\s*(?:가래|기침)|피기침|(?:목|목구멍)에서\s*피(?:가)?\s*(?:올라|넘어)`
         ),
         pat(String.raw`(?:객혈|각혈)${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
@@ -679,7 +688,7 @@ const RULES: Rule[] = [
             String.raw`혈변|(?:대변|(?<!소)변)(?:에|에서)\s*피|피(?:가)?\s*섞인\s*(?:대변|(?<!소)변)|` +
             // "변에 약간의 피 같은 것이", "변에 까만 색 피가" — blood said, not only a color (2026-11-06)
             String.raw`(?:대변|(?<![가-힣])변)(?:에|에서)\s*(?:약간의?\s*|조금\s*|까만\s*색?\s*|검은\s*색?\s*|빨간\s*색?\s*)?피|` +
-            String.raw`(?:검은|까만|짜장\s*같은)\s*(?:대변|변)|(?:대변|변)(?:이)?\s*(?:검게|까맣게)`
+            String.raw`(?:검은|까만|짜장\s*같은)\s*(?:색\s*)?(?:대변|변)|피똥|(?:대변|변)(?:이)?\s*(?:검게|까맣게)`
         ),
         pat(String.raw`혈변${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
@@ -711,7 +720,7 @@ const RULES: Rule[] = [
     ),
     rule(
         "기절",
-        pat(String.raw`기절|실신|정신(?:을)?\s*잃|의식(?:을)?\s*잃|쓰러졌|쓰러진\s*적`),
+        pat(String.raw`기절|실신|까무러|의식(?:이)?\s*없|정신(?:을)?\s*잃|의식(?:을)?\s*잃|쓰러졌|쓰러진\s*적`),
         pat(String.raw`(?:기절|실신)(?:한\s*적)?${PARTICLE}\s*${ABSENT_ENDING}|쓰러진\s*적(?:은|도)?\s*없`),
     ),
     rule(
@@ -754,7 +763,9 @@ const RULES: Rule[] = [
     ),
     rule(
         "경련",
-        pat(String.raw`(?<!위|근육\s*)경련|발작|(?:몸|팔|다리)(?:이|가)?\s*(?:뻣뻣해지|뒤틀리)`),
+        // "경기를 했어요", "거품을 물었어요", "눈이 뒤집혔어요" (119 emergency-call expressions); not a match (축구 경기).
+        pat(String.raw`(?<!(?:축구|야구|농구|배구|게임|시합|운동|테니스|골프)\s*)(?<![가-힣])경기(?:를|가)?\s*(?:했|해|하더|하면서|일으|나서|났)|` +
+          String.raw`(?:입에\s*)?거품(?:을)?\s*물|눈(?:이)?\s*뒤집|(?<!위|근육\s*)경련|발작|(?:몸|팔|다리)(?:이|가)?\s*(?:뻣뻣해지|뒤틀리)`),
         pat(String.raw`(?:경련|발작)${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
     rule(
@@ -797,7 +808,7 @@ const RULES: Rule[] = [
         "배뇨 곤란",
         pat(
             String.raw`(?:소변|오줌)(?:이|을|도)?\s*(?:잘\s*)?(?:안\s*나와|안\s*나오|안\s*나온|못\s*(?:봤|봐|보|본)|` +
-            String.raw`보기(?:가)?\s*(?:힘들|어렵)|찔끔|시원하게\s*안)|` +
+            String.raw`보기(?:가)?\s*(?:힘들|어렵)|찔끔|시원하게\s*안)|(?:오줌통|방광)(?:이)?\s*터질|` +
             // "소변이 잘 나오지 않고", "소변 보는 게 정말 힘들어요" (2026-11-06)
             String.raw`(?:소변|오줌)(?:이|도)?\s*${INTENSITY_PHRASE}잘\s*(?:안\s*나|나오지\s*않)|` +
             String.raw`(?:소변|오줌)(?:을)?\s*보는\s*(?:게|것도?)\s*${INTENSITY_PHRASE}(?:힘들|어렵|어려)`
@@ -890,7 +901,7 @@ const RULES: Rule[] = [
         "혼란",
         // Not "마음이 혼란스러워요" (feelings), "혼란스러워 보일까 봐" (how one seems) or "정신이 없어요" (busy).
         // "마음이 좀 혼란스럽긴 한데": a word or two may sit between (2026-11-11 long-sentence check).
-        pat(String.raw`(?<!(?:마음|생각|기분|머릿속|감정)(?:이|가|은|는|도)?\s*(?:[가-힣]+\s+){0,2})혼란스(?:러|럽)(?!워?\s*보)|의식(?:이)?\s*혼미|` +
+        pat(String.raw`(?<!(?:마음|생각|기분|머릿속|감정)(?:이|가|은|는|도)?\s*(?:[가-힣]+\s+){0,2})혼란스(?:러|럽)(?!워?\s*보)|의식(?:이)?\s*(?:혼미|희미|흐려|흐릿)|` +
           String.raw`정신(?:이)?\s*${INTENSITY_PHRASE}(?:오락가락|왔다\s*갔다|흐릿|흐려)|사람(?:을|도)?\s*(?:잘\s*)?못\s*알아|` +
           String.raw`(?:여기가|지금이)\s*(?:어디|언제)인지\s*(?:잘\s*)?모르`),
         pat(String.raw`혼란${PARTICLE}\s*${ABSENT_ENDING}|정신(?:은|도)?\s*(?:멀쩡|또렷|맑)`),
@@ -985,6 +996,64 @@ const RULES: Rule[] = [
         pat(String.raw`탈모|(?:머리카락|머리털|머리)(?:이|가|도)?\s*(?:${INTENSITY_WORD}\s*|한\s*움큼씩\s*|뭉텅뭉텅\s*|요즘\s*|허전하게\s*)*(?:빠져|빠지|빠진|빠졌)`),
         pat(String.raw`(?:머리카락|머리)(?:은|는|도)?\s*안\s*빠|탈모${PARTICLE}\s*${ABSENT_ENDING}`),
     ),
+    // 2026-11-27: six more the span model named from outside the list (vocabulary.json symptoms, outside_eval_set).
+    rule(
+        "창백함",
+        // "창백하진 않아요" is read as a denial right after the mention. A yellow face (누렇) is 황달.
+        pat(String.raw`창백(?:하|해|한)?|(?:얼굴|안색|낯빛|입술)(?:이|가|도)?\s*${INTENSITY_PHRASE}(?:하얗|하얘|허옇|허얘)|` +
+          String.raw`(?:피부색|얼굴색|안색)(?:이|가|도)?\s*${INTENSITY_PHRASE}(?:옅어|하얘|하얗)|` +
+          String.raw`(?:얼굴|안색)?(?:에)?\s*핏기(?:가|도)?\s*(?:${INTENSITY_WORD}\s*|하나도\s*|전혀\s*)*없`),
+        pat(String.raw`창백함${PARTICLE}\s*${ABSENT_ENDING}|안색(?:은|도)?\s*(?:괜찮|좋)`),
+    ),
+    rule(
+        "안면 홍조",
+        // Heat in the face; a red rash on it stays 발진, and "열이 올라" stays 발열.
+        // "얼굴이 쉽게 빨개져요", "안면이 갑자기 붉게 변해요" (training dev half); "빨갛게 올라왔어요" (a rash) stays 발진.
+        pat(String.raw`홍조|(?:얼굴|안면|볼|뺨)(?:이|가|도)?\s*` +
+          String.raw`(?:${INTENSITY_WORD}\s*|쉽게\s*|자주\s*|종종\s*|갑자기\s*|가끔\s*|확\s*|왜\s*그런지\s*|계속\s*|어제부터\s*|뜨겁게\s*)*` +
+          String.raw`(?:화끈|달아오르|달아올라|달아올랐|빨개지|빨개져|빨개졌|빨개진|붉어지|붉어져|붉어졌|붉어진|(?:빨갛게|붉게)\s*(?:변하|변해|변했|변한|되))`),
+        pat(String.raw`홍조${PARTICLE}\s*${ABSENT_ENDING}|(?:얼굴|볼)(?:은|는|도)?\s*안\s*(?:화끈|달아)`),
+    ),
+    rule(
+        "질 분비물",
+        // 냉 as a word of its own: not 냉장고, 냉면 or 냉찜질.
+        pat(String.raw`질\s*분비물|(?<![가-힣])냉(?:이|도)?\s*${INTENSITY_PHRASE}(?:많|늘|나와|나오|비치|비쳐|섞|냄새|있)|` +
+          String.raw`(?:밑|질)(?:에서|으로)\s*${INTENSITY_PHRASE}(?:분비물|냉)`),
+        pat(String.raw`(?<![가-힣])냉(?:은|도)?\s*(?:안\s*(?:나|비)|없)|질\s*분비물${PARTICLE}\s*${ABSENT_ENDING}`),
+    ),
+    rule(
+        "월경 이상",
+        // The period itself (late, irregular, heavy); pain with it stays 생리통.
+        pat(String.raw`생리\s*불순|월경\s*(?:불순|과다|이상)|` +
+          String.raw`(?:생리|월경)(?:\s*양|량)?(?:이|가|도|를)?\s*${INTENSITY_PHRASE}` +
+          String.raw`(?:(?:\d+|한|두|세|몇)\s*(?:달|개월)(?:째|이나|동안|넘게)?\s*)?` +
+          String.raw`(?:불규칙|들쭉날쭉|끊겼|끊긴|멈췄|늦어|늦게|늦네|건너뛰|많아|많이\s*나|너무\s*많|줄었|적어|안\s*(?:나와|와|해|하|했|있))`),
+        pat(String.raw`(?:생리|월경)(?:는|은|도)?\s*(?:규칙적|일정|정상|제때)|(?:생리\s*불순|월경\s*이상)${PARTICLE}\s*${ABSENT_ENDING}`),
+    ),
+    rule(
+        "기억력 저하",
+        // Not "언제부터인지 기억이 안 나요" (the onset), nor a single "깜빡하고" (forgot once), nor blinking eyes.
+        pat(String.raw`건망증|기억력(?:이|도)?\s*${INTENSITY_PHRASE}(?:떨어|나빠|안\s*좋|감퇴|흐려|예전\s*같지)|` +
+          String.raw`(?<!눈(?:이|을)?\s*)(?:깜빡깜빡|깜박깜박)|(?:자꾸|자주)\s*(?:뭘\s*|잘\s*)?(?:깜빡|깜박)(?:해|하|거려|거리)`),
+        pat(String.raw`건망증${PARTICLE}\s*${ABSENT_ENDING}|기억력(?:은|도)?\s*(?:괜찮|좋|멀쩡|정상)`),
+    ),
+    rule(
+        "질 출혈",
+        // Bleeding from below outside a period (하혈, 119 calls). A period said as such is 월경 이상 or nothing.
+        pat(String.raw`하혈|부정\s*출혈|질\s*출혈|(?:밑|질)(?:에서|으로)\s*${INTENSITY_PHRASE}피|생리\s*(?:때|기간)?(?:가|도)?\s*아닌데\s*피`),
+        pat(String.raw`(?:하혈|부정\s*출혈|질\s*출혈)${PARTICLE}\s*${ABSENT_ENDING}`),
+    ),
+    rule(
+        "청색증",
+        // Blue lips or fingertips (청색증이 오다, 119 calls).
+        pat(String.raw`청색증|(?:입술|손끝|손톱|얼굴)(?:이|가|도)?\s*${INTENSITY_PHRASE}(?:파래|파랗|퍼래|퍼렇|새파래|새파랗|보라색)`),
+        pat(String.raw`청색증${PARTICLE}\s*${ABSENT_ENDING}|입술(?:은|도)?\s*안\s*파래`),
+    ),
+    rule(
+        "항문 통증",
+        pat(String.raw`(?:항문|똥꼬)(?:이|가|도|쪽이|에)?\s*${INTENSITY_PHRASE}(?:아프|아파|아팠|아픈|아픔|따끔|따가|따갑|쓰라|쓰려|욱신|통증)`),
+        pat(String.raw`(?:항문|똥꼬)(?:은|는|도)?\s*(?:안\s*아프|안\s*아파|아프지\s*않|괜찮)`),
+    ),
 ];
 const FREQUENCY_SYMPTOMS = new Set(["구토", "설사"]);
 const SIDE_PATTERN = pat(String.raw`(오른쪽|왼쪽|양쪽|우측|좌측|오른|왼)(?:\s*편)?`);
@@ -1074,11 +1143,19 @@ const KNOWN_MEDICATION_PATTERN = pat(
     String.raw`아스피린|아목시실린|오구멘틴|세파클러|클래리스로마이신|지르텍|알레그라|코대원|시네츄라|` +
     String.raw`베아제|훼스탈|겔포스|개비스콘|스멕타|로페라마이드|넥시움|메트포르민|리피토|노바스크|` +
     String.raw`와파린|엘리퀴스|씬지로이드|신지로이드|프레드니솔론|인슐린|벤토린|심비코트|` +
-    String.raw`테라플루|화이투벤|콜대원|이지엔6|까스활명수|활명수|후시딘|마데카솔`
+    String.raw`테라플루|화이투벤|콜대원|이지엔6|까스활명수|활명수|후시딘|마데카솔|` +
+    // 2026-11-27: more names patients say, chosen to not sit inside everyday words.
+    String.raw`맥시부펜|써스펜|나프록센|쎄레브렉스|세레브렉스|울트라셋|트라마돌|타미플루|클라리틴|페니라민|` +
+    String.raw`뮤코펙트|코푸시럽|화콜|가스모틴|무코스타|알마겔|스토가|둘코락스|마그밀|메디락|비오플|정로환|` +
+    String.raw`판토록|우루사|이가탄|인사돌|케토톱|쌍화탕|아모잘탄|트윈스타|엑스포지|자누비아|자누메트|` +
+    String.raw`다이아벡스|아마릴|트라젠타|포시가|자디앙|크레스토|아토젯|플라빅스|자렐토|졸피뎀|스틸녹스|` +
+    String.raw`자낙스|렉사프로`
 );
 // Generic drug name endings, e.g. 세팔렉신 is not listed but 아지트로마이신 ends in 마이신.
 const DRUG_NAME_PATTERN = pat(
-    String.raw`(?<![가-힣])[가-힣]{2,10}(?:마이신|실린|프로펜|스타틴|사르탄|프라졸|디핀|세핀|파린|플록사신)`
+    String.raw`(?<![가-힣])[가-힣]{2,10}(?:마이신|실린|프로펜|스타틴|사르탄|프라졸|디핀|세핀|파린|플록사신|` +
+    // 시타글립틴, 다파글리플로진, 파모티딘, 디아제팜, 알프라졸람, 디클로페낙, 프로프라놀롤, 아시클로비르 (2026-11-27)
+    String.raw`글립틴|글리플로진|티딘|제팜|졸람|페낙|놀롤|클로비르|미비르)`
 );
 // A name we do not know, followed by a pill dose: "테렌을 500mg을 먹었고" (STT's "타이레놀"). Kept as said, not
 // replaced by a similar-sounding medicine, so the patient can correct it on the review screen.
