@@ -2,6 +2,7 @@
 // The labels follow docs/INTAKE_EXTRACTION.md, not the rules' own output, so golden.json (the rules' saved output)
 // cannot stand in for them. Run from apps/web:  node eval/evaluate.ts            (summary)
 //                                              node eval/evaluate.ts --errors   (also every wrong item)
+// Another set: --set intake_eval_set_v2.jsonl (2026-11-28: details, unsure danger signs, dialect, paper wording, idioms).
 // With a model's saved predictions (train/train.py): --model <file> scores the model's symptoms alone,
 // --hybrid <file> keeps the rules' symptoms, adds the model's new ones and takes the model's status where they differ.
 import { readFileSync } from "node:fs";
@@ -15,6 +16,7 @@ type GoldSymptom = {
   severity?: string;
   frequency?: string;
   trend?: "improving" | "worsening" | "unchanged";
+  details?: string[]; // "왼팔까지 퍼짐", "누우면 심해짐" (2026-11-28); a symptom without it should carry none
 };
 type Item = {
   id: string;
@@ -56,8 +58,11 @@ function symptomsFor(id: string, rules: SymptomObservation[]): SymptomObservatio
   });
   return [...merged, ...model.filter((item) => !rules.some((symptom) => symptom.name === item.name)).map(observation)];
 }
-const items: Item[] = readFileSync(new URL("./intake_eval_set.jsonl", import.meta.url), "utf8")
-  .split("\n").filter((line) => line.trim()).map((line) => JSON.parse(line));
+const items: Item[] = readFileSync(new URL(`./${option("--set") ?? "intake_eval_set.jsonl"}`, import.meta.url), "utf8")
+  .split("\n").filter((line) => line.trim()).map((line) => JSON.parse(line))
+  // --half tune: odd-numbered items, the only ones looked at when changing the rules; --half measure: even, scored only.
+  .filter((item: Item) => !option("--half")
+    || (Number(item.id.replace(/\D/g, "")) % 2 === 1) === (option("--half") === "tune"));
 
 type Count = { tp: number; fp: number; fn: number };
 const count = (): Count => ({ tp: 0, fp: 0, fn: 0 });
@@ -87,6 +92,9 @@ let dangerMissed = 0;
 // A danger symptom the patient was unsure of must not be dropped (2026-11-27): kept as 확실하지 않음, or as 있음.
 let unsureDangerGold = 0;
 let unsureDangerDropped = 0;
+// Details (2026-11-28): found on the right symptom, found only on another one, and said where none was expected.
+const details = { gold: 0, right: 0, elsewhere: 0, extra: 0 };
+const sameDetail = (a: string, b: string) => squash(a).includes(squash(b)) || squash(b).includes(squash(a));
 const errors: string[] = [];
 
 const tally = <K>(map: Map<K, Count>, key: K) => map.get(key) ?? map.set(key, count()).get(key)!;
@@ -133,6 +141,14 @@ for (const item of items) {
       unsureDangerGold += 1;
       if (got?.status !== "uncertain" && got?.status !== "present") unsureDangerDropped += 1;
     }
+    for (const detail of want.details ?? []) {
+      details.gold += 1;
+      if (got?.details?.some((value) => sameDetail(value, detail))) details.right += 1;
+      else {
+        if (result.symptoms.some((other) => other.details?.some((value) => sameDetail(value, detail)))) details.elsewhere += 1;
+        wrong.push(`특징 놓침: ${want.name} ${detail}`);
+      }
+    }
     if (!got) {
       found.fn += 1; strict.fn += 1; category.fn += 1; symptom.fn += 1;
       hit(byStatus, want.status, false);
@@ -157,6 +173,15 @@ for (const item of items) {
     for (const [label, expected, actual] of checks) {
       hit(attributes, label, expected === actual);
       if (expected !== actual) wrong.push(`${label} 틀림: ${want.name} ${String(expected)} → ${String(actual)}`);
+    }
+  }
+  // Only a set labeled with details says "none" by leaving them out; the first set never labeled them.
+  for (const symptom of option("--set") ? result.symptoms : []) {
+    const expected = gold.find((want) => want.name === symptom.name)?.details ?? [];
+    for (const value of symptom.details ?? []) {
+      if (expected.some((detail) => sameDetail(value, detail))) continue;
+      details.extra += 1;
+      wrong.push(`정답에 없는 특징: ${symptom.name} ${value}`);
     }
   }
   for (const [name, extra] of predicted) {
@@ -198,6 +223,7 @@ for (const [status, label] of [["present", "있음"], ["absent", "없음"], ["un
 }
 console.log(`  위험 증상(있음) 놓침: ${dangerMissed}/${dangerGold}`);
 console.log(`  위험 증상(확실하지 않음) 버림: ${unsureDangerDropped}/${unsureDangerGold}`);
+console.log(`  특징: 정답 ${details.gold}개 중 맞는 증상에 붙음 ${details.right}, 다른 증상에만 붙음 ${details.elsewhere}, 정답에 없는 특징 ${details.extra}개`);
 console.log("\n[증상 세부 정보] 이름을 찾은 증상 중");
 for (const [label, entry] of attributes) console.log(`  ${label.padEnd(10)} ${ratio(entry)}`);
 console.log("\n[그 밖의 항목]");
