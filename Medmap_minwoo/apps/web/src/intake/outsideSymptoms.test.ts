@@ -37,7 +37,9 @@ describe("namePart", () => {
   });
 
   it("does not name by color alone, nor across words", () => {
-    expect(namePart("변에 붉은색이 섞여 나오긴 하는데", new Set())).not.toBe("혈변");
+    // Red in the stool is read by the rules since 2026-11-27 (혈변 left the red 119 notice); urine stays apart.
+    expect(namePart("변에 붉은색이 섞여 나오긴 하는데", new Set())).toBe("혈변");
+    expect(namePart("소변에 빨간 것 같은 게 보여요", new Set())).not.toBe("혈변");
     expect(namePart("가슴이 가끔씩 아프기도 하구요", new Set(["흉통"]))).not.toBe("치통");
   });
 });

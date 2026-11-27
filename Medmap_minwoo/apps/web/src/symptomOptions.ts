@@ -111,7 +111,9 @@ export function followUpQuestions(
 }
 
 // Symptoms that should send the patient to care quickly, whatever the cause: the red notice with 119.
-const URGENT_SYMPTOMS = new Set(["흉통", "객혈", "토혈", "혈변", "기절", "마비", "말 어눌함", "경련"]);
+// 혈변 left out (user decision, 2026-11-27): red in the stool is often not an emergency, and the rules now read a
+// colour alone ("변에 빨간 게 섞여 나와요"), which would raise the red notice too readily.
+const URGENT_SYMPTOMS = new Set(["흉통", "객혈", "토혈", "기절", "마비", "말 어눌함", "경련"]);
 // Common symptoms worth telling the doctor first when severe. Not an emergency by themselves, so they get a
 // calm note instead of the red one: a severe stomach ache read as "call 119" (user feedback, 2026-10-07).
 const NOTABLE_WHEN_SEVERE = new Set(["호흡곤란", "두통", "복통"]);

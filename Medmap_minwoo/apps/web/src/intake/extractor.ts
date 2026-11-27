@@ -695,7 +695,11 @@ const RULES: Rule[] = [
             String.raw`혈변|(?:대변|(?<!소)변)(?:에|에서)\s*피|피(?:가)?\s*섞인\s*(?:대변|(?<!소)변)|` +
             // "변에 약간의 피 같은 것이", "변에 까만 색 피가" — blood said, not only a color (2026-11-06)
             String.raw`(?:대변|(?<![가-힣])변)(?:에|에서)\s*(?:약간의?\s*|조금\s*|까만\s*색?\s*|검은\s*색?\s*|빨간\s*색?\s*)?피|` +
-            String.raw`(?:검은|까만|짜장\s*같은)\s*(?:색\s*)?(?:대변|변)|피똥|(?:대변|변)(?:이)?\s*(?:검게|까맣게)`
+            String.raw`(?:검은|까만|짜장\s*같은)\s*(?:색\s*)?(?:대변|변)|피똥|(?:대변|변)(?:이)?\s*(?:검게|까맣게)|` +
+            // Red said alone: "변에 붉은색이 섞여", "변을 보면 빨간 색이 있긴 한데" (training dev half). Read since 혈변
+            // left the red 119 notice (user decision, 2026-11-27); the patient confirms it. Not 소변.
+            String.raw`(?<![가-힣])(?:대변|변)(?:에|에서|을\s*보면|을?\s*볼\s*때)\s*${INTENSITY_PHRASE}(?:가끔\s*)?(?:빨간|붉은|시뻘건|새빨간)\s*(?:색|게|것|빛)?|` +
+            String.raw`(?<![가-힣])(?:대변|변)(?:이|도)?\s*${INTENSITY_PHRASE}(?:빨개|빨갛|붉어|붉게)`
         ),
         pat(String.raw`혈변${PARTICLE}\s*${ABSENT_ENDING}`),
     ),

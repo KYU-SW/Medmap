@@ -29431,5 +29431,121 @@
    ],
    "needs_user_confirmation": true
   }
+ },
+ {
+  "text": "변에 빨간 게 섞여 나와요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "혈변",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "변에 빨간 게"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "변을 보면 빨간 색이 있긴 한데.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "혈변",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "변을 보면 빨간 색"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "변이 빨개요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [
+    {
+     "name": "혈변",
+     "status": "present",
+     "body_site": null,
+     "onset": null,
+     "onset_date": null,
+     "severity": null,
+     "frequency": null,
+     "trend": null,
+     "source_text": "변이 빨개"
+    }
+   ],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
+ },
+ {
+  "text": "편의점에 빨간 우산이 있어요.",
+  "reference_date": null,
+  "result": {
+   "symptoms": [],
+   "medications": [],
+   "allergies": [],
+   "medical_history": [],
+   "others_symptoms": [],
+   "profile": {
+    "age": null,
+    "sex": null,
+    "pregnancy": null,
+    "smoking": null,
+    "drinking": null
+   },
+   "unrecognized_fragments": [],
+   "needs_user_confirmation": true
+  }
  }
 ]
