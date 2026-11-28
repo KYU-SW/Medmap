@@ -13661,7 +13661,7 @@
      "trend": null,
      "source_text": "배가 아파",
      "details": [
-      "누우면 나타남"
+      "오른쪽으로 누우면 나타남"
      ]
     }
    ],
@@ -23548,7 +23548,10 @@
      "severity": null,
      "frequency": null,
      "trend": null,
-     "source_text": "배가 아파"
+     "source_text": "배가 아파",
+     "details": [
+      "생리할 때마다 나타남"
+     ]
     }
    ],
    "medications": [],
@@ -24780,7 +24783,10 @@
      "severity": null,
      "frequency": null,
      "trend": null,
-     "source_text": "답답한"
+     "source_text": "답답한",
+     "details": [
+      "기지개를 펴면 나아짐"
+     ]
     }
    ],
    "medications": [],

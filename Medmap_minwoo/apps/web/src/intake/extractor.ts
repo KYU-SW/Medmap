@@ -227,9 +227,23 @@ const IMPROVEMENT_PHRASE = (
     String.raw`(?:괜찮아졌|나아졌|호전됐|좋아졌|덜해졌|줄었)`
 );
 // "배가 좀 나아졌어요", "머리가 더 심해졌어": a body part with how it changed names the pain there.
+// Any verb said as "~ㄹ 때(마다)" ("계단 올라갈 때", "잠자리에 들 때", "스트레스 받을 때"), not only the listed ones: phrase-by-phrase
+// lists did not carry over to unseen sentences (2026-11-28 second eval set). A syllable ending in ㄹ is every 28th from 갈.
+const RIEUL_FINAL = `[${Array.from({ length: 19 * 21 }, (_, i) => String.fromCharCode(0xac00 + i * 28 + 8)).join("")}]`;
+// Words before it that are not part of the condition: adverbs ("특히 걸을 때") and "그럴 때", "어릴 때", "아플 때".
+const NOT_CONDITION_WORD = String.raw`(?:특히|좀|조금|약간|가끔|자주|요즘|요새|주로|항상|늘|보통|그냥|특별히|더|또|막|이제|아직|꼭|많이|정말|진짜|너무|그런데|근데|그리고|그래서|하지만|그|이|저|` +
+    // nor the end of the clause before ("않지만 칫솔질할 때", "아파서 걸을 때")
+    String.raw`[가-힣]*(?:지만|데|고|서|요|다))`;
+const GENERIC_CONDITION = (
+    String.raw`(?:(?!${NOT_CONDITION_WORD}\s)[가-힣]{1,6}(?:을|를|에|에서|이|가)?\s+)?` +
+    String.raw`(?!(?:그럴|이럴|저럴|어릴|아플|아팠을|심할|필요할|모를|말할)\s*때)[가-힣]{0,4}${RIEUL_FINAL}\s*때(?:(?:마다|에)?(?![가-힣])|(?=[는도]))|` +
+    // "~면" likewise ("뭔가 닿으면", "날씨가 추워지면", "입을 벌리면"), but not "그러면", "말하자면", "알려주시면", "아프면".
+    String.raw`(?:(?!${NOT_CONDITION_WORD}\s)[가-힣]{1,6}(?:을|를|에|이|가)?\s+)?` +
+    String.raw`(?![가-힣]*(?:다|라|려|자|시)면)(?!(?:그러|그렇|이러|저러|말하|아프|아파지|심하|심해지|괜찮으|없으|있으|같으|지나|이|하)면)[가-힣]{1,5}면(?![가-힣])`
+);
 // What brings a symptom on or eases it (OPQRST, 2026-11-27; see attachDetails). Also keeps "누우면 더 아파요" from
 // reading as a trend.
-const DETAIL_CONDITION = (
+const LISTED_CONDITION = (
     String.raw`누우면|누워\s*있으면|앉아\s*있으면|앉으면|(?:아침에\s*)?(?:일어나면|일어날\s*때)|일어설\s*때|자세를\s*바꾸면|자세를\s*바꿀\s*때|움직이면|움직일\s*때|걸으면|걸을\s*때|뛰면|` +
     String.raw`계단(?:을)?\s*(?:오를\s*때|오르면)|운동하면|운동할\s*때|숨(?:을)?\s*(?:크게\s*)?(?:쉴\s*때|들이쉬면|들이쉴\s*때)|기침할\s*때|기침하면|` +
     // "물을 많이 마시면" (2026-11-28): how much may sit between the thing and the verb.
@@ -238,6 +252,8 @@ const DETAIL_CONDITION = (
     String.raw`(?:허리를\s*)?숙이면|구부리면|고개를\s*돌리면|찬\s*바람(?:을)?\s*쐬면|추우면|스트레스(?:를)?\s*받으면|` +
     String.raw`(?:소변|대변)(?:을)?\s*볼\s*때|쉬면|쉬고\s*나면|자고\s*나면|따뜻하게\s*하면|찜질하면`
 );
+const DETAIL_CONDITION = `${LISTED_CONDITION}|${GENERIC_CONDITION}`;
+const LISTED_CONDITION_PATTERN = pat(String.raw`(?:[가-힣]+\s+)*(?:${LISTED_CONDITION})`);
 const CHANGE_PHRASE = (
     String.raw`(?:${IMPROVEMENT_PHRASE}|(?:(?:더|점점|많이|훨씬)\s*)?(?:심해졌|악화됐|나빠졌))`
 );
@@ -1927,7 +1943,7 @@ type Found = { rule: Rule; evidence: Evidence; absent: boolean };
 // whether it comes and goes. Times of day ("밤에") are left to the onset.
 const DETAIL_TRIGGER_PATTERN = pat(
     String.raw`(?<![가-힣])(${DETAIL_CONDITION})[^.!?。]{0,20}?` +
-    String.raw`(?:(나아|괜찮아|편해|편안해|덜\s*아|가라앉|좋아지|좋아져|사라|(?:열|체온)(?:이|도)?\s*(?:내려|떨어))|(더\s*(?:심해|아파|아프|힘들|나빠|쓰려|쓰리|지끈|욱신|쑤셔|쑤시|저려|저리|가빠|가쁘)|심해|나빠|악화)|` +
+    String.raw`(?:(나아|괜찮아|편해|편안해|덜\s*아|가라앉|좋아지|좋아져|사라|(?:열|체온)(?:이|도)?\s*(?:내려|떨어))|(더\s*(?:심해|아파|아프|힘들|나빠|쓰려|쓰리|지끈|욱신|쑤셔|쑤시|저려|저리|가빠|가쁘|불편|그래|그렇)|심해|나빠|악화)|` +
     // "우유를 먹으면 설사를 해요", "기름진 걸 먹으면 토해요" (2026-11-28 check of item 2)
     String.raw`(아파|아프|아픈|쓰려|쓰리|쓰린|쑤시|쑤셔|저려|저리|결려|결리|찌릿|콕콕|따끔|답답|차요|차고|가빠|가쁘|지끈|욱신|어지러|생기|생겨|시작|` +
     String.raw`설사|토(?:를)?\s*(?:해|했|하)|토해|토했|가려|부어|부었|붓|기침(?:이|을)?\s*(?:나|해)))`
@@ -1995,6 +2011,9 @@ function attachDetails(text: string, placed: Array<[number, SymptomObservation]>
     // "누우면 더 아파요" goes to the symptom just before, but not when another subject sits in between ("기침할 때 피가
     // 나오기 시작했고") or the condition is set against something ("숨 쉴 때는 괜찮아요").
     const holders = covering(effectStart);
+    // The general form ("수변을 볼 때 아프고") only with a symptom said at the effect: a bare "아프고" left over must stay
+    // an unread fragment, not go to the symptom nearby (2026-11-28).
+    if (holders.length === 0 && match.groups[4] && !LISTED_CONDITION_PATTERN.fullmatch(condition)) continue;
     if (holders.length > 0) {
       found.push([match.start, match.end, `${condition} ${change}`, effectStart, holders[holders.length - 1]]);
     } else if (!/[가-힣]+(?:이|가)\s/.test(between) && !/^\s*(?:는|도|은)/.test(between)) {
