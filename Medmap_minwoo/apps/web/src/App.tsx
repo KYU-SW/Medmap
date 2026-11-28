@@ -274,7 +274,7 @@ function DoctorSummary({ text }: { text: string }) {
         {view.lists.map(([label, value]) => (
           <div key={label} className={label === "알레르기" && value !== "확인되지 않음" ? "doc-lists__allergy" : undefined}>
             <dt>{label}</dt>
-            <dd>{value === "확인되지 않음" ? <span className="muted">없음</span> : value}</dd>
+            <dd>{value === "확인되지 않음" ? <span className="muted">확인되지 않음</span> : value}</dd>
           </div>
         ))}
       </dl>
@@ -1637,9 +1637,11 @@ export default function App() {
                   <label>
                     특징
                     <input
-                      value={symptom.details?.join(", ") ?? ""}
+                      // Split only when leaving the box: splitting on each key ate the comma and space just typed.
+                      key={symptom.details?.join(", ") ?? ""}
+                      defaultValue={symptom.details?.join(", ") ?? ""}
                       placeholder="예: 누우면 심해짐, 왼팔까지 퍼짐"
-                      onChange={(event) => {
+                      onBlur={(event) => {
                         const details = event.target.value.split(",").map((part) => part.trim()).filter(Boolean);
                         updateSymptom(index, { details: details.length > 0 ? details : undefined });
                       }}
