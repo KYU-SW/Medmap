@@ -15,6 +15,7 @@
 - [프로젝트 배경](#-프로젝트-배경)
 - [목표](#-목표)
 - [사용자와 범위](#-사용자와-범위)
+- [화면](#-화면)
 - [현재 할 수 있는 것](#-현재-할-수-있는-것)
 - [처리 예시](#-처리-예시-입력--출력)
 - [정확도](#-정확도-2026-11-28-코드-기준)
@@ -66,6 +67,40 @@
 | 🩺 다루는 정보 | 증상 89종(있음·없음·확실하지 않음, 부위, 시작, 정도, 횟수, 변화, 특징), 복용약, 알레르기, 과거력, 기본 정보 |
 | 🗣️ 언어 | 한국어 (존댓말·반말·음슴체·일부 사투리) |
 | 🚫 범위 밖 | 진단·치료 권고, 응급 상황 판단(위험 증상은 119 안내만 함), 영상·검사 결과 해석, 보호자의 대리 기록(다른 사람 증상은 따로 분리) |
+
+---
+
+## 📱 화면
+
+> 아래 [처리 예시](#-처리-예시-입력--출력)의 가상 문장(+ `가끔 입안이 따끔거려요`)을 글로 적어 넣고 찍은 화면입니다 (웹 버전, 폰 크기 390px).
+> 안드로이드 앱도 같은 화면을 씁니다. 실제 환자 정보는 없습니다.
+
+<table>
+  <tr>
+    <td align="center"><img src="docs/images/01_home.jpg" width="200" alt="홈 화면"></td>
+    <td align="center"><img src="docs/images/02_input.jpg" width="200" alt="증상 말하기·적기"></td>
+    <td align="center"><img src="docs/images/03_review.jpg" width="200" alt="정리된 내용 확인"></td>
+    <td align="center"><img src="docs/images/04_review_ai_questions.jpg" width="200" alt="AI가 찾은 다른 증상과 추가 질문"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>① 홈</b><br>사용 안내와 메뉴</td>
+    <td align="center"><b>② 말하기·적기</b><br>말로 기록 또는 글로 적기</td>
+    <td align="center"><b>③ 확인</b><br>증상·상태·부위·시작·특징</td>
+    <td align="center"><b>④ AI 제안·추가 질문</b><br>목록 밖 증상은 눌러야 추가</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/images/05_summary.jpg" width="200" alt="진료 전 요약"></td>
+    <td align="center"><img src="docs/images/06_qr.jpg" width="200" alt="암호화 QR"></td>
+    <td align="center"><img src="docs/images/07_history.jpg" width="200" alt="지난 기록 달력"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center"><b>⑤ 진료 전 요약</b><br>먼저 알릴 증상 안내</td>
+    <td align="center"><b>⑥ 암호화 QR</b><br>12자리 번호로 의사가 엶</td>
+    <td align="center"><b>⑦ 지난 기록</b><br>달력·진행 중인 증상</td>
+    <td></td>
+  </tr>
+</table>
 
 ---
 
